@@ -16,6 +16,7 @@
     $ pyenv local harmony-rt
     $ pyenv activate harmony-rt
     $ poetry install
+    $ pyenv rehash
 
 ## Run the notebook
 
