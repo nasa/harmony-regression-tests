@@ -1,0 +1,4 @@
+test/net2cog/** !text !filter !merge !diff
+test/hybig/** !text !filter !merge !diff
+test/opera-rtc-s1-browse/** !text !filter !merge !diff
+test/regridder/** !text !filter !merge !diff
