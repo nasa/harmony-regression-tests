@@ -2,9 +2,9 @@
 
 ## Prerequisites
 
-[pyenv](https://github.com/pyenv/pyenv)
-[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-[poetry](https://python-poetry.org/)
+* [pyenv](https://github.com/pyenv/pyenv)
+* [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
+* [poetry](https://python-poetry.org/)
 
 ## Install Python 3.8 (if needed)
 
