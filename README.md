@@ -9,7 +9,17 @@
     $ make image
     $ make run
 
+By default this will run the tests against the UAT environment. To run
+against a specific environment:
+
+    $ make run environment=prod
+
+Valid environment values are: sbx, sit, uat, prod.
+
 # Development
+
+These prerequisites and steps are only needed if you want to do local
+development on the project.
 
 ## Prerequisites
 
