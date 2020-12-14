@@ -2,6 +2,17 @@
 
 ## Prerequisites
 
+* [Docker](https://www.docker.com/get-started)
+
+## Build the Image & Run the Container
+
+    $ make image
+    $ make run
+
+# Development
+
+## Prerequisites
+
 * [pyenv](https://github.com/pyenv/pyenv)
 * [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
 * [poetry](https://python-poetry.org/)
