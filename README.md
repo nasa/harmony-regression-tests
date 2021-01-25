@@ -1,6 +1,8 @@
 # Harmony Regression Tests
 
-## Prerequisites
+# Running the Tests
+
+## Install Prerequisites
 
 * [Docker](https://www.docker.com/get-started)
 
