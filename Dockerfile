@@ -1,10 +1,6 @@
-FROM jupyter/scipy-notebook:latest
+FROM python:3.8.7-buster
 
 WORKDIR /opt/harmony
-
-# RUN curl -sSL
-# https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
-        # | python -
 
 RUN pip install poetry
 
@@ -16,4 +12,4 @@ COPY Harmony.ipynb .
 COPY NASA_logo.svg .
 
 ENV environment="uat"
-ENTRYPOINT poetry run papermill Harmony.ipynb /tmp/Results.ipynb -p environment $environment
+ENTRYPOINT poetry run papermill Harmony.ipynb Results.ipynb -p environment $environment
