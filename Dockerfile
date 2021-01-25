@@ -10,6 +10,7 @@ RUN poetry install
 
 COPY Harmony.ipynb .
 COPY NASA_logo.svg .
+COPY harmony/ ./harmony/
 
 ENV environment="uat"
 ENTRYPOINT poetry run papermill Harmony.ipynb Results.ipynb -p environment $environment
