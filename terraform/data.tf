@@ -31,3 +31,7 @@ data "aws_ami" "ngap" {
 
   owners = ["863143145967", "182918467801"]
 }
+
+data "aws_iam_instance_profile" "regression_test_instance_profile" {
+  name = "harmony-${var.environment_name}-instance-profile"
+}
