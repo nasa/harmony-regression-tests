@@ -15,3 +15,4 @@ variable "key_name" {
 variable "environment_name" {
   description = "environment name, e.g. sit, uat, prod, harmony-35, etc"
 }
+
