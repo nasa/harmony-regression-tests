@@ -8,6 +8,7 @@
 
 ## Build the Image & Run the Container
 
+    $ cd test
     $ make image
     $ make run
 
@@ -18,10 +19,12 @@ against a specific environment:
 
 Valid environment values are: sbx, sit, uat, prod.
 
-# Development
+# Notebook Development
+
+**Note** - this section applies to the contents of hte `test` directory
 
 These prerequisites and steps are only needed if you want to do local
-development on the project.
+development on the project. 
 
 ## Prerequisites
 

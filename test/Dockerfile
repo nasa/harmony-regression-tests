@@ -12,7 +12,4 @@ RUN poetry install
 COPY Harmony.ipynb .
 COPY harmony/ ./harmony/
 
-
-
-ENV environment="uat"
 ENTRYPOINT poetry run papermill Harmony.ipynb /root/output/Results.ipynb -p environment $environment
