@@ -1,0 +1,9 @@
+#!/bin/bash -xe
+
+echo "" >> /etc/hosts.allow
+echo "sshd: 127.0.0.1" >> /etc/hosts.allow
+
+# Set up docker
+yum install -y docker gcc-c++ make
+usermod -aG docker ec2-user
+service docker start
