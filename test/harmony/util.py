@@ -1,7 +1,6 @@
 import requests
 
 ENVIRONMENT_HOSTNAME = {
-    'sbx': 'harmony.sbx.earthdata.nasa.gov',
     'sit': 'harmony.sit.earthdata.nasa.gov',
     'uat': 'harmony.uat.earthdata.nasa.gov',
     'prod': 'harmony.earthdata.nasa.gov'
