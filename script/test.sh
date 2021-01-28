@@ -57,15 +57,15 @@ terraform apply -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
 instance_id=$(terraform output -json harmony_regression_test_instance_id | jq -r .id)
 # run the tests on the created EC2 instance
 cd ..
-retry 5 scp -r test "ec2-user@${instance_id}:"
-retry 5 ssh "ec2-user@${instance_id}" "cd test && make image"
+retry 5 scp -F sshconfig -r test "ec2-user@${instance_id}:"
+retry 5 ssh -F sshconfig "ec2-user@${instance_id}" "cd test && make image"
 set +e
-ssh "ec2-user@${instance_id}" "cd test && make run HARMONY_HOST_URL=${harmony_host_url}"
+ssh -F sshconfig "ec2-user@${instance_id}" "cd test && make run HARMONY_HOST_URL=${harmony_host_url}"
 exit_code=$?
 set -e
 # copy the output to here
-retry 5 scp "ec2-user@${instance_id}:test/output/*.ipynb" ./output
-# destroy the test environment 
+retry 5 scp -F sshconfig "ec2-user@${instance_id}:test/output/*.ipynb" ./output
+# destroy the test environment
 # cd terraform
 # terraform destroy -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
 
