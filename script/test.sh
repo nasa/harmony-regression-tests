@@ -53,7 +53,7 @@ esac
 # create the test environment
 cd ../terraform
 terraform init
-terraform apply -auto-approve
+terraform apply -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
 instance_id=$(terraform output -json harmony_regression_test_instance_id | jq -r .id)
 # run the tests on the created EC2 instance
 cd ..
@@ -67,7 +67,7 @@ set -e
 retry 5 scp "ec2-user@${instance_id}:test/output/*.ipynb" ./output
 # destroy the test environment 
 cd terraform
-terraform destroy -auto-approve
+terraform destroy -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
 
 # return the exit code form running the tests
 exit $exit_code
