@@ -12,4 +12,4 @@ RUN poetry install
 COPY Harmony.ipynb .
 COPY harmony/ ./harmony/
 
-ENTRYPOINT poetry run papermill Harmony.ipynb /root/output/Results.ipynb -p environment $environment
+ENTRYPOINT poetry run papermill Harmony.ipynb /root/output/Results.ipynb -p harmony_host_url $harmony_host_url

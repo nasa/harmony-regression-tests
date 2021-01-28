@@ -4,6 +4,5 @@ image: pyproject.toml poetry.lock Dockerfile Harmony.ipynb
 	docker build -t harmony/regression-tests:latest .
 
 run:
-	docker run -v ${PWD}/output:/root/output --env environment=${HARMONY_ENVIRONMENT} harmony/regression-tests:latest
+	docker run -v ${PWD}/output:/root/output --env harmony_host_url="${HARMONY_HOST_URL}" harmony/regression-tests:latest
 
-all: image run
