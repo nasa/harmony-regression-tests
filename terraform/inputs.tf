@@ -10,6 +10,7 @@ variable "instance_type" {
 
 variable "key_name" {
   description = "Key pair name to use for the harmony EC2 instance."
+  default     = "bamboo"
 }
 
 variable "environment_name" {
