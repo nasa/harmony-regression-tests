@@ -3,3 +3,6 @@ __pycache__/
 Results.ipynb
 .vscode
 output/*
+.env
+.deployenv
+.identity
