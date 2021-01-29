@@ -7,28 +7,6 @@ if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   exit 1
 fi
 
-function retry {
-  set +e
-  local retries=$1
-  shift
-
-  local count=0
-  until "$@"; do
-    exit=$?
-    count=$(($count + 1))
-    if [ $count -lt $retries ]; then
-      sleep 10
-      echo "Retry $count/$retries exited $exit, retrying"
-    else
-      echo "Retry $count/$retries exited $exit, no more retries left."
-      set -e
-      return $exit
-    fi
-  done
-  set -e
-  return 0
-}
-
 function get_elb {
   # Figure out the Harmony load balancer - just grabs the first ELB for now - need to update to filter for the right one
   echo $(aws elbv2 describe-load-balancers | jq --arg host "harmony-$HARMONY_ENVIRONMENT-frontend" '.LoadBalancers[] | select(.LoadBalancerName == $host) | .DNSName' | tr -d '"')
@@ -55,19 +33,47 @@ cd ../terraform
 terraform init
 terraform apply -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
 instance_id=$(terraform output -json harmony_regression_test_instance_id | jq -r .id)
-# run the tests on the created EC2 instance
+
 cd ..
-retry 5 scp -F sshconfig -r test "ec2-user@${instance_id}:"
-retry 5 ssh -F sshconfig "ec2-user@${instance_id}" "cd test && make image"
-set +e
-ssh -F sshconfig "ec2-user@${instance_id}" "cd test && make run HARMONY_HOST_URL=${harmony_host_url}"
-exit_code=$?
-set -e
-# copy the output to here
-retry 5 scp -F sshconfig "ec2-user@${instance_id}:test/output/*.ipynb" ./output
-# destroy the test environment
+
+# Set up SSH key
+identity='.identity'
+
+if [ -z ${SECRET_KEY_1+x} ]; then
+  cp $SECRET_KEY_FILE $identity
+else
+  echo $SECRET_KEY_1$SECRET_KEY_2 | base64 -d > $identity
+fi
+chmod 0600 $identity
+
+AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-west-2}"
+
+deployenv='.deployenv'
+if [ -e $deployenv ]; then
+  rm $deployenv
+fi
+
+if [ -e .env ]; then
+  set -o allexport
+  source .env
+  set +o allexport
+  cp .env $deployenv
+else
+  echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $deployenv
+  echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $deployenv
+fi
+
+echo "INSTANCE_ID=${instance_id}" >> $deployenv
+echo "HARMONY_HOST_URL=${harmony_host_url}" >> $deployenv
+echo "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> $deployenv
+
+./script/build-image.sh
+
+docker run --rm \
+  -v $(pwd):/tmp \
+  harmony/regression-tests \
+  './script/deploy-from-docker.sh'
+
+# destroy the test environment (will be done in a separate step)
 # cd terraform
 # terraform destroy -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
-
-# return the exit code form running the tests
-exit $exit_code
