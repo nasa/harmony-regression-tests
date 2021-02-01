@@ -1,6 +1,6 @@
 .PHONY: run
 
-image: pyproject.toml poetry.lock Dockerfile Harmony.ipynb
+image: pyproject.toml poetry.lock Dockerfile
 	docker build -t harmony/regression-tests:latest .
 
 run:
