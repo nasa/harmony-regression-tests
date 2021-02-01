@@ -38,7 +38,9 @@ ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "cd test && make run HAR
 exit_code=$?
 set -e
 # copy the output to here
-retry 5 scp -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}:test/output/*.ipynb" ./output
+retry 5 scp -r -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}:test/output/*" ./output
+# copy the output to s3
+aws s3 cp output "s3://${REGRESSION_TEST_OUTPUT_BUCKET}" --recursive
 
 # return the exit code form running the tests
 exit $exit_code

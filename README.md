@@ -44,9 +44,15 @@ development on the project.
     $ poetry install
     $ pyenv rehash
 
-## Run the notebook
+## Run the notebooks
 
-    $ papermill Harmony.ipynb Results.ipynb -p environment uat
+    $ ./run_notebooks harmony_host_url=<url of Harmony in the target environment>
+    
+e.g., 
+    
+    $ ./run_notebooks harmony_host_url="https://harmony.sit.earthdata.nasa.gov"
+
+Outputs will be in the `output` directory
 
 ## Start JupyterLab
 
