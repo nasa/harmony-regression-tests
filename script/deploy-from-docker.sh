@@ -18,7 +18,7 @@ function retry {
     exit=$?
     count=$(($count + 1))
     if [ $count -lt $retries ]; then
-      sleep 10
+      sleep 15
       echo "Retry $count/$retries exited $exit, retrying"
     else
       echo "Retry $count/$retries exited $exit, no more retries left."
@@ -31,7 +31,8 @@ function retry {
 }
 
 retry 5 scp -v -F sshconfig -i .identity -r test "ec2-user@${INSTANCE_ID}:"
-retry 5 ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "cd test && make image"
+# It can take a couple minutes for docker to be available on the instance
+retry 10 ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "cd test && make image"
 set +e
 ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "cd test && make run HARMONY_HOST_URL=${HARMONY_HOST_URL}"
 exit_code=$?
