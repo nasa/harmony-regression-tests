@@ -28,6 +28,8 @@ sit|sandbox)
   ;;
 esac
 
+output_bucket="${REGRESSION_TEST_OUTPUT_BUCKET}"
+
 # create the test environment
 cd ../terraform
 terraform init
@@ -66,6 +68,7 @@ fi
 echo "INSTANCE_ID=${instance_id}" >> $deployenv
 echo "HARMONY_HOST_URL=${harmony_host_url}" >> $deployenv
 echo "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> $deployenv
+echo "REGRESSION_TEST_OUTPUT_BUCKET=${output_bucket}" >> $deployenv
 
 ./script/build-image.sh
 
