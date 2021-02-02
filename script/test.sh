@@ -28,7 +28,7 @@ sit|sandbox)
   ;;
 esac
 
-output_bucket="harmony_${HARMONY_ENVIRONMENT}_regression_test"
+output_bucket="${REGRESSION_TEST_OUTPUT_BUCKET}"
 
 # create the test environment
 cd ../terraform
