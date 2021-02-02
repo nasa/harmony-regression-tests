@@ -9,7 +9,8 @@ COPY pyproject.toml .
 COPY poetry.lock .
 RUN poetry install
 
-COPY Harmony.ipynb .
-COPY harmony/ ./harmony/
+COPY notebooks ./notebooks
+COPY harmony ./harmony
+COPY run_notebooks.sh .
 
-ENTRYPOINT poetry run papermill Harmony.ipynb /root/output/Results.ipynb -p harmony_host_url $harmony_host_url
+ENTRYPOINT ./run_notebooks.sh -p harmony_host_url $harmony_host_url
