@@ -7,6 +7,16 @@ if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   exit 1
 fi
 
+if [[ -z "${NETRC_LOGIN}" ]]; then
+  echo "NETRC_LOGIN must be set to run this script"
+  exit 1
+fi
+
+if [[ -z "${NETRC_PASSWORD}" ]]; then
+  echo "NETRC_PASSWORD must be set to run this script"
+  exit 1
+fi
+
 function get_elb {
   # Figure out the Harmony load balancer - just grabs the first ELB for now - need to update to filter for the right one
   echo $(aws elbv2 describe-load-balancers | jq --arg host "harmony-$HARMONY_ENVIRONMENT-frontend" '.LoadBalancers[] | select(.LoadBalancerName == $host) | .DNSName' | tr -d '"')
@@ -74,9 +84,11 @@ echo "REGRESSION_TEST_OUTPUT_BUCKET=${output_bucket}" >> $deployenv
 
 docker run --rm \
   -v $(pwd):/tmp \
+  -e NETRC_LOGIN \
+  -e NETRC_PASSWORD \
   harmony/regression-tests \
   './script/deploy-from-docker.sh'
 
 # destroy the test environment (will be done in a separate step)
-# cd terraform
-# terraform destroy -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
+cd terraform
+terraform destroy -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
