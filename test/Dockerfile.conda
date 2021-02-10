@@ -5,7 +5,7 @@ ARG notebook
 ENV env_sub_dir=$sub_dir
 ENV env_notebook=$notebook
 
-# COPY ~/.netrc /root/.netrc
+COPY .netrc .netrc
 WORKDIR /root
 
 # COPY notebooks ./notebooks
