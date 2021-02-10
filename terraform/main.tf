@@ -45,6 +45,10 @@ resource "aws_instance" "harmony_regression_test" {
 
   user_data = file("${path.module}/harmony-user-data.tmpl")
 
+  root_block_device {
+    volume_size = 256
+  }
+
   vpc_security_group_ids = [aws_security_group.harmony_regression_test.id]
   tags = {
     Name = "harmony-regression-test-${var.environment_name}"
