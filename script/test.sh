@@ -1,19 +1,9 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   echo "HARMONY_ENVIRONMENT must be set to run this script"
-  exit 1
-fi
-
-if [[ -z "${NETRC_LOGIN}" ]]; then
-  echo "NETRC_LOGIN must be set to run this script"
-  exit 1
-fi
-
-if [[ -z "${NETRC_PASSWORD}" ]]; then
-  echo "NETRC_PASSWORD must be set to run this script"
   exit 1
 fi
 
@@ -21,6 +11,36 @@ function get_elb {
   # Figure out the Harmony load balancer - just grabs the first ELB for now - need to update to filter for the right one
   echo $(aws elbv2 describe-load-balancers | jq --arg host "harmony-$HARMONY_ENVIRONMENT-frontend" '.LoadBalancers[] | select(.LoadBalancerName == $host) | .DNSName' | tr -d '"')
 }
+
+cd ..
+
+deployenv='.deployenv'
+if [ -e $deployenv ]; then
+  rm $deployenv
+fi
+
+if [ -e .env ]; then
+  echo "Using .env file"
+  set -o allexport
+  source .env
+  set +o allexport
+  cp .env $deployenv
+else
+  echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $deployenv
+  echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $deployenv
+  echo "REGRESSION_TEST_OUTPUT_BUCKET=${REGRESSION_TEST_OUTPUT_BUCKET}" >> $deployenv
+fi
+
+export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-west-2}"
+echo "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> $deployenv
+
+# create the test environment
+cd ./terraform
+terraform init
+terraform apply -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
+instance_id=$(terraform output -json harmony_regression_test_instance_id | jq -r .id)
+
+echo "intance_id = ${instance_id}"
 
 case $HARMONY_ENVIRONMENT in
 uat)
@@ -38,13 +58,7 @@ sit|sandbox)
   ;;
 esac
 
-output_bucket="${REGRESSION_TEST_OUTPUT_BUCKET}"
-
-# create the test environment
-cd ../terraform
-terraform init
-terraform apply -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
-instance_id=$(terraform output -json harmony_regression_test_instance_id | jq -r .id)
+echo "harmony host url: ${harmony_host_url}"
 
 cd ..
 
@@ -58,37 +72,18 @@ else
 fi
 chmod 0600 $identity
 
-AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-west-2}"
-
-deployenv='.deployenv'
-if [ -e $deployenv ]; then
-  rm $deployenv
-fi
-
-if [ -e .env ]; then
-  set -o allexport
-  source .env
-  set +o allexport
-  cp .env $deployenv
-else
-  echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $deployenv
-  echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $deployenv
-fi
-
 echo "INSTANCE_ID=${instance_id}" >> $deployenv
 echo "HARMONY_HOST_URL=${harmony_host_url}" >> $deployenv
-echo "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> $deployenv
-echo "REGRESSION_TEST_OUTPUT_BUCKET=${output_bucket}" >> $deployenv
 
 ./script/build-image.sh
 
 docker run --rm \
   -v $(pwd):/tmp \
-  -e NETRC_LOGIN \
-  -e NETRC_PASSWORD \
+  -e EDL_USERNAME \
+  -e EDL_PASSWORD \
   harmony/regression-tests \
   './script/deploy-from-docker.sh'
 
 # destroy the test environment (will be done in a separate step)
-cd terraform
-terraform destroy -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
+# cd terraform
+# terraform destroy -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"

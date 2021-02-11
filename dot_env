@@ -1,0 +1,6 @@
+REGRESSION_TEST_OUTPUT_BUCKET=<some bucket like harmony-sit-regression-tests>
+AWS_ACCESS_KEY_ID=<KEY ID>
+AWS_SECRET_ACCESS_KEY=<SECRET KEY>
+EDL_USER=harmony_dev_user
+EDL_PASSWORD=<HARMONY DEV USER PASSWORD>
+SECRET_KEY_FILE=<path to unencrypted (no passphrase) private key file>
