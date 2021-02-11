@@ -33,12 +33,12 @@ function retry {
 # copy the test directory to the EC2 instance
 retry 5 scp -v -F sshconfig -i .identity -r test "ec2-user@${INSTANCE_ID}:"
 # create a .netrc file on the EC2 instance
-netrc_default="default login ${NETRC_LOGIN} password ${NETRC_PASSWORD}"
+netrc_default="default login ${EDL_USER} password ${EDL_PASSWORD}"
 retry 5 ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "echo \"${netrc_default}\" > ./test/.netrc"
 # It can take a couple minutes for docker to be available on the instance
-retry 10 ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "cd test && make image3"
+retry 10 ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "cd test && make -j images"
 set +e
-ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "cd test && make run3 HARMONY_HOST_URL=${HARMONY_HOST_URL}"
+ssh -F sshconfig -i .identity "ec2-user@${INSTANCE_ID}" "cd test && export HARMONY_HOST_URL=${HARMONY_HOST_URL} && ./run_notebooks.sh"
 exit_code=$?
 set -e
 # copy the output to here

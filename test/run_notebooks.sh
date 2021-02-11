@@ -1,11 +1,36 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
 echo "Running regression tests"
 
-for file in $(ls notebooks/*.ipynb); do
-  echo "$file"
-  dir="./output/$(basename ${file} .ipynb)"
-  mkdir -p "${dir}"
-  poetry run papermill "${file}" "${dir}/Results.ipynb" -p harmony_host_url $harmony_host_url
+# Add Docker images created in Makefile here
+images=(harmony asf-gdal)
 
+# launch all the docker containers and store their process IDs
+for image in ${images[@]}; do
+  PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+done
+
+# wait for processes to finish and store each exit code into array STATUS'
+for name_pid in ${PIDS[@]}; do
+  IFS=","
+  set -- $name_pid
+  name=$1
+  pid=$2
+  code=$(docker container wait ${pid})
+  EXIT_CODES+=(${code})
+  NAMES+=(${name})
+done
+
+# check to see if any of the docker runs errored
+i=0
+for code in ${EXIT_CODES[@]}; do
+  name=${NAMES[$i]}
+  if [[ ${code} -ne 0 ]]; then
+    echo -e "${RED}Test suite ${name} failed with exit code ${code}${NC}"
+    exit ${code}
+  fi
+  ((i+=1))
 done
