@@ -1,16 +1,16 @@
-FROM python:3.8.7-buster
+FROM continuumio/miniconda3:latest
 
-WORKDIR /opt/harmony
+ARG sub_dir
+ARG notebook
+ENV env_sub_dir=$sub_dir
+ENV env_notebook=$notebook
 
-RUN pip install poetry
-RUN mkdir -p ./output
+COPY .netrc .netrc
+WORKDIR /root
 
-COPY pyproject.toml .
-COPY poetry.lock .
-RUN poetry install
+COPY ${sub_dir} ./${sub_dir}
+RUN ls ${sub_dir}
 
-COPY notebooks ./notebooks
-COPY harmony ./harmony
-COPY run_notebooks.sh .
+RUN conda env create --name papermill --file ./${sub_dir}/environment.yaml
 
-ENTRYPOINT ./run_notebooks.sh -p harmony_host_url $harmony_host_url
+ENTRYPOINT export PATH=/opt/conda/envs/papermill/bin:$PATH; mkdir /root/output/${env_sub_dir}; papermill --cwd ${env_sub_dir} ${env_sub_dir}/${env_notebook} /root/output/${env_sub_dir}/Results.ipynb -p harmony_host_url $harmony_host_url
