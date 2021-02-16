@@ -5,9 +5,9 @@ ARG notebook
 ENV env_sub_dir=$sub_dir
 ENV env_notebook=$notebook
 
-COPY .netrc .netrc
 WORKDIR /root
 
+COPY .netrc .netrc
 COPY ${sub_dir} ./${sub_dir}
 RUN ls ${sub_dir}
 
