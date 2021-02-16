@@ -1,0 +1,13 @@
+name: papermill
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - jupyter
+  - requests
+  - netcdf4
+  - matplotlib
+  - papermill
+  - pytest
+  - ipytest
