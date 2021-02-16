@@ -26,11 +26,14 @@ done
 
 # check to see if any of the docker runs errored
 i=0
+exit_code=0
 for code in ${EXIT_CODES[@]}; do
   name=${NAMES[$i]}
   if [[ ${code} -ne 0 ]]; then
     echo -e "${RED}Test suite ${name} failed with exit code ${code}${NC}"
-    exit ${code}
+    exit_code=1
   fi
   ((i+=1))
 done
+
+exit ${exit_code}
