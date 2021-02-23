@@ -143,13 +143,15 @@ def show(response, varList=[], color_index=None, immediate=True):
     #Plot the variables requested
     for var in varList:
       if var in data and len(data[var].shape) > 0:
+          ds = data[var]
           if (len(data[var].shape) < 3):
             #Simple plot for 1D or 2D
-            plt.plot(data[var])
+            np_data=ds[()]
+            plt.plot(np_data)
             plt.show()
           else:
             #Setup for 3D display
-            ds = data[var]
+            # ds = data[var]
             values = np.flip(ds[0,:], 0)
             where = (values != ds.attrs.get('_FillValue', None))
             scale = ds.attrs.get('scale_factor', [1])[0]
