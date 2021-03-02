@@ -18,6 +18,18 @@ running the associated image.
 `make -j images` can be used to make the images in parallel (faster), although this may lead to
 Docker Desktop instabilities
 
+## Create Terraform Autovars File
+In the `terraform` directory create a file called `key.auto.tfvars` and
+add a single line indicating the name of the ssh public key file that
+should be used for the EC2 instance that runs the notebooks.
+
+This file name is the name of the S3 file created in the Harmony ssh key bucket as described in the Harmony project README.md.
+
+Example:
+```
+key_name = "harmony-sit-my-key-name"
+```
+
 ## Run the notebooks
 
     $ cd test
