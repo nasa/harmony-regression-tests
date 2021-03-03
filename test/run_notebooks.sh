@@ -6,7 +6,7 @@ NC='\033[0m' # No Color
 echo "Running regression tests"
 
 # Add Docker images created in Makefile here
-images=(harmony-regression)
+images=(harmony harmony-regression)
 
 # launch all the docker containers and store their process IDs
 for image in ${images[@]}; do
