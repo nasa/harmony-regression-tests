@@ -1,4 +1,4 @@
-REGRESSION_TEST_OUTPUT_BUCKET=<some bucket like harmony-sit-regression-tests>
+REGRESSION_TEST_OUTPUT_BUCKET=<some bucket you have created, (aws s3 mb ____)>
 AWS_ACCESS_KEY_ID=<KEY ID>
 AWS_SECRET_ACCESS_KEY=<SECRET KEY>
 EDL_USER=harmony_dev_user
