@@ -14,7 +14,6 @@ RUN conda install conda-lock
 COPY .netrc .netrc
 RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/conda-linux-64.lock ./${sub_dir}
-RUN ls ${sub_dir}
 
 RUN conda create --name papermill --file ./${sub_dir}/conda-linux-64.lock
 
