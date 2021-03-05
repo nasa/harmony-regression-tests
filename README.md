@@ -11,6 +11,9 @@ running the associated image.
 * [Docker](https://www.docker.com/get-started)
 
 ## Build the Images
+Create a .netrc file in the `test` directory of this repository. This file will be
+copied to into the docker images and used when running the notebooks. The `.gitignore`
+file will prevent this from being committed to the git project.
 
     $ cd test
     $ make images
