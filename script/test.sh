@@ -12,6 +12,36 @@ function get_elb {
   echo $(aws elbv2 describe-load-balancers | jq --arg host "harmony-$HARMONY_ENVIRONMENT-frontend" '.LoadBalancers[] | select(.LoadBalancerName == $host) | .DNSName' | tr -d '"')
 }
 
+cd ..
+
+deployenv='.deployenv'
+if [ -e $deployenv ]; then
+  rm $deployenv
+fi
+
+if [ -e .env ]; then
+  echo "Using .env file"
+  set -o allexport
+  source .env
+  set +o allexport
+  cp .env $deployenv
+else
+  echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $deployenv
+  echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $deployenv
+  echo "REGRESSION_TEST_OUTPUT_BUCKET=${REGRESSION_TEST_OUTPUT_BUCKET}" >> $deployenv
+fi
+
+export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-west-2}"
+echo "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> $deployenv
+
+# create the test environment
+cd ./terraform
+terraform init
+terraform apply -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
+instance_id=$(terraform output -json harmony_regression_test_instance_id | jq -r .id)
+
+echo "intance_id = ${instance_id}"
+
 case $HARMONY_ENVIRONMENT in
 uat)
   harmony_host_url="https://harmony.uat.earthdata.nasa.gov"
@@ -28,13 +58,7 @@ sit|sandbox)
   ;;
 esac
 
-output_bucket="${REGRESSION_TEST_OUTPUT_BUCKET}"
-
-# create the test environment
-cd ../terraform
-terraform init
-terraform apply -auto-approve -var "environment_name=${HARMONY_ENVIRONMENT}"
-instance_id=$(terraform output -json harmony_regression_test_instance_id | jq -r .id)
+echo "harmony host url: ${harmony_host_url}"
 
 cd ..
 
@@ -48,32 +72,15 @@ else
 fi
 chmod 0600 $identity
 
-AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-west-2}"
-
-deployenv='.deployenv'
-if [ -e $deployenv ]; then
-  rm $deployenv
-fi
-
-if [ -e .env ]; then
-  set -o allexport
-  source .env
-  set +o allexport
-  cp .env $deployenv
-else
-  echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $deployenv
-  echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $deployenv
-fi
-
 echo "INSTANCE_ID=${instance_id}" >> $deployenv
 echo "HARMONY_HOST_URL=${harmony_host_url}" >> $deployenv
-echo "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> $deployenv
-echo "REGRESSION_TEST_OUTPUT_BUCKET=${output_bucket}" >> $deployenv
 
 ./script/build-image.sh
 
 docker run --rm \
   -v $(pwd):/tmp \
+  -e EDL_USERNAME \
+  -e EDL_PASSWORD \
   harmony/regression-tests \
   './script/deploy-from-docker.sh'
 
