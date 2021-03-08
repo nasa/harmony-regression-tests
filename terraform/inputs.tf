@@ -4,12 +4,12 @@ variable "aws_region" {
 }
 
 variable "instance_type" {
-  description = "EC2 instance type for the harmony application"
-  default     = "t2.medium"
+  description = "EC2 instance type for the regression test runner"
+  default     = "t2.xlarge"
 }
 
 variable "key_name" {
-  description = "Key pair name to use for the harmony EC2 instance."
+  description = "Key pair name to use for the harmony regression test instance."
   default     = "bamboo"
 }
 
