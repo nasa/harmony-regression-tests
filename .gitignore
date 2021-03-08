@@ -6,3 +6,5 @@ output/*
 .env
 .deployenv
 .identity
+.netrc
+
