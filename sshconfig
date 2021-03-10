@@ -4,4 +4,4 @@ Host i-*
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
     LogLevel ERROR
-    ServerAliveInterval 60
+    ServerAliveInterval 30
