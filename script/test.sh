@@ -79,7 +79,7 @@ echo "HARMONY_HOST_URL=${harmony_host_url}" >> $deployenv
 
 docker run --rm \
   -v $(pwd):/tmp \
-  -e EDL_USERNAME \
+  -e EDL_USER \
   -e EDL_PASSWORD \
   harmony/regression-tests \
   './script/deploy-from-docker.sh'
