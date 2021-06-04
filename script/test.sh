@@ -49,7 +49,10 @@ uat)
 prod)
   harmony_host_url="https://harmony.earthdata.nasa.gov"
   ;;
-sit|sandbox)
+sit)
+  harmony_host_url="https://harmony.sit.earthdata.nasa.gov"
+  ;;
+sandbox)
   harmony_host_url="http://$(get_elb)"
   ;;
 *)
