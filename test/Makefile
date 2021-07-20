@@ -7,4 +7,7 @@ asf-gdal-image: Dockerfile asf-gdal/environment.yaml
 harmony-regression-image: Dockerfile harmony-regression/environment.yaml
 	docker build -t harmony/regression-tests-harmony-regression:latest -f ./Dockerfile --build-arg notebook=HarmonyRegression.ipynb --build-arg sub_dir=harmony-regression .
 
-images: harmony-image asf-gdal-image harmony-regression-image
+sds-image: Dockerfile sds/environment.yaml
+	docker build -t harmony/regression-tests-sds:latest -f ./Dockerfile --build-arg notebook=SDS_Regression.ipynb --build-arg sub_dir=sds .
+
+images: harmony-image asf-gdal-image harmony-regression-image sds-image
