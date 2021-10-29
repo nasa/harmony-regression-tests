@@ -10,8 +10,7 @@ RUN \
     rm session-manager-plugin.rpm &&\
     curl -so /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest &&\
     chmod u+x /usr/local/bin/ecs-cli &&\
-    pip --no-cache-dir install --upgrade awscli &&\
-    pip install --ignore-installed PyYAML &&\
-    pip --no-cache-dir install awslogs cfn-lint &&\
-    pip install --upgrade awscli &&\
+    pip --no-cache-dir install --upgrade awscli --ignore-installed &&\
+    pip --no-cache-dir install awslogs cfn-lint --ignore-installed &&\
+    pip install --upgrade awscli --ignore-installed &&\
     rm -rf /var/cache/yum/*
