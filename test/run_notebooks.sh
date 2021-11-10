@@ -7,7 +7,7 @@ NC='\033[0m' # No Color
 echo "Running regression tests"
 
 # Add Docker images created in Makefile here
-images=(harmony asf-gdal harmony-regression sds)
+images=(harmony harmony-regression sds) #asf-gdal
 
 # launch all the docker containers and store their process IDs
 for image in ${images[@]}; do
