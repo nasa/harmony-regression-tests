@@ -7,12 +7,12 @@ NC='\033[0m' # No Color
 echo "Running regression tests"
 
 # Add Docker images created in Makefile here
-images=(harmony harmony-regression sds) #asf-gdal
+images=(harmony harmony-regression sds hga)
 
 # launch all the docker containers and store their process IDs
 for image in ${images[@]}; do
   echo -e "Test suite ${image} starting"
-  PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output -v ${PWD}/${image}:/root/${image} --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+  PIDS+=(${image},$(docker run -d --rm -v ${PWD}/output:/root/output -v ${PWD}/${image}:/root/${image} --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
 done
 
 trap ctrl_c SIGINT SIGTERM
