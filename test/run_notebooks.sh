@@ -12,7 +12,7 @@ images=(harmony harmony-regression sds hga)
 # launch all the docker containers and store their process IDs
 for image in ${images[@]}; do
   echo -e "Test suite ${image} starting"
-  PIDS+=(${image},$(docker run -d --rm -v ${PWD}/output:/root/output -v ${PWD}/${image}:/root/${image} --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+  PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output -v ${PWD}/${image}:/root/${image} --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
 done
 
 trap ctrl_c SIGINT SIGTERM
@@ -45,6 +45,7 @@ for name_comma_pid in ${PIDS[@]}; do
   else
     echo -e "${GREEN}Test suite ${name} succeeded${NC}"
   fi
+  docker rm ${pid} >/dev/null
 done
 
 if [[ ${exit_code} -ne 0 ]]; then
