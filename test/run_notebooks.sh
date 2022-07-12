@@ -7,7 +7,7 @@ NC='\033[0m' # No Color
 echo "Running regression tests"
 
 # Add Docker images created in Makefile here
-images=(harmony asf-gdal harmony-regression sds)
+images=(harmony harmony-regression sds hga)
 
 # launch all the docker containers and store their process IDs
 for image in ${images[@]}; do
@@ -45,6 +45,7 @@ for name_comma_pid in ${PIDS[@]}; do
   else
     echo -e "${GREEN}Test suite ${name} succeeded${NC}"
   fi
+  docker rm ${pid} >/dev/null
 done
 
 if [[ ${exit_code} -ne 0 ]]; then
