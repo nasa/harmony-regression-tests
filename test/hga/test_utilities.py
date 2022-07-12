@@ -2,7 +2,7 @@ from os import makedirs
 from shutil import rmtree
 from typing import Dict
 
-from harmony import Client, Request
+from harmony import Client, Environment, Request
 from imghdr import what as what_file_type
 from netCDF4 import Dataset as NetCDF4Dataset
 from osgeo.gdal import Info as GdalInfo, Open as GdalOpen
@@ -10,6 +10,20 @@ from osgeo.osr import SpatialReference
 from numpy import array_equal
 from numpy.testing import assert_almost_equal
 from pyproj import Transformer
+
+
+def get_test_granule_id(environment: Environment, production_granule_id: str,
+                        non_prod_granule_id: str) -> str:
+    """ Select either the production or non-production granule concept ID
+        based on the environment against which the tests are being run.
+
+    """
+    if environment == Environment.PROD:
+        granule_id = production_granule_id
+    else:
+        granule_id = non_prod_granule_id
+
+    return granule_id
 
 
 def make_request_and_download_result(harmony_client: Client, request: Request,
