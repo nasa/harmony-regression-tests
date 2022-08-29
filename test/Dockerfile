@@ -20,4 +20,4 @@ RUN conda create --name papermill --file ./${sub_dir}/conda-linux-64.lock -q -y
 # (harmony-py is available from PyPI, not conda)
 RUN conda install --name papermill -y -q pip; conda run --name papermill pip install -q harmony-py
 
-ENTRYPOINT export PATH=/opt/conda/envs/papermill/bin:$PATH; mkdir /root/output/${env_sub_dir}; papermill --stdout-file /root/output/test.log --cwd ${env_sub_dir} ${env_sub_dir}/${env_notebook} /root/output/${env_sub_dir}/Results.ipynb -p harmony_host_url $harmony_host_url
+ENTRYPOINT export PATH=/opt/conda/envs/papermill/bin:$PATH; mkdir /root/output/${env_sub_dir}; papermill --stdout-file /root/output/${env_sub_dir}/test.log --cwd ${env_sub_dir} ${env_sub_dir}/${env_notebook} /root/output/${env_sub_dir}/Results.ipynb -p harmony_host_url $harmony_host_url
