@@ -128,7 +128,7 @@ the `environment.yaml` file).
 
 To build the lockfile install `conda-lock` by following the directions provided on its website. Then generate the lockfile for your notebook by running the following:
 ```
-conda-lock -f environment.yaml -p linux-64
+conda-lock -f environment.yaml --kind explicit --platform linux-64
 ```
 
 Test notebooks should not rely on other forms of dependency management or expect user input.
