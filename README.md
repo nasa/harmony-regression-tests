@@ -126,9 +126,12 @@ by conda to more efficiently load dependencies. The Docker build expects a lockf
 named `conda-linux-64.lock` to exist at the top level of a notebook directory (next to
 the `environment.yaml` file).
 
-To build the lockfile install `conda-lock` by following the directions provided on its website. Then generate the lockfile for your notebook by running the following:
+To build the lockfile install `conda-lock` by following the directions provided
+on its website. Then generate the lockfile for your notebook by running the
+following in a miniconda3 container:
+
 ```
-conda-lock -f environment.yaml -p linux-64
+conda-lock -f environment.yaml --kind explicit --platform linux-64
 ```
 
 Test notebooks should not rely on other forms of dependency management or expect user input.
