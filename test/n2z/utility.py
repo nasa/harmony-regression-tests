@@ -3,7 +3,6 @@
 import boto3
 from filecmp import dircmp
 import os
-from tempfile import TemporaryDirectory
 from typing import List
 
 
@@ -66,16 +65,13 @@ def download_zarr_store(zarr_s3_url: str,
 
 
 def assert_zarr_store_matches_reference_data(
-        zarr_store: str,
+        download_store: str,
         reference_store: str,
-        endpoint_url: str = None
 ) -> None:
-    """Download zarr store and compare against the reference store."""
-
-    with TemporaryDirectory() as tmp_dirname:
-        download_zarr_store(zarr_store, tmp_dirname, endpoint_url)
-        comparison = dircmp(tmp_dirname, reference_store)
-        if len(comparison.diff_files) == 0:
-            print_success('Zarr store matches reference')
-        else:
-            raise Exception('Zarr store does not match reference store')
+    """Compare downloaded store to reference store."""
+    comparison = dircmp(download_store, reference_store)
+    if len(comparison.diff_files) == 0:
+        print_success('Zarr store matches reference')
+    else:
+        print(f'Bad files: {comparison.diff_files}')
+        raise Exception('Zarr store does not match reference store')
