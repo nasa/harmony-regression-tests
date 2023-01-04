@@ -62,16 +62,3 @@ def download_zarr_store(zarr_s3_url: str,
         if not os.path.exists(os.path.dirname(full_local_filename)):
             os.makedirs(os.path.dirname(full_local_filename))
         s3.download_file(bucket_name, object_name, full_local_filename)
-
-
-def assert_zarr_store_matches_reference_data(
-        download_store: str,
-        reference_store: str,
-) -> None:
-    """Compare downloaded store to reference store."""
-    comparison = dircmp(download_store, reference_store)
-    if len(comparison.diff_files) == 0:
-        print_success('Zarr store matches reference')
-    else:
-        print(f'Bad files: {comparison.diff_files}')
-        raise Exception('Zarr store does not match reference store')

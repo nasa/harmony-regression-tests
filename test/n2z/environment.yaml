@@ -6,3 +6,4 @@ dependencies:
   - python=3.9
   - jupyter
   - papermill
+  - xarray >= 2022.12.0
