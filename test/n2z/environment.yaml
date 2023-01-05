@@ -4,6 +4,12 @@ channels:
   - defaults
 dependencies:
   - python=3.9
+  - boto3
   - jupyter
   - papermill
-  - xarray >= 2022.12.0
+  - xarray == 2022.9.0
+  - numpy
+  - pandas == 1.3.0
+  - packaging
+  - zarr
+  - cftime

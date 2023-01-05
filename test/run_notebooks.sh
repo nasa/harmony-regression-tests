@@ -11,8 +11,14 @@ images=(harmony harmony-regression sds hga n2z)
 
 # launch all the docker containers and store their process IDs
 for image in ${images[@]}; do
-  echo -e "Test suite ${image} starting"
-  PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output -v ${PWD}/${image}:/root/${image} --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+    echo -e "Test suite ${image} starting"
+
+    # insert AWS Credential variables for n2z only
+    if [[ $image == "n2z" ]]; then
+	PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output -v ${PWD}/${image}:/root/${image} --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" --env AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+    else
+	PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output -v ${PWD}/${image}:/root/${image} --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+    fi
 done
 
 trap ctrl_c SIGINT SIGTERM
