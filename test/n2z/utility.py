@@ -13,8 +13,8 @@ def print_success(success_string: str) -> str:
 
 def get_zarr_stores(results: dict) -> List[dict]:
     """Return all results items that are type "application/x-zarr"."""
-    return [link for
-            link in results.get('links')
+    return [link
+            for link in results.get('links')
             if link.get('type') == 'application/x-zarr']
 
 
