@@ -1,0 +1,10 @@
+{
+    "DimensionNames": "lon,lonv",
+    "Units": "degrees_east",
+    "_ARRAY_DIMENSIONS": [
+        "lon",
+        "lonv"
+    ],
+    "coordinates": "lon lonv",
+    "units": "degrees_east"
+}
