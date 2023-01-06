@@ -1,0 +1,12 @@
+{
+    "DimensionNames": "lat",
+    "LongName": "Latitude at the center of\n\t\t\t0.10 degree grid intervals of latitude\n\t\t\tfrom -90 to 90.",
+    "Units": "degrees_north",
+    "_ARRAY_DIMENSIONS": [
+        "lat"
+    ],
+    "axis": "Y",
+    "bounds": "lat_bnds",
+    "standard_name": "latitude",
+    "units": "degrees_north"
+}

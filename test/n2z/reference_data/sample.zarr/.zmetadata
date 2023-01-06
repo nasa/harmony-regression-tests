@@ -1,0 +1,575 @@
+{
+    "metadata": {
+        ".zattrs": {
+            "FileHeader": "DOI=10.5067/GPM/IMERG/3B-HH/06;\nDOIauthority=http://dx.doi.org/;\nDOIshortName=3IMERGHH;\nAlgorithmID=3IMERGHH;\nAlgorithmVersion=3IMERGH_6.3;\nFileName=3B-HHR.MS.MRG.3IMERG.20200101-S000000-E002959.0000.V06B.HDF5;\nSatelliteName=MULTI;\nInstrumentName=MERGED;\nGenerationDateTime=2020-05-04T06:20:10.000Z;\nStartGranuleDateTime=2020-01-01T00:00:00.000Z;\nStopGranuleDateTime=2020-01-01T00:29:59.999Z;\nGranuleNumber=;\nNumberOfSwaths=0;\nNumberOfGrids=1;\nGranuleStart=;\nTimeInterval=HALF_HOUR;\nProcessingSystem=PPS;\nProductVersion=V06B;\nEmptyGranule=NOT_EMPTY;\nMissingData=;\n",
+            "FileInfo": "DataFormatVersion=6a;\nTKCodeBuildVersion=0;\nMetadataVersion=6a;\nFormatPackage=HDF5-1.8.9;\nBlueprintFilename=GPM.V6.3IMERGHH.blueprint.xml;\nBlueprintVersion=BV_62;\nTKIOVersion=3.93;\nMetadataStyle=PVL;\nEndianType=LITTLE_ENDIAN;\n"
+        },
+        ".zgroup": {
+            "zarr_format": 2
+        },
+        "Grid/.zattrs": {
+            "GridHeader": "BinMethod=ARITHMETIC_MEAN;\nRegistration=CENTER;\nLatitudeResolution=0.1;\nLongitudeResolution=0.1;\nNorthBoundingCoordinate=90;\nSouthBoundingCoordinate=-90;\nEastBoundingCoordinate=180;\nWestBoundingCoordinate=-180;\nOrigin=SOUTHWEST;\n"
+        },
+        "Grid/.zgroup": {
+            "zarr_format": 2
+        },
+        "Grid/HQobservationTime/.zarray": {
+            "chunks": [
+                1,
+                3600,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i2",
+            "fill_value": -9999,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/HQobservationTime/.zattrs": {
+            "CodeMissingValue": "-9999",
+            "DimensionNames": "time,lon,lat",
+            "Units": "minutes",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999,
+            "coordinates": "time lon lat",
+            "units": "minutes"
+        },
+        "Grid/HQprecipSource/.zarray": {
+            "chunks": [
+                1,
+                3600,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i2",
+            "fill_value": -9999,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/HQprecipSource/.zattrs": {
+            "CodeMissingValue": "-9999",
+            "DimensionNames": "time,lon,lat",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999,
+            "coordinates": "time lon lat"
+        },
+        "Grid/HQprecipitation/.zarray": {
+            "chunks": [
+                1,
+                2184,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": -9999.900390625,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/HQprecipitation/.zattrs": {
+            "CodeMissingValue": "-9999.9",
+            "DimensionNames": "time,lon,lat",
+            "Units": "mm/hr",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999.900390625,
+            "coordinates": "time lon lat",
+            "units": "mm/hr"
+        },
+        "Grid/IRkalmanFilterWeight/.zarray": {
+            "chunks": [
+                1,
+                3600,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i2",
+            "fill_value": -9999,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/IRkalmanFilterWeight/.zattrs": {
+            "CodeMissingValue": "-9999",
+            "DimensionNames": "time,lon,lat",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999,
+            "coordinates": "time lon lat"
+        },
+        "Grid/IRprecipitation/.zarray": {
+            "chunks": [
+                1,
+                2184,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": -9999.900390625,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/IRprecipitation/.zattrs": {
+            "CodeMissingValue": "-9999.9",
+            "DimensionNames": "time,lon,lat",
+            "Units": "mm/hr",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999.900390625,
+            "coordinates": "time lon lat",
+            "units": "mm/hr"
+        },
+        "Grid/lat/.zarray": {
+            "chunks": [
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": 0.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/lat/.zattrs": {
+            "DimensionNames": "lat",
+            "LongName": "Latitude at the center of\n\t\t\t0.10 degree grid intervals of latitude\n\t\t\tfrom -90 to 90.",
+            "Units": "degrees_north",
+            "_ARRAY_DIMENSIONS": [
+                "lat"
+            ],
+            "axis": "Y",
+            "bounds": "lat_bnds",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "Grid/lat_bnds/.zarray": {
+            "chunks": [
+                1800,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": 0.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1800,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "Grid/lat_bnds/.zattrs": {
+            "DimensionNames": "lat,latv",
+            "Units": "degrees_north",
+            "_ARRAY_DIMENSIONS": [
+                "lat",
+                "latv"
+            ],
+            "coordinates": "lat latv",
+            "units": "degrees_north"
+        },
+        "Grid/lon/.zarray": {
+            "chunks": [
+                3600
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": 0.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                3600
+            ],
+            "zarr_format": 2
+        },
+        "Grid/lon/.zattrs": {
+            "DimensionNames": "lon",
+            "LongName": "Longitude at the center of\n\t\t\t0.10 degree grid intervals of longitude \n\t\t\tfrom -180 to 180.",
+            "Units": "degrees_east",
+            "_ARRAY_DIMENSIONS": [
+                "lon"
+            ],
+            "axis": "X",
+            "bounds": "lon_bnds",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "Grid/lon_bnds/.zarray": {
+            "chunks": [
+                3600,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": 0.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                3600,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "Grid/lon_bnds/.zattrs": {
+            "DimensionNames": "lon,lonv",
+            "Units": "degrees_east",
+            "_ARRAY_DIMENSIONS": [
+                "lon",
+                "lonv"
+            ],
+            "coordinates": "lon lonv",
+            "units": "degrees_east"
+        },
+        "Grid/precipitationCal/.zarray": {
+            "chunks": [
+                1,
+                2184,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": -9999.900390625,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/precipitationCal/.zattrs": {
+            "CodeMissingValue": "-9999.9",
+            "DimensionNames": "time,lon,lat",
+            "Units": "mm/hr",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999.900390625,
+            "coordinates": "time lon lat",
+            "units": "mm/hr"
+        },
+        "Grid/precipitationQualityIndex/.zarray": {
+            "chunks": [
+                1,
+                2184,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": -9999.900390625,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/precipitationQualityIndex/.zattrs": {
+            "CodeMissingValue": "-9999.9",
+            "DimensionNames": "time,lon,lat",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999.900390625,
+            "coordinates": "time lon lat"
+        },
+        "Grid/precipitationUncal/.zarray": {
+            "chunks": [
+                1,
+                2184,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": -9999.900390625,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/precipitationUncal/.zattrs": {
+            "CodeMissingValue": "-9999.9",
+            "DimensionNames": "time,lon,lat",
+            "Units": "mm/hr",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999.900390625,
+            "coordinates": "time lon lat",
+            "units": "mm/hr"
+        },
+        "Grid/probabilityLiquidPrecipitation/.zarray": {
+            "chunks": [
+                1,
+                3600,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i2",
+            "fill_value": -9999,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/probabilityLiquidPrecipitation/.zattrs": {
+            "CodeMissingValue": "-9999",
+            "DimensionNames": "time,lon,lat",
+            "Units": "percent",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999,
+            "coordinates": "time lon lat",
+            "units": "percent"
+        },
+        "Grid/randomError/.zarray": {
+            "chunks": [
+                1,
+                2184,
+                1800
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": -9999.900390625,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3600,
+                1800
+            ],
+            "zarr_format": 2
+        },
+        "Grid/randomError/.zattrs": {
+            "CodeMissingValue": "-9999.9",
+            "DimensionNames": "time,lon,lat",
+            "Units": "mm/hr",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "lon",
+                "lat"
+            ],
+            "_FillValue": -9999.900390625,
+            "coordinates": "time lon lat",
+            "units": "mm/hr"
+        },
+        "Grid/time/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i4",
+            "fill_value": 0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2
+            ],
+            "zarr_format": 2
+        },
+        "Grid/time/.zattrs": {
+            "DimensionNames": "time",
+            "LongName": "Representative time of data in \n\t\t\tseconds since 1970-01-01 00:00:00 UTC.",
+            "Units": "seconds since 1970-01-01 00:00:00 UTC",
+            "_ARRAY_DIMENSIONS": [
+                "time"
+            ],
+            "axis": "T",
+            "bounds": "time_bnds",
+            "calendar": "julian",
+            "standard_name": "time",
+            "units": "seconds since 1970-01-01 00:00:00 UTC"
+        },
+        "Grid/time_bnds/.zarray": {
+            "chunks": [
+                1,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i4",
+            "fill_value": 0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "Grid/time_bnds/.zattrs": {
+            "DimensionNames": "time,nv",
+            "Units": "seconds since 1970-01-01 00:00:00 UTC",
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "nv"
+            ],
+            "coordinates": "time nv",
+            "units": "seconds since 1970-01-01 00:00:00 UTC"
+        }
+    },
+    "zarr_consolidated_format": 1
+}
