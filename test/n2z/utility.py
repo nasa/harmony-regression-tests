@@ -1,7 +1,6 @@
 """Simple utility functions used in the NetCDF-to-Zarr test notebook."""
 
 import boto3
-from filecmp import dircmp
 import os
 from typing import List
 
@@ -14,7 +13,7 @@ def print_success(success_string: str) -> str:
 def get_zarr_stores(results: dict) -> List[dict]:
     """Return all results items that are type "application/x-zarr"."""
     return [link
-            for link in results.get('links')
+            for link in results.get('links', [])
             if link.get('type') == 'application/x-zarr']
 
 
