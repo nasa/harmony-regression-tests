@@ -13,4 +13,7 @@ n2z-image: Dockerfile sds/environment.yaml
 sds-image: Dockerfile sds/environment.yaml
 	docker build -t harmony/regression-tests-sds:latest -f ./Dockerfile --build-arg notebook=SDS_Regression.ipynb --build-arg sub_dir=sds .
 
-images: harmony-image harmony-regression-image hga-image n2z-image sds-image
+swath-projector-image: Dockerfile swath-projector/environment.yaml
+	docker build -t harmony/regression-tests-swath-projector:latest -f ./Dockerfile --build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
+
+images: harmony-image harmony-regression-image hga-image n2z-image sds-image swath-projector
