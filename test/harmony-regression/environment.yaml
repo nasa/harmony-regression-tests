@@ -4,17 +4,17 @@ channels:
   - defaults
 dependencies:
   - python=3.9
-  - jupyter
-  - papermill
-  - requests >= 2.23.0
-  - CacheControl >= 0.12.6
-  - matplotlib >= 3.2.1
-  - Pillow >= 7.1.1
-  - h5py >= 2.10.0
-  - numpy >= 1.18.2
-  - geopandas >= 0.7.0
-  - descartes >= 1.1.0
-  - contextily >= 1.0.0
-  - sat-stac >= 0.4.0
-  - xarray >= 0.16.2
-  - intake-stac
+  - jupyter == 1.0.0
+  - papermill == 2.3.4
+  - requests == 2.28.1
+  - CacheControl == 0.12.11
+  - matplotlib == 3.6.2
+  - Pillow == 9.4.0
+  - h5py == 3.7.0
+  - numpy == 1.24.1
+  - geopandas == 0.12.2
+  - descartes == 1.1.0
+  - contextily == 1.2.0
+  - sat-stac == 0.4.1
+  - xarray == 2022.12.0
+  - intake-stac == 0.3.0
