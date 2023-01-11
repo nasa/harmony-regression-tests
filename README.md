@@ -22,7 +22,7 @@ Example `test/.netrc` that can log into both environments:
     machine urs.earthdata.nasa.gov login SOME_USER password SOME_PASSWORD
     machine uat.urs.earthdata.nasa.gov login SOME_UAT_USER password SOME_UAT_PASSWORD
 
-This file will be copied to into the docker images and used when running the
+This `.netrc` file will be copied to into the docker images and used when running the
 notebooks. The `.gitignore` file will prevent this from being committed to the
 git project, but we recommend providing a user account with minimal privileges
 for test purposes.
@@ -128,7 +128,7 @@ the `environment.yaml` file).
 
 To build the lockfile install `conda-lock` by following the directions provided
 on its website. Then generate the lockfile for your notebook by running the
-following in a miniconda3 container:
+following in a `miniconda3` container:
 
 ```
 conda-lock -f environment.yaml --kind explicit --platform linux-64
