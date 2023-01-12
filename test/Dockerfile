@@ -14,7 +14,8 @@ WORKDIR /root
 RUN conda config --add channels conda-forge
 RUN conda install conda-lock -q -y
 
-COPY .netrc .netrc
+#COPY .netrc .netrc
+COPY build-netrc.sh notebook-entrypoint.sh .
 RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/conda-linux-64.lock ./${sub_dir}
 
