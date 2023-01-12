@@ -19,4 +19,7 @@ swath-projector-image: Dockerfile swath-projector/environment.yaml
 trajectory-subsetter-image: Dockerfile trajectory-subsetter/environment.yaml
 	docker build -t harmony/regression-tests-trajectory-subsetter:latest -f ./Dockerfile --build-arg notebook=TrajectorySubsetter_Regression.ipynb --build-arg sub_dir=trajectory-subsetter .
 
-images: harmony-image harmony-regression-image hga-image n2z-image sds-image swath-projector trajectory-subsetter-image
+variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
+	docker build -t harmony/regression-tests-variable-subsetter:latest -f ./Dockerfile --build-arg notebook=VariableSubsetter_Regression.ipynb --build-arg sub_dir=variable-subsetter .
+
+images: harmony-image harmony-regression-image hga-image n2z-image sds-image swath-projector trajectory-subsetter-image variable-subsetter-image
