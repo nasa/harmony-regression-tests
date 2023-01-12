@@ -6,10 +6,12 @@ dependencies:
   - python=3.9
   - jupyter
   - papermill
-  - requests >= 2.23.0
-  - matplotlib >= 3.2.1
-  - numpy >= 1.18.2
-  - netCDF4 >= 1.5.7
-  - h5py >= 3.3.0
-  - cartopy >= 0.20.2
-  - xarray >= 2022.6.0
+  - requests
+  - matplotlib
+  - numpy
+  - netCDF4
+  - h5py
+  - cartopy
+  - xarray
+  - pip:
+    - harmony-py
