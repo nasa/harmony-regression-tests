@@ -12,14 +12,12 @@ on:
         type: string
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout regression test repository
+        uses: actions/checkout@v3
 
-  steps:
-    - name: Checkout regression test repository
-      uses: actions/checkout@v3
-
-    - name: Build Image
-      run: |
-        make ${{inputs.image-short-name}}-image
+      - name: Build Image
+        run: |
+          make ${{inputs.image-short-name}}-image
