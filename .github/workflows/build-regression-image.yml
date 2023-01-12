@@ -1,0 +1,23 @@
+#  This workflow builds a new docker image for a regression tests The image
+#  will be built from the input variables and pushed to ghcr.io if the path to
+#  this image's version file has changed
+
+name: Build and publish an image
+
+on:
+  workflow_call:
+    inputs:
+      image-short-name:
+        required: true
+        type: string
+
+jobs:
+  runs-on: ubuntu-latest
+
+  build:
+    - name: Checkout regression test repository
+      uses: actions/checkout@v3
+
+    - name: Build Image
+      run: |
+        make ${{inputs.image-short-name}}-image
