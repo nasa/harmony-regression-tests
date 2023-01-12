@@ -7,7 +7,7 @@ harmony-regression-image: Dockerfile harmony-regression/environment.yaml
 hga-image: Dockerfile hga/environment.yaml
 	docker build -t harmony/regression-tests-hga:latest -f ./Dockerfile --build-arg notebook=HGA_Regression.ipynb --build-arg sub_dir=hga .
 
-n2z-image: Dockerfile sds/environment.yaml
+n2z-image: Dockerfile n2z/environment.yaml
 	docker build -t harmony/regression-tests-n2z:latest -f ./Dockerfile --build-arg notebook=N2Z_Regression.ipynb --build-arg sub_dir=n2z .
 
 sds-image: Dockerfile sds/environment.yaml
@@ -16,4 +16,7 @@ sds-image: Dockerfile sds/environment.yaml
 swath-projector-image: Dockerfile swath-projector/environment.yaml
 	docker build -t harmony/regression-tests-swath-projector:latest -f ./Dockerfile --build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
 
-images: harmony-image harmony-regression-image hga-image n2z-image sds-image swath-projector
+trajectory-subsetter-image: Dockerfile trajectory-subsetter/environment.yaml
+	docker build -t harmony/regression-tests-trajectory-subsetter:latest -f ./Dockerfile --build-arg notebook=TrajectorySubsetter_Regression.ipynb --build-arg sub_dir=trajectory-subsetter .
+
+images: harmony-image harmony-regression-image hga-image n2z-image sds-image swath-projector trajectory-subsetter-image
