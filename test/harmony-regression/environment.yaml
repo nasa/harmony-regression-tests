@@ -18,3 +18,5 @@ dependencies:
   - sat-stac == 0.4.1
   - xarray == 2022.12.0
   - intake-stac == 0.3.0
+  - pip:
+    - harmony-py
