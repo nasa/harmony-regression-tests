@@ -6,8 +6,11 @@ NC='\033[0m' # No Color
 
 echo "Running regression tests"
 
-# Add Docker images created in Makefile here
-images=(harmony harmony-regression sds hga n2z)
+# Specify the test images to run, by default all built by the Makefile. If
+# the script is invoked with a list of images, only run those.
+all_images=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter)
+specified_images=("$@")
+images=("${specified_images[@]:-${all_images[@]}}")
 
 # launch all the docker containers and store their process IDs
 for image in "${images[@]}"; do
