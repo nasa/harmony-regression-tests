@@ -10,3 +10,5 @@ dependencies:
   - numpy
   - gdal=3.4.2
   - netCDF4
+  - pip:
+    - harmony-py
