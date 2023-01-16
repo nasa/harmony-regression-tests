@@ -13,3 +13,5 @@ dependencies:
   - packaging
   - zarr
   - cftime
+  - pip:
+    - harmony-py

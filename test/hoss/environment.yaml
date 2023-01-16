@@ -1,0 +1,14 @@
+name: papermill
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - jupyter=1.0.0
+  - papermill=2.3.4
+  - python-dateutil=2.7.5
+  - numpy=1.24.1
+  - netCDF4=1.6.2
+  - xarray=2022.12.0
+  - pip:
+    - harmony-py
