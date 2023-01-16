@@ -11,3 +11,5 @@ dependencies:
   - papermill==2.3.4
   - pytest==7.2.0
   - ipytest==0.12.0
+  - pip:
+    - harmony-py
