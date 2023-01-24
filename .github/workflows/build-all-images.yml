@@ -11,14 +11,22 @@ jobs:
     strategy:
       matrix:
         targets:
-          - {image: "harmony", notebook: "Harmony.ipynb"},
-          - {image: "harmony-regression", notebook: "HarmonyRegression.ipynb"}
-          - {image: "hga", notebook: "HGA_Regression.ipynb"}
-          - {image: "hoss", notebook: "HOSS_Regression.ipynb"}
-          - {image: "n2z", notebook: "N2Z_Regression.ipynb"}
-          - {image: "swath-projector", notebook: "SwathProjector_Regression.ipynb"}
-          - {image: "trajectory-subsetter", notebook: "TrajectorySubsetter_Regression.ipynb"}
-          - {image: "variable-subsetter", notebook: "VariableSubsetter_Regression.ipynb"}
+          - image: "harmony"
+            notebook: "Harmony.ipynb"
+          - image: "harmony-regression"
+            notebook: "HarmonyRegression.ipynb"
+          - image: "hga"
+            notebook: "HGA_Regression.ipynb"
+          - image: "hoss"
+            notebook: "HOSS_Regression.ipynb"
+          - image: "n2z"
+            notebook: "N2Z_Regression.ipynb"
+          - image: "swath-projector"
+            notebook: "SwathProjector_Regression.ipynb"
+          - image: "trajectory-subsetter"
+            notebook: "TrajectorySubsetter_Regression.ipynb"
+          - image: "variable-subsetter"
+            notebook: "VariableSubsetter_Regression.ipynb"
 
     uses: ./.github/workflows/build-target-image.yml
     with:
