@@ -62,8 +62,9 @@ jobs:
         with:
           context: .
           build-args:
-            - notebook: ${{inputs.notebook-name}}
-            - subdir: ${{inputs.image-short-name}}
+            -
+              notebook: ${{inputs.notebook-name}}
+              subdir: ${{inputs.image-short-name}}
           file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
