@@ -62,7 +62,7 @@ jobs:
           build-args: |
               notebook=${{inputs.notebook-name}}
               subdir=${{inputs.image-short-name}}
-          file: test/Dockerfile
+          file: ./test/Dockerfile
           context: ./test
           push: true
           tags: ${{ steps.meta.outputs.tags }}
