@@ -66,7 +66,7 @@ jobs:
         with:
           build-args: |
               notebook=${{inputs.notebook-name}}
-              subdir=${{inputs.image-short-name}}
+              sub_dir=${{inputs.image-short-name}}
           file: ./test/Dockerfile
           context: ./test
           push: true
