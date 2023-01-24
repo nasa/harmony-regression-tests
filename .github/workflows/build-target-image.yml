@@ -10,6 +10,9 @@ on:
       image-short-name:
         required: true
         type: string
+      notebook-name:
+        require: true
+        type: string
 
 env:
   REGISTRY: ghcr.io
@@ -28,12 +31,7 @@ jobs:
           filters: |
             src:
               - ./test/${{inputs.image-short-name}}/version.txt
-
-      - name: Build image
-        working-directory: ./test
-        if: steps.changes.outputs.src == 'true'
-        run: |
-          make ${{inputs.image-short-name}}-image
+              - ./test/Dockerfile
 
       - name: Extract semantic version number
         if: steps.changes.outputs.src == 'true'
@@ -57,11 +55,15 @@ jobs:
           tags: |
             type=semver,pattern={{version}},value=${{ env.semantic_version }}
 
-      - name: Push Docker image
-        if: steps.changes.outputs.src == 'true'
+      - name: Build and Push Docker image
         uses: docker/build-push-action@v3
+        if: steps.changes.outputs.src == 'true'
+        working-directory: ./test
         with:
           context: .
+          build-args:
+            - notebook=${{inputs.notebook-name}}
+            - subdir=${{inputs.image-short-name}}
           file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
