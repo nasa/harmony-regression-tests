@@ -11,7 +11,7 @@ on:
         required: true
         type: string
       notebook-name:
-        require: true
+        required: true
         type: string
 
 env:
