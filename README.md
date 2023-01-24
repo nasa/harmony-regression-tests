@@ -181,8 +181,9 @@ the test suite) should be added (see the `harmony-image` example), and the new i
 should be added as a dependency of the `images` target. The docker image should have a name like
 `harmony/regression-tests-<base_name>`, where `base_name` is the name of the test suite.
 
-To build the test images on github, add the `base_name` to the list of images
-in the `.github/workflows/build-all-images.yml` file.
+To build the test images on github, add a new matrix target that includes the
+image base name and notbook name to the list of targets in the
+`.github/workflows/build-all-images.yml` file.
 
 Finally, add the image base name to the `images` array on line 6 of the `run_notebooks.sh` file.
 For instance, if the image is named `harmony/regression-tests-foo`, then we would add `foo` to the
