@@ -58,9 +58,8 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v3
         if: steps.changes.outputs.src == 'true'
-        working-directory: ./test
         with:
-          context: .
+          context: ./test
           build-args:
             -
               notebook: ${{inputs.notebook-name}}
