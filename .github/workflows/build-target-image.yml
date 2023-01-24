@@ -55,6 +55,9 @@ jobs:
           tags: |
             type=semver,pattern={{version}},value=${{ env.semantic_version }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Build and Push Docker image
         uses: docker/build-push-action@v3
         if: steps.changes.outputs.src == 'true'
