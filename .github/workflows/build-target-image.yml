@@ -61,7 +61,6 @@ jobs:
         with:
           context: ./test
           build-args:
-            -
               notebook: ${{inputs.notebook-name}}
               subdir: ${{inputs.image-short-name}}
           file: Dockerfile
