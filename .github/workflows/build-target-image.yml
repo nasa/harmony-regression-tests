@@ -58,13 +58,12 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v3
         if: steps.changes.outputs.src == 'true'
-        working-directory: ./test
         with:
-          context: .
           build-args: |
               notebook=${{inputs.notebook-name}}
               subdir=${{inputs.image-short-name}}
-          file: Dockerfile
+          file: ./test/Dockerfile
+          context: ./test
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
