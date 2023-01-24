@@ -13,7 +13,6 @@ WORKDIR /root
 
 RUN conda install --channel=conda-forge --name=base conda-lock -q -y
 
-#COPY .netrc .netrc
 COPY build-netrc.sh notebook-entrypoint.sh ./
 RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/conda-lock.yml ./${sub_dir}
