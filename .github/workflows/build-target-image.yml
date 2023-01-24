@@ -32,6 +32,8 @@ jobs:
             src:
               - ./test/${{inputs.image-short-name}}/version.txt
               - ./test/Dockerfile
+              - ./.github/build-all-images.yml
+              - ./.github/build-target-image.yml
 
       - name: Extract semantic version number
         if: steps.changes.outputs.src == 'true'
