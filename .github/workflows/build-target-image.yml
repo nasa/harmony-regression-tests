@@ -60,9 +60,9 @@ jobs:
         if: steps.changes.outputs.src == 'true'
         with:
           context: ./test
-          build-args:
-              notebook: ${{inputs.notebook-name}}
-              subdir: ${{inputs.image-short-name}}
+          build-args: |
+              notebook=${{inputs.notebook-name}}
+              subdir=${{inputs.image-short-name}}
           file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
