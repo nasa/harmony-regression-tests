@@ -1,0 +1,72 @@
+#  This workflow builds a specific regression test docker image.  Using the
+#  input image short name from the workflow call, when the target image's
+#  version.txt is changed, the image is rebuilt and pushed to ghcr.io
+
+name: Build and Publish a target Image
+
+on:
+  workflow_call:
+    inputs:
+      image-short-name:
+        required: true
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout regression test repository
+        uses: actions/checkout@v3
+
+      - name: Did this image's version change?
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            src:
+              - ./test/${{inputs.image-short-name}}/version.txt
+
+      - name: Build image
+        working-directory: ./test
+        if: steps.changes.outputs.src == 'true'
+        run: |
+          make ${{inputs.image-short-name}}-image
+
+      - name: Extract semantic version number
+        if: steps.changes.outputs.src == 'true'
+        working-directory: ./test/${{inputs.image-short-name}}
+        run: echo "semantic_version=$(cat version.txt)" >> $GITHUB_ENV
+
+      - name: Log-in to ghcr.io registry
+        if: steps.changes.outputs.src == 'true'
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add tags to the Docker image
+        if: steps.changes.outputs.src == 'true'
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: "${{ env.REGISTRY }}/${{github.repository_owner}}/regression-tests-${{ inputs.image-short-name }}"
+          tags: |
+            type=semver,pattern={{version}},value=${{ env.semantic_version }}
+
+      - name: Push Docker image
+        if: steps.changes.outputs.src == 'true'
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Do nothing for this image
+        if: steps.changes.outputs.src == 'false'
+        run: echo "No changes required for this image ${{inputs.image-short-name}}"

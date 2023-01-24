@@ -1,0 +1,16 @@
+# This is a top level workflow that will use a matrix to build all images.
+
+name: Build and Publish All Images
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-images:
+    strategy:
+      matrix:
+        images: ["harmony", "harmony-regression", "hoss", "hga", "n2z", "swath-projector", "trajectory-subsetter", "variable-subsetter"]
+    uses: ./.github/workflows/build-target-image.yml
+    with:
+      image-short-name: ${{ matrix.images }}
