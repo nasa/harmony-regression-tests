@@ -84,6 +84,8 @@ docker run --rm \
   -v $(pwd):/tmp \
   -e EDL_USER \
   -e EDL_PASSWORD \
+  -e AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY \
   harmony/regression-tests \
   './script/deploy-from-docker.sh'
 
