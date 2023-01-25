@@ -22,7 +22,11 @@ for image in "${images[@]}"; do
     else
 	creds=""
     fi
-    PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output -v ${PWD}/${image}:/root/${image} ${creds} --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+    PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output \
+		     -v ${PWD}/${image}:/root/${image} \
+		      ${creds} \
+		      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
+		      --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
 done
 
 trap ctrl_c SIGINT SIGTERM
