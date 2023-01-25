@@ -22,4 +22,4 @@ trajectory-subsetter-image: Dockerfile trajectory-subsetter/environment.yaml
 variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
 	docker build -t harmony/regression-tests-variable-subsetter:latest -f ./Dockerfile --build-arg notebook=VariableSubsetter_Regression.ipynb --build-arg sub_dir=variable-subsetter .
 
-images: harmony-image harmony-regression-image hga-image hoss-image n2z-image swath-projector trajectory-subsetter-image variable-subsetter-image
+images: harmony-image harmony-regression-image hga-image hoss-image n2z-image swath-projector-image trajectory-subsetter-image variable-subsetter-image
