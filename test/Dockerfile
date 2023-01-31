@@ -17,5 +17,4 @@ RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/conda-lock.yml ./${sub_dir}
 RUN conda-lock install -n papermill ./${sub_dir}/conda-lock.yml
 
-
 ENTRYPOINT /bin/bash ./notebook-entrypoint.sh
