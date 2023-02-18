@@ -1,7 +1,7 @@
 {
     "metadata": {
         ".zattrs": {
-            "FileHeader": "DOI=10.5067/GPM/IMERG/3B-HH/06;\nDOIauthority=http://dx.doi.org/;\nDOIshortName=3IMERGHH;\nAlgorithmID=3IMERGHH;\nAlgorithmVersion=3IMERGH_6.3;\nFileName=3B-HHR.MS.MRG.3IMERG.20200101-S000000-E002959.0000.V06B.HDF5;\nSatelliteName=MULTI;\nInstrumentName=MERGED;\nGenerationDateTime=2020-05-04T06:20:10.000Z;\nStartGranuleDateTime=2020-01-01T00:00:00.000Z;\nStopGranuleDateTime=2020-01-01T00:29:59.999Z;\nGranuleNumber=;\nNumberOfSwaths=0;\nNumberOfGrids=1;\nGranuleStart=;\nTimeInterval=HALF_HOUR;\nProcessingSystem=PPS;\nProductVersion=V06B;\nEmptyGranule=NOT_EMPTY;\nMissingData=;\n",
+            "FileHeader": "DOI=10.5067/GPM/IMERG/3B-HH/06;\nDOIauthority=http://dx.doi.org/;\nDOIshortName=3IMERGHH;\nAlgorithmID=3IMERGHH;\nAlgorithmVersion=3IMERGH_6.3;\nFileName=3B-HHR.MS.MRG.3IMERG.20200101-S003000-E005959.0030.V06B.HDF5;\nSatelliteName=MULTI;\nInstrumentName=MERGED;\nGenerationDateTime=2020-05-04T06:20:22.000Z;\nStartGranuleDateTime=2020-01-01T00:30:00.000Z;\nStopGranuleDateTime=2020-01-01T00:59:59.999Z;\nGranuleNumber=;\nNumberOfSwaths=0;\nNumberOfGrids=1;\nGranuleStart=;\nTimeInterval=HALF_HOUR;\nProcessingSystem=PPS;\nProductVersion=V06B;\nEmptyGranule=NOT_EMPTY;\nMissingData=;\n",
             "FileInfo": "DataFormatVersion=6a;\nTKCodeBuildVersion=0;\nMetadataVersion=6a;\nFormatPackage=HDF5-1.8.9;\nBlueprintFilename=GPM.V6.3IMERGHH.blueprint.xml;\nBlueprintVersion=BV_62;\nTKIOVersion=3.93;\nMetadataStyle=PVL;\nEndianType=LITTLE_ENDIAN;\n"
         },
         ".zgroup": {
@@ -15,9 +15,9 @@
         },
         "Grid/HQobservationTime/.zarray": {
             "chunks": [
-                1,
-                3600,
-                1800
+                2,
+                991,
+                991
             ],
             "compressor": {
                 "blocksize": 0,
@@ -27,7 +27,7 @@
                 "shuffle": 1
             },
             "dtype": "<i2",
-            "fill_value": -9999,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -52,9 +52,9 @@
         },
         "Grid/HQprecipSource/.zarray": {
             "chunks": [
-                1,
-                3600,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -64,7 +64,7 @@
                 "shuffle": 1
             },
             "dtype": "<i2",
-            "fill_value": -9999,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -87,9 +87,9 @@
         },
         "Grid/HQprecipitation/.zarray": {
             "chunks": [
-                1,
-                2184,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -99,7 +99,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": -9999.900390625,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -124,9 +124,9 @@
         },
         "Grid/IRkalmanFilterWeight/.zarray": {
             "chunks": [
-                1,
-                3600,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -136,7 +136,7 @@
                 "shuffle": 1
             },
             "dtype": "<i2",
-            "fill_value": -9999,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -159,9 +159,9 @@
         },
         "Grid/IRprecipitation/.zarray": {
             "chunks": [
-                1,
-                2184,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -171,7 +171,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": -9999.900390625,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -206,7 +206,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": 0.0,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -239,7 +239,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": 0.0,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -270,7 +270,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": 0.0,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -303,7 +303,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": 0.0,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -324,9 +324,9 @@
         },
         "Grid/precipitationCal/.zarray": {
             "chunks": [
-                1,
-                2184,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -336,7 +336,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": -9999.900390625,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -361,9 +361,9 @@
         },
         "Grid/precipitationQualityIndex/.zarray": {
             "chunks": [
-                1,
-                2184,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -373,7 +373,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": -9999.900390625,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -396,9 +396,9 @@
         },
         "Grid/precipitationUncal/.zarray": {
             "chunks": [
-                1,
-                2184,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -408,7 +408,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": -9999.900390625,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -433,9 +433,9 @@
         },
         "Grid/probabilityLiquidPrecipitation/.zarray": {
             "chunks": [
-                1,
-                3600,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -445,7 +445,7 @@
                 "shuffle": 1
             },
             "dtype": "<i2",
-            "fill_value": -9999,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -470,9 +470,9 @@
         },
         "Grid/randomError/.zarray": {
             "chunks": [
-                1,
-                2184,
-                1800
+                2,
+                1402,
+                1402
             ],
             "compressor": {
                 "blocksize": 0,
@@ -482,7 +482,7 @@
                 "shuffle": 1
             },
             "dtype": "<f4",
-            "fill_value": -9999.900390625,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -517,7 +517,7 @@
                 "shuffle": 1
             },
             "dtype": "<i4",
-            "fill_value": 0,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
@@ -551,7 +551,7 @@
                 "shuffle": 1
             },
             "dtype": "<i4",
-            "fill_value": 0,
+            "fill_value": null,
             "filters": null,
             "order": "C",
             "shape": [
