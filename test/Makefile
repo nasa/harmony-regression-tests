@@ -13,6 +13,9 @@ hoss-image: Dockerfile hoss/environment.yaml
 n2z-image: Dockerfile n2z/environment.yaml
 	docker build -t harmony/regression-tests-n2z:latest -f ./Dockerfile --build-arg notebook=N2Z_Regression.ipynb --build-arg sub_dir=n2z .
 
+regridder-image: Dockerfile regridder/environment.yaml
+	docker build -t harmony/regression-tests-regridder:latest -f ./Dockerfile --build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder .
+
 swath-projector-image: Dockerfile swath-projector/environment.yaml
 	docker build -t harmony/regression-tests-swath-projector:latest -f ./Dockerfile --build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
 
