@@ -8,6 +8,7 @@ dependencies:
   - papermill
   - xarray == 2022.12.0
   - numpy
+  - netCDF4
   - pandas == 1.3.0
   - pip:
     - harmony-py
