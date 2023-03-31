@@ -27,6 +27,9 @@ jobs:
             image: "n2z"
             notebook: "N2Z_Regression.ipynb"
           -
+            image: "regridder"
+            notebook: "Regridder_Regression.ipynb"
+          -
             image: "swath-projector"
             notebook: "SwathProjector_Regression.ipynb"
           -
