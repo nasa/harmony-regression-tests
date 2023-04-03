@@ -179,15 +179,17 @@ documentation on setting parameters.
 New test suites must be added to the `Makefile`. A new `name-image` target (where name is the name of
 the test suite) should be added (see the `harmony-image` example), and the new image target
 should be added as a dependency of the `images` target. The docker image should have a name like
-`harmony/regression-tests-<base_name>`, where `base_name` is the name of the test suite.
+`ghcr.io/nasa/regression-tests-<base_name>`, where `base_name` is the name of the test suite.
+
 
 To build the test images on github, add a new matrix target that includes the
 image base name and notbook name to the list of targets in the
 `.github/workflows/build-all-images.yml` file.
 
-Finally, add the image base name to the `images` array on line 6 of the `run_notebooks.sh` file.
-For instance, if the image is named `harmony/regression-tests-foo`, then we would add `foo` to the
-array.
+Finally, add the image base name to the `images` array on line 6 of the
+`run_notebooks.sh` file and line 20 of scripts/test-in-bamboo.sh. For instance,
+if the image is named `ghcr.io/nasa/regression-tests-foo`, then we would add
+`foo` to the arrays.
 
 The `run_notebooks.sh` file can be used as described above to run the test suite. Notebooks are
 expected to exit with a non-zero exit code on failure when run from `papermill`.

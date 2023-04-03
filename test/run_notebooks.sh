@@ -26,7 +26,7 @@ for image in "${images[@]}"; do
 		     -v ${PWD}/${image}:/root/${image} \
 		      ${creds} \
 		      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
-		      --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+		      --env harmony_host_url="${HARMONY_HOST_URL}" "ghcr.io/nasa/regression-tests-${image}:latest"))
 done
 
 trap ctrl_c SIGINT SIGTERM
