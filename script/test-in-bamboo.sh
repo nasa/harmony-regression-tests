@@ -29,16 +29,16 @@ echo "harmony host url: ${harmony_host_url}"
 
 
 ## download test versions of the regression images from GitHub container registry.
-## default images are pulled for each image in the all_images array
-## deault images are : "ghrc.io/nasa/regression-tests-<image>:latest"
-## Any bamboo variables named "REGRESSION_TESTS_<IMAGE>_VERSION" will override the default value.
+## default images are pulled for each test in the all_tests array
+## deault images are : "ghrc.io/nasa/regression-tests-<test>:latest"
+## Any bamboo variables named "REGRESSION_TESTS_<test>_IMAGE" will override the default value.
 image_names=()
 container_repository="ghcr.io/nasa/"
-all_images=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder)
+all_tests=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder)
 
-for image in "${all_images[@]}"; do
+for image in "${all_tests[@]}"; do
     base="regression-tests-${image}"
-    ENV_NAME=$(echo "${base}-version" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
+    ENV_NAME=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
     default="${container_repository}${base}:latest"
     image_names+=("${!ENV_NAME:-${default}}")
 done
