@@ -186,10 +186,10 @@ To build the test images on github, add a new matrix target that includes the
 image base name and notbook name to the list of targets in the
 `.github/workflows/build-all-images.yml` file.
 
-Finally, add the image base name to the `images` array on line 6 of the
-`run_notebooks.sh` file and line 20 of scripts/test-in-bamboo.sh. For instance,
-if the image is named `ghcr.io/nasa/regression-tests-foo`, then we would add
-`foo` to the arrays.
+Finally, add the image base name to the `all_images` array in the
+`run_notebooks.sh` file and the `all_tests` array in `scripts/test-in-bamboo.sh` script. For instance,
+if the new image is named `ghcr.io/nasa/regression-tests-foo`, then we would add
+`foo` to both arrays.
 
 The `run_notebooks.sh` file can be used as described above to run the test suite. Notebooks are
 expected to exit with a non-zero exit code on failure when run from `papermill`.
