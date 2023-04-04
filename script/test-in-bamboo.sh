@@ -34,7 +34,7 @@ echo "harmony host url: ${harmony_host_url}"
 ## Images are pulled for each test in the all_tests array
 ## default images have a pattern: "ghrc.io/nasa/regression-tests-<test>:latest"
 ## Any bamboo variables named "REGRESSION_TESTS_<test>_IMAGE" will override the default value.
-## e.g. any REGRESSION_TESTS_N2Z_IMAGE environemnt set would be used instead of the default.
+## e.g. if REGRESSION_TESTS_N2Z_IMAGE environment was set, the value would be used instead of the default.
 
 image_names=()
 container_repository="ghcr.io/nasa/"
