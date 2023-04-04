@@ -38,15 +38,17 @@ all_images=(harmony harmony-regression hoss hga n2z swath-projector trajectory-s
 
 for image in "${all_images[@]}"; do
     base="regression-tests-${image}"
-    ENV_NAME=$(echo ${base}-version | tr '[:lower:]' '[:upper:]' | tr '-' '_')
+    ENV_NAME=$(echo "${base}-version" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
     default="${container_repository}${base}:latest"
     image_names+=("${!ENV_NAME:-${default}}")
 done
 
 
+/bin/rm -f pulled-docker-images.txt
 for image in "${image_names[@]}"; do
     echo "Pulling image: ${image}"
-    docker pull ${image}
+    echo "${image}" >> pulled-images.txt
+    docker pull "${image}"
 done
 
 
