@@ -5,6 +5,16 @@
 
 set -ex
 
+## Returns the correct image name to pull from docker.  If the test name's
+## environmental variable exists, return that, otherwise return the default
+## value for the image.
+function image_name () {
+    base="regression-tests-$1"
+    env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
+    default_image="ghcr.io/nasa/${base}:latest"
+    echo "${!env_image_name:-${default_image}}"
+}
+
 if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   echo "HARMONY_ENVIRONMENT must be set to run this script"
   exit 1
@@ -37,14 +47,9 @@ echo "harmony host url: ${harmony_host_url}"
 ## e.g. if REGRESSION_TESTS_N2Z_IMAGE environment was set, the value would be used instead of the default.
 
 image_names=()
-container_repository="ghcr.io/nasa/"
 all_tests=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder)
-
 for image in "${all_tests[@]}"; do
-    base="regression-tests-${image}"
-    env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
-    default_image="${container_repository}${base}:latest"
-    image_names+=("${!env_image_name:-${default_image}}")
+    image_names+=($(image_name "$image"))
 done
 
 # download all of the images and output their names
