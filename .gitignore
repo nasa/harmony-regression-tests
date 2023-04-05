@@ -8,4 +8,4 @@ output/*
 .identity
 .netrc
 
-**pulled-images.txt
+**/pulled-images.txt
