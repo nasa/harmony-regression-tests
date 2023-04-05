@@ -4,7 +4,19 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+## Returns the correct image name.  If the test name's
+## environmental variable exists, return that, otherwise return the default
+## value for the image.
+function image_name () {
+    base="regression-tests-$1"
+    env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
+    default_image="ghcr.io/nasa/${base}:latest"
+    echo "${!env_image_name:-${default_image}}"
+}
+
+
 echo "Running regression tests"
+
 
 # Specify the test images to run, by default all built by the Makefile. If
 # the script is invoked with a list of images, only run those.
@@ -22,11 +34,14 @@ for image in "${images[@]}"; do
     else
 	creds=""
     fi
+
+    full_image=$(image_name "$image")
+    echo "running test with $full_image"
     PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output \
 		     -v ${PWD}/${image}:/root/${image} \
 		      ${creds} \
 		      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
-		      --env harmony_host_url="${HARMONY_HOST_URL}" "harmony/regression-tests-${image}:latest"))
+		      --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
 done
 
 trap ctrl_c SIGINT SIGTERM
