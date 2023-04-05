@@ -68,3 +68,6 @@ cd test \
 	      EDL_USER="${EDL_USER}" \
 	      EDL_PASSWORD="${EDL_PASSWORD}" \
     && ./run_notebooks.sh
+
+# Copy the notebook artefacts up to S3:
+aws s3 cp output "s3://${REGRESSION_TEST_OUTPUT_BUCKET}" --recursive
