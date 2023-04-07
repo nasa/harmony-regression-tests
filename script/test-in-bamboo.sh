@@ -71,5 +71,7 @@ cd test \
 
 # Copy the notebook artefacts up to S3:
 if [[ -z "${REGRESSION_TEST_OUTPUT_BUCKET}" ]]; then
+  echo "REGRESSION_TEST_OUTPUT_BUCKET environment variable not set."
+else
   aws s3 cp output "s3://${REGRESSION_TEST_OUTPUT_BUCKET}" --recursive
 fi
