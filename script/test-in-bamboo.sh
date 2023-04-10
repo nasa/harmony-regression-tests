@@ -53,7 +53,7 @@ for image in "${all_tests[@]}"; do
 done
 
 # download all of the images and output their names
-/bin/rm -f pulled-docker-images.txt
+/bin/rm -f pulled-images.txt
 for image in "${image_names[@]}"; do
     echo "Pulling image: ${image}"
     echo "${image}" >> pulled-images.txt
