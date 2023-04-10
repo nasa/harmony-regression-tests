@@ -12,14 +12,10 @@ or localhost (harmony-in-a-box). This is a good choice for test development and
 verifying service changes do not cause regression failures. Generally you run
 locally in the browser against a single service regression test.
 
-The final way to run the tests is on an AWS EC2 instance via terraform and
-Docker. This is how the tests run on the Bamboo server, but you can also run
-the tests in AWS from your laptop with proper AWS credentials.
-
 ## Install Prerequisites
 
 * [Docker](https://www.docker.com/get-started) (to run locally in docker)
-* [terraform](https://www.terraform.io/) (to run from local on AWS EC2)
+
 
 ## Running the Tests Locally
 
@@ -31,19 +27,19 @@ From the `./test` directory make all of the regression images with:
     $ make images
 
 *`make -j images` can be used to make the images in parallel (faster), although this may lead to
-Docker Desktop*
+Docker Desktop instabilities*
 
 ### Running in Docker:
 
     $ cd test
     $ export HARMONY_HOST_URL=<url of Harmony in the target environment>
     $ export EDL_PASSWORD=<your EDL password>
-    $ export EDL_user=<your EDL username>
+    $ export EDL_USER=<your EDL username>
     $ export AWS_ACCESS_KEY_ID=<key for the target environement>
     $ export AWS_SECRET_ACCESS_KEY=<key secret for the target environement>
     $ ./run_notebooks.sh
 
-Outputs can be found in the `output/<image>` directory.
+Outputs can be found in the `tests/output/<image>` directory.
 
 Notes:
 
@@ -60,7 +56,7 @@ created Zarr store.*
 1. *`HARMONY_HOST_URL` is the harmony base url for your target environment. e.g. `SIT` would be `https://harmony.sit.earthdata.nasa.gov`*
 
 
-### test in a Browswer:
+### Test in a Browser:
 
 To run the tests:
 
@@ -76,48 +72,6 @@ environment before installing from the environment.yml).
 1. Update the `harmony_host_url` in the notebook.
 1. Run the tests.
 
-### Test on AWS via terraform:
-
-Harmony tests run in the AWS us-west-2 region.  We have provided a Terraform
-deployment to ease test execution in this region.
-
-#### Create Terraform Autovars File
-
-In the `terraform` directory create a file called `key.auto.tfvars` and
-add a single line indicating the name of the public key pair file that
-should be used for the EC2 instance that runs the notebooks. ([Create a key pair on EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html))
-
-Example:
-```
-key_name = "harmony-sit-my-key-name"
-```
-
-#### Execute the Tests
-
-**Important**: The following steps allocate resources in AWS. To ease repeated
-tests and troubleshooting, they also don't automatically clean up the instance
-they create.  See "Clean Up Test Resources" to ensure you are minimizing costs
-by cleaning up resources.
-
-First create a `.env` file in the top level directory by copying in the
-`dot_env` file and filling in the proper values. Then execute the following.
-
-    $ cd script
-    $ export HARMONY_ENVIRONMENT=<uat|sit|sandbox|prod>
-    $ ./test.sh
-
-Output will be uploaded to an existing bucket specified by the `REGRESSION_TEST_OUTPUT_BUCKET`
-environment variable with a folder for each notebook.
-
-#### Clean Up Test Resources
-
-The prior scripts do not clean up allocated resources.  To remove the resources
-used to run the test, run this command from the terraform directory.
-
-    $ cd terraform
-    $ terraform destroy
-
-Tests outputs are not automatically deleted.
 
 ## Notebook Development
 
@@ -136,7 +90,7 @@ For example, in the `harmony` directory we have
  subdirectory. The `name` field in the file should be `papermill`. For example:
 
  ```yaml
- name: papermill
+name: papermill
 channels:
   - conda-forge
   - defaults
