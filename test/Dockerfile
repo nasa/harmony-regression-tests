@@ -13,8 +13,10 @@ WORKDIR /root
 RUN conda install --channel=conda-forge --name=base conda-lock -q -y
 
 COPY build-netrc.sh notebook-entrypoint.sh ./
+
 RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/conda-lock.yml ./${sub_dir}
 RUN conda-lock install -n papermill ./${sub_dir}/conda-lock.yml
+COPY ${sub_dir} ./${sub_dir}
 
 ENTRYPOINT /bin/bash ./notebook-entrypoint.sh
