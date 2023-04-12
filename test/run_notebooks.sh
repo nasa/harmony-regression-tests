@@ -37,7 +37,7 @@ for image in "${images[@]}"; do
 
     full_image=$(image_name "$image")
     echo "running test with $full_image"
-    PIDS+=(${image},$(docker run -d -v ${PWD}/output:/root/output \
+    PIDS+=(${image},$(docker run -d -v ${PWD}/output:/app/output \
 		      ${creds} \
 		      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
 		      --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
