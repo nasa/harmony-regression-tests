@@ -1,4 +1,4 @@
-FROM mambaorg/micromamba:1.2
+FROM mambaorg/micromamba:1.4.2-jammy
 
 ARG sub_dir
 ARG notebook
