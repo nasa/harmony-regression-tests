@@ -108,11 +108,12 @@ dependencies:
 ```
 
 ## μmamba (micromamba)
+
 To increase runtime efficiency, the build relies on
 [micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html).
 Micromamba and mamba are meant to be drop in replacements for miniconda and
 conda. The fast solving allows us to skip creating a conda-lock file, and the
-dependency management is entirely defined by the environment.yaml file.
+dependency management is entirely defined by the `environment.yaml` file.
 
 Test notebooks should not rely on other forms of dependency management or expect user input.
 They _should_ utilize the `harmony_host_url` global variable to communicate with Harmony
