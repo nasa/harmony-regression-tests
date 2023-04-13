@@ -35,8 +35,8 @@ Docker Desktop instabilities*
     $ export HARMONY_HOST_URL=<url of Harmony in the target environment>
     $ export EDL_PASSWORD=<your EDL password>
     $ export EDL_USER=<your EDL username>
-    $ export AWS_ACCESS_KEY_ID=<key for the target environement>
-    $ export AWS_SECRET_ACCESS_KEY=<key secret for the target environement>
+    $ export AWS_ACCESS_KEY_ID=<key for the target environment>
+    $ export AWS_SECRET_ACCESS_KEY=<key secret for the target environment>
     $ ./run_notebooks.sh
 
 Outputs can be found in the `tests/output/<image>` directory.
@@ -107,21 +107,12 @@ dependencies:
     - harmony-py
 ```
 
-## Generating a Dependency Lockfile
+## μmamba (micromamba)
 To increase runtime efficiency, the build relies on
-[conda-lock](https://pypi.org/project/conda-lock/). This is used to create a
-dependency lockfile that can be used by conda to more efficiently load
-dependencies. The Docker build expects a lockfile named `conda-lock.yml` to
-exist at the top level of a notebook directory (next to the `environment.yaml`
-file).
-
-To build the lockfile install `conda-lock` by following the directions provided
-on its website. Then generate the lockfile for your notebook by running the
-following:
-
-```
-conda-lock -f environment.yaml -p linux-64
-```
+[micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html).
+Micromamba and mamba are meant to be drop in replacements for miniconda and
+conda. The fast solving allows us to skip creating a conda-lock file, and the
+dependency management is entirely defined by the environment.yaml file.
 
 Test notebooks should not rely on other forms of dependency management or expect user input.
 They _should_ utilize the `harmony_host_url` global variable to communicate with Harmony
