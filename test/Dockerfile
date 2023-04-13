@@ -12,8 +12,6 @@ ENV AWS_REGION=us-west-2
 ENV PYTHONDONTWRITEBYTECODE=true
 
 WORKDIR /workdir
-# RUN conda install --channel=conda-forge --name=base conda-lock --quiet --yes \
-#     && conda clean --all --force-pkgs-dirs --yes
 
 COPY build-netrc.sh notebook-entrypoint.sh ./
 
@@ -22,9 +20,6 @@ COPY ${sub_dir}/environment.yaml ./${sub_dir}
 
 RUN micromamba create -y -f ${sub_dir}/environment.yaml \
     && micromamba clean --all --force-pkgs-dirs --yes
-
-# RUN conda-lock install --name papermill ./${sub_dir}/conda-lock.yml \
-#     && conda clean --all --force-pkgs-dirs --yes
 
 COPY ${sub_dir} ./${sub_dir}
 
