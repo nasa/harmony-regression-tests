@@ -11,7 +11,7 @@ ENV AWS_REGION=us-west-2
 
 ENV PYTHONDONTWRITEBYTECODE=true
 
-WORKDIR /app
+WORKDIR /workdir
 # RUN conda install --channel=conda-forge --name=base conda-lock --quiet --yes \
 #     && conda clean --all --force-pkgs-dirs --yes
 
