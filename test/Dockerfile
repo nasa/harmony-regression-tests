@@ -1,4 +1,5 @@
 FROM mambaorg/micromamba:1.4.2-jammy
+USER root
 
 ARG sub_dir
 ARG notebook
