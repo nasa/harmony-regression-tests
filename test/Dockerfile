@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:latest
+FROM mambaorg/micromamba:1.4.2-jammy
 
 ARG sub_dir
 ARG notebook
@@ -11,14 +11,16 @@ ENV AWS_REGION=us-west-2
 
 ENV PYTHONDONTWRITEBYTECODE=true
 
-WORKDIR /root
-RUN conda install --channel=conda-forge --name=base conda-lock -q -y && conda clean -afy
+WORKDIR /workdir
 
 COPY build-netrc.sh notebook-entrypoint.sh ./
 
 RUN mkdir ./${sub_dir}
-COPY ${sub_dir}/conda-lock.yml ./${sub_dir}
-RUN conda-lock install -n papermill ./${sub_dir}/conda-lock.yml  && conda clean -afy
+COPY ${sub_dir}/environment.yaml ./${sub_dir}
+
+RUN micromamba create -y -f ${sub_dir}/environment.yaml \
+    && micromamba clean --all --force-pkgs-dirs --yes
+
 COPY ${sub_dir} ./${sub_dir}
 
 ENTRYPOINT /bin/bash ./notebook-entrypoint.sh
