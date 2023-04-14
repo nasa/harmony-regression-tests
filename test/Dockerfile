@@ -1,4 +1,4 @@
-FROM mambaorg/micromamba:1.4.2-jammy
+FROM mambaorg/micromamba:1.4.2-focal
 USER root
 
 ARG sub_dir
