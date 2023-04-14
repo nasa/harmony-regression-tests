@@ -12,7 +12,6 @@ from io import BytesIO
 from matplotlib import pyplot as plt
 from PIL import Image
 from h5py import File as H5File
-import xarray as xa
 import numpy as np
 import geopandas as gpd
 import contextily as ctx
