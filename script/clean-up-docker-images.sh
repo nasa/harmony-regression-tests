@@ -6,5 +6,5 @@
 while read -r line
 do
     echo "removing $line"
-    docker rmi "$line"
+    docker rmi --force "$line"
 done < pulled-images.txt
