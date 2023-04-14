@@ -1,4 +1,7 @@
-FROM mambaorg/micromamba:1.4.2-jammy
+# Uses focal image because newer jammy image does not work with old docker versions
+# see related information: https://github.com/adoptium/containers/issues/215#issuecomment-1142046045
+FROM mambaorg/micromamba:1.4.2-focal
+USER root
 
 ARG sub_dir
 ARG notebook
