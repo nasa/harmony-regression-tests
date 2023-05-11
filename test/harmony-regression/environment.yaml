@@ -3,14 +3,14 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
-  - jupyter
+  - python=3.10
+  - notebook=6.5.4
   - python-dateutil == 2.8.2
   - python-dateutil ~= 2.7
   - sat-stac == 0.4.1
   - intake-stac == 0.3.0 # increasing causes problems with additional install of pystac which has problems with urllib/requests.py
-  - papermill
-  - requests
+  - papermill==2.3.4
+  - requests==2.29.0
   - Pillow
   - CacheControl
   - matplotlib
