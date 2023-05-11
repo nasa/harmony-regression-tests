@@ -3,9 +3,9 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
-  - jupyter==1.0.0
-  - requests==2.28.1
+  - python=3.10
+  - notebook==6.5.4
+  - requests==2.29.0
   - papermill==2.3.4
   - pip:
     - harmony-py
