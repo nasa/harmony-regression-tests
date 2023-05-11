@@ -3,12 +3,12 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
-  - jupyter=1.0.0
+  - python=3.10
+  - notebook=6.5.4
   - papermill=2.3.4
   - python-dateutil=2.7.5
-  - numpy=1.24.1
-  - netCDF4=1.6.2
+  - numpy=1.24.3
+  - netCDF4=1.6.3
   - xarray=2022.12.0
   - pip:
     - harmony-py
