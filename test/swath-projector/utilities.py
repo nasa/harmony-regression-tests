@@ -52,8 +52,9 @@ def submit_and_download(harmony_client: Client, request: Request,
             replace(downloaded_filename, output_file_name)
             print(f'Saved output to: {output_file_name}')
 
-    except ProcessingFailedException:
+    except ProcessingFailedException as exception:
         print_error('Harmony request failed to complete successfully.')
+        raise exception
 
 
 def remove_results_files() -> None:
