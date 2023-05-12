@@ -3,9 +3,9 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
-  - jupyter
-  - papermill
+  - python=3.10
+  - notebook=6.5.4
+  - papermill=2.3.4
   - pyproj
   - numpy
   - gdal=3.4.2

@@ -4,11 +4,11 @@ channels:
   - defaults
 dependencies:
   - python=3.9
-  - jupyter
-  - papermill
+  - notebook=6.5.4
+  - papermill=2.3.4
   - xarray == 2022.12.0
-  - numpy
-  - netCDF4
+  - numpy=1.24.3
+  - netCDF4=1.6.3
   - pandas == 1.3.0
   - pip:
     - harmony-py
