@@ -1,7 +1,7 @@
 #!/bin/bash
 # script to act as the entrypoint for running harmony regression tests in their containers.
 
-export PATH=/opt/conda/envs/papermill/bin:$PATH
+export PATH=/opt/conda/envs/papermill-${env_sub_dir}/bin:$PATH
 
 /bin/bash /workdir/build-netrc.sh
 

@@ -1,4 +1,4 @@
-name: papermill
+name: papermill-harmony-regression
 channels:
   - conda-forge
   - defaults
