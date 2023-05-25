@@ -1,4 +1,4 @@
-name: papermill
+name: papermill-variable-subsetter
 channels:
   - conda-forge
   - defaults
