@@ -1,4 +1,4 @@
-name: papermill
+name: papermill-swath-projector
 channels:
   - conda-forge
   - defaults

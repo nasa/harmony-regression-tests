@@ -1,4 +1,4 @@
-name: papermill
+name: papermill-trajectory-subsetter
 channels:
   - conda-forge
   - defaults

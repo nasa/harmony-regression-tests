@@ -1,4 +1,4 @@
-name: papermill
+name: papermill-n2z
 channels:
   - conda-forge
   - defaults
