@@ -1,4 +1,4 @@
-name: papermill
+name: papermill-harmony
 channels:
   - conda-forge
   - defaults

@@ -1,4 +1,4 @@
-name: papermill
+name: papermill-hga
 channels:
   - conda-forge
   - defaults
