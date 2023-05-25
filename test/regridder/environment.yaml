@@ -1,4 +1,4 @@
-name: papermill
+name: papermill-regridder
 channels:
   - conda-forge
   - defaults

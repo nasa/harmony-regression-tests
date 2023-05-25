@@ -64,9 +64,10 @@ To run the tests:
 use the environment.yml of the test to [create the environment with
 conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file)
 or you can create the environment with another virtual env, just ensure all of
-the requirement from the environment.yml file are installed. (Be careful, This
-will always create a conda environment named papermill, so delete any existing
-environment before installing from the environment.yml).
+the requirement from the environment.yml file are installed. They will create
+conda environments named `papermill-<image>`, and you should delete any existing
+environment before installing from the environment.yml.
+
 1. Start the jupyter server: `jupyter notebook`.
 1. Browse and open the jupyter notebook file for the test. (`<image>_Regression.ipynb`)
 1. Update the `harmony_host_url` in the notebook.
@@ -90,7 +91,7 @@ For example, in the `harmony` directory we have
  subdirectory. The `name` field in the file should be `papermill`. For example:
 
  ```yaml
-name: papermill
+name: papermill-<IMAGE>
 channels:
   - conda-forge
   - defaults
