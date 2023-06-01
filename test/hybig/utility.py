@@ -29,3 +29,11 @@ def assert_dataset_produced_correct_results(
     test_image = test_dataset.read()
     assert_array_almost_equal(ref_image, test_image)
     print_success('Generated image contains correct data.')
+
+def build_file_list(basename: str, path: Path, file_type: str) -> list[Path]:
+    if file_type == 'PNG':
+        exts = ['.png', '.pgw', '.png.aux.xml']
+    else:
+        exts = ['.jpg', '.jgw', '.jpg.aux.xml']
+
+    return [Path(str(path / basename) + ext) for ext in exts]
