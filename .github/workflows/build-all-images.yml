@@ -24,6 +24,9 @@ jobs:
             image: "hoss"
             notebook: "HOSS_Regression.ipynb"
           -
+            image: "hybig"
+            notebook: "HyBIG_Regression.ipynb"
+          -
             image: "n2z"
             notebook: "N2Z_Regression.ipynb"
           -
