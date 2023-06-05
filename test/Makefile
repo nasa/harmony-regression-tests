@@ -10,6 +10,9 @@ hga-image: Dockerfile hga/environment.yaml
 hoss-image: Dockerfile hoss/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-hoss:latest -f ./Dockerfile --build-arg notebook=HOSS_Regression.ipynb --build-arg sub_dir=hoss .
 
+hybig-image: Dockerfile hybig/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-hybig:latest -f ./Dockerfile --build-arg notebook=HyBIG_Regression.ipynb --build-arg sub_dir=hybig .
+
 n2z-image: Dockerfile n2z/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-n2z:latest -f ./Dockerfile --build-arg notebook=N2Z_Regression.ipynb --build-arg sub_dir=n2z .
 
@@ -25,4 +28,4 @@ trajectory-subsetter-image: Dockerfile trajectory-subsetter/environment.yaml
 variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-variable-subsetter:latest -f ./Dockerfile --build-arg notebook=VariableSubsetter_Regression.ipynb --build-arg sub_dir=variable-subsetter .
 
-images: harmony-image harmony-regression-image hga-image hoss-image n2z-image regridder-image swath-projector-image trajectory-subsetter-image variable-subsetter-image
+images: harmony-image harmony-regression-image hga-image hoss-image hybig-image n2z-image regridder-image swath-projector-image trajectory-subsetter-image variable-subsetter-image
