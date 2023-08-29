@@ -7,5 +7,6 @@ output/*
 .deployenv
 .identity
 .netrc
+.DS_Store
 
 **/pulled-images.txt
