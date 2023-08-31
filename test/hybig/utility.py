@@ -17,17 +17,17 @@ def assert_dataset_produced_correct_results(
     generated_file: Path, expected_metadata: dict, reference_file: Path, file_type: str
 ) -> None:
     """Check that the generated data matches the expected data."""
-    test_dataset = rasterio.open(generated_file)
-    assert (
-        test_dataset.meta == expected_metadata
-    ), f'output {file_type} has incorrect metadata'
-    print_success('Generated image has correct metadata.')
+    with rasterio.open(generated_file) as test_dataset:
+        assert (
+            test_dataset.meta == expected_metadata
+        ), f'output {file_type} has incorrect metadata'
+        print_success('Generated image has correct metadata.')
 
-    reference_dataset = rasterio.open(reference_file)
+        with rasterio.open(reference_file) as reference_dataset:
+            ref_image = reference_dataset.read()
+            test_image = test_dataset.read()
+            assert_array_almost_equal(ref_image, test_image)
 
-    ref_image = reference_dataset.read()
-    test_image = test_dataset.read()
-    assert_array_almost_equal(ref_image, test_image)
     print_success('Generated image contains correct data.')
 
 def build_file_list(basename: str, path: Path, file_type: str) -> list[Path]:
