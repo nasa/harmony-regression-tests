@@ -9,6 +9,6 @@ dependencies:
   - python-dateutil=2.7.5
   - numpy=1.24.3
   - netCDF4=1.6.3
-  - xarray=2022.12.0
+  - xarray-datatree=0.0.12
   - pip:
     - harmony-py
