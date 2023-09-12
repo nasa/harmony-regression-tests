@@ -108,6 +108,39 @@ dependencies:
     - harmony-py
 ```
 
+### Versioning
+
+The regression test notebooks follow semantic versioning:
+
+```
+major.minor.patch
+```
+
+Every time a regression test suite is updated, the version number in the
+`version.txt` file for that suite should be iterated by the appropriate type of
+version increment. This will likely occur for one of three reasons:
+
+* Adding, updating or removing tests within the notebook (or associated utility
+  functionality).
+* Adding or updating Python dependencies in the `environment.yaml` file for
+  the test suite.
+* Updating the overall Docker image for all test suites, in which case all
+  suites should have their `version.txt` incremented.
+
+The CI/CD pipeline for this repository will release a new Docker image for a
+test suite to
+[ghcr.io](https://github.com/orgs/nasa/packages?repo_name=harmony-regression-tests)
+whenever a change in the relevant `version.txt` file is merged to the main
+branch.
+
+To use these changes in the overall Harmony CI/CD pipeline in Bamboo, the
+environment variables for the appropriate regression test deployment
+environment (SIT, UAT or production) should also be updated.
+
+Note - the manual update step for Bamboo environment variables is brittle, and
+improvements are being considered to make the choice of regression test image
+version more automated.
+
 ## μmamba (micromamba)
 
 To increase runtime efficiency, the build relies on
