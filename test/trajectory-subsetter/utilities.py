@@ -25,8 +25,8 @@ def compare_results_to_reference_file(results_file_name: str,
 
     reference_data = None
     results_data = None
-    
-    
+   
+   
 def submit_and_download(harmony_client: Client, request: Request,
                         output_file_name: str):
     """ Submit a Harmony request via a `harmony-py` client. Wait for the
