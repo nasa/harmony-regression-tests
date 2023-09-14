@@ -7,7 +7,7 @@ from os import listdir, remove, replace
 
 from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
-import datatree
+from datatree import open_datatree
 
 
 def compare_results_to_reference_file(results_file_name: str,
@@ -17,16 +17,16 @@ def compare_results_to_reference_file(results_file_name: str,
         downloaded results to a reference file.
 
     """
-    reference_data =  datatree.open_datatree(reference_file_name)
-    results_data = datatree.open_datatree(results_file_name)
+    reference_data =  open_datatree(reference_file_name)
+    results_data = open_datatree(results_file_name)
 
     assert results_data.identical(reference_data), ('Output and reference files '
                                                     'do not match.')
 
     reference_data = None
     results_data = None
- 
- 
+
+
 def submit_and_download(harmony_client: Client, request: Request,
                         output_file_name: str):
     """ Submit a Harmony request via a `harmony-py` client. Wait for the
