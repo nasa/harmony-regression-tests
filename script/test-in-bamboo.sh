@@ -5,13 +5,15 @@
 
 set -ex
 
-## Returns the correct image name to pull from docker.  If the test name's
+
+## Returns the image name to pull from docker.  If the test name's
 ## environmental variable exists, return that, otherwise return the default
-## value for the image.
+## value for the image read from the version.txt file.
 function image_name () {
     base="regression-tests-$1"
+    recent_tag=$(<"./test/$1/version.txt")
     env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
-    default_image="ghcr.io/nasa/${base}:latest"
+    default_image="ghcr.io/nasa/${base}:${recent_tag}"
     echo "${!env_image_name:-${default_image}}"
 }
 
