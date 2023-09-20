@@ -71,7 +71,7 @@ cd test \
 	      AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
 	      EDL_USER="${EDL_USER}" \
 	      EDL_PASSWORD="${EDL_PASSWORD}" \
-    && ./run_notebooks.sh
+    && ./run_notebooks.sh --use-versions
 
 # Copy the notebook artefacts up to S3:
 if [[ -z "${REGRESSION_TEST_OUTPUT_BUCKET}" ]]; then

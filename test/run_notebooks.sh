@@ -7,12 +7,18 @@ NC='\033[0m' # No Color
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 
-## Returns the correct image name.  If the test name's
-## environmental variable exists, return that, otherwise return the default
-## value for the image read from the version.txt file..
+## Returns the correct image name to run a notebook.
+## If the test name's environmental variable exists, return that.
+## otherwise:
+##   if the second argument passed is 'true' return the tag value for the image read from the version.txt file.
+##   else returns 'latest'
 function image_name () {
     base="regression-tests-$1"
-    recent_tag=$(<"$SCRIPT_DIR/$1/version.txt")
+    if [ "$2" = true ]; then
+	recent_tag=$(<"$SCRIPT_DIR/$1/version.txt")
+    else
+	recent_tag="latest"
+    fi
     env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
     default_image="ghcr.io/nasa/${base}:${recent_tag}"
     echo "${!env_image_name:-${default_image}}"
@@ -25,7 +31,22 @@ echo "Running regression tests"
 # Specify the test images to run, by default all built by the Makefile. If
 # the script is invoked with a list of images, only run those.
 all_images=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder hybig)
-specified_images=("$@")
+specified_images=()
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --use-versions)
+            use_versions=true
+            shift
+            ;;
+        *)
+            specified_images+=("$1")
+            shift
+            ;;
+    esac
+done
+
+## use the user supplied images or the default list of all images.
 images=("${specified_images[@]:-${all_images[@]}}")
 
 # launch all the docker containers and store their process IDs
@@ -39,7 +60,7 @@ for image in "${images[@]}"; do
         creds=""
     fi
 
-    full_image=$(image_name "$image")
+    full_image=$(image_name "$image" "$use_versions")
     echo "running test with $full_image"
     PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
                       ${creds} \
