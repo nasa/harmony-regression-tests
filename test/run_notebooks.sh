@@ -4,13 +4,17 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+
 ## Returns the correct image name.  If the test name's
 ## environmental variable exists, return that, otherwise return the default
-## value for the image.
+## value for the image read from the version.txt file..
 function image_name () {
     base="regression-tests-$1"
+    recent_tag=$(<"$SCRIPT_DIR/$1/version.txt")
     env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
-    default_image="ghcr.io/nasa/${base}:latest"
+    default_image="ghcr.io/nasa/${base}:${recent_tag}"
     echo "${!env_image_name:-${default_image}}"
 }
 
@@ -30,17 +34,17 @@ for image in "${images[@]}"; do
 
     # insert AWS Credential variables for n2z only
     if [[ $image == "n2z" ]]; then
-	creds="--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
+        creds="--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
     else
-	creds=""
+        creds=""
     fi
 
     full_image=$(image_name "$image")
     echo "running test with $full_image"
     PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
-		      ${creds} \
-		      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
-		      --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
+                      ${creds} \
+                      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
+                      --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
 done
 
 trap ctrl_c SIGINT SIGTERM

@@ -5,13 +5,15 @@
 
 set -ex
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 
 ## Returns the image name to pull from docker.  If the test name's
 ## environmental variable exists, return that, otherwise return the default
 ## value for the image read from the version.txt file.
 function image_name () {
     base="regression-tests-$1"
-    recent_tag=$(<"./test/$1/version.txt")
+    recent_tag=$(<"$SCRIPT_DIR/../test/$1/version.txt")
     env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
     default_image="ghcr.io/nasa/${base}:${recent_tag}"
     echo "${!env_image_name:-${default_image}}"
