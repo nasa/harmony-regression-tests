@@ -4,16 +4,11 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-## Returns the correct image name.  If the test name's
-## environmental variable exists, return that, otherwise return the default
-## value for the image.
-function image_name () {
-    base="regression-tests-$1"
-    env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
-    default_image="ghcr.io/nasa/${base}:latest"
-    echo "${!env_image_name:-${default_image}}"
-}
-
+## Import function that returns correct image names.  if flag --use-versions is
+## set when this script is called, it will use names form versions.txt
+## otherwise it will default to "latest"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source "${SCRIPT_DIR}/../script/image_name.sh"
 
 echo "Running regression tests"
 
@@ -21,7 +16,22 @@ echo "Running regression tests"
 # Specify the test images to run, by default all built by the Makefile. If
 # the script is invoked with a list of images, only run those.
 all_images=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder hybig)
-specified_images=("$@")
+specified_images=()
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --use-versions)
+            use_versions=true
+            shift
+            ;;
+        *)
+            specified_images+=("$1")
+            shift
+            ;;
+    esac
+done
+
+## use the user supplied images or the default list of all images.
 images=("${specified_images[@]:-${all_images[@]}}")
 
 # launch all the docker containers and store their process IDs
@@ -30,17 +40,17 @@ for image in "${images[@]}"; do
 
     # insert AWS Credential variables for n2z only
     if [[ $image == "n2z" ]]; then
-	creds="--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
+        creds="--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
     else
-	creds=""
+        creds=""
     fi
 
-    full_image=$(image_name "$image")
+    full_image=$(image_name "$image" "$use_versions")
     echo "running test with $full_image"
     PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
-		      ${creds} \
-		      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
-		      --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
+                      ${creds} \
+                      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
+                      --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
 done
 
 trap ctrl_c SIGINT SIGTERM
