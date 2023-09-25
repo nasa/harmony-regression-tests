@@ -10,9 +10,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 function image_name () {
     base="regression-tests-$1"
     if [ "$2" = true ]; then
-	recent_tag=$(<"$SCRIPT_DIR/../test/$1/version.txt")
+        recent_tag=$(<"$SCRIPT_DIR/../test/$1/version.txt")
     else
-	recent_tag="latest"
+        recent_tag="latest"
     fi
     env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
     default_image="ghcr.io/nasa/${base}:${recent_tag}"
