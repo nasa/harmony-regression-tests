@@ -4,26 +4,11 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+## Import function that returns correct image names.  if flag --use-versions is
+## set when this script is called, it will use names form versions.txt
+## otherwise it will default to "latest"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
-
-## Returns the correct image name to run a notebook.
-## If the test name's environmental variable exists, return that.
-## otherwise:
-##   if the second argument passed is 'true' return the tag value for the image read from the version.txt file.
-##   else returns 'latest'
-function image_name () {
-    base="regression-tests-$1"
-    if [ "$2" = true ]; then
-	recent_tag=$(<"$SCRIPT_DIR/$1/version.txt")
-    else
-	recent_tag="latest"
-    fi
-    env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
-    default_image="ghcr.io/nasa/${base}:${recent_tag}"
-    echo "${!env_image_name:-${default_image}}"
-}
-
+source "${SCRIPT_DIR}/../script/image_name.sh"
 
 echo "Running regression tests"
 

@@ -5,19 +5,10 @@
 
 set -ex
 
+
+## Import function image_name that determines the images to pull from docker.
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
-
-## Returns the image name to pull from docker.  If the test name's
-## environmental variable exists, return that, otherwise return the default
-## value for the image read from the version.txt file.
-function image_name () {
-    base="regression-tests-$1"
-    recent_tag=$(<"$SCRIPT_DIR/../test/$1/version.txt")
-    env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
-    default_image="ghcr.io/nasa/${base}:${recent_tag}"
-    echo "${!env_image_name:-${default_image}}"
-}
+source "${SCRIPT_DIR}/image_name.sh"
 
 if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   echo "HARMONY_ENVIRONMENT must be set to run this script"
@@ -53,7 +44,7 @@ echo "harmony host url: ${harmony_host_url}"
 image_names=()
 all_tests=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder hybig)
 for image in "${all_tests[@]}"; do
-    image_names+=($(image_name "$image"))
+    image_names+=($(image_name "$image" true))
 done
 
 # download all of the images and output their names
