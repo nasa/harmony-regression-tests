@@ -6,16 +6,9 @@
 set -ex
 
 
-## Returns the image name to pull from docker.  If the test name's
-## environmental variable exists, return that, otherwise return the default
-## value for the image read from the version.txt file.
-function image_name () {
-    base="regression-tests-$1"
-    recent_tag=$(<"./test/$1/version.txt")
-    env_image_name=$(echo "${base}_IMAGE" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
-    default_image="ghcr.io/nasa/${base}:${recent_tag}"
-    echo "${!env_image_name:-${default_image}}"
-}
+## Import function image_name that determines the images to pull from docker.
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source "${SCRIPT_DIR}/image_name.sh"
 
 if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   echo "HARMONY_ENVIRONMENT must be set to run this script"
@@ -51,7 +44,7 @@ echo "harmony host url: ${harmony_host_url}"
 image_names=()
 all_tests=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder hybig)
 for image in "${all_tests[@]}"; do
-    image_names+=($(image_name "$image"))
+    image_names+=($(image_name "$image" true))
 done
 
 # download all of the images and output their names
@@ -65,11 +58,11 @@ done
 ## run the tests
 cd test \
     && export HARMONY_HOST_URL="${harmony_host_url}" \
-	      AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-	      AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
-	      EDL_USER="${EDL_USER}" \
-	      EDL_PASSWORD="${EDL_PASSWORD}" \
-    && ./run_notebooks.sh
+              AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+              AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+              EDL_USER="${EDL_USER}" \
+              EDL_PASSWORD="${EDL_PASSWORD}" \
+    && ./run_notebooks.sh --use-versions
 
 # Copy the notebook artefacts up to S3:
 if [[ -z "${REGRESSION_TEST_OUTPUT_BUCKET}" ]]; then
