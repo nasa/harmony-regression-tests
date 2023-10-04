@@ -61,6 +61,7 @@ function ctrl_c() {
     name_pid=(${name_comma_pid//,/ })
     echo "Killing ${name_pid[0]}"
     docker kill "${name_pid[1]}" >/dev/null
+    docker rm "${name_pid[1]}" >/dev/null
   done
   echo "Exiting"
   exit 1
