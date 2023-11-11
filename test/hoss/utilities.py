@@ -4,7 +4,7 @@
 
 """
 from os import listdir, remove, replace
-from typing import Optional
+from typing import Dict, Optional
 
 from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
@@ -82,3 +82,19 @@ def print_error(error_string: str) -> str:
 def print_success(success_string: str) -> str:
     """ Print a success message, with formatting for green text. """
     print(f'\033[92mSuccess: {success_string}\033[0m')
+
+
+def test_is_configured(configuration_settings: Dict,
+                       collection_key: str) -> bool:
+    """ A helper function to determine if a test should be run given the
+        environment information available.
+
+        The specific check is whether the configuration object exists and, if
+        so, if the collection that will be used in the test has been saved in
+        that configuration object.
+
+    """
+    return (
+        configuration_settings is not None
+        and configuration_settings.get(collection_key) is not None
+    )
