@@ -9,5 +9,4 @@ dependencies:
   - python-dateutil=2.7.5
   - pip:
     - harmony-py
-    - pytest
-    - boto3
+    - pyhdf
