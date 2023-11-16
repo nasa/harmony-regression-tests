@@ -3,10 +3,11 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.10
-  - notebook=6.5.4
-  - papermill=2.3.4
-  - python-dateutil=2.7.5
+  - python
+  - notebook
+  - papermill
+  - python-dateutil
+  - hdf4
   - pip:
     - harmony-py
     - pyhdf
