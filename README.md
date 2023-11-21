@@ -55,11 +55,10 @@ created Zarr store.*
 
 1. *`HARMONY_HOST_URL` is the harmony base url for your target environment. e.g. `SIT` would be `https://harmony.sit.earthdata.nasa.gov`*
 
-1. When testing against a local Harmony installation, where
-  `HARMONY_HOST_URL=http://localhost:3000`, best testing results occur when
-  running the notebook manually on a Jupyter notebook server, rather than via
-  the `run_notebooks.sh` script.
-
+1. The `run_notebooks.sh` script cannot be used to test against Harmony-in-a-Box,
+   i.e. `HARMONY_HOST_URL=http://localhost:3000`, due to Docker-in-Docker issues.
+   To test against a local Harmony instance, the notebook should be run
+   manually on a Jupyter notebook server (e.g., in a browser).
 
 ### Test in a Browser:
 
@@ -77,7 +76,6 @@ environment before installing from the environment.yml.
 1. Browse and open the jupyter notebook file for the test. (`<image>_Regression.ipynb`)
 1. Update the `harmony_host_url` in the notebook.
 1. Run the tests.
-
 
 ## Adding a new test suite:
 
@@ -101,10 +99,14 @@ environment before installing from the environment.yml.
    ```
    all_images=(<pre existing test suites> <new-suite-name>)
    ```
+1. Update `script/test-in-bamboo.sh` to list the new suite name in `all_tests`.
 
 With this in place, the new test suite should be able to be built and run:
 
 ```bash
+EDL_USER=...
+EDL_PASSWORD=...
+HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov  # Or UAT or production
 cd test
 make <new-suite-name>-image
 ./run_notebooks.sh <new-suite-name>
@@ -121,19 +123,41 @@ file is updated. To do so, simply add a new target to the
   notebook: <new-notebook-name>
 ```
 
-## Notebook Development
+## Test suite contents:
 
-Notebooks and support files should be placed in a subdirectory of the `test` directory.
+This section of the README describes the files that are expected in every test
+suite subdirectory.
 
-For example, in the `harmony` directory we have
+For example, in the `swath-projector` directory we have
 
 ```
-├── Harmony.ipynb
-├── __init__.py
+├── reference_files
+├── SwathProjector_Regression.ipynb
 ├── environment.yaml
-├── util.py
+├── utilities.py
 └── version.txt
 ```
+
+* `reference_files` contains golden template files for expected outputs of
+  `tests.
+* `SwathProjector_Regression.ipynb` is the regression test Jupyter notebook
+  itself, running tests in cells. A test suite fails when a Jupyter notebook
+  cell returns an error from the execution. Each regression test is designed to
+  trigger this failure state for failed tests by asserting whether the output
+  matches expectations.
+* `environment.yaml` defines the conda environment and packages present in it.
+  The Docker image for each test suite will use the appropriate environment
+  file to define the conda environment the Jupyter notebook is executed within
+  during regression testing.
+* `utilities.py` is a file containing lower level helper functions. Usually,
+  these helper functions have been removed from the notebook itself in order to
+  simplify the appearance of the notebook and make it easier to understand upon
+  test failures.
+* `version.txt` contains a semantic version number for the latest version of
+  the regression tests. This will be iterated either as new tests are added, or
+  as the test outputs are updated. Changing this file in a PR, and then merging
+  that PR to the `main` branch will trigger the publication of a new version of
+  that regression test Docker image.
 
  Notebook dependencies should be listed in file named `environment.yaml` at the top level of the
  subdirectory. The `name` field in the file should be `papermill`. For example:
