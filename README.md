@@ -60,6 +60,9 @@ created Zarr store.*
    To test against a local Harmony instance, the notebook should be run
    manually on a Jupyter notebook server (e.g., in a browser).
 
+For more information on running a local Harmony instance, see:
+<https://github.com/nasa/harmony/blob/main/README.md>.
+
 ### Test in a Browser:
 
 To run the tests:
