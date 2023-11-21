@@ -89,7 +89,7 @@ environment before installing from the environment.yml.
    test suite:
 
    ```
-   <suite-name>-image
+   <new-suite-name>-image
        docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> .
    ```
 1. Update the `make images` rule to include building the new image.
@@ -131,7 +131,7 @@ For example, in the `harmony` directory we have
 ├── Harmony.ipynb
 ├── __init__.py
 ├── environment.yaml
-└── util.py
+├── util.py
 └── version.txt
 ```
 
