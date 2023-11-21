@@ -55,6 +55,13 @@ created Zarr store.*
 
 1. *`HARMONY_HOST_URL` is the harmony base url for your target environment. e.g. `SIT` would be `https://harmony.sit.earthdata.nasa.gov`*
 
+1. The `run_notebooks.sh` script cannot be used to test against Harmony-in-a-Box,
+   i.e. `HARMONY_HOST_URL=http://localhost:3000`, due to Docker-in-Docker issues.
+   To test against a local Harmony instance, the notebook should be run
+   manually on a Jupyter notebook server (e.g., in a browser).
+
+For more information on running a local Harmony instance, see:
+<https://github.com/nasa/harmony/blob/main/README.md>.
 
 ### Test in a Browser:
 
@@ -73,19 +80,87 @@ environment before installing from the environment.yml.
 1. Update the `harmony_host_url` in the notebook.
 1. Run the tests.
 
+## Adding a new test suite:
 
-## Notebook Development
+1. Create a subdirectory within `test` that contains a notebook, environment,
+   version and supporting files, as described in the next section. For ease, it
+   is simplest to use the same string for the subdirectory name and the suite
+   name.
+1. Update the `test/Makefile` to be able to build a Docker image for the new
+   test suite:
 
-Notebooks and support files should be placed in a subdirectory of the `test` directory.
+   ```
+   <new-suite-name>-image
+       docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> .
+   ```
+1. Update the `make images` rule to include building the new image.
 
-For example, in the `harmony` directory we have
+   ```
+   images: <pre existing rules already listed> <new-suite-name>-image
+   ```
+1. Update `test/run_notebooks.sh` to include the new test image in `all_images`:
+   ```
+   all_images=(<pre existing test suites> <new-suite-name>)
+   ```
+1. Update `script/test-in-bamboo.sh` to list the new suite name in `all_tests`.
+
+With this in place, the new test suite should be able to be built and run:
+
+```bash
+EDL_USER=...
+EDL_PASSWORD=...
+HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov  # Or UAT or production
+cd test
+make <new-suite-name>-image
+./run_notebooks.sh <new-suite-name>
+```
+
+After this, the test suite will need to be integrated with the GitHub workflow
+to create a new version of the test image any time the related `version.txt`
+file is updated. To do so, simply add a new target to the
+[build-all-images.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/build-all-images.yml) workflow in the `.github/workflows` directory:
 
 ```
-├── Harmony.ipynb
-├── __init__.py
+-
+  image: <new-suite-name>
+  notebook: <new-notebook-name>
+```
+
+## Test suite contents:
+
+This section of the README describes the files that are expected in every test
+suite subdirectory.
+
+For example, in the `swath-projector` directory we have
+
+```
+├── reference_files
+├── SwathProjector_Regression.ipynb
 ├── environment.yaml
-└── util.py
+├── utilities.py
+└── version.txt
 ```
+
+* `reference_files` contains golden template files for expected outputs of
+  `tests.
+* `SwathProjector_Regression.ipynb` is the regression test Jupyter notebook
+  itself, running tests in cells. A test suite fails when a Jupyter notebook
+  cell returns an error from the execution. Each regression test is designed to
+  trigger this failure state for failed tests by asserting whether the output
+  matches expectations.
+* `environment.yaml` defines the conda environment and packages present in it.
+  The Docker image for each test suite will use the appropriate environment
+  file to define the conda environment the Jupyter notebook is executed within
+  during regression testing.
+* `utilities.py` is a file containing lower level helper functions. Usually,
+  these helper functions have been removed from the notebook itself in order to
+  simplify the appearance of the notebook and make it easier to understand upon
+  test failures.
+* `version.txt` contains a semantic version number for the latest version of
+  the regression tests. This will be iterated either as new tests are added, or
+  as the test outputs are updated. Changing this file in a PR, and then merging
+  that PR to the `main` branch will trigger the publication of a new version of
+  that regression test Docker image.
 
  Notebook dependencies should be listed in file named `environment.yaml` at the top level of the
  subdirectory. The `name` field in the file should be `papermill`. For example:
