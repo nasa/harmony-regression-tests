@@ -55,6 +55,11 @@ created Zarr store.*
 
 1. *`HARMONY_HOST_URL` is the harmony base url for your target environment. e.g. `SIT` would be `https://harmony.sit.earthdata.nasa.gov`*
 
+1. When testing against a local Harmony installation, where
+  `HARMONY_HOST_URL=http://localhost:3000`, best testing results occur when
+  running the notebook manually on a Jupyter notebook server, rather than via
+  the `run_notebooks.sh` script.
+
 
 ### Test in a Browser:
 
@@ -74,6 +79,48 @@ environment before installing from the environment.yml.
 1. Run the tests.
 
 
+## Adding a new test suite:
+
+1. Create a subdirectory within `test` that contains a notebook, environment,
+   version and supporting files, as described in the next section. For ease, it
+   is simplest to use the same string for the subdirectory name and the suite
+   name.
+1. Update the `test/Makefile` to be able to build a Docker image for the new
+   test suite:
+
+   ```
+   <suite-name>-image
+       docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> .
+   ```
+1. Update the `make images` rule to include building the new image.
+
+   ```
+   images: <pre existing rules already listed> <new-suite-name>-image
+   ```
+1. Update `test/run_notebooks.sh` to include the new test image in `all_images`:
+   ```
+   all_images=(<pre existing test suites> <new-suite-name>)
+   ```
+
+With this in place, the new test suite should be able to be built and run:
+
+```bash
+cd test
+make <new-suite-name>-image
+./run_notebooks.sh <new-suite-name>
+```
+
+After this, the test suite will need to be integrated with the GitHub workflow
+to create a new version of the test image any time the related `version.txt`
+file is updated. To do so, simply add a new target to the
+[build-all-images.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/build-all-images.yml) workflow in the `.github/workflows` directory:
+
+```
+-
+  image: <new-suite-name>
+  notebook: <new-notebook-name>
+```
+
 ## Notebook Development
 
 Notebooks and support files should be placed in a subdirectory of the `test` directory.
@@ -85,6 +132,7 @@ For example, in the `harmony` directory we have
 ├── __init__.py
 ├── environment.yaml
 └── util.py
+└── version.txt
 ```
 
  Notebook dependencies should be listed in file named `environment.yaml` at the top level of the
