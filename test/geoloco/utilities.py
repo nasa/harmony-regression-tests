@@ -77,5 +77,3 @@ def print_error(error_string: str) -> str:
 def print_success(success_string: str) -> str:
     """Print a success message, with formatting for green text."""
     print(f'\033[92mSuccess: {success_string}\033[0m')
-
-  
