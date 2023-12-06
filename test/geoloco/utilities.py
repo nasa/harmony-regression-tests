@@ -54,7 +54,26 @@ def get_dim_sizes(file: str) -> list[int]:
             dims = dataset.dimensions(full=1)
             ydim = list(dims.values())[0][0]
             xdim = list(dims.values())[1][0]
-        return [ydim, xdim]
+
+    file_SD.end()
+    return [ydim, xdim]
+
+
+def get_sds_data(file: str):
+    sds_data = None
+    file_SD = SD(file, SDC.READ)
+    datasets = file_SD.datasets()
+
+    if len(datasets) > 0:
+        dataset_names = datasets.keys()
+        for name in dataset_names:
+            if name == 'Cloud_Mask':
+                print('Obtaining ', name, ' data')
+                dataset = file_SD.select(name)
+                sds_data = dataset.get()
+
+    file_SD.end()
+    return sds_data
 
 
 def remove_results_files() -> None:
