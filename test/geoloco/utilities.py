@@ -3,6 +3,7 @@ Common utility functions used by the geoloco regression tests.
 """
 import os
 from pyhdf.SD import SD, SDC
+import numpy
 
 from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
@@ -96,3 +97,23 @@ def print_error(error_string: str) -> str:
 def print_success(success_string: str) -> str:
     """Print a success message, with formatting for green text."""
     print(f'\033[92mSuccess: {success_string}\033[0m')
+
+
+def compare_dimensions(reference_dim_file: str, test_file: str) -> bool:
+    """Compares two data dimension sizes"""
+    reference_dim_sizes = get_dim_sizes(reference_dim_file)
+    test_dim_sizes = get_dim_sizes(test_file)
+    if reference_dim_sizes == test_dim_sizes:
+        return True
+    else:
+        return False
+
+
+def compare_data(reference_file: str, test_file: str) -> bool:
+    """Compares two data dimension sizes"""
+    reference_data = get_sds_data(reference_file)
+    test_data = get_sds_data(test_file)
+    if numpy.array_equal(reference_data, test_data):
+        return True
+    else:
+        return False
