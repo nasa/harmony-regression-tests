@@ -40,7 +40,9 @@ for image in "${images[@]}"; do
 
     # insert AWS Credential variables for n2z only
     if [[ $image == "n2z" ]]; then
-        creds="--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
+        creds="--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+               --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+	       --env AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}"
     else
         creds=""
     fi
@@ -57,7 +59,7 @@ trap ctrl_c SIGINT SIGTERM
 
 function ctrl_c() {
   echo "Cleaning up"
-  for name_comma_pid in ${PIDS[@]}; do
+  for name_comma_pid in "${PIDS[@]}"; do
     name_pid=(${name_comma_pid//,/ })
     echo "Killing ${name_pid[0]}"
     docker kill "${name_pid[1]}" >/dev/null
@@ -69,7 +71,7 @@ function ctrl_c() {
 
 exit_code=0
 # wait for processes to finish and store each exit code into array STATUS'
-for name_comma_pid in ${PIDS[@]}; do
+for name_comma_pid in "${PIDS[@]}"; do
   name_pid=(${name_comma_pid//,/ })
   name=${name_pid[0]}
   pid=${name_pid[1]}
