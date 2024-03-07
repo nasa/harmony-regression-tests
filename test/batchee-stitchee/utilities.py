@@ -4,73 +4,59 @@
 
 """
 from os import listdir, remove, replace
-from typing import Union
+from typing import Optional, Union
 
 from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
 from netCDF4 import Dataset, Group, Variable
 import numpy as np
+import xarray as xr
+from datatree import open_datatree
 
 
 GroupOrVariable = Union[Group, Variable]
 
+def compare_results_to_reference_file(results_file_name: str,
+                                      reference_file_name: str,
+                                      group_name: Optional[str]) -> None:
+    """ Use native `xarray` functionality to compare data values and metadata
+        attributes of downloaded results to a reference file.
 
-def compare_attributes_to_reference(results_object: GroupOrVariable,
-                                    ref_object: GroupOrVariable):
-    """ Ensure the metadata attributes of two NetCDF-4 objects (groups or
-        variables) are the same, with the exception of `history` and
+        If future tests require checks of hierarchical output with multiple
+        groups, see same-named function in `variable-subsetter/utilities.py`.
+
+    """
+    reference_data =  xr.open_dataset(reference_file_name, group=group_name)
+    results_data = xr.open_dataset(results_file_name, group=group_name)
+
+    assert results_data.equals(reference_data), ('Output and reference files '
+                                                 'do not match.')
+
+    reference_data.close()
+    results_data.close()
+    reference_data = None
+    results_data = None
+
+
+def compare_global_attributes_to_reference(results_file_name: str,
+                                           reference_file_name: str,):
+    """ Ensure the metadata attributes of two NetCDF-4 files are the same, 
+        with the exception of `history` and
         `history_json`, which will include references to the request time.
 
     """
-    assert results_object.ncattrs() == ref_object.ncattrs()
+    attr_a = xr.open_dataset(results_file_name).attrs
+    attr_b = xr.open_dataset(reference_file_name).attrs
+    
+    del attr_a['history_json']
+    del attr_b['history_json']
+    if "history" in attr_a:
+        del attr_a['history']
+    if "history" in attr_b:
+        del attr_b['history']
+    
+    assert attr_a == attr_b
 
-    for attribute_name, ref_attribute_value in ref_object.__dict__.items():
-        if attribute_name not in ['history', 'history_json']:
-            if isinstance(ref_attribute_value, np.ndarray):
-                np.testing.assert_array_equal(
-                    results_object.getncattr(attribute_name),
-                    ref_attribute_value
-                )
-            else:
-                assert results_object.getncattr(attribute_name) == ref_attribute_value
-
-
-def compare_variable_to_reference(results_variable: Variable,
-                                  ref_variable: Variable):
-    """ Compare two NetCDF-4 variables, ensuring they have the same data in
-        their arrays and the same metadata attribute.
-
-    """
-    np.testing.assert_array_equal(results_variable[:], ref_variable[:])
-    compare_attributes_to_reference(results_variable, ref_variable)
-
-
-def compare_group_to_reference(results_group: Group, ref_group: Group):
-    """ Compare two NetCDF-4 file groups, ensuring they have the same metadata
-        attributes (excluding provenance), child variables and child groups.
-        Child variables and groups are then compared recursively.
-
-    """
-    compare_attributes_to_reference(results_group, ref_group)
-
-    assert list(results_group.groups.keys()) == list(ref_group.groups.keys())
-    assert list(results_group.variables.keys()) == list(ref_group.variables.keys())
-
-    for variable_name, ref_variable in ref_group.variables.items():
-        compare_variable_to_reference(results_group[variable_name], ref_variable)
-
-    for child_group_name, ref_child_group in ref_group.groups.items():
-        compare_group_to_reference(results_group[child_group_name],
-                                   ref_child_group)
-
-
-def compare_results_to_reference_file(results_file: str, ref_file: str):
-    """ Compare two NetCDF-4 files recursively, checking that the both have the
-        same group structure, variables and metadata attributes.
-
-    """
-    with Dataset(results_file) as results_ds, Dataset(ref_file) as ref_ds:
-        compare_group_to_reference(results_ds, ref_ds)
 
 
 def submit_and_download(harmony_client: Client, request: Request,
