@@ -28,4 +28,7 @@ trajectory-subsetter-image: Dockerfile trajectory-subsetter/environment.yaml
 variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-variable-subsetter:latest -f ./Dockerfile --build-arg notebook=VariableSubsetter_Regression.ipynb --build-arg sub_dir=variable-subsetter .
 
-images: harmony-image harmony-regression-image hga-image hoss-image hybig-image n2z-image regridder-image swath-projector-image trajectory-subsetter-image variable-subsetter-image
+geoloco-image: Dockerfile geoloco/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-geoloco:latest -f ./Dockerfile --build-arg notebook=Geoloco_Regression.ipynb --build-arg sub_dir=geoloco .
+
+images: harmony-image harmony-regression-image hga-image hoss-image hybig-image n2z-image regridder-image swath-projector-image trajectory-subsetter-image variable-subsetter-image geoloco-image
