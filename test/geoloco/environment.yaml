@@ -1,0 +1,16 @@
+name: papermill-geoloco
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11.0
+  - notebook=7.0.6
+  - papermill=2.3.4
+  - python-dateutil=2.8.2
+  - hdf4=4.2.15
+  - gcc=13.2.0
+  - zlib=1.2.13
+  - pip:
+    - harmony-py==0.4.10
+    - pyhdf==0.11.3
+    - numpy==1.26.2

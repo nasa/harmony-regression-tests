@@ -8,5 +8,6 @@ output/*
 .identity
 .netrc
 .DS_Store
+.idea
 
 **/pulled-images.txt
