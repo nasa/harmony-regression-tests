@@ -6,16 +6,10 @@ of regression tests that are each semi-independent.  This CHANGELOG file should 
 to document pull requests to this repository.
 
 
-## 2024-08-05 [#86]
+## 2024-08-05 ([#86](https://github.com/nasa/harmony-regression-tests/pull/86))
 
 Adds this file to capture changes to the repository.
 
 Adds pre-commit.ci behavior to the repository. This setup ensures consistent code style, catches common errors, and maintains file hygiene across the project.
 
 Updates the base image for all regression tests to `mambaorg/micromamba:1.5.8-jammy`
-
-
-
-## 2023-12-19 [#82]
-
-Testing is this PR will get picked up.
