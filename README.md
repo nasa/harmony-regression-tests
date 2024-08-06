@@ -8,7 +8,7 @@ UAT and Prod. This is the preferred method of verifying no regressons have
 occurred, when the services have been modified.
 
 Alternatively, each test can be run locally in a browser against SIT, UAT, PROD
-or localhost (harmony-in-a-box). This is a good choice for test development and
+or localhost (Harmony-In-A-Box). This is a good choice for test development and
 verifying service changes do not cause regression failures. Generally you run
 locally in the browser against a single service regression test.
 
@@ -53,15 +53,18 @@ created Zarr store.*
    to run after the run_notebooks command.  e.g. `./run_notebooks.sh hga n2z`
    would run the `harmony GDAL adapter` and `NetCDF-to-Zarr` regression tests.*
 
-1. *`HARMONY_HOST_URL` is the harmony base url for your target environment. e.g. `SIT` would be `https://harmony.sit.earthdata.nasa.gov`*
+1. *`HARMONY_HOST_URL` is the harmony base url for your target
+   environment. e.g. `SIT` would be `https://harmony.sit.earthdata.nasa.gov`*
 
-1. The `run_notebooks.sh` script cannot be used to test against Harmony-in-a-Box,
-   i.e. `HARMONY_HOST_URL=http://localhost:3000`, due to Docker-in-Docker issues.
-   To test against a local Harmony instance, the notebook should be run
-   manually on a Jupyter notebook server (e.g., in a browser).
+1. *The `run_notebooks.sh` script cannot be used to test against
+   Harmony-in-a-Box, i.e. `HARMONY_HOST_URL=http://localhost:3000`, due to
+   Docker-in-Docker issues.  To test against a local Harmony instance, the
+   notebook should be run manually on a Jupyter notebook server (e.g., in a
+   browser).*
 
-For more information on running a local Harmony instance, see:
-<https://github.com/nasa/harmony/blob/main/README.md>.
+For more information on running a local Harmony instance, see the [Harmony
+README](https://github.com/nasa/harmony/blob/main/README.md).
+
 
 ### Test in a Browser:
 
@@ -248,3 +251,36 @@ if the new image is named `ghcr.io/nasa/regression-tests-foo`, then we would add
 
 The `run_notebooks.sh` file can be used as described above to run the test suite. Notebooks are
 expected to exit with a non-zero exit code on failure when run from `papermill`.
+
+## pre-commit hooks:
+
+This repository uses [pre-commit](https://pre-commit.com/) to enable pre-commit
+checking the repository for some coding standard best practices. These include:
+
+* Removing trailing whitespaces.
+* Removing blank lines at the end of a file.
+* Ensure JSON files have valid formats.
+* [ruff](https://github.com/astral-sh/ruff) Python linting checks.
+* [black](https://black.readthedocs.io/en/stable/index.html) Python code
+  formatting checks.
+
+To enable these checks:
+
+```bash
+# Install pre-commit Python package:
+pip install pre-commit
+
+# Install the git hook scripts:
+pre-commit install
+```
+
+
+If you have installed the hooks locally, when you commit your changes the hook
+will validate your changes before actually committing to your repository. If
+there are failures you will have to opportunity to fix them and add them to
+your commit.
+
+[pre-commit.ci](pre-commit.ci) is configured such that these same hooks will be
+automatically run for every pull request. Because of this, it is highly
+recommended that you also do this locally, since failures will prevent your PR
+from being merged.
