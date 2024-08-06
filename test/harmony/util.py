@@ -1,5 +1,6 @@
 import requests
 
+
 def _url(harmony_host_url: str, uri: str) -> str:
     return f'{harmony_host_url}/{uri}'
 
