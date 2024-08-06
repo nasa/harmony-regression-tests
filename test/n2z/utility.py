@@ -12,13 +12,16 @@ def print_success(success_string: str) -> str:
 
 def get_zarr_stores(results: dict) -> List[dict]:
     """Return all results items that are type "application/x-zarr"."""
-    return [link
-            for link in results.get('links', [])
-            if link.get('type') == 'application/x-zarr']
+    return [
+        link
+        for link in results.get('links', [])
+        if link.get('type') == 'application/x-zarr'
+    ]
 
 
-def assert_result_has_correct_number_of_stores(results: dict,
-                                               expected_stores: int) -> None:
+def assert_result_has_correct_number_of_stores(
+    results: dict, expected_stores: int
+) -> None:
     """
     Verify correct number of zarr stores returned.
 
@@ -36,9 +39,9 @@ def get_zarr_store_location(results: dict) -> str:
     return zarr_stores[0]['href']
 
 
-def download_zarr_store(zarr_s3_url: str,
-                        local_directory: str,
-                        endpoint_url: str = None) -> None:
+def download_zarr_store(
+    zarr_s3_url: str, local_directory: str, endpoint_url: str = None
+) -> None:
     """Download a zarr store from S3 to the desired location.
 
     zarr_s3_url - location of the zarr store on s3

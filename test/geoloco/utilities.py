@@ -1,6 +1,7 @@
 """"
 Common utility functions used by the geoloco regression tests.
 """
+
 import os
 from pyhdf.SD import SD, SDC
 import numpy
@@ -9,11 +10,12 @@ from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
 
 
-def submit_and_download(harmony_client: Client, request: Request,
-                        file_indicator: str) -> str:
-    """ Submit a Harmony request via a `harmony-py` client. Wait for the
-        Harmony job to finish, then download the results to the specified file
-        path.
+def submit_and_download(
+    harmony_client: Client, request: Request, file_indicator: str
+) -> str:
+    """Submit a Harmony request via a `harmony-py` client. Wait for the
+    Harmony job to finish, then download the results to the specified file
+    path.
 
     """
     downloaded_filenames = []
@@ -22,10 +24,10 @@ def submit_and_download(harmony_client: Client, request: Request,
     try:
         job_id = harmony_client.submit(request)
 
-        for filename in [file_future.result()
-                         for file_future
-                         in harmony_client.download_all(job_id,
-                                                        overwrite=True)]:
+        for filename in [
+            file_future.result()
+            for file_future in harmony_client.download_all(job_id, overwrite=True)
+        ]:
 
             print(f'Downloaded: {filename}')
             downloaded_filenames.extend([filename])
@@ -34,7 +36,6 @@ def submit_and_download(harmony_client: Client, request: Request,
             if file_indicator in filename:
                 output_filename = filename
                 print(f'Saved output to: {output_filename}')
-
 
     except ProcessingFailedException as exception:
         print_error('Harmony request failed to complete successfully.')
@@ -78,8 +79,8 @@ def get_sds_data(file: str):
 
 
 def remove_results_files() -> None:
-    """ Remove all HDF-4 files downloaded during the Geoloco
-        regression tests.
+    """Remove all HDF-4 files downloaded during the Geoloco
+    regression tests.
 
     """
     directory_files = os.listdir()
