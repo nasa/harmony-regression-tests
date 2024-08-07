@@ -70,6 +70,7 @@ jobs:
 
       - name: Pull Docker image
         run: docker pull ghcr.io/nasa/regression-tests-${{ inputs.docker-image-name }}:${{ inputs.docker-image-tag }}
+
       - name: Execute notebook
         working-directory: ./test
         env:
@@ -77,6 +78,7 @@ jobs:
           EDL_PASSWORD: ${{ secrets.EDL_PASSWORD }}
           HARMONY_HOST_URL: ${{ vars.HARMONY_HOST_URL }}
         run: ./run_notebooks.sh ${{ inputs.docker-image-name }}
+
       - name: Save notebook as an artefact
         if: always()
         uses: actions/upload-artifact@v3
