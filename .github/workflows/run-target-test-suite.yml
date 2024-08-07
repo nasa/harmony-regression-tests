@@ -68,7 +68,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Pull Docker image 
+      - name: Pull Docker image
         run: docker pull ghcr.io/nasa/regression-tests-${{ inputs.docker-image-name }}:${{ inputs.docker-image-tag }}
       - name: Execute notebook
         working-directory: ./test
