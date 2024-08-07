@@ -17,6 +17,15 @@ locally in the browser against a single service regression test.
 * [Docker](https://www.docker.com/get-started) (to run locally in docker)
 
 
+## Running the Tests in GitHub:
+
+Each test suite can be individually invoked via a GitHub workflow. Navigate to
+the [GitHub Actions tab](https://github.com/nasa/harmony-regression-tests/actions)
+for this repository. Then select the "Run test suite" workflow from the lefthand
+menu. On the right hand side, click the "Run workflow" dropdown, and select the
+correct Docker image and Harmony environment. That should manually trigger the
+workflow.
+
 ## Running the Tests Locally
 
 Each test suite is run in a separate Docker container using a temporary Docker image

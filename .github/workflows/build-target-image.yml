@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout regression test repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Did this image's version change?
         uses: dorny/paths-filter@v2
