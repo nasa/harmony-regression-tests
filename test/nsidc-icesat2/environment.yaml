@@ -1,0 +1,9 @@
+name: papermill-nsidc-icesat2
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11.5
+  - notebook=7.2.1
+  - pip:
+    - harmony-py==0.4.15

@@ -16,6 +16,9 @@ hybig-image: Dockerfile hybig/environment.yaml
 n2z-image: Dockerfile n2z/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-n2z:latest -f ./Dockerfile --build-arg notebook=N2Z_Regression.ipynb --build-arg sub_dir=n2z .
 
+nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-nsidc-icesat2:latest -f ./Dockerfile --build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 .
+
 regridder-image: Dockerfile regridder/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-regridder:latest -f ./Dockerfile --build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder .
 
@@ -31,4 +34,15 @@ variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
 geoloco-image: Dockerfile geoloco/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-geoloco:latest -f ./Dockerfile --build-arg notebook=Geoloco_Regression.ipynb --build-arg sub_dir=geoloco .
 
-images: harmony-image harmony-regression-image hga-image hoss-image hybig-image n2z-image regridder-image swath-projector-image trajectory-subsetter-image variable-subsetter-image geoloco-image
+images: harmony-image \
+	harmony-regression-image \
+	hga-image \
+	hoss-image \
+	hybig-image \
+	n2z-image \
+	nsidc-icesat2-image \
+	regridder-image \
+	swath-projector-image \
+	trajectory-subsetter-image \
+	variable-subsetter-image \
+	geoloco-image
