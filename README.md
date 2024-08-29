@@ -90,12 +90,15 @@ environment before installing from the environment.yml.
    is simplest to use the same string for the subdirectory name and the suite
    name.
 1. Update the `test/Makefile` to be able to build a Docker image for the new
-   test suite:
+   test suite optionally including the shared utility directory:
 
    ```
    <new-suite-name>-image
-       docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> .
+       docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> [--build-arg shared_utils=true] .
    ```
+
+1. If you would like to use shared utilities to help ease the coding you can include a build arg in
+
 1. Update the `make images` rule to include building the new image.
 
    ```

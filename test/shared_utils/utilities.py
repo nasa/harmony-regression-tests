@@ -4,7 +4,7 @@
 
 """
 
-from os import listdir, remove, replace
+from os import replace
 from itertools import count
 
 from harmony import Client, Request
@@ -18,6 +18,46 @@ except Exception:
     # only used by Trajectory Subsetter tests.
     # TODO: remove and make Trajectory Subsetter use above
     from datatree import open_datatree
+
+
+def print_error(error_string: str) -> str:
+    """Print an error, with formatting for red text."""
+    print(f'\033[91m{error_string}\033[0m')
+
+
+def print_success(success_string: str) -> str:
+    """Print a success message, with formatting for green text."""
+    print(f'\033[92mSuccess: {success_string}\033[0m')
+
+
+def submit_and_download(
+    harmony_client: Client, request: Request, output_file_name: str
+):
+    """Submit a Harmony request via a `harmony-py` client. Wait for the
+    Harmony job to finish, then download the results to the specified file
+    path.
+
+    """
+    downloaded_filename = None
+
+    try:
+        job_id = harmony_client.submit(request)
+
+        for filename in [
+            file_future.result()
+            for file_future in harmony_client.download_all(job_id, overwrite=True)
+        ]:
+
+            print(f'Downloaded: {filename}')
+            downloaded_filename = filename
+
+        if downloaded_filename is not None:
+            replace(downloaded_filename, output_file_name)
+            print(f'Saved output to: {output_file_name}')
+
+    except ProcessingFailedException as exception:
+        print_error('Harmony request failed to complete successfully.')
+        raise exception
 
 
 def compare_results_to_reference_file(
@@ -68,36 +108,6 @@ def compare_results_to_reference_file_new(
     results_data = None
 
 
-def submit_and_download(
-    harmony_client: Client, request: Request, output_file_name: str
-):
-    """Submit a Harmony request via a `harmony-py` client. Wait for the
-    Harmony job to finish, then download the results to the specified file
-    path.
-
-    """
-    downloaded_filename = None
-
-    try:
-        job_id = harmony_client.submit(request)
-
-        for filename in [
-            file_future.result()
-            for file_future in harmony_client.download_all(job_id, overwrite=True)
-        ]:
-
-            print(f'Downloaded: {filename}')
-            downloaded_filename = filename
-
-        if downloaded_filename is not None:
-            replace(downloaded_filename, output_file_name)
-            print(f'Saved output to: {output_file_name}')
-
-    except ProcessingFailedException as exception:
-        print_error('Harmony request failed to complete successfully.')
-        raise exception
-
-
 def unalign_groups(
     dict_of_datasets: dict[str, Dataset], coordinate: str
 ) -> dict[str, Dataset]:
@@ -136,25 +146,3 @@ def unalign_groups(
         )
         for key, ds in dict_of_datasets.items()
     }
-
-
-def remove_results_files() -> None:
-    """Remove all NetCDF-4 files downloaded during the Swath Projector
-    regression tests.
-
-    """
-    directory_files = listdir()
-
-    for directory_file in directory_files:
-        if directory_file.endswith('.h5'):
-            remove(directory_file)
-
-
-def print_error(error_string: str) -> str:
-    """Print an error, with formatting for red text."""
-    print(f'\033[91m{error_string}\033[0m')
-
-
-def print_success(success_string: str) -> str:
-    """Print a success message, with formatting for green text."""
-    print(f'\033[92mSuccess: {success_string}\033[0m')

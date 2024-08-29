@@ -1,24 +1,32 @@
-# This is directory that contains common utility functions that can be shared across regression tests.
+## This is directory that contains common utility functions that can be shared across regression tests.
 
-The next steps would be to add the build arg to the docker build command in the Makefiles
+This directory can be included in your test suite by adding a build-arg to the docker build command in the Makefile.
 
 ```sh
- docker build -t ghcr.io/nasa/regression-tests-nsidc-icesat2:latest -f ./Dockerfile --build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 --build-arg shared_utils=true -f Dockerfile .
- ```
+nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-nsidc-icesat2:latest -f ./Dockerfile \
+	--build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 --build-arg shared_utils=true .
+```
 
-# Will also need to descibe how to use the shared_utils and how to ensure your conda environment has all requirements.
 
 
-# describe how to import these in your tests
+Doing this will cause this directory and all its files to be included at `/workdir/shared_utils` in your container.
+
+## Using the shared utility routines
+
+To use routines from the `shared_utils` dir you need to add the `../shared_utils` directory to the Python module search path using `sys.path.append()` so that the modules will be found.
 
 ```python
 ## Import shared utility routines:
-from pathlib import Path
 import sys
 
-shared_utils = Path(__file__).resolve().parent.parent / 'shared_utils'
-sys.path.append(str(shared_utils))
-from utilities import print_success  # noqa: E402
+sys.path.append('../shared_utils')
+from utilities import (
+    print_error,
+    print_success,
+    submit_and_download,
+    compare_results_to_reference_file,
+)
 
-print_success('whoopie')
+print_success('yay! you imported the functions.')
 ```
