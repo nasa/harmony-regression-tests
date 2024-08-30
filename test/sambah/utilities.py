@@ -4,7 +4,6 @@
 
 """
 from os import listdir, remove, replace
-from typing import Dict, Optional
 
 from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
@@ -13,10 +12,10 @@ import xarray as xr
 
 def compare_results_to_reference_file(results_file_name: str,
                                       group_name='/') -> None:
-    """ Use native `xarray` functionality to compare data values and metadata
-        attributes of downloaded results to a reference file.
+    """Use native `xarray` functionality to compare data values and metadata
+    attributes of downloaded results to a reference file.
     """
-    reference_data =  xr.open_dataset(f"reference_files/{results_file_name}", group=group_name)
+    reference_data = xr.open_dataset(f"reference_files/{results_file_name}", group=group_name)
     results_data = xr.open_dataset(results_file_name, group=group_name)
 
     assert results_data.equals(reference_data), ('Output and reference files '
@@ -24,16 +23,13 @@ def compare_results_to_reference_file(results_file_name: str,
 
     reference_data.close()
     results_data.close()
-    reference_data = None
-    results_data = None
 
 
 def submit_and_download(harmony_client: Client, request: Request,
                         output_file_name: str):
-    """ Submit a Harmony request via a `harmony-py` client. Wait for the
-        Harmony job to finish, then download the results to the specified file
-        path.
+    """Submit a Harmony request via a `harmony-py` client.
 
+    Wait for the Harmony job to finish, then download the results to the specified file path.
     """
     downloaded_filename = None
 
@@ -54,13 +50,12 @@ def submit_and_download(harmony_client: Client, request: Request,
             print(f'Saved output to: {output_file_name}')
 
     except ProcessingFailedException as exception:
-        print_error('Harmony request failed to complete successfully.')
+        print('Harmony request failed to complete successfully.')
         raise exception
 
 
 def remove_results_files() -> None:
-    """ Remove all NetCDF-4 files downloaded during the Swath Projector
-        regression tests.
+    """ Remove all NetCDF-4 files downloaded during the regression tests.
 
     """
     directory_files = listdir()
@@ -68,4 +63,3 @@ def remove_results_files() -> None:
     for directory_file in directory_files:
         if directory_file.endswith('.nc4'):
             remove(directory_file)
-
