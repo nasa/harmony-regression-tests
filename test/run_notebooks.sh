@@ -15,7 +15,7 @@ echo "Running regression tests"
 
 # Specify the test images to run, by default all built by the Makefile. If
 # the script is invoked with a list of images, only run those.
-all_images=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder hybig geoloco)
+all_images=(harmony harmony-regression hoss hga n2z swath-projector trajectory-subsetter variable-subsetter regridder hybig geoloco net2cog)
 specified_images=()
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
