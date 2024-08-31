@@ -5,7 +5,7 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2024-08-30 
+## 2024-08-30
 
 Add regression test for net2cog
 
