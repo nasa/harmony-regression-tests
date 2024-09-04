@@ -1,4 +1,4 @@
-"""Simple utility functions used in the regridder test notebook."""
+"""Simple utility functions used in the net2cog test notebook."""
 
 from pathlib import Path
 import rasterio
