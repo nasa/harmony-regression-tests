@@ -5,13 +5,15 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2024-08-29 ([#92](https://github.com/nasa/harmony-regression-tests/pull/92))
+## 2024-09-04 ([#92](https://github.com/nasa/harmony-regression-tests/pull/92))
 
 - Adds NSIDC ICESat2 Regression test suite.
 
 - Adds `shared_utils` functionality. This directory contains routines that are commonly used in regression tests and limits code duplication. To include the `shared_utils` directory in your docker container, Update the Makefile to add a shared_utils build arg. E.g. `--build-arg shared_utils=true` (see the nsidc-icesat2-image target)
 
+## 2024-08-30 ([#94](https://github.com/nasa/harmony-regression-tests/pull/94))
 
+Add regression test for net2cog
 
 ## 2024-08-05 ([#86](https://github.com/nasa/harmony-regression-tests/pull/86))
 
