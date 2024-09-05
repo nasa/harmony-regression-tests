@@ -4,7 +4,7 @@
 
 """
 
-from os import replace
+from shutil import move
 from itertools import count
 
 from harmony import Client, Request
@@ -52,7 +52,7 @@ def submit_and_download(
             downloaded_filename = filename
 
         if downloaded_filename is not None:
-            replace(downloaded_filename, output_file_name)
+            move(downloaded_filename, output_file_name)
             print(f'Saved output to: {output_file_name}')
 
     except ProcessingFailedException as exception:
