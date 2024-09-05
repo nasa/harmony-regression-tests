@@ -14,7 +14,7 @@ Doing this will cause this directory and all its files to be included at `/workd
 
 The test environment is determined by the environment.yaml in the test directory, but if you are including `shared_utils` you will need to also include harmony-py and either xarray-datatree or a fancy pinned version of xarray
 
-For example the pip requirements in the nsidc_icesat2 environment.file :
+For example the pip requirements in the nsidc_icesat2 environment file :
 ```
 name: papermill-nsidc-icesat2
 channels:
