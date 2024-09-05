@@ -1,4 +1,4 @@
-## This is directory that contains common utility functions that can be shared across regression tests.
+## This directory contains common utility functions that can be shared across regression tests.
 
 This directory can be included in your test suite by adding a build-arg to the docker build command in the Makefile.
 
