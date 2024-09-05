@@ -9,7 +9,7 @@ to document pull requests to this repository.
 
 - Adds NSIDC ICESat2 Regression test suite.
 
-- Adds `shared_utils` functionality. This directory contains routines that are commonly used in regression tests and limits code duplication. To include the `shared_utils` directory in your docker container, Update the Makefile to add a shared_utils build arg. E.g. `--build-arg shared_utils=true` (see the nsidc-icesat2-image target)
+- Adds `shared_utils` functionality. This directory contains routines that are commonly used in regression tests and limits code duplication. To include the `shared_utils` directory in your docker container, update the Makefile to add a shared_utils build arg. E.g. `--build-arg shared_utils=true` (see the nsidc-icesat2-image target)
 
 ## 2024-08-30 ([#94](https://github.com/nasa/harmony-regression-tests/pull/94))
 
