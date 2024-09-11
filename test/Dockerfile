@@ -22,13 +22,6 @@ COPY build-netrc.sh notebook-entrypoint.sh ./
 RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/environment.yaml ./${sub_dir}
 
-# Shared util temporary solution: because datatree is not released we are using
-# a pinned version from the git repo and need to have git installed to install
-# xarray
-RUN if [ "$shared_utils" = "true" ]; then \
-        apt-get update && apt-get install -y git; \
-    fi
-
 RUN micromamba create -y -f ${sub_dir}/environment.yaml \
     && micromamba clean --all --force-pkgs-dirs --yes
 
