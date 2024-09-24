@@ -32,6 +32,7 @@ jobs:
           -
             image: "nsidc-icesat2"
             notebook: "NSIDC-ICESAT2_Regression.ipynb"
+            lfs: "true"
           -
             image: "regridder"
             notebook: "Regridder_Regression.ipynb"
@@ -55,3 +56,4 @@ jobs:
     with:
       image-short-name: ${{ matrix.targets.image }}
       notebook-name: ${{ matrix.targets.notebook }}
+      lfs: ${{matrix.targets.lfs}}

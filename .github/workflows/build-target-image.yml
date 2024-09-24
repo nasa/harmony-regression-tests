@@ -13,6 +13,10 @@ on:
       notebook-name:
         required: true
         type: string
+      lfs:
+        required: false
+        type: string
+        default: ''
 
 env:
   REGISTRY: ghcr.io
@@ -23,6 +27,8 @@ jobs:
     steps:
       - name: Checkout regression test repository
         uses: actions/checkout@v3
+        with:
+          lfs: ${{inputs.lfs}}
 
       - name: Did this image's version change?
         uses: dorny/paths-filter@v2
