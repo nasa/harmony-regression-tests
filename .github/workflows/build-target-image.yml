@@ -13,10 +13,12 @@ on:
       notebook-name:
         required: true
         type: string
-      lfs:
-        required: false
+      shared-utils:
+        required: true
         type: string
-        default: ''
+      lfs:
+        required: true
+        type: string
 
 env:
   REGISTRY: ghcr.io
@@ -26,12 +28,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout regression test repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           lfs: ${{inputs.lfs}}
 
       - name: Did this image's version change?
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@v3
         id: changes
         with:
           filters: |
@@ -75,6 +77,8 @@ jobs:
           build-args: |
               notebook=${{inputs.notebook-name}}
               sub_dir=${{inputs.image-short-name}}
+              shared_utils=${{inputs.shared-utils}}
+
           file: ./test/Dockerfile
           context: ./test
           push: true

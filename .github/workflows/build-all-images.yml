@@ -32,6 +32,7 @@ jobs:
           -
             image: "nsidc-icesat2"
             notebook: "NSIDC-ICESAT2_Regression.ipynb"
+            shared-utils: "true"
             lfs: "true"
           -
             image: "regridder"
@@ -56,4 +57,5 @@ jobs:
     with:
       image-short-name: ${{ matrix.targets.image }}
       notebook-name: ${{ matrix.targets.notebook }}
-      lfs: ${{matrix.targets.lfs}}
+      shared-utils: ${{ matrix.targets.shared-utils || 'false' }}
+      lfs: ${{ matrix.targets.lfs || '' }}
