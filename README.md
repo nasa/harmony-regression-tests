@@ -126,11 +126,23 @@ to create a new version of the test image any time the related `version.txt`
 file is updated. To do so, simply add a new target to the
 [build-all-images.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/build-all-images.yml) workflow in the `.github/workflows` directory:
 
-```
+```yaml
 -
   image: <new-suite-name>
   notebook: <new-notebook-name>
 ```
+
+The above is the basic structure for adding a new image to the CI/CD.  Two additional options `shared-utils` and `lfs` default to off, but can be over-ridden as they are for the nsidc-icesat2 image. `shared-utils` controls the addition of the `tests/shared_utils` directory into your image. `lfs` enables git LFS for your image and should be enabled only if you have added reference files with git LFS.
+
+``` yaml
+    -
+      image: "nsidc-icesat2"
+      notebook: "NSIDC-ICESAT2_Regression.ipynb"
+      shared-utils: "true"
+      lfs: "true"
+
+```
+
 
 ## Test suite contents:
 

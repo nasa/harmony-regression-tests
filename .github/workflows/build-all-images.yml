@@ -46,11 +46,11 @@ jobs:
           -
             image: "variable-subsetter"
             notebook: "VariableSubsetter_Regression.ipynb"
-
-          - image: "geoloco"
+          -
+            image: "geoloco"
             notebook: "Geoloco_Regression.ipynb"
-
-          - image: "net2cog"
+          -
+            image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
 
     uses: ./.github/workflows/build-target-image.yml
