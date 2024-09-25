@@ -97,7 +97,12 @@ environment before installing from the environment.yml.
        docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> [--build-arg shared_utils=true] .
    ```
 
-1. If you would like to use shared utilities to help ease the coding you can include a build arg in
+1. If you would like to use shared utilities to help ease the coding you can
+   add the shared_util build-arg to your docker build command in the Makefile
+   (as well as adding it as a key in the `workflow/build-all-images.yml` file).
+   When enabed, this argument will include the `tests/shared_utils` directory
+   as a sibling directory to your tests.  See the
+   `tests/shared_utils/README.md` file for more information.
 
 1. Update the `make images` rule to include building the new image.
 
