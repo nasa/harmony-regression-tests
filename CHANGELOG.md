@@ -5,11 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2024-09-04 ([#92](https://github.com/nasa/harmony-regression-tests/pull/92))
+## 2024-09-24 ([#92](https://github.com/nasa/harmony-regression-tests/pull/92))
 
 - Adds NSIDC ICESat2 Regression test suite.
 
-- Adds `shared_utils` functionality. This directory contains routines that are commonly used in regression tests and limits code duplication. To include the `shared_utils` directory in your docker container, update the Makefile to add a shared_utils build arg. E.g. `--build-arg shared_utils=true` (see the nsidc-icesat2-image target)
+- Adds `shared_utils` functionality. This directory contains routines that are commonly used in regression tests and limits code duplication. To include the `shared_utils` directory in your docker container, update the `Makefile` to add a shared_utils build arg. E.g. `--build-arg shared_utils=true` and update the `.github/workflows/build-all-images.yml` to add a `shared-utils` key of "true" (see the nsidc-icesat2-image target in each file)
+
+- Adds Git LFS functionality. Large files can be configured to use [Git LFS](https://git-lfs.com/). This PR configures the NSIDC reference files  `test/nsidc-icesat2/reference_files/*.h5`.
+
 
 ## 2024-08-30 ([#94](https://github.com/nasa/harmony-regression-tests/pull/94))
 

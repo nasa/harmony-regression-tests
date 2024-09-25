@@ -148,7 +148,8 @@ For example, in the `swath-projector` directory we have
 ```
 
 * `reference_files` contains golden template files for expected outputs of
-  `tests.
+   `tests`.  When you add new binary files to your test, you should configure
+   them to to use Git LFS as well as keep them as small as possible.
 * `SwathProjector_Regression.ipynb` is the regression test Jupyter notebook
   itself, running tests in cells. A test suite fails when a Jupyter notebook
   cell returns an error from the execution. Each regression test is designed to
