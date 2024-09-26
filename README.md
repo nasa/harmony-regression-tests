@@ -15,6 +15,14 @@ locally in the browser against a single service regression test.
 ## Install Prerequisites
 
 * [Docker](https://www.docker.com/get-started) (to run locally in docker)
+* [git-lfs](https://git-lfs.com/) (to handle large files)
+
+
+### Cloning the repostiory.
+
+To work with this repository, ensure git-lfs (Git Large File Storage) is
+installed on your system, as it's used to manage some large files stored in
+GitHub.
 
 
 ## Running the Tests Locally
