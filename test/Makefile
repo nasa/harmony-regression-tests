@@ -1,37 +1,72 @@
 harmony-image: Dockerfile harmony/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-harmony:latest -f ./Dockerfile --build-arg notebook=Harmony.ipynb --build-arg sub_dir=harmony .
+	docker build -t ghcr.io/nasa/regression-tests-harmony:latest -f ./Dockerfile \
+	--build-arg notebook=Harmony.ipynb --build-arg sub_dir=harmony .
 
 harmony-regression-image: Dockerfile harmony-regression/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-harmony-regression:latest -f ./Dockerfile --build-arg notebook=HarmonyRegression.ipynb --build-arg sub_dir=harmony-regression .
+	docker build -t ghcr.io/nasa/regression-tests-harmony-regression:latest -f ./Dockerfile \
+	--build-arg notebook=HarmonyRegression.ipynb --build-arg sub_dir=harmony-regression .
 
 hga-image: Dockerfile hga/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-hga:latest -f ./Dockerfile --build-arg notebook=HGA_Regression.ipynb --build-arg sub_dir=hga .
+	docker build -t ghcr.io/nasa/regression-tests-hga:latest -f ./Dockerfile \
+	--build-arg notebook=HGA_Regression.ipynb --build-arg sub_dir=hga .
 
 hoss-image: Dockerfile hoss/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-hoss:latest -f ./Dockerfile --build-arg notebook=HOSS_Regression.ipynb --build-arg sub_dir=hoss .
+	docker build -t ghcr.io/nasa/regression-tests-hoss:latest -f ./Dockerfile \
+	--build-arg notebook=HOSS_Regression.ipynb --build-arg sub_dir=hoss .
 
 hybig-image: Dockerfile hybig/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-hybig:latest -f ./Dockerfile --build-arg notebook=HyBIG_Regression.ipynb --build-arg sub_dir=hybig .
+	docker build -t ghcr.io/nasa/regression-tests-hybig:latest -f ./Dockerfile \
+	--build-arg notebook=HyBIG_Regression.ipynb --build-arg sub_dir=hybig .
 
 n2z-image: Dockerfile n2z/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-n2z:latest -f ./Dockerfile --build-arg notebook=N2Z_Regression.ipynb --build-arg sub_dir=n2z .
+	docker build -t ghcr.io/nasa/regression-tests-n2z:latest -f ./Dockerfile \
+	--build-arg notebook=N2Z_Regression.ipynb --build-arg sub_dir=n2z .
+
+nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-nsidc-icesat2:latest -f ./Dockerfile \
+	--build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 --build-arg shared_utils=true .
 
 regridder-image: Dockerfile regridder/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-regridder:latest -f ./Dockerfile --build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder .
+	docker build -t ghcr.io/nasa/regression-tests-regridder:latest -f ./Dockerfile \
+	--build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder .
 
 swath-projector-image: Dockerfile swath-projector/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-swath-projector:latest -f ./Dockerfile --build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
+	docker build -t ghcr.io/nasa/regression-tests-swath-projector:latest -f ./Dockerfile \
+	--build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
 
 trajectory-subsetter-image: Dockerfile trajectory-subsetter/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-trajectory-subsetter:latest -f ./Dockerfile --build-arg notebook=TrajectorySubsetter_Regression.ipynb --build-arg sub_dir=trajectory-subsetter .
+	docker build -t ghcr.io/nasa/regression-tests-trajectory-subsetter:latest -f ./Dockerfile \
+	--build-arg notebook=TrajectorySubsetter_Regression.ipynb --build-arg sub_dir=trajectory-subsetter .
 
 variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-variable-subsetter:latest -f ./Dockerfile --build-arg notebook=VariableSubsetter_Regression.ipynb --build-arg sub_dir=variable-subsetter .
+	docker build -t ghcr.io/nasa/regression-tests-variable-subsetter:latest -f ./Dockerfile \
+	--build-arg notebook=VariableSubsetter_Regression.ipynb --build-arg sub_dir=variable-subsetter .
 
 geoloco-image: Dockerfile geoloco/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-geoloco:latest -f ./Dockerfile --build-arg notebook=Geoloco_Regression.ipynb --build-arg sub_dir=geoloco .
+	docker build -t ghcr.io/nasa/regression-tests-geoloco:latest -f ./Dockerfile \
+	--build-arg notebook=Geoloco_Regression.ipynb --build-arg sub_dir=geoloco .
 
 subset-band-name-image: Dockerfile subset-band-name/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-subset-band-name:latest -f ./Dockerfile --build-arg notebook=SubsetBandName_Regression.ipynb --build-arg sub_dir=subset-band-name .
+	docker build -t ghcr.io/nasa/regression-tests-subset-band-name:latest -f ./Dockerfile \
+    --build-arg notebook=SubsetBandName_Regression.ipynb --build-arg sub_dir=subset-band-name .
 
-images: harmony-image harmony-regression-image hga-image hoss-image hybig-image n2z-image regridder-image swath-projector-image trajectory-subsetter-image variable-subsetter-image geoloco-image
+images: harmony-image harmony-regression-image hga-image hoss-image hybig-image n2z-image regridder-image swath-projector-image trajectory-subsetter-image variable-subsetter-image geoloco-image subset-band-name-image
+
+net2cog-image: Dockerfile net2cog/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-net2cog:latest -f ./Dockerfile \
+	--build-arg notebook=net2cog_Regression.ipynb --build-arg sub_dir=net2cog .
+
+images: harmony-image \
+	harmony-regression-image \
+	hga-image \
+	hoss-image \
+	hybig-image \
+	n2z-image \
+	nsidc-icesat2-image \
+	regridder-image \
+	swath-projector-image \
+	trajectory-subsetter-image \
+	variable-subsetter-image \
+	geoloco-image \
+	net2cog-image \
+	subset-band-name-image
