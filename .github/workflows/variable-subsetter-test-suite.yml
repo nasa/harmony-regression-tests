@@ -2,7 +2,7 @@
 #
 # Required settings in the repository:
 # Environments (exactly the following strings):
-# - production
+# - prod
 # - uat
 # - sit
 #
@@ -41,7 +41,7 @@ on:
         options:
           - sit
           - uat
-          - production
+          - prod
 
 jobs:
   variable_subsetter_job:
@@ -62,7 +62,7 @@ jobs:
           if [ "${{ github.event.client_payload.harmony-environment }}" == "uat" ]; then
             echo "HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov"
             echo "HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov" >> $GITHUB_ENV
-          elif [ "${{ github.event.client_payload.harmony-environment }}" == "production" ]; then
+          elif [ "${{ github.event.client_payload.harmony-environment }}" == "prod" ]; then
             echo "HARMONY_HOST_URL=https://harmony.earthdata.nasa.gov"
             echo "HARMONY_HOST_URL=https://harmony.earthdata.nasa.gov" >> $GITHUB_ENV
           else
