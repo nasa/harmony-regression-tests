@@ -29,7 +29,7 @@ on:
         type: string
 
   repository_dispatch:
-    types: [variable-subsetter]
+    types: [harmony-service-example]
     inputs:
       docker-image-tag:
         required: false
