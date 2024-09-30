@@ -23,6 +23,10 @@ on:
       harmony-environment:
         required: true
         type: string
+      docker-image-tag:
+        required: false
+        type: string
+        default: 'latest'
 
   repository_dispatch:
     types: [harmony-service-example]
@@ -34,6 +38,10 @@ on:
           - sit
           - uat
           - prod
+      docker-image-tag:
+        required: false
+        type: string
+        default: 'latest'
 
 jobs:
   variable_subsetter_job:
@@ -47,7 +55,7 @@ jobs:
         run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Pull Docker image
-        run: docker pull ghcr.io/nasa/regression-tests-variable-subsetter:latest
+        run: docker pull ghcr.io/nasa/regression-tests-variable-subsetter:${{ github.event.client_payload.docker-image-tag }}
 
       - name: Set HARMONY_HOST_URL
         run: |
