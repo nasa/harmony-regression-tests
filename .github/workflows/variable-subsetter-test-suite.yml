@@ -94,6 +94,6 @@ jobs:
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: variable-subsetter regression test result is ${{ steps.test-step.outcome }}
-          to: ${{ secrets.TO_EMAIL_VARIABLE_SUBSETTER }}
+          to: ${{ vars.TO_EMAIL_VARIABLE_SUBSETTER }}
           from: ${{ secrets.FROM_EMAIL }}
           body: variable-subsetter regression test result is ${{ steps.test-step.outcome }}! View the details at ${{ env.RUN_URL }}.
