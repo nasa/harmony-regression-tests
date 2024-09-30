@@ -71,12 +71,25 @@ jobs:
       - name: Pull Docker image
         run: docker pull ghcr.io/nasa/regression-tests-${{ inputs.docker-image-name }}:${{ inputs.docker-image-tag }}
 
+      - name: Set HARMONY_HOST_URL
+        run: |
+          if [ "${{ inputs.harmony-environment }}" == "uat" ]; then
+            echo "HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov" >> $GITHUB_ENV
+          elif [ "${{ inputs.harmony-environment }}" == "prod" ]; then
+            echo "HARMONY_HOST_URL=https://harmony.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.earthdata.nasa.gov" >> $GITHUB_ENV
+          else
+            echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov" >> $GITHUB_ENV
+          fi
+
       - name: Execute notebook
         working-directory: ./test
         env:
           EDL_USER: ${{ secrets.EDL_USER }}
           EDL_PASSWORD: ${{ secrets.EDL_PASSWORD }}
-          HARMONY_HOST_URL: ${{ vars.HARMONY_HOST_URL }}
+          HARMONY_HOST_URL: ${{ env.HARMONY_HOST_URL }}
         run: ./run_notebooks.sh ${{ inputs.docker-image-name }}
 
       - name: Save notebook as an artefact
