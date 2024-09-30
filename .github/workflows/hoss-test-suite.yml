@@ -71,6 +71,7 @@ jobs:
         run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Execute notebook
+        id: test-step
         working-directory: ./test
         env:
           EDL_USER: ${{ secrets.EDL_USER }}
@@ -78,7 +79,7 @@ jobs:
           HARMONY_HOST_URL: ${{ env.HARMONY_HOST_URL }}
         run: ./run_notebooks.sh hoss
 
-      - name: Save notebook as an artefact
+      - name: Save notebook as an artifact
         if: always()
         uses: actions/upload-artifact@v3
         with:
@@ -86,14 +87,14 @@ jobs:
           path: test/output/hoss/Results.ipynb
 
       - name: Send mail
-        if: failure()
+        if: always()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: HOSS regression test of ${{ github.repository }} failed
+          subject: HOSS regression test result is ${{ steps.test-step.outcome }}
           to: ${{ vars.TO_EMAIL_HOSS }}
           from: ${{ secrets.FROM_EMAIL }}
-          body: HOSS regression test of ${{ github.repository }} failed! View the details at ${{ env.RUN_URL }}.
+          body: HOSS regression test result is ${{ steps.test-step.outcome }}! View the details at ${{ env.RUN_URL }}.

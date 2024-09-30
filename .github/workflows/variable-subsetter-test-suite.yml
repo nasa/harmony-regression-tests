@@ -79,7 +79,7 @@ jobs:
           HARMONY_HOST_URL: ${{ env.HARMONY_HOST_URL }}
         run: ./run_notebooks.sh variable-subsetter
 
-      - name: Save notebook as an artefact
+      - name: Save notebook as an artifact
         if: always()
         uses: actions/upload-artifact@v3
         with:
@@ -87,6 +87,7 @@ jobs:
           path: test/output/variable-subsetter/Results.ipynb
 
       - name: Send mail
+        if: always()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
