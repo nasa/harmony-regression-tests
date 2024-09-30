@@ -81,3 +81,38 @@ jobs:
         with:
           name: notebook-output
           path: test/output/hoss/Results.ipynb
+
+      - name: Send failure notification email
+        if: failure()  # This step runs only if the previous steps fail
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const nodemailer = require('nodemailer');
+
+            let transporter = nodemailer.createTransport({
+              host: process.env.SMTP_HOST,
+              port: process.env.SMTP_PORT,
+              secure: false,
+              auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASSWORD,
+              },
+            });
+
+            let info = await transporter.sendMail({
+              from: `"GitHub Actions" <${process.env.FROM_EMAIL}>`,
+              to: process.env.TO_EMAIL_WORKFLOW_1,  # Using the workflow-specific email secret
+              subject: `GitHub Actions Workflow 1 Failed: ${process.env.GITHUB_WORKFLOW}`,
+              text: `The workflow run for ${process.env.GITHUB_REPOSITORY} on branch ${process.env.GITHUB_REF} failed.`,
+              html: `<p>The workflow run for <strong>${process.env.GITHUB_REPOSITORY}</strong> on branch <strong>${process.env.GITHUB_REF}</strong> failed.</p>
+                     <p>Check the details: <a href="${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}">Workflow Run</a></p>`,
+            });
+
+            console.log('Message sent: %s', info.messageId);
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          TO_EMAIL_WORKFLOW_1: ${{ secrets.TO_EMAIL_HOSS }}  # Referencing the specific recipient email
