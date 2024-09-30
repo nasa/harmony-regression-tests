@@ -55,7 +55,7 @@ jobs:
         run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Pull Docker image
-        run: docker pull ghcr.io/nasa/regression-tests-variable-subsetter:${{ github.event.client_payload.docker-image-tag }}
+        run: docker pull ghcr.io/nasa/regression-tests-variable-subsetter:${{ github.event.client_payload.docker-image-tag || 'latest' }}
 
       - name: Set HARMONY_HOST_URL
         run: |
