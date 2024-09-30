@@ -51,6 +51,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get the URL of the current workflow run
+        run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+
       - name: Pull Docker image
         run: docker pull ghcr.io/nasa/regression-tests-variable-subsetter:${{ github.event.client_payload.docker-image-tag }}
 
@@ -66,9 +69,6 @@ jobs:
             echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov"
             echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov" >> $GITHUB_ENV
           fi
-
-      - name: Get the URL of the current workflow run
-        run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Execute notebook
         id: test-step
