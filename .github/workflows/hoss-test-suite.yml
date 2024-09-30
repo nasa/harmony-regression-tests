@@ -67,6 +67,9 @@ jobs:
             echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov" >> $GITHUB_ENV
           fi
 
+      - name: Get the URL of the current workflow run
+        run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+
       - name: Execute notebook
         working-directory: ./test
         env:
@@ -90,7 +93,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: Github Actions xxxxxxxx job result
+          subject: HOSS regression test of ${{ github.repository }} failed
           to: ${{ secrets.TO_EMAIL_HOSS }}
           from: ${{ secrets.FROM_EMAIL }}
-          body: HOSS regression test of ${{ github.repository }} completed xxxxx successfully!
+          body: HOSS regression test of ${{ github.repository }} failed! View the details here ${{ env.RUN_URL }}.
