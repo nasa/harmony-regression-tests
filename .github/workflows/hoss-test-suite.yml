@@ -96,4 +96,4 @@ jobs:
           subject: HOSS regression test of ${{ github.repository }} failed
           to: ${{ secrets.TO_EMAIL_HOSS }}
           from: ${{ secrets.FROM_EMAIL }}
-          body: HOSS regression test of ${{ github.repository }} failed! View the details here ${{ env.RUN_URL }}.
+          body: HOSS regression test of ${{ github.repository }} failed! View the details at ${{ env.RUN_URL }}.

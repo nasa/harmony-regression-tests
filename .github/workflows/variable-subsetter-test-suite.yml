@@ -67,7 +67,11 @@ jobs:
             echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov" >> $GITHUB_ENV
           fi
 
+      - name: Get the URL of the current workflow run
+        run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+
       - name: Execute notebook
+        id: test-step
         working-directory: ./test
         env:
           EDL_USER: ${{ secrets.EDL_USER }}
@@ -81,3 +85,15 @@ jobs:
         with:
           name: notebook-output
           path: test/output/variable-subsetter/Results.ipynb
+
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: variable-subsetter regression test result is ${{ steps.test-step.outcome }}
+          to: ${{ secrets.TO_EMAIL_VARIABLE_SUBSETTER }}
+          from: ${{ secrets.FROM_EMAIL }}
+          body: variable-subsetter regression test result is ${{ steps.test-step.outcome }}! View the details at ${{ env.RUN_URL }}.
