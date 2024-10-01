@@ -1,0 +1,100 @@
+# This workflow runs a specific regression test suite, using the input image
+# name and tag from the workflow call.
+#
+# Required settings in the repository:
+# Environments (exactly the following strings):
+# - production
+# - uat
+# - sit
+#
+# Secrets in each environment:
+# - EDL_USER
+# - EDL_PASSWORD
+#
+# Variables in each environment:
+# - HARMONY_HOST_URL
+#
+# Note: A workflow_call event can only have inputs of type boolean, number or
+# string.
+name: Run test suite
+
+on:
+  workflow_call:
+    inputs:
+      docker-image-name:
+        required: true
+        type: string
+      docker-image-tag:
+        required: false
+        type: string
+        default: 'latest'
+      harmony-environment:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      docker-image-name:
+        required: true
+        type: choice
+        options:
+          - geoloco
+          - harmony-regression
+          - harmony
+          - hga
+          - hoss
+          - hybig
+          # - n2z  # Commented out because needs AWS credentials
+          - regridder
+          - swath-projector
+          - trajectory-subsetter
+          - variable-subsetter
+      docker-image-tag:
+        required: false
+        type: string
+        default: 'latest'
+      harmony-environment:
+        required: true
+        type: choice
+        options:
+          - sit
+          - uat
+          - production
+
+jobs:
+  run-tests:
+    environment: ${{ inputs.harmony-environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Pull Docker image
+        run: docker pull ghcr.io/nasa/regression-tests-${{ inputs.docker-image-name }}:${{ inputs.docker-image-tag }}
+
+      - name: Set HARMONY_HOST_URL
+        run: |
+          if [ "${{ inputs.harmony-environment }}" == "uat" ]; then
+            echo "HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov" >> $GITHUB_ENV
+          elif [ "${{ inputs.harmony-environment }}" == "prod" ]; then
+            echo "HARMONY_HOST_URL=https://harmony.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.earthdata.nasa.gov" >> $GITHUB_ENV
+          else
+            echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov" >> $GITHUB_ENV
+          fi
+
+      - name: Execute notebook
+        working-directory: ./test
+        env:
+          EDL_USER: ${{ secrets.EDL_USER }}
+          EDL_PASSWORD: ${{ secrets.EDL_PASSWORD }}
+          HARMONY_HOST_URL: ${{ env.HARMONY_HOST_URL }}
+        run: ./run_notebooks.sh ${{ inputs.docker-image-name }}
+
+      - name: Save notebook as an artefact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: notebook-output
+          path: test/output/${{ inputs.docker-image-name }}/Results.ipynb
