@@ -83,7 +83,7 @@ def compare_results_to_reference_file_new(
     results_file_name: str,
     reference_file_name: str,
     identical: bool = True,
-    coordinates_to_fix: list[str | None] = None,
+    coordinates_to_fix: list[str] | None = None,
 ) -> None:
     """Use `DataTree` functionality to compare data values, variables,
     coordinates, metadata, and all their corresponding attributes of
