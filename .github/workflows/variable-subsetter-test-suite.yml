@@ -44,12 +44,55 @@ jobs:
   base_job:
     environment: ${{ github.event.client_payload.harmony-environment }}
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.create-tests.outputs.matrix }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Get the URL of the current workflow run
         run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+
+      - name: Load Harmony Service Config from Environment Variable
+        id: load-config
+        run: |
+          # Use the event type to select the appropriate service list
+          echo "github.event.action: ${{ github.event.action }}"
+          echo "github.event_name: ${{ github.event_name }}"
+          SERVICES_TESTS=$(echo '${{ vars.SERVICES_TESTS_CONFIG }}' | jq -r '."${{ github.event.action }}"')
+          echo "============SERVICES_TESTS=$SERVICES_TESTS"
+          echo "SERVICES_TESTS=$SERVICES_TESTS" >> $GITHUB_ENV
+
+      - name: Create Matrix Configuration
+        id: create-tests
+        run: |
+          # Split the selected service list into an array format and set it as the tests
+          TESTS=$(echo ",${{ env.SERVICES_TESTS }}" | tr ',' '\n' | jq -c -R '[inputs] | {service: .}')
+          echo "=======env.SERVICES_TESTS: ${{ env.SERVICES_TESTS }}"
+          echo "=======tests: $TESTS"
+
+          echo "matrix=$TESTS" >> $GITHUB_OUTPUT
+
+      - name: Debug Matrix Output
+        run: |
+          echo "Tests is: ${{ steps.create-tests.outputs.matrix }}"
+
+  run-tests:
+    needs: base_job
+    environment: ${{ github.event.client_payload.harmony-environment }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.base_job.outputs.matrix) }}
+
+    steps:
+      - name: Debug Step
+        run: |
+          echo "Matrix is: ${{ needs.base_job.outputs.matrix }}"
+
+      - name: Access Matrix Output 2
+        run: |
+          echo "Matrix is: ${{ needs.base_job.outputs.matrix }}"
+          echo "Matrix 222 is: ${{ matrix.service }}"
 
       - name: Set HARMONY_HOST_URL
         run: |
@@ -64,28 +107,6 @@ jobs:
             echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov" >> $GITHUB_ENV
           fi
 
-      - name: Load Harmony Service Config from Environment Variable
-        id: load-config
-        run: |
-          # Use the event type to select the appropriate service list
-          echo "github.event.action: ${{ github.event.action }}"
-          echo "github.event_name: ${{ github.event_name }}"
-          echo "SERVICES_TESTS=$(echo '${{ vars.SERVICES_TESTS_CONFIG }}' | jq -r '."${{ github.event.action || github.event_name }}"')" >> $GITHUB_ENV
-
-      - name: Create Matrix Configuration
-        id: create-matrix
-        run: |
-          # Split the selected service list into an array format and set it as the matrix
-          echo "::set-output name=matrix::$(echo "${{ env.SERVICES_TESTS }}" | tr ',' '\n' | jq -c -R '[inputs] | {service: .}')"
-
-  run-tests:
-    needs: base_job
-    environment: ${{ github.event.client_payload.harmony-environment }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{ fromJson(needs.base_job.outputs['create-matrix.matrix']) }}
-
-    steps:
       - name: Pull Docker image
         run: docker pull ghcr.io/nasa/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || 'latest' }}
 
@@ -111,11 +132,11 @@ jobs:
 
   email_job:
     needs: run-tests
+    if: always()
     environment: ${{ github.event.client_payload.harmony-environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Send mail
-        if: always()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
