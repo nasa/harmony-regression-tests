@@ -14,8 +14,9 @@ locally in the browser against a single service regression test.
 
 ## Install Prerequisites
 
-* [Docker](https://www.docker.com/get-started) (to run locally in docker)
-* [git-lfs](https://git-lfs.com/) (to handle large files)
+* [Docker](https://www.docker.com/get-started) - to run locally in docker
+* [git-lfs](https://git-lfs.com/) - to handle large files
+* [pre-commit](https://pre-commit.com/) - to ensure code formatting. [See below](#pre-commit-hooks).
 
 
 ### Cloning the repostiory.
