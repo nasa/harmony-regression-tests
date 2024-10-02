@@ -5,6 +5,11 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2024-10-02 ([#xx](https://github.com/nasa/harmony-regression-tests/pull/xx))
+
+- Adds NSIDC ICESat2 Production Regression configuration.
+
+
 ## 2024-09-24 ([#92](https://github.com/nasa/harmony-regression-tests/pull/92))
 
 - Adds NSIDC ICESat2 Regression test suite.
