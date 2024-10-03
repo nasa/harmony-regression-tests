@@ -36,9 +36,9 @@ workflow.
 
 The regression test GitHub actions can also be invoked through different event types
 after a Harmony service is successfully deployed in Harmony or after a new version of
-the Harmony server is deployed. Currently, only HOSS regression event type is supported.
-The regression test event type for other Harmony services and Harmony server will be added
-in the near future.
+the Harmony server is deployed.
+Note: Only the `latest` tag of the regression docker image will be used to run the
+Jupyter notebook tests.
 
 ## Running the Tests Locally
 
@@ -137,6 +137,9 @@ environment before installing from the environment.yml.
    all_images=(<pre existing test suites> <new-suite-name>)
    ```
 1. Update `script/test-in-bamboo.sh` to list the new suite name in `all_tests`.
+1. Update `config/services_tests_config_<env>.json` to associate the new suite name
+   with a Harmony service and add it to the `all` list so that it will be run when
+   the associated Harmony service or Harmony server is deployed.
 
 With this in place, the new test suite should be able to be built and run:
 
