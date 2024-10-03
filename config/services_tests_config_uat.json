@@ -1,0 +1,20 @@
+{
+    "all": "harmony,harmony-regression,geoloco,hga,n2z,regridder,hoss,variable-subsetter,hybig,net2cog,subset-band-name,swath-projector,nsidc-icesat2,trajectory-subsetter",
+    "batchee": "TBD",
+    "geoloco": "geoloco",
+    "giovanni-adapter": "TBD",
+    "harmony-gdal-adapter": "hga",
+    "harmony-netcdf-to-zarr": "n2z",
+    "harmony-regridder": "regridder",
+    "harmony-service-example": "harmony-regression",
+    "hoss": "hoss, variable-subsetter",
+    "hybig": "hybig",
+    "net2cog": "net2cog",
+    "podaac-concise": "TBD",
+    "podaac-l2-subsetter": "TBD",
+    "sds-maskfill": "TBD",
+    "stitchee": "TBD",
+    "subset-band-name": "subset-band-name",
+    "swath-projector": "swath-projector",
+    "trajectory-subsetter": "nsidc-icesat2,trajectory-subsetter"
+}

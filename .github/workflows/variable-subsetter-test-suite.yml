@@ -26,7 +26,7 @@ on:
         default: 'latest'
 
   repository_dispatch:
-    types: [harmony-service-example]
+    types: [all,geoloco,harmony-gdal-adapter,harmony-netcdf-to-zarr,harmony-service-example,hoss,hybig,net2cog,swath-projector,trajectory-subsetter]
     inputs:
       harmony-environment:
         required: true
@@ -49,6 +49,9 @@ jobs:
       harmony_host_url: ${{ env.HARMONY_HOST_URL }}
       run_url: ${{ env.RUN_URL }}
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
       - name: Get the URL of the current workflow run
         run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
 
@@ -69,16 +72,12 @@ jobs:
         id: create-matrix
         run: |
           # Use the event type to select the appropriate service list
-          SERVICES_TESTS=$(echo '${{ vars.SERVICES_TESTS_CONFIG }}' | jq -r '."${{ github.event.action }}"')
+          SERVICES_TESTS=$(cat ./config/services_tests_config_${{ github.event.client_payload.harmony-environment }}.json | jq -r '."${{ github.event.action }}"')
           # Split the selected service list into an array format and set it as the matrix
-          MATRIX=$(echo ",$SERVICES_TESTS" | tr ',' '\n' | jq -c -R '[inputs] | {service: .}')
+          MATRIX=$(echo ",$SERVICES_TESTS" | tr ',' '\n' | awk '{$1=$1;print}' | jq -c -R '[inputs] | {service: .}')
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
 
-      - name: Debug Matrix Output
-        run: |
-          echo "Tests is: ${{ steps.create-matrix.outputs.matrix }}"
-
-  run-tests:
+  test:
     needs: base
     environment: ${{ github.event.client_payload.harmony-environment }}
     runs-on: ubuntu-latest
@@ -112,7 +111,7 @@ jobs:
           path: test/output/${{ matrix.service }}/Results.ipynb
 
   email:
-    needs: run-tests
+    needs: test
     if: always()
     environment: ${{ github.event.client_payload.harmony-environment }}
     runs-on: ubuntu-latest
@@ -130,7 +129,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ github.event.action }} regression test result is ${{ needs.run-tests.result }}
+          subject: ${{ github.event.action }} regression test result is ${{ needs.test.result }}
           to: ${{ env.TO_EMAIL }}
           from: ${{ secrets.FROM_EMAIL }}
-          body: ${{ github.event.action }} regression test result is ${{ needs.run-tests.result }}! View the details at ${{ needs.run-tests.outputs.run_url }}.
+          body: ${{ github.event.action }} regression test result is ${{ needs.test.result }}! View the details at ${{ needs.test.outputs.run_url }}.
