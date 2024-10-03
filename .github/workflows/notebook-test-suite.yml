@@ -1,4 +1,12 @@
-# This workflow runs variable-subsetter regression test suite, using the tag from the workflow call.
+# This workflow runs Jupyter notebook based regression test suites.
+# It can be run manually run on github Actions or invoked through
+# the github Action workflow api.
+# When invoked through the github Action workflow api, a event type needs
+# to be provided. The event type should be either the name of one of the
+# Harmony services or 'all'.
+# The notebook test suites associated with Harmony service matching the event
+# will be executed, or all the notebook test suites will be exectued when 'all'
+# is provided which is triggered when a Harmonny server deployment occurs.
 #
 # Required settings in the repository:
 # Environments (exactly the following strings):
@@ -12,7 +20,7 @@
 #
 # Note: A workflow_call event can only have inputs of type boolean, number or
 # string.
-name: Run variable-subsetter test suite
+name: Run Jupyter notebook based test suite
 
 on:
   workflow_call:
