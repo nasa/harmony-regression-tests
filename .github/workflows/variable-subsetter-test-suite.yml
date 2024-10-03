@@ -41,7 +41,7 @@ on:
         default: 'latest'
 
 jobs:
-  base-job:
+  base:
     environment: ${{ github.event.client_payload.harmony-environment }}
     runs-on: ubuntu-latest
     outputs:
@@ -69,8 +69,6 @@ jobs:
         id: create-matrix
         run: |
           # Use the event type to select the appropriate service list
-          echo "github.event.action: ${{ github.event.action }}"
-          echo "github.event_name: ${{ github.event_name }}"
           SERVICES_TESTS=$(echo '${{ vars.SERVICES_TESTS_CONFIG }}' | jq -r '."${{ github.event.action }}"')
           # Split the selected service list into an array format and set it as the matrix
           MATRIX=$(echo ",$SERVICES_TESTS" | tr ',' '\n' | jq -c -R '[inputs] | {service: .}')
@@ -81,23 +79,18 @@ jobs:
           echo "Tests is: ${{ steps.create-matrix.outputs.matrix }}"
 
   run-tests:
-    needs: base-job
+    needs: base
     environment: ${{ github.event.client_payload.harmony-environment }}
     runs-on: ubuntu-latest
     outputs:
-      run_url: ${{ needs.base-job.outputs.run_url }}
+      run_url: ${{ needs.base.outputs.run_url }}
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.base-job.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.base.outputs.matrix) }}
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
-
-      - name: Debug Step
-        run: |
-          echo "Matrix is: ${{ needs.base-job.outputs.matrix }}"
-          echo "current test running: ${{ matrix.service }}"
 
       - name: Pull Docker image
         run: docker pull ghcr.io/nasa/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || 'latest' }}
@@ -108,22 +101,28 @@ jobs:
         env:
           EDL_USER: ${{ secrets.EDL_USER }}
           EDL_PASSWORD: ${{ secrets.EDL_PASSWORD }}
-          HARMONY_HOST_URL: ${{ needs.base-job.outputs.harmony_host_url }}
+          HARMONY_HOST_URL: ${{ needs.base.outputs.harmony_host_url }}
         run: ./run_notebooks.sh ${{ matrix.service }}
 
       - name: Save notebook as an artifact
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: notebook-output
           path: test/output/${{ matrix.service }}/Results.ipynb
 
-  email_job:
+  email:
     needs: run-tests
     if: always()
     environment: ${{ github.event.client_payload.harmony-environment }}
     runs-on: ubuntu-latest
     steps:
+      - name: Get TO_EMAIL
+        id: get-to-email
+        run: |
+          SERVICE_EMAILS=$(echo '${{ vars.SERVICES_EMAILS_CONFIG }}' | jq -r '."${{ github.event.action }}"')
+          echo "TO_EMAIL=$SERVICE_EMAILS" >> $GITHUB_ENV
+
       - name: Send mail
         uses: dawidd6/action-send-mail@v3
         with:
@@ -132,6 +131,6 @@ jobs:
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ${{ github.event.action }} regression test result is ${{ needs.run-tests.result }}
-          to: ${{ vars.TO_EMAIL_VARIABLE_SUBSETTER }}
+          to: ${{ env.TO_EMAIL }}
           from: ${{ secrets.FROM_EMAIL }}
           body: ${{ github.event.action }} regression test result is ${{ needs.run-tests.result }}! View the details at ${{ needs.run-tests.outputs.run_url }}.
