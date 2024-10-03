@@ -107,7 +107,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: notebook-output
+          name: notebook-output-${{ matrix.service }}
           path: test/output/${{ matrix.service }}/Results.ipynb
 
   email:
@@ -117,9 +117,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get TO_EMAIL
-        id: get-to-email
         run: |
           SERVICE_EMAILS=$(echo '${{ vars.SERVICES_EMAILS_CONFIG }}' | jq -r '."${{ github.event.action }}"')
+          if [ "$SERVICE_EMAILS" == "null" ]; then
+            SERVICE_EMAILS=${{ vars.TO_EMAIL_DEFAULT }}
+          fi
           echo "TO_EMAIL=$SERVICE_EMAILS" >> $GITHUB_ENV
 
       - name: Send mail
