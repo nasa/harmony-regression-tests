@@ -12,7 +12,6 @@
 # Environments (exactly the following strings):
 # - prod
 # - uat
-# - sit
 #
 # Secrets in each environment:
 # - EDL_USER
@@ -40,7 +39,6 @@ on:
         required: true
         type: choice
         options:
-          - sit
           - uat
           - prod
       docker-image-tag:
