@@ -20,6 +20,7 @@
 # Note: A workflow_call event can only have inputs of type boolean, number or
 # string.
 name: Run Jupyter notebook based test suite
+run-name: ${{ github.event.action || inputs.service-name }} service regression tests
 
 on:
   workflow_call:
