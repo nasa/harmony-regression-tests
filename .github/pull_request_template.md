@@ -12,3 +12,4 @@ A short description of the changes in this PR...
 * [ ] Acceptance criteria met
 * [ ] Tests added/updated (if needed) and passing
 * [ ] Documentation updated (if needed)
+* [ ] CHANGELOG updated with the changes for this PR
