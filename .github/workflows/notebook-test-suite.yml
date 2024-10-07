@@ -41,7 +41,7 @@ on:
         type: choice
         options:
           - uat
-          - production
+          - prod
       service-name:
         description: "Select the service to run tests against"
         required: true
