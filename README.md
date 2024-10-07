@@ -26,6 +26,21 @@ installed on your system, as it's used to manage some large files stored in
 GitHub.
 
 
+## Running the Tests in GitHub:
+
+Each test suite can be individually invoked via a GitHub workflow. Navigate to
+the [GitHub Actions tab](https://github.com/nasa/harmony-regression-tests/actions)
+for this repository. Then select the "Run test suite" workflow from the lefthand
+menu. On the right hand side, click the "Run workflow" dropdown, and select the
+correct Docker image and Harmony environment. That should manually trigger the
+workflow.
+
+The regression test GitHub actions can also be invoked through different event types
+after a Harmony service is successfully deployed in Harmony or after a new version of
+the Harmony server is deployed.
+Note: Only the `latest` tag of the regression docker image will be used to run the
+Jupyter notebook tests.
+
 ## Running the Tests Locally
 
 Each test suite is run in a separate Docker container using a temporary Docker image
@@ -123,6 +138,9 @@ environment before installing from the environment.yml.
    all_images=(<pre existing test suites> <new-suite-name>)
    ```
 1. Update `script/test-in-bamboo.sh` to list the new suite name in `all_tests`.
+1. Update `config/services_tests_config_<env>.json` to associate the new suite name
+   with a Harmony service and add it to the `all` list so that it will be run when
+   the associated Harmony service or Harmony server is deployed.
 
 With this in place, the new test suite should be able to be built and run:
 
