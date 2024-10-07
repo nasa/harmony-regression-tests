@@ -82,13 +82,17 @@ def compare_results_to_reference_file(
 def compare_results_to_reference_file_new(
     results_file_name: str,
     reference_file_name: str,
-    coordinates_to_fix: list[str | None] = [],
+    identical: bool = True,
+    coordinates_to_fix: list[str] | None = None,
 ) -> None:
     """Use `DataTree` functionality to compare data values, variables,
     coordinates, metadata, and all their corresponding attributes of
     downloaded results to a reference file.
 
     """
+    if coordinates_to_fix is None:
+        coordinates_to_fix = []
+
     reference_groups = open_groups(reference_file_name)
     results_groups = open_groups(results_file_name)
 
@@ -100,9 +104,14 @@ def compare_results_to_reference_file_new(
     reference_data = DataTree.from_dict(reference_groups)
     results_data = DataTree.from_dict(results_groups)
 
-    assert results_data.identical(reference_data), (
-        'Output and reference files ' 'do not match.'
-    )
+    if identical:
+        assert results_data.identical(
+            reference_data
+        ), 'Output and reference files do not match.'
+    else:
+        assert results_data.equals(
+            reference_data
+        ), 'Output and reference files do not match.'
 
     reference_data = None
     results_data = None
