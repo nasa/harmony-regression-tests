@@ -50,8 +50,6 @@ subset-band-name-image: Dockerfile subset-band-name/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-subset-band-name:latest -f ./Dockerfile \
     --build-arg notebook=SubsetBandName_Regression.ipynb --build-arg sub_dir=subset-band-name .
 
-images: harmony-image harmony-regression-image hga-image hoss-image hybig-image n2z-image regridder-image swath-projector-image trajectory-subsetter-image variable-subsetter-image geoloco-image subset-band-name-image
-
 net2cog-image: Dockerfile net2cog/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-net2cog:latest -f ./Dockerfile \
 	--build-arg notebook=net2cog_Regression.ipynb --build-arg sub_dir=net2cog .
