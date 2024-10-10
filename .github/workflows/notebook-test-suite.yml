@@ -1,0 +1,177 @@
+# This workflow runs Jupyter notebook based regression test suites.
+# It can be run manually run on github Actions or invoked through
+# the github Action workflow api.
+# When invoked through the github Action workflow api, a event type needs
+# to be provided. The event type should be either the name of one of the
+# Harmony services or 'all'.
+# The notebook test suites associated with Harmony service matching the event
+# will be executed, or all the notebook test suites will be exectued when 'all'
+# is provided which is triggered when a Harmonny server deployment occurs.
+#
+# Required settings in the repository:
+# Environments (exactly the following strings):
+# - prod
+# - uat
+#
+# Secrets in each environment:
+# - EDL_USER
+# - EDL_PASSWORD
+#
+# Note: A workflow_call event can only have inputs of type boolean, number or
+# string.
+name: Run Jupyter notebook based test suite
+run-name: ${{ github.event.action || inputs.service-name }} service regression tests
+
+on:
+  workflow_call:
+    inputs:
+      harmony-environment:
+        required: true
+        type: string
+      docker-image-tag:
+        required: false
+        type: string
+        default: 'latest'
+
+  workflow_dispatch:
+    inputs:
+      harmony-environment:
+        description: "Select the Harmony environment to run the test in"
+        required: true
+        type: choice
+        options:
+          - uat
+          - prod
+      service-name:
+        description: "Select the service to run tests against"
+        required: true
+        type: choice
+        options:
+          - geoloco
+          - harmony
+          - harmony-gdal-adapter
+          # - harmony-netcdf-to-zarr  # Commented out because needs AWS credentials
+          - harmony-regression
+          - harmony-regridder
+          - harmony-service-example
+          - hoss
+          - hybig
+          - query-cmr
+          - subset-band-name
+          - swath-projector
+          - trajectory-subsetter
+      docker-image-tag:
+        description: "Optional Docker image tag to use for the tests"
+        required: false
+        type: string
+        default: 'latest'
+
+  repository_dispatch:
+    types: [all,geoloco,harmony-gdal-adapter,harmony-netcdf-to-zarr,harmony-service-example,hoss,hybig,net2cog,swath-projector,trajectory-subsetter]
+    inputs:
+      harmony-environment:
+        required: true
+        type: choice
+        options:
+          - uat
+          - prod
+      docker-image-tag:
+        required: false
+        type: string
+        default: 'latest'
+
+jobs:
+  base:
+    environment: ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.create-matrix.outputs.matrix }}
+      harmony_host_url: ${{ env.HARMONY_HOST_URL }}
+      run_url: ${{ env.RUN_URL }}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Get the URL of the current workflow run
+        run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+
+      - name: Set HARMONY_HOST_URL
+        run: |
+          if [ "${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}" == "uat" ]; then
+            echo "HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov" >> $GITHUB_ENV
+          elif [ "${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}" == "prod" ]; then
+            echo "HARMONY_HOST_URL=https://harmony.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.earthdata.nasa.gov" >> $GITHUB_ENV
+          else
+            echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov"
+            echo "HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov" >> $GITHUB_ENV
+          fi
+
+      - name: Create matrix configuration from Environment Variable
+        id: create-matrix
+        run: |
+          # Use the event type to select the appropriate service list
+          SERVICES_TESTS=$(cat ./config/services_tests_config_${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}.json | jq -r '."${{ github.event.action || inputs.service-name }}"')
+          # Split the selected service list into an array format and set it as the matrix
+          MATRIX=$(echo ",$SERVICES_TESTS" | tr ',' '\n' | awk '{$1=$1;print}' | jq -c -R '[inputs] | {service: .}')
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+
+  test:
+    needs: base
+    environment: ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}
+    runs-on: ubuntu-latest
+    outputs:
+      run_url: ${{ needs.base.outputs.run_url }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.base.outputs.matrix) }}
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Pull Docker image
+        run: docker pull ghcr.io/nasa/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || 'latest' }}
+
+      - name: Execute notebook
+        id: test-step
+        working-directory: ./test
+        env:
+          EDL_USER: ${{ secrets.EDL_USER }}
+          EDL_PASSWORD: ${{ secrets.EDL_PASSWORD }}
+          HARMONY_HOST_URL: ${{ needs.base.outputs.harmony_host_url }}
+        run: ./run_notebooks.sh ${{ matrix.service }}
+
+      - name: Save notebook as an artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: notebook-output-${{ matrix.service }}
+          path: test/output/${{ matrix.service }}/Results.ipynb
+
+  email:
+    needs: test
+    if: always()
+    environment: ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get TO_EMAIL
+        run: |
+          SERVICE_EMAILS=$(echo '${{ vars.SERVICES_EMAILS_CONFIG }}' | jq -r '."${{ github.event.action || inputs.service-name }}"')
+          if [ "$SERVICE_EMAILS" == "null" ]; then
+            SERVICE_EMAILS=${{ vars.TO_EMAIL_DEFAULT }}
+          fi
+          echo "TO_EMAIL=$SERVICE_EMAILS" >> $GITHUB_ENV
+
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: ${{ github.event.action || inputs.service-name }} regression test result is ${{ needs.test.result }}
+          to: ${{ env.TO_EMAIL }}
+          from: ${{ secrets.FROM_EMAIL }}
+          body: ${{ github.event.action || inputs.service-name }} regression test result is ${{ needs.test.result }}! View the details at ${{ needs.test.outputs.run_url }}.
