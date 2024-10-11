@@ -12,7 +12,7 @@ Doing this will cause this directory and all its files to be included at `/workd
 
 ## Include the necessary python packages in your test's pip_requirements.txt
 
-The test environment is determined by the environment.yaml in the test directory, but if you are including `shared_utils` you will need to also include harmony-py and either xarray-datatree or a fancy pinned version of xarray
+The test environment is determined by the environment.yaml in the test directory, but if you are using routines from `shared_utils` you will need to also update your test's `environment.yaml` to include the libraries that are imported in the shared modules. That means `harmony-py` to use routines from utilities.py and a recent version of `xarray` for ones from `compare.py`.  As always you should look in the files to see if there are new requirements.
 
 For example the pip requirements in the nsidc_icesat2 environment file :
 ```
@@ -31,7 +31,6 @@ dependencies:
     - xarray==2024.9.0
 ```
 
-
 ## Using the shared utility routines
 
 To use routines from the `shared_utils` dir you need to add the `../shared_utils` directory to the Python module search path using `sys.path.append()` so that the modules will be found.
@@ -45,8 +44,8 @@ from utilities import (
     print_error,
     print_success,
     submit_and_download,
-    compare_results_to_reference_file,
 )
+from compare import compare_results_to_reference_file
 
 print_success('yay! you imported the functions.')
 ```
