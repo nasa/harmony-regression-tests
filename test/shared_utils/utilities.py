@@ -70,10 +70,13 @@ def compare_results_to_reference_file(
     """
     reference_data = open_datatree(reference_file_name)
     results_data = open_datatree(results_file_name)
-
-    assert results_data.identical(reference_data), (
-        'Output and reference files ' 'do not match.'
-    )
+    
+    try:
+        assert results_data.identical(reference_data), (
+            'Output and reference files ' 'do not match.'
+        )
+    except AssertionError as exception:
+        print_error(exception)
 
     reference_data = None
     results_data = None
@@ -104,14 +107,17 @@ def compare_results_to_reference_file_new(
     reference_data = DataTree.from_dict(reference_groups)
     results_data = DataTree.from_dict(results_groups)
 
-    if identical:
-        assert results_data.identical(
-            reference_data
-        ), 'Output and reference files do not match.'
-    else:
-        assert results_data.equals(
-            reference_data
-        ), 'Output and reference files do not match.'
+    try:
+        if identical:
+            assert results_data.identical(
+                reference_data
+            ), 'Output and reference files do not match.'
+        else:
+            assert results_data.equals(
+                reference_data
+            ), 'Output and reference files do not match.'
+    except AssertionError as exception:
+        print_error(exception)
 
     reference_data = None
     results_data = None
