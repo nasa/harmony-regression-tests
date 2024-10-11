@@ -5,13 +5,21 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2024-10-11 ([#103](https://github.com/nasa/harmony-regression-tests/pull/103))
+
+- Update the ATL03 and ATL08 reference files in the `nsidc-icesat2` regression
+  test notebook to adjust to the DAS-2205 bug fix.
+- Updates the `shared_utils` function `compare_results_to_reference_file_new`
+  to surround comparison assertion with a `try`/`except` so all tests are run
+  even when a comparison fails.
+
 ## 2024-10-02 ([#99](https://github.com/nasa/harmony-regression-tests/pull/99))
 
 - Adds NSIDC ICESat2 Production Regression configuration.
 - Updates the `shared_utils` function `compare_results_to_reference_file_new`
   to take a new optional argument `identical` which defaults to `True` but if
   set to `False` the Datatree comparison falls back to an `equals` test
-  ignoring metadata in its reference file comparions.
+  ignoring metadata in its reference file comparisons.
 
 
 ## 2024-09-24 ([#92](https://github.com/nasa/harmony-regression-tests/pull/92))
