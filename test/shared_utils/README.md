@@ -28,7 +28,7 @@ dependencies:
   - pip
   - pip:
     - harmony-py==0.4.15
-    - git+https://github.com/pydata/xarray.git@ca2e9d6#egg=xarray
+    - xarray==2024.9.0
 ```
 
 
