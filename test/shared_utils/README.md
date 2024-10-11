@@ -1,5 +1,7 @@
 ## This directory contains common utility functions that can be shared across regression tests.
 
+## Include the build arg on the Makefile for your tests
+
 This directory can be included in your test suite by adding a build-arg to the docker build command in the Makefile.
 
 ```sh
@@ -8,7 +10,19 @@ nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
 	--build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 --build-arg shared_utils=true .
 ```
 
-Doing this will cause this directory and all its files to be included at `/workdir/shared_utils` in your container.
+Doing this will cause this directory and all its files to be included at `/workdir/shared_utils` in your container when you are working locally.
+
+## Update github workflows to include the build arg for your tests.
+
+To include the shared_utils directory on the regression image built by GitHub you add a `shared_utils` key to the service matrix under your service like was done for the trajectory subsetter in the `.github/workflows/build-all-images.yml` file.
+
+```yml
+          -
+            image: "trajectory-subsetter"
+            notebook: "TrajectorySubsetter_Regression.ipynb"
+            shared-utils: "true"
+
+```
 
 ## Include the necessary python packages in your test's pip_requirements.txt
 

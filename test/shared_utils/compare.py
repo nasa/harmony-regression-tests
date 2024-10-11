@@ -7,36 +7,13 @@ This module focuses on comparing output specifically with xarray.
 
 from itertools import count
 
-try:
-    from xarray.backends.api import open_groups
-    from xarray.core.datatree import DataTree
-    from xarray import Dataset
-except Exception:
-    # only used by Trajectory Subsetter tests.
-    # TODO: remove and make Trajectory Subsetter use above
-    from datatree import open_datatree
+
+from xarray.backends.api import open_groups
+from xarray.core.datatree import DataTree
+from xarray import Dataset
 
 
 def compare_results_to_reference_file(
-    results_file_name: str, reference_file_name: str
-) -> None:
-    """Use `DataTree` functionality to compare data values, variables,
-    coordinates, metadata, and all their corresponding attributes of
-    downloaded results to a reference file.
-
-    """
-    reference_data = open_datatree(reference_file_name)
-    results_data = open_datatree(results_file_name)
-
-    assert results_data.identical(reference_data), (
-        'Output and reference files ' 'do not match.'
-    )
-
-    reference_data = None
-    results_data = None
-
-
-def compare_results_to_reference_file_new(
     results_file_name: str,
     reference_file_name: str,
     identical: bool = True,

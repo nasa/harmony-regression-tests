@@ -43,6 +43,7 @@ jobs:
           -
             image: "trajectory-subsetter"
             notebook: "TrajectorySubsetter_Regression.ipynb"
+            shared-utils: "true"
           -
             image: "variable-subsetter"
             notebook: "VariableSubsetter_Regression.ipynb"
