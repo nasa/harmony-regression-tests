@@ -70,7 +70,7 @@ def compare_results_to_reference_file(
     """
     reference_data = open_datatree(reference_file_name)
     results_data = open_datatree(results_file_name)
-    
+
     try:
         assert results_data.identical(reference_data), (
             'Output and reference files ' 'do not match.'
