@@ -36,7 +36,7 @@ swath-projector-image: Dockerfile swath-projector/environment.yaml
 
 trajectory-subsetter-image: Dockerfile trajectory-subsetter/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-trajectory-subsetter:latest -f ./Dockerfile \
-	--build-arg notebook=TrajectorySubsetter_Regression.ipynb --build-arg sub_dir=trajectory-subsetter .
+	--build-arg notebook=TrajectorySubsetter_Regression.ipynb --build-arg sub_dir=trajectory-subsetter --build-arg shared_utils=true .
 
 variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-variable-subsetter:latest -f ./Dockerfile \
