@@ -8,7 +8,7 @@ from os import listdir, remove
 
 
 def remove_results_files() -> None:
-    """Remove all NetCDF-4 files downloaded during the Swath Projector
+    """Remove all hdf5 files downloaded during the Trajectory Subsetter
     regression tests.
 
     """
