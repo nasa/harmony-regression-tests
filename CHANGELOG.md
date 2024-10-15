@@ -5,6 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2024-10-11 ([#104](https://github.com/nasa/harmony-regression-tests/pull/104))
+
+- Migrates trajectory-subsetter to use `shared_utils`.
+- Separates `shared_utils/utilities.py` into `utilities.py` and `compare.py` preventing `xarray` from being a mandatory requirement to use `shared_utils`.
+- Updates `shared_utils` `README` to mention the github action updates needed to use `shared_utils`.
+- Removes old `compare_results_to_reference_file` and renames `compare_results_to_reference_file_new` -> `compare_results_to_reference_file`
+- Migrates nsidc_icesat2 tests to the new `shared_utils` structure and names.
+
 ## 2024-10-11 ([#103](https://github.com/nasa/harmony-regression-tests/pull/103))
 
 - Update the ATL03 and ATL08 reference files in the `nsidc-icesat2` regression
