@@ -24,7 +24,7 @@ To include the shared_utils directory on the regression image built by GitHub yo
 
 ```
 
-## Include the necessary python packages in your test's pip_requirements.txt
+## Include the necessary python packages in your test's environment.yaml
 
 The test environment is determined by the environment.yaml in the test directory, but if you are using routines from `shared_utils` you will need to also update your test's `environment.yaml` to include the libraries that are imported in the shared modules. That means `harmony-py` to use routines from utilities.py and a recent version of `xarray` for ones from `compare.py`.  As always you should look in the files to see if there are new requirements.
 
