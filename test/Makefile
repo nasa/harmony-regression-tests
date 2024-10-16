@@ -24,7 +24,8 @@ n2z-image: Dockerfile n2z/environment.yaml
 
 nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-nsidc-icesat2:latest -f ./Dockerfile \
-	--build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 --build-arg shared_utils=true .
+	--build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 \
+	--build-arg shared_utils=true .
 
 regridder-image: Dockerfile regridder/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-regridder:latest -f ./Dockerfile \
@@ -34,9 +35,15 @@ swath-projector-image: Dockerfile swath-projector/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-swath-projector:latest -f ./Dockerfile \
 	--build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
 
+subset-band-name-image: Dockerfile subset-band-name/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-subset-band-name:latest -f ./Dockerfile \
+	--build-arg notebook=SubsetBandName_Regression.ipynb --build-arg sub_dir=subset-band-name \
+	--build-arg shared_utils=true .
+
 trajectory-subsetter-image: Dockerfile trajectory-subsetter/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-trajectory-subsetter:latest -f ./Dockerfile \
-	--build-arg notebook=TrajectorySubsetter_Regression.ipynb --build-arg sub_dir=trajectory-subsetter --build-arg shared_utils=true .
+	--build-arg notebook=TrajectorySubsetter_Regression.ipynb --build-arg sub_dir=trajectory-subsetter \
+	--build-arg shared_utils=true .
 
 variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-variable-subsetter:latest -f ./Dockerfile \
@@ -45,10 +52,6 @@ variable-subsetter-image: Dockerfile variable-subsetter/environment.yaml
 geoloco-image: Dockerfile geoloco/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-geoloco:latest -f ./Dockerfile \
 	--build-arg notebook=Geoloco_Regression.ipynb --build-arg sub_dir=geoloco .
-
-subset-band-name-image: Dockerfile subset-band-name/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-subset-band-name:latest -f ./Dockerfile \
-    --build-arg notebook=SubsetBandName_Regression.ipynb --build-arg sub_dir=subset-band-name .
 
 net2cog-image: Dockerfile net2cog/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-net2cog:latest -f ./Dockerfile \
@@ -62,9 +65,9 @@ images: harmony-image \
 	n2z-image \
 	nsidc-icesat2-image \
 	regridder-image \
+	subset-band-name-image \
 	swath-projector-image \
 	trajectory-subsetter-image \
 	variable-subsetter-image \
 	geoloco-image \
-	net2cog-image \
-	subset-band-name-image
+	net2cog-image
