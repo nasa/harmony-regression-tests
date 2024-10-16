@@ -5,6 +5,10 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2024-10-16 ([#95](https://github.com/nasa/harmony-regression-tests/pull/95))
+
+- TODO: Update this with the changes added for the subet-band-name service
+
 ## 2024-10-11 ([#104](https://github.com/nasa/harmony-regression-tests/pull/104))
 
 - Migrates trajectory-subsetter to use `shared_utils`.
