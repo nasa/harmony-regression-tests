@@ -11,6 +11,8 @@ to document pull requests to this repository.
   in the request. This will ensure Harmony passes UMM-Var metadata to HyBIG and
   therefore allow HyBIG to use a custom colour map for the generated browse
   imagery.
+- The comparisons within the HyBIG regression test suite also now derive their
+  CRS and geotransform metadata from the `.aux.xml` file for each browse image.
 
 ## 2024-10-11 ([#104](https://github.com/nasa/harmony-regression-tests/pull/104))
 
