@@ -38,6 +38,11 @@ jobs:
             image: "regridder"
             notebook: "Regridder_Regression.ipynb"
           -
+            image: "subset-band-name"
+            notebook: "SubsetBandName_Regression.ipynb"
+            shared-utils: "true"
+            lfs: "true"
+          -
             image: "swath-projector"
             notebook: "SwathProjector_Regression.ipynb"
           -
