@@ -9,6 +9,15 @@ to document pull requests to this repository.
 
 - TODO: Update this with the changes added for the subet-band-name service
 
+## 2024-10-16 ([#105](https://github.com/nasa/harmony-regression-tests/pull/105))
+
+- Updates the HyBIG regression test suite to include a test specifying a variable
+  in the request. This will ensure Harmony passes UMM-Var metadata to HyBIG and
+  therefore allow HyBIG to use a custom colour map for the generated browse
+  imagery.
+- The comparisons within the HyBIG regression test suite also now derive their
+  CRS and geotransform metadata from the `.aux.xml` file for each browse image.
+
 ## 2024-10-11 ([#104](https://github.com/nasa/harmony-regression-tests/pull/104))
 
 - Migrates trajectory-subsetter to use `shared_utils`.
