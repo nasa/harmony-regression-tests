@@ -20,7 +20,7 @@
 # Note: A workflow_call event can only have inputs of type boolean, number or
 # string.
 name: Run Jupyter notebook based test suite
-run-name: ${{ github.event.action || inputs.service-name }} service regression tests
+run-name: ${{ github.event.action || inputs.service-name }} ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }} regression tests
 
 on:
   workflow_call:
@@ -171,7 +171,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ github.event.action || inputs.service-name }} regression test result is ${{ needs.test.result }}
+          subject: ${{ github.event.action || inputs.service-name }} ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }} regression test result is ${{ needs.test.result }}
           to: ${{ env.TO_EMAIL }}
           from: ${{ secrets.FROM_EMAIL }}
-          body: ${{ github.event.action || inputs.service-name }} regression test result is ${{ needs.test.result }}! View the details at ${{ needs.test.outputs.run_url }}.
+          body: ${{ github.event.action || inputs.service-name }} ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }} regression test result is ${{ needs.test.result }}! View the details at ${{ needs.test.outputs.run_url }}.
