@@ -7,18 +7,17 @@ from pyhdf.SD import SD, SDC
 import numpy
 
 
-def get_sds_data(file: str):
+def get_sds_data(file: str, sds_name: str):
     sds_data = None
-    file_SD = SD(file, SDC.READ)
-    datasets = file_SD.datasets()
+    file_sd = SD(file, SDC.READ)
+    datasets = file_sd.datasets()
 
-    for key in datasets.keys():
-        if key == 'EV_250_Aggr500_RefSB':
-            print('Obtaining ', key, ' data')
-            dataset = file_SD.select(key)
-            sds_data = dataset.get()
+    if datasets.get(sds_name) is not None:
+        print('Obtaining', sds_name, 'data from', file)
+        dataset = file_sd.select(sds_name)
+        sds_data = dataset.get()
 
-    file_SD.end()
+    file_sd.end()
     return sds_data
 
 
@@ -34,9 +33,9 @@ def remove_results_files() -> None:
             os.remove(directory_file)
 
 
-def compare_data(reference_file: str, test_file: str) -> bool:
+def compare_data(reference_file: str, test_file: str, sds_name: str) -> bool:
     """Compares two data dimension sizes"""
-    reference_data = get_sds_data(reference_file)
-    test_data = get_sds_data(test_file)
+    reference_data = get_sds_data(reference_file, sds_name)
+    test_data = get_sds_data(test_file, sds_name)
 
     return numpy.array_equal(reference_data, test_data)
