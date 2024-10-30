@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2024-10-29 ([#95](https://github.com/nasa/harmony-regression-tests/pull/95))
+
+- Adds LAADS DAAC subset-band-name test suite with subsetting EV_250_Aggr500_RefSB
+  variable MOD02HKM collection as a starter test
+- Utilizes functions from `shared_utils`
+
 ## 2024-10-16 ([#105](https://github.com/nasa/harmony-regression-tests/pull/105))
 
 - Updates the HyBIG regression test suite to include a test specifying a variable
