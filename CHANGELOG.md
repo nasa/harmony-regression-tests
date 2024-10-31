@@ -11,7 +11,7 @@ to document pull requests to this repository.
   happen for environments against which the test suite is not configured. Prior
   to this change an undefined variable was causing issues when running the test
   suite against production.
-  
+
 ## 2024-10-30 ([#111](https://github.com/nasa/harmony-regression-tests/pull/111))
 
 - Updates the swath-projector epsg reference file
