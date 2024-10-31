@@ -23,7 +23,14 @@ locally in the browser against a single service regression test.
 
 To work with this repository, ensure git-lfs (Git Large File Storage) is
 installed on your system, as it's used to manage some large files stored in
-GitHub.
+GitHub. To install git-lfs with Homebrew, enter the following commands:
+
+```
+brew install git-lfs
+git lfs install
+```
+
+If you have already cloned this repository, delete it and re-clone.
 
 
 ## Running the Tests in GitHub:
