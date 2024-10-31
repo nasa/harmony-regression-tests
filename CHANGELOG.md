@@ -5,12 +5,22 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2024-10-21 ([#107](https://github.com/nasa/harmony-regression-tests/pull/107))
+## 2024-10-31 ([#107](https://github.com/nasa/harmony-regression-tests/pull/107))
 
 - Updates the net2cog regression test suite to ensure that failures do not
   happen for environments against which the test suite is not configured. Prior
   to this change an undefined variable was causing issues when running the test
   suite against production.
+  
+## 2024-10-30 ([#111](https://github.com/nasa/harmony-regression-tests/pull/111))
+
+- Updates the swath-projector epsg reference file
+
+## 2024-10-29 ([#95](https://github.com/nasa/harmony-regression-tests/pull/95))
+
+- Adds LAADS DAAC subset-band-name test suite with subsetting EV_250_Aggr500_RefSB
+  variable MOD02HKM collection as a starter test
+- Utilizes functions from `shared_utils`
 
 ## 2024-10-16 ([#105](https://github.com/nasa/harmony-regression-tests/pull/105))
 
