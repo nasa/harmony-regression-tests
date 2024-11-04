@@ -5,6 +5,10 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2024-11-04 ([#107](https://github.com/nasa/harmony-regression-tests/pull/112))
+
+- Ensures conda packages are installed from conda-forge.
+
 ## 2024-10-31 ([#107](https://github.com/nasa/harmony-regression-tests/pull/107))
 
 - Updates the net2cog regression test suite to ensure that failures do not
