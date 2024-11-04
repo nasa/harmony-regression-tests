@@ -1,7 +1,7 @@
 name: papermill-n2z
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - python=3.9
   - boto3=1.26.133
