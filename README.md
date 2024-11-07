@@ -227,7 +227,7 @@ For example, in the `swath-projector` directory we have
 name: papermill-<IMAGE>
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - python=3.11
   - jupyter
