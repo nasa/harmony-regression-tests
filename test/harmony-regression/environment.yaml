@@ -1,7 +1,7 @@
 name: papermill-harmony-regression
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - python=3.10
   - notebook=6.5.4

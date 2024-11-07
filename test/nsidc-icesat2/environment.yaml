@@ -1,6 +1,7 @@
 name: papermill-nsidc-icesat2
 channels:
   - conda-forge
+  - nodefaults
 dependencies:
   - python=3.11.5
   - netCDF4
