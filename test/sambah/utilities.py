@@ -15,8 +15,8 @@ def compare_results_to_reference_file(results_file_name: str) -> None:
     """Use native `xarray` functionality to compare data values and metadata
     attributes of downloaded results to a reference file.
     """
-    results_data = xr.open_datatree(output_filename)
-    reference_data = xr.open_datatree(f"reference_files/{output_filename}")
+    results_data = xr.open_datatree(results_file_name)
+    reference_data = xr.open_datatree(f"reference_files/{results_file_name}")
 
     assert results_data.equals(reference_data), (
         'Output and reference files ' 'do not match.'
