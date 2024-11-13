@@ -1,0 +1,13 @@
+name: papermill-sambah
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - notebook=6.5.4
+  - papermill=2.3.4
+  - python-dateutil=2.8.2
+  - numpy=2.1.3
+  - netCDF4=1.7.2
+  - xarray=2024.10.0
+  - harmony-py=0.4.15
