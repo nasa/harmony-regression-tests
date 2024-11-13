@@ -30,22 +30,38 @@ jobs:
             image: "n2z"
             notebook: "N2Z_Regression.ipynb"
           -
+            image: "nsidc-icesat2"
+            notebook: "NSIDC-ICESAT2_Regression.ipynb"
+            shared-utils: "true"
+            lfs: "true"
+          -
             image: "regridder"
             notebook: "Regridder_Regression.ipynb"
+          -
+            image: "subset-band-name"
+            notebook: "SubsetBandName_Regression.ipynb"
+            shared-utils: "true"
+            lfs: "true"
           -
             image: "swath-projector"
             notebook: "SwathProjector_Regression.ipynb"
           -
             image: "trajectory-subsetter"
             notebook: "TrajectorySubsetter_Regression.ipynb"
+            shared-utils: "true"
           -
             image: "variable-subsetter"
             notebook: "VariableSubsetter_Regression.ipynb"
-
-          - image: "geoloco"
+          -
+            image: "geoloco"
             notebook: "Geoloco_Regression.ipynb"
+          -
+            image: "net2cog"
+            notebook: "net2cog_Regression.ipynb"
 
     uses: ./.github/workflows/build-target-image.yml
     with:
       image-short-name: ${{ matrix.targets.image }}
       notebook-name: ${{ matrix.targets.notebook }}
+      shared-utils: ${{ matrix.targets.shared-utils || 'false' }}
+      lfs: ${{ matrix.targets.lfs || '' }}

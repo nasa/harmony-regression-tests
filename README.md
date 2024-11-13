@@ -14,8 +14,39 @@ locally in the browser against a single service regression test.
 
 ## Install Prerequisites
 
-* [Docker](https://www.docker.com/get-started) (to run locally in docker)
+* [Docker](https://www.docker.com/get-started) - to run locally in docker
+* [git-lfs](https://git-lfs.com/) - to handle large files
+* [pre-commit](https://pre-commit.com/) - to ensure code formatting. [See below](#pre-commit-hooks).
 
+
+### Cloning the repostiory.
+
+To work with this repository, ensure git-lfs (Git Large File Storage) is
+installed on your system, as it's used to manage some large files stored in
+GitHub. To install git-lfs with Homebrew, enter the following commands:
+
+```
+brew install git-lfs
+git lfs install
+```
+
+If you have already cloned this repository, delete it and re-clone.
+
+
+## Running the Tests in GitHub:
+
+Each test suite can be individually invoked via a GitHub workflow. Navigate to
+the [GitHub Actions tab](https://github.com/nasa/harmony-regression-tests/actions)
+for this repository. Then select the "Run test suite" workflow from the lefthand
+menu. On the right hand side, click the "Run workflow" dropdown, and select the
+correct Docker image and Harmony environment. That should manually trigger the
+workflow.
+
+The regression test GitHub actions can also be invoked through different event types
+after a Harmony service is successfully deployed in Harmony or after a new version of
+the Harmony server is deployed.
+Note: Only the `latest` tag of the regression docker image will be used to run the
+Jupyter notebook tests.
 
 ## Running the Tests Locally
 
@@ -90,12 +121,20 @@ environment before installing from the environment.yml.
    is simplest to use the same string for the subdirectory name and the suite
    name.
 1. Update the `test/Makefile` to be able to build a Docker image for the new
-   test suite:
+   test suite optionally including the shared utility directory:
 
    ```
    <new-suite-name>-image
-       docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> .
+       docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> [--build-arg shared_utils=true] .
    ```
+
+1. If you would like to use shared utilities to help ease the coding you can
+   add the shared_util build-arg to your docker build command in the Makefile
+   (as well as adding it as a key in the `workflow/build-all-images.yml` file).
+   When enabed, this argument will include the `tests/shared_utils` directory
+   as a sibling directory to your tests.  See the
+   `tests/shared_utils/README.md` file for more information.
+
 1. Update the `make images` rule to include building the new image.
 
    ```
@@ -106,6 +145,9 @@ environment before installing from the environment.yml.
    all_images=(<pre existing test suites> <new-suite-name>)
    ```
 1. Update `script/test-in-bamboo.sh` to list the new suite name in `all_tests`.
+1. Update `config/services_tests_config_<env>.json` to associate the new suite name
+   with a Harmony service and add it to the `all` list so that it will be run when
+   the associated Harmony service or Harmony server is deployed.
 
 With this in place, the new test suite should be able to be built and run:
 
@@ -123,11 +165,23 @@ to create a new version of the test image any time the related `version.txt`
 file is updated. To do so, simply add a new target to the
 [build-all-images.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/build-all-images.yml) workflow in the `.github/workflows` directory:
 
-```
+```yaml
 -
   image: <new-suite-name>
   notebook: <new-notebook-name>
 ```
+
+The above is the basic structure for adding a new image to the CI/CD.  Two additional options `shared-utils` and `lfs` default to off, but can be over-ridden as they are for the nsidc-icesat2 image. `shared-utils` controls the addition of the `tests/shared_utils` directory into your image. `lfs` enables git LFS for your image and should be enabled only if you have added reference files with git LFS.
+
+``` yaml
+    -
+      image: "nsidc-icesat2"
+      notebook: "NSIDC-ICESAT2_Regression.ipynb"
+      shared-utils: "true"
+      lfs: "true"
+
+```
+
 
 ## Test suite contents:
 
@@ -145,7 +199,8 @@ For example, in the `swath-projector` directory we have
 ```
 
 * `reference_files` contains golden template files for expected outputs of
-  `tests.
+   `tests`.  When you add new binary files to your test, you should configure
+   them to to use Git LFS as well as keep them as small as possible.
 * `SwathProjector_Regression.ipynb` is the regression test Jupyter notebook
   itself, running tests in cells. A test suite fails when a Jupyter notebook
   cell returns an error from the execution. Each regression test is designed to
@@ -172,9 +227,9 @@ For example, in the `swath-projector` directory we have
 name: papermill-<IMAGE>
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
-  - python=3.7
+  - python=3.11
   - jupyter
   - requests
   - netcdf4

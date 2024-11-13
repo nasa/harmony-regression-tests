@@ -1,14 +1,13 @@
 name: papermill-trajectory-subsetter
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
-  - python=3.10
-  - notebook=6.5.4
-  - papermill=2.3.4
-  - python-dateutil=2.7.5
-  - numpy=1.24.3
-  - netCDF4=1.6.3
-  - xarray-datatree=0.0.12
+  - python=3.11.5
+  - notebook=7.2.1
+  - papermill=2.6
+  - numpy=2.1.2
+  - netCDF4=1.7.1
   - pip:
-    - harmony-py
+    - harmony-py==0.4.15
+    - xarray==2024.9.0

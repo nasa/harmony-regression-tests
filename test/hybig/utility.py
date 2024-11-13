@@ -16,16 +16,24 @@ def print_success(success_string: str) -> str:
 
 
 def assert_dataset_produced_correct_results(
-    generated_file: Path, expected_metadata: dict, reference_file: Path, file_type: str
+    generated_file: Path, reference_file: Path, file_type: str
 ) -> None:
-    """Check that the generated data matches the expected data."""
-    with rasterio.open(generated_file) as test_dataset:
-        assert (
-            test_dataset.meta == expected_metadata
-        ), f'output {file_type} has incorrect metadata: {test_dataset.meta}'
-        print_success('Generated image has correct metadata.')
+    """Check that the generated data matches the expected data.
+    This function compares the metadata and the array values of
+    the generated test output against a reference file. Some
+    metadata read by `rasterio`, such as the CRS and geotransform,
+    are retrieved from a sibling `.aux.xml` file, meaning the
+    content of the test output and reference files for these
+    siblings is also being tested.
 
+    """
+    with rasterio.open(generated_file) as test_dataset:
         with rasterio.open(reference_file) as reference_dataset:
+            assert (
+                test_dataset.meta == reference_dataset.meta
+            ), f'output {file_type} has incorrect metadata: {test_dataset.meta}'
+            print_success('Generated image has correct metadata.')
+
             ref_image = reference_dataset.read()
             test_image = test_dataset.read()
             assert_array_almost_equal(ref_image, test_image)
