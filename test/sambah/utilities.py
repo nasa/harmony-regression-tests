@@ -11,14 +11,12 @@ from harmony.harmony import ProcessingFailedException
 import xarray as xr
 
 
-def compare_results_to_reference_file(results_file_name: str, group_name='/') -> None:
+def compare_results_to_reference_file(results_file_name: str) -> None:
     """Use native `xarray` functionality to compare data values and metadata
     attributes of downloaded results to a reference file.
     """
-    reference_data = xr.open_dataset(
-        f"reference_files/{results_file_name}", group=group_name
-    )
-    results_data = xr.open_dataset(results_file_name, group=group_name)
+    results_data = xr.open_datatree(output_filename)
+    reference_data = xr.open_datatree(f"reference_files/{output_filename}")
 
     assert results_data.equals(reference_data), (
         'Output and reference files ' 'do not match.'
