@@ -1,4 +1,3 @@
-from filecmp import cmp
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -16,14 +15,14 @@ job_id = harmony_client.submit(request)
 harmony_client.wait_for_processing(job_id)
 
 with TemporaryDirectory() as temp_dir:
-    output_files = [future.result() for future in harmony_client.download_all(job_id, directory=temp_dir)]
+    output_files = [Path(future.result()) for future in harmony_client.download_all(job_id, directory=temp_dir)]
 
     assert len(output_files) == 3
-    assert output_files[0].endswith('.png')
-    assert output_files[1].endswith('.pgw')
-    assert output_files[2].endswith('.aux.xml')
+    assert output_files[0].suffixes == ['.png']
+    assert output_files[1].suffixes == ['.pgw']
+    assert output_files[2].suffixes == ['.png', '.aux', '.xml']
 
     reference_data = Path(__file__).parent / 'reference_data'
-    assert cmp(output_files[0], reference_data / 'rgb.png', shallow=False)
-    assert cmp(output_files[1], reference_data / 'rgb.pgw', shallow=False)
-    assert cmp(output_files[2], reference_data / 'rgb.aux.xml', shallow=False)
+    assert output_files[0].read_bytes() == (reference_data / 'rgb.png').read_bytes()
+    assert output_files[1].read_bytes() == (reference_data / 'rgb.pgw').read_bytes()
+    assert output_files[2].read_bytes() == (reference_data / 'rgb.png.aux.xml').read_bytes()
