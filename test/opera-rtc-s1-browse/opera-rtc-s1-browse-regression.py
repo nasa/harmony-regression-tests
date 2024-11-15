@@ -15,7 +15,6 @@ request = harmony.Request(
 job_id = harmony_client.submit(request)
 harmony_client.wait_for_processing(job_id)
 
-reference_data = Path(__file__).parent / 'reference_data'
 with TemporaryDirectory() as temp_dir:
     output_files = [future.result() for future in harmony_client.download_all(job_id, directory=temp_dir)]
 
@@ -24,6 +23,7 @@ with TemporaryDirectory() as temp_dir:
     assert output_files[1].endswith('.pgw')
     assert output_files[2].endswith('.aux.xml')
 
+    reference_data = Path(__file__).parent / 'reference_data'
     assert cmp(output_files[0], reference_data / 'rgb.png', shallow=False)
     assert cmp(output_files[1], reference_data / 'rgb.pgw', shallow=False)
     assert cmp(output_files[2], reference_data / 'rgb.aux.xml', shallow=False)
