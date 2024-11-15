@@ -3,7 +3,7 @@
     notebook to increase the readability of the regression test suite.
 
 """
-
+from functools import partial
 from os import listdir, remove, replace
 
 from harmony import Client, Request
@@ -18,6 +18,15 @@ def compare_results_to_reference_file(results_file_name: str) -> None:
     results_data = xr.open_datatree(results_file_name)
     reference_data = xr.open_datatree(f"reference_files/{results_file_name}")
 
+    # We have to drop 'subset_files', 
+    # because the values contain collection_ids, 
+    # which will be different for UAT and PROD
+    # def my_drop_vars(*arg, f):
+    #     return lambda var_names: f("subset_files", )
+    # drop_vars_partial = partial(xr.Dataset.drop_vars, errors="ignore")
+    # results_data = results_data.map_over_datasets(drop_vars_partial, ("subset_files", ))
+    # reference_data = reference_data.map_over_datasets(drop_vars_partial, ("subset_files", ))
+    
     assert results_data.equals(reference_data), (
         'Output and reference files ' 'do not match.'
     )
@@ -55,11 +64,19 @@ def submit_and_download(
         print('Harmony request failed to complete successfully.')
         raise exception
 
-
 def remove_results_files() -> None:
     """Remove all NetCDF-4 files downloaded during the regression tests."""
     directory_files = listdir()
 
     for directory_file in directory_files:
-        if directory_file.endswith('.nc4'):
+        if directory_file.endswith('.nc4') or directory_file.endswith('.nc'):
             remove(directory_file)
+
+def print_error(error_string: str) -> str:
+    """Print an error, with formatting for red text."""
+    print(f'\033[91m{error_string}\033[0m')
+
+def print_success(success_string: str) -> str:
+    """Print a success message, with formatting for green text."""
+    print(f'\033[92mSuccess: {success_string}\033[0m')
+
