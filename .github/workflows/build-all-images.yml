@@ -58,6 +58,9 @@ jobs:
           -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
+          -
+            image: "sambah"
+            notebook: "SAMBAH_Regression.ipynb"
 
     uses: ./.github/workflows/build-target-image.yml
     with:
