@@ -4,10 +4,8 @@
 
 """
 from functools import partial
-from os import listdir, remove, replace
+from os import listdir, remove
 
-from harmony import Client, Request
-from harmony.harmony import ProcessingFailedException
 import xarray as xr
 
 
