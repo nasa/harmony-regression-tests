@@ -58,6 +58,9 @@ jobs:
           -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
+          -
+            image: "opera-rtc-s1-browse"
+            notebook: "opera-rtc-s1-browse_Regression.ipynb"
 
     uses: ./.github/workflows/build-target-image.yml
     with:
