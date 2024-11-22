@@ -7,4 +7,4 @@ dependencies:
   - pip=24.3.1
   - notebook=7.2.2
   - papermill=2.6.0
-  - harmony-py==0.4.15
+  - harmony-py==0.5.0
