@@ -5,6 +5,10 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2024-11-27([#119](https://github.com/nasa/harmony-regression-tests/pull/119))
+
+- Ensures proper formatting on all PRs.
+
 ## 2024-11-06 ([#112](https://github.com/nasa/harmony-regression-tests/pull/112))
 
 - Ensures conda packages are installed from conda-forge.
