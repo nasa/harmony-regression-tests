@@ -3,8 +3,12 @@ lint.select = [
   "E",   # (pycodestyle): PEP 8 style guide enforcement (spacing, indentation, line length)
   "F",   # (pyflakes): Logical errors like unused imports, undefined names, syntax errors
   "UP",  # (pyupgrade): Modernizes Python syntax (e.g., new string formats, type annotations)
-  "I",   # (isort): Import sorting and organization into sections
+  "I",   # (isort): Import sorting and organization into sections'
+  "D",   # (pydocstyle): Docstring
 ]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.ruff.format]
 quote-style = "single"
