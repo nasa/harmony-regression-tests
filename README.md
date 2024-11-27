@@ -223,7 +223,7 @@ For example, in the `swath-projector` directory we have
  Notebook dependencies should be listed in file named `environment.yaml` at the top level of the
  subdirectory. The `name` field in the file should be `papermill`. For example:
 
- ```yaml
+```yaml
 name: papermill-<IMAGE>
 channels:
   - conda-forge
@@ -315,9 +315,13 @@ checking the repository for some coding standard best practices. These include:
 * Removing trailing whitespaces.
 * Removing blank lines at the end of a file.
 * Ensure JSON files have valid formats.
-* [ruff](https://github.com/astral-sh/ruff) Python linting checks.
-* [black](https://black.readthedocs.io/en/stable/index.html) Python code
-  formatting checks.
+* Ensures large files aren't added to the repository
+* [ruff](https://github.com/astral-sh/ruff) to enforce:
+  + (pycodestyle): PEP 8 style guide enforcement (spacing, indentation, line length)
+  + (pyflakes): Logical errors like unused imports, undefined names, syntax errors
+  + (pyupgrade): Modernizes Python syntax (e.g., new string formats, type annotations)
+  + (isort): Import sorting and organization into sections
+  + single quotes style.
 
 To enable these checks:
 
