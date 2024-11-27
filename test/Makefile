@@ -57,6 +57,10 @@ net2cog-image: Dockerfile net2cog/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-net2cog:latest -f ./Dockerfile \
 	--build-arg notebook=net2cog_Regression.ipynb --build-arg sub_dir=net2cog .
 
+opera-rtc-s1-browse-image: Dockerfile opera-rtc-s1-browse/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-opera-rtc-s1-browse:latest -f ./Dockerfile \
+	--build-arg notebook=opera-rtc-s1-browse_Regression.ipynb --build-arg sub_dir=opera-rtc-s1-browse .
+
 images: harmony-image \
 	harmony-regression-image \
 	hga-image \
@@ -70,4 +74,5 @@ images: harmony-image \
 	trajectory-subsetter-image \
 	variable-subsetter-image \
 	geoloco-image \
-	net2cog-image
+	net2cog-image \
+	opera-rtc-s1-browse-image
