@@ -1,14 +1,14 @@
-""" A module containing utility functionality used by the Swath Projector
-    regression tests. These functions are kept out of the Jupyter notebook to
-    increase the readability of the regression test suite.
+"""A module containing utility functionality used by the Swath Projector
+regression tests. These functions are kept out of the Jupyter notebook to
+increase the readability of the regression test suite.
 
 """
 
 from os import listdir, remove, replace
 
+import xarray as xr
 from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
-import xarray as xr
 
 
 def compare_results_to_reference_file(
@@ -48,7 +48,6 @@ def submit_and_download(
             file_future.result()
             for file_future in harmony_client.download_all(job_id, overwrite=True)
         ]:
-
             print(f'Downloaded: {filename}')
             downloaded_filename = filename
 

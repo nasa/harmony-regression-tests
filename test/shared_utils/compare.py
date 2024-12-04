@@ -7,10 +7,9 @@ This module focuses on comparing output specifically with xarray.
 
 from itertools import count
 
-
+from xarray import Dataset
 from xarray.backends.api import open_groups
 from xarray.core.datatree import DataTree
-from xarray import Dataset
 
 
 def compare_results_to_reference_file(
@@ -66,15 +65,15 @@ def unalign_groups(
     assigning a unique identifier to each instance. This allows for the creation of
     a DataTree from the modified dictionary of datasets.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     dict_of_datasets : dict[str, Dataset]
         A dictionary of xarray Datasets, typically obtained from xarray.open_groups().
     coordinate : str
         The name of the coordinate to be renamed across Datasets.
 
-    Returns:
-    --------
+    Returns
+    -------
     dict[str, Dataset]
         A new dictionary of datasets with the specified coordinate
         incrementally renamed when present.
@@ -83,7 +82,7 @@ def unalign_groups(
     counter = count(1)
     return {
         key: (
-            ds.rename({coordinate: f"{coordinate}_{next(counter)}"})
+            ds.rename({coordinate: f'{coordinate}_{next(counter)}'})
             if coordinate in ds.coords
             else ds
         )

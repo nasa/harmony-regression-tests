@@ -1,14 +1,15 @@
+from imghdr import what as what_file_type
 from os import makedirs
 from shutil import rmtree
 from typing import Dict
 
 from harmony import Client, Environment, Request
-from imghdr import what as what_file_type
 from netCDF4 import Dataset as NetCDF4Dataset
-from osgeo.gdal import Info as GdalInfo, Open as GdalOpen
-from osgeo.osr import SpatialReference
 from numpy import array_equal
 from numpy.testing import assert_almost_equal
+from osgeo.gdal import Info as GdalInfo
+from osgeo.gdal import Open as GdalOpen
+from osgeo.osr import SpatialReference
 from pyproj import Transformer
 
 
@@ -274,10 +275,10 @@ def compare_netcdf_files(test_output: str, reference_image: str) -> bool:
     flat.
 
     """
-    with NetCDF4Dataset(test_output) as output_ds, NetCDF4Dataset(
-        reference_image
-    ) as reference_ds:
-
+    with (
+        NetCDF4Dataset(test_output) as output_ds,
+        NetCDF4Dataset(reference_image) as reference_ds,
+    ):
         variables_equal = all(
             [
                 variable_name in output_ds.variables

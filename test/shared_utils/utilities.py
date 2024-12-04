@@ -1,6 +1,6 @@
-""" A module containing common functionality used by multiple
-    regression tests. These functions are kept out of the Jupyter notebook to
-    increase the readability of the regression test suite.
+"""A module containing common functionality used by multiple
+regression tests. These functions are kept out of the Jupyter notebook to
+increase the readability of the regression test suite.
 
 """
 
@@ -37,7 +37,6 @@ def submit_and_download(
             file_future.result()
             for file_future in harmony_client.download_all(job_id, overwrite=True)
         ]:
-
             print(f'Downloaded: {filename}')
             downloaded_filename = filename
 

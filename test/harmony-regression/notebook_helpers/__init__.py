@@ -1,24 +1,21 @@
 import http.client as http_client
-import logging
-from datetime import datetime
-from time import sleep
 import json
-
-import tempfile
+import logging
 import os
-
+import tempfile
+from datetime import datetime
 from io import BytesIO
+from time import sleep
+
+import contextily as ctx
+import geopandas as gpd
+import numpy as np
+import requests
+from cachecontrol import CacheControlAdapter, CacheController
+from h5py import File as H5File
 from matplotlib import pyplot as plt
 from PIL import Image
-from h5py import File as H5File
-import numpy as np
-import geopandas as gpd
-import contextily as ctx
-
 from satstac import Catalog
-
-import requests
-from cachecontrol import CacheController, CacheControlAdapter
 
 
 def _build_session():
@@ -26,6 +23,7 @@ def _build_session():
 
     Returns:
         requests.Session -- A shared session to use for the notebook
+
     """
     result = requests.session()
 
@@ -50,7 +48,7 @@ def debug_http():
     http_client.HTTPConnection.debuglevel = 1
     logging.basicConfig()
     logging.getLogger().setLevel(logging.DEBUG)
-    requests_log = logging.getLogger("requests.packages.urllib3")
+    requests_log = logging.getLogger('requests.packages.urllib3')
     requests_log.setLevel(logging.DEBUG)
     requests_log.propagate = True
 
@@ -62,6 +60,7 @@ def request(*args, **kwargs):
 
     Returns:
         requests.Response -- The response to the request
+
     """
     req = requests.Request(*args, **kwargs)
     prepped = session.prepare_request(req)
@@ -79,6 +78,7 @@ def get(*args, **kwargs):
 
     Returns:
         requests.Response -- The response to the request
+
     """
     return request('GET', *args, **kwargs)
 
@@ -90,6 +90,7 @@ def post(*args, **kwargs):
 
     Returns:
         requests.Response -- The response to the request
+
     """
     return request('POST', *args, **kwargs)
 
@@ -102,6 +103,7 @@ def show_shape(filename, basemap=True):
 
     Keyword Arguments:
         basemap {bool} -- Whether to display a basemap under the shapefile (default: {True})
+
     """
     shape = gpd.read_file(filename).to_crs(epsg=3857)
     plot = shape.plot(alpha=0.5, edgecolor='k', figsize=(8, 8))
@@ -125,7 +127,6 @@ def show(response, varList=[], color_index=None, immediate=True):
         immediate {bool} -- True if the data should be shown immediately in the notebook (default: {True})
 
     """
-
     # show_netcdf (look at dimensions, decide how to display); show_image
     plt.rcParams['figure.figsize'] = [16, 8]
     arrays = []
@@ -220,6 +221,7 @@ def get_data_urls(response):
 
     Returns:
         string[] -- An array of URLs for data links
+
     """
     return [
         link['href']
@@ -241,10 +243,11 @@ def show_async(response, varList=[]):
 
     Returns:
         response.Response -- the response from the final successful or failed poll
+
     """
 
     def show_response(response, link_count):
-        print('Async response at', datetime.now().strftime("%H:%M:%S"))
+        print('Async response at', datetime.now().strftime('%H:%M:%S'))
         print(json.dumps(response.json(), indent=2))
         links = get_data_urls(response)
         new_links = links[slice(link_count, None)]
@@ -306,6 +309,7 @@ def show_async_condensed(response, varList=[], show_results=True):
         response {response.Response} -- the response to display
         varList {array} -- If set, only plot the variables listed in varList.  Otherwise, plot all.
         show_results {bool} -- True will display the results as they arrive.  (default: {True})
+
     """
 
     def show_response_condensed(response, varList, link_count):
@@ -355,8 +359,8 @@ def check_bbox_subset(response, req_lat_min, req_lat_max, req_lon_min, req_lon_m
         req_lat_max -- The maximum latitude from the request bbox for a spatial subset
         req_lon_min -- The minimimum longitude from the request bbox for a spatial subset
         req_lon_max -- The maximum longitude from the request bbox for a spatial subset
-    """
 
+    """
     data = H5File(BytesIO(response.content), 'r')
 
     attr_data = data['lat'][:]
@@ -385,6 +389,7 @@ def check_status(response):
 
     Arguments:
         response {response.Response} -- the response to display
+
     """
     if response.status_code != 200:
         errStr = 'Request failed with status code ' + str(response.status_code)
@@ -397,6 +402,7 @@ def check_stac(response):
 
     Arguments:
         response {response.Response} -- the response to display
+
     """
     for i in range(len(response.json()['links'])):
         if response.json()['links'][i]['title'] == 'STAC catalog':

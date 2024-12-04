@@ -1,8 +1,9 @@
 """Simple utility functions used in the NetCDF-to-Zarr test notebook."""
 
-import boto3
 import os
 from typing import List
+
+import boto3
 
 
 def print_success(success_string: str) -> str:
@@ -22,8 +23,7 @@ def get_zarr_stores(results: dict) -> List[dict]:
 def assert_result_has_correct_number_of_stores(
     results: dict, expected_stores: int
 ) -> None:
-    """
-    Verify correct number of zarr stores returned.
+    """Verify correct number of zarr stores returned.
 
     Count the number of results items that are zarr stores and ensure
     that number matches the expected value.

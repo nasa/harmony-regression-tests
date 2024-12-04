@@ -1,8 +1,9 @@
 """Simple utility functions used in the net2cog test notebook."""
 
-from pathlib import Path
-import rasterio
 import subprocess
+from pathlib import Path
+
+import rasterio
 from numpy.testing import assert_array_almost_equal
 
 
@@ -37,11 +38,9 @@ def assert_dataset_produced_correct_results(
 def validate_cog(path: Path) -> None:
     cogtif_val = ['rio', 'cogeo', 'validate', f'{path}']
 
-    process = subprocess.run(
-        cogtif_val, check=True, stdout=subprocess.PIPE, universal_newlines=True
-    )
+    process = subprocess.run(cogtif_val, check=True, stdout=subprocess.PIPE, text=True)
     cog_test = process.stdout
-    cog_test = cog_test.replace("\n", "")
+    cog_test = cog_test.replace('\n', '')
 
-    valid_cog = f"{path} is a valid cloud optimized GeoTIFF"
+    valid_cog = f'{path} is a valid cloud optimized GeoTIFF'
     assert cog_test == valid_cog

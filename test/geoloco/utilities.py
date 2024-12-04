@@ -1,13 +1,13 @@
-""""
+""" "
 Common utility functions used by the geoloco regression tests.
 """
 
 import os
-from pyhdf.SD import SD, SDC
-import numpy
 
+import numpy
 from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
+from pyhdf.SD import SD, SDC
 
 
 def submit_and_download(
@@ -28,7 +28,6 @@ def submit_and_download(
             file_future.result()
             for file_future in harmony_client.download_all(job_id, overwrite=True)
         ]:
-
             print(f'Downloaded: {filename}')
             downloaded_filenames.extend([filename])
 

@@ -1,10 +1,11 @@
-""""
+"""
 Utility functions used by the subset-band-name regression tests.
 """
 
 import os
-from pyhdf.SD import SD, SDC
+
 import numpy
+from pyhdf.SD import SD, SDC
 
 
 def get_sds_data(file: str, sds_name: str):

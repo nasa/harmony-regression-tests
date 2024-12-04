@@ -1,17 +1,16 @@
-""" A module containing utility functionality used by the Variable Subsetter
-    regression tests. These functions are kept out of the Jupyter notebook to
-    increase the readability of the regression test suite.
+"""A module containing utility functionality used by the Variable Subsetter
+regression tests. These functions are kept out of the Jupyter notebook to
+increase the readability of the regression test suite.
 
 """
 
 from os import listdir, remove, replace
 from typing import Union
 
+import numpy as np
 from harmony import Client, Request
 from harmony.harmony import ProcessingFailedException
 from netCDF4 import Dataset, Group, Variable
-import numpy as np
-
 
 GroupOrVariable = Union[Group, Variable]
 
@@ -89,7 +88,6 @@ def submit_and_download(
             file_future.result()
             for file_future in harmony_client.download_all(job_id, overwrite=True)
         ]:
-
             print(f'Downloaded: {filename}')
             downloaded_filename = filename
 
