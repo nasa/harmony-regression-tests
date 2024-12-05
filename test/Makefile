@@ -61,6 +61,10 @@ sambah-image: Dockerfile sambah/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-sambah:latest -f ./Dockerfile \
 	--build-arg notebook=SAMBAH_Regression.ipynb --build-arg sub_dir=sambah .
 
+opera-rtc-s1-browse-image: Dockerfile opera-rtc-s1-browse/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-opera-rtc-s1-browse:latest -f ./Dockerfile \
+	--build-arg notebook=opera-rtc-s1-browse_Regression.ipynb --build-arg sub_dir=opera-rtc-s1-browse .
+
 images: harmony-image \
 	harmony-regression-image \
 	hga-image \
@@ -75,4 +79,5 @@ images: harmony-image \
 	variable-subsetter-image \
 	geoloco-image \
 	net2cog-image \
-	sambah-image
+	sambah-image \
+	opera-rtc-s1-browse-image
