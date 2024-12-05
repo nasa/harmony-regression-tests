@@ -60,6 +60,7 @@ on:
           - subset-band-name
           - swath-projector
           - trajectory-subsetter
+          - opera-rtc-s1-browse
       docker-image-tag:
         description: "Optional Docker image tag to use for the tests"
         required: false
@@ -67,7 +68,7 @@ on:
         default: 'latest'
 
   repository_dispatch:
-    types: [all,geoloco,harmony-gdal-adapter,harmony-netcdf-to-zarr,harmony-service-example,hoss,hybig,net2cog,swath-projector,trajectory-subsetter]
+    types: [all,geoloco,harmony-gdal-adapter,harmony-netcdf-to-zarr,harmony-service-example,hoss,hybig,net2cog,swath-projector,trajectory-subsetter,opera-rtc-s1-browse]
     inputs:
       harmony-environment:
         required: true
