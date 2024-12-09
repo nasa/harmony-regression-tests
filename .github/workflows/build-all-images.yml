@@ -61,6 +61,7 @@ jobs:
           -
             image: "sambah"
             notebook: "SAMBAH_Regression.ipynb"
+            shared-utils: "true"
             lfs: "true"
           -
             image: "opera-rtc-s1-browse"
