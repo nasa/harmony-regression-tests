@@ -59,7 +59,8 @@ net2cog-image: Dockerfile net2cog/environment.yaml
 
 sambah-image: Dockerfile sambah/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-sambah:latest -f ./Dockerfile \
-	--build-arg notebook=SAMBAH_Regression.ipynb --build-arg sub_dir=sambah .
+	--build-arg notebook=SAMBAH_Regression.ipynb --build-arg sub_dir=sambah \
+	--build-arg shared_utils=true .
 
 opera-rtc-s1-browse-image: Dockerfile opera-rtc-s1-browse/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-opera-rtc-s1-browse:latest -f ./Dockerfile \
