@@ -1,8 +1,4 @@
-""" A module containing utility functionality used by the Harmony OPeNDAP
-    SubSetter regression tests. These functions are kept out of the Jupyter
-    notebook to increase the readability of the regression test suite.
-
-"""
+"""Utility functions for the SAMBAH regression tests."""
 
 from functools import partial
 from os import listdir, remove
