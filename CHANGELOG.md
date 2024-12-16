@@ -5,6 +5,10 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2024-12-16 ([#123](https://github.com/nasa/harmony-regression-tests/pull/123))
+
+- Updates opera-rtc-s1-browse test images to account for changes in HyBIG v2.1.0
+
 ## 2024-11-06 ([#112](https://github.com/nasa/harmony-regression-tests/pull/112))
 
 - Ensures conda packages are installed from conda-forge.
