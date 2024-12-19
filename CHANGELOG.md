@@ -5,9 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+
 ## 2024-12-20([#126](https://github.com/nasa/harmony-regression-tests/pull/126))
 
 - Update configuration to run `opera-rtc-s1-browse` tests on HyBIG deployments.
+
+## 2024-12-19 ([#125](https://github.com/nasa/harmony-regression-tests/pull/125))
+
+- Updates HyBIG test images to account for increased color map range (DAS-2280)
 
 ## 2024-12-16 ([#122](https://github.com/nasa/harmony-regression-tests/pull/122))([#123](https://github.com/nasa/harmony-regression-tests/pull/123))
 
