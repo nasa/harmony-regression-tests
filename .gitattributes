@@ -1,6 +1,8 @@
 test/nsidc-icesat2/reference_files/*.h5 filter=lfs diff=lfs merge=lfs -text
 test/subset-band-name/reference_data/*.hdf filter=lfs diff=lfs merge=lfs -text
 test/opera-rtc-s1-browse/reference_data/*.png filter=lfs diff=lfs merge=lfs -text
+test/hybig/reference_data/**/*.png filter=lfs diff=lfs merge=lfs -text
+test/hybig/reference_data/**/*.jpg filter=lfs diff=lfs merge=lfs -text
 test/net2cog/** !text !filter !merge !diff
 test/hybig/** !text !filter !merge !diff
 test/opera-rtc-s1-browse/** !text !filter !merge !diff
