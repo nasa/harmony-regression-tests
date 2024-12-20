@@ -8,7 +8,7 @@
     "harmony-regridder": "regridder",
     "harmony-service-example": "harmony-regression",
     "hoss": "hoss, variable-subsetter",
-    "hybig": "hybig",
+    "hybig": "hybig,opera-rtc-s1-browse",
     "net2cog": "net2cog",
     "podaac-concise": "TBD",
     "podaac-l2-subsetter": "TBD",
