@@ -9,6 +9,10 @@ to document pull requests to this repository.
 
 - Update configuration to run `opera-rtc-s1-browse` tests on HyBIG deployments.
 
+## 2024-12-19 ([#125](https://github.com/nasa/harmony-regression-tests/pull/125))
+
+- Updates HyBIG test images to account for increased color map range (DAS-2280)
+
 ## 2024-12-16 ([#122](https://github.com/nasa/harmony-regression-tests/pull/122))([#123](https://github.com/nasa/harmony-regression-tests/pull/123))
 
 - Updates HyBIG test images to account for changes in how HyBIG treats 3 and 4 band input GeoTIFFs.
