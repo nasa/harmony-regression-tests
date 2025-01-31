@@ -31,7 +31,7 @@ def assert_dataset_produced_correct_results(
         with rasterio.open(reference_file) as reference_dataset:
             assert (
                 test_dataset.meta == reference_dataset.meta
-            ), f'output {file_type} has incorrect metadata: {test_dataset.meta}'
+            ), f'output {file_type} has incorrect metadata:\nTest Result Metadata:\n{test_dataset.meta}\nReference Metadata\n{reference_dataset.meta}'
             print_success('Generated image has correct metadata.')
 
             ref_image = reference_dataset.read()

@@ -26,6 +26,7 @@ jobs:
           -
             image: "hybig"
             notebook: "HyBIG_Regression.ipynb"
+            lfs: "true"
           -
             image: "n2z"
             notebook: "N2Z_Regression.ipynb"
