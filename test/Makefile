@@ -31,6 +31,11 @@ regridder-image: Dockerfile regridder/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-regridder:latest -f ./Dockerfile \
 	--build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder .
 
+smap-l2-gridder-image: Dockerfile smap-l2-gridder/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-smap-l2-gridder:latest -f ./Dockerfile \
+	--build-arg notebook=smap-l2-gridder_Regression.ipynb --build-arg sub_dir=smap-l2-gridder \
+	--build-arg shared_utils=true .
+
 swath-projector-image: Dockerfile swath-projector/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-swath-projector:latest -f ./Dockerfile \
 	--build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
@@ -69,6 +74,7 @@ images: harmony-image \
 	n2z-image \
 	nsidc-icesat2-image \
 	regridder-image \
+	smap-l2-gridder-image \
 	subset-band-name-image \
 	swath-projector-image \
 	trajectory-subsetter-image \
