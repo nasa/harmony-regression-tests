@@ -141,7 +141,7 @@ jobs:
 
       - name: update testing image name
         run: |
-          echo "REGRESSION_TESTS_$(echo "${{ matrix.service }}" | tr '[:lower:]' '[:upper:]' | tr '-' '_')_IMAGE=ghcr.io/${{ github.repository_owner }}/regression-tests-${{ matrix.service }}::${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}" >> $GITHUB_ENV
+          echo "REGRESSION_TESTS_$(echo "${{ matrix.service }}" | tr '[:lower:]' '[:upper:]' | tr '-' '_')_IMAGE=ghcr.io/${{ github.repository_owner }}/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}" >> $GITHUB_ENV
 
       - name: Execute notebook
         id: test-step
