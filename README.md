@@ -229,7 +229,7 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  - python=3.11
+- python=3.12
   - jupyter
   - requests
   - netcdf4
@@ -243,7 +243,7 @@ dependencies:
 
 ### Versioning
 
-The regression test notebooks follow semantic versioning:
+The regression test notebooks try to follow semantic versioning:
 
 ```
 major.minor.patch
