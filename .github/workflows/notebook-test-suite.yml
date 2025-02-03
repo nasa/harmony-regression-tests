@@ -136,6 +136,10 @@ jobs:
       - name: Pull Docker image
         run: docker pull ghcr.io/${{github.repository_owner}}/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}
 
+      - name: Update Test Image Name
+        run: |
+          echo "REGRESSION_TESTS_$(echo "${{ matrix.service }}" | tr '[:lower:]' '[:upper:]' | tr '-' '_')_IMAGE=ghcr.io/${{ github.repository_owner }}/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}" >> $GITHUB_ENV
+
       - name: Execute notebook
         id: test-step
         working-directory: ./test
