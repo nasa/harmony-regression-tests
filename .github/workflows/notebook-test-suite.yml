@@ -57,6 +57,7 @@ on:
           - hoss
           - hybig
           - query-cmr
+          - smap-l2-gridder
           - subset-band-name
           - swath-projector
           - trajectory-subsetter
