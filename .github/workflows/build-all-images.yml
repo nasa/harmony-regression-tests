@@ -44,8 +44,8 @@ jobs:
             shared-utils: "true"
             lfs: "true"
           -
-            image: "smap-l2-subsetter"
-            notebook: "smap-l2-subsetter_Regression.ipynb"
+            image: "smap-l2-gridder"
+            notebook: "smap-l2-gridder_Regression.ipynb"
             shared-utils: "true"
             lfs: "true"
           -
