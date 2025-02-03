@@ -133,6 +133,9 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
+      - name: who owns this?
+        run: echo ${{ github.repository_owner }}
+
       - name: Pull Docker image
         run: docker pull ghcr.io/${{github.repository_owner}}/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}
 
