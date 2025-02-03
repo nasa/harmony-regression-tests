@@ -147,7 +147,9 @@ jobs:
           EDL_PASSWORD: ${{ secrets.EDL_PASSWORD }}
           HARMONY_HOST_URL: ${{ needs.base.outputs.harmony_host_url }}
           REGRESSION_TESTS_$(echo "${{ matrix.service }}" | tr '[:lower:]' '[:upper:]' | tr '-' '_')_IMAGE: ghcr.io/${{github.repository_owner}}/regression-tests-${{ matrix.service }}:latest
-        run: ./run_notebooks.sh ${{ matrix.service }}
+        run: |
+          env | grep REGRESSION
+          ./run_notebooks.sh ${{ matrix.service }}
 
       - name: Save notebook as an artifact
         if: always()
