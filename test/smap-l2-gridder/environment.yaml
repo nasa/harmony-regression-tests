@@ -1,0 +1,14 @@
+name: papermill-smap-l2-gridder
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.12
+  - netCDF4=1.7.2
+  - notebook=7.2.2
+  - numpy=2.1.3
+  - papermill=2.6.0
+  - pip
+  - pip:
+    - harmony-py==0.4.15
+    - xarray==2025.1.2
