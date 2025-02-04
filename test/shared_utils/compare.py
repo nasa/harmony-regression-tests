@@ -18,16 +18,24 @@ def compare_results_to_reference_file(
     reference_file_name: str,
     identical: bool = True,
     coordinates_to_fix: list[str] | None = None,
-    limit_comparison_dimensions: dict | None = None,
+    subset_selector: dict | None = None,
 ) -> None:
     """Compare two files as DataTrees
 
     Args:
         results_file_name: Path to the results file to validate
+
         reference_file_name: Path to the reference file to compare against
-        identical: If True, use strict comparison including attributes; if False, compare only values
-        coordinates_to_fix: List of coordinate names to be renamed in the case that the input has "unalignable" names.
-        limit_comparison_dimensions: Dict of dimension names and indices to limit comparison scope
+
+        identical: If True, use strict comparison including attributes; if
+                   False, compare only values
+
+        coordinates_to_fix: List of coordinate names to be renamed in the case
+                            that the input has "unalignable" names.
+
+        subset_selector: Dict of top level group names to selection
+                         dictionaries used to subset the input DataTree to the
+                         reference data. (see subset_datatree)
 
     Raises:
       AssertionError: when files don't match according to comparison criteria.
@@ -48,9 +56,8 @@ def compare_results_to_reference_file(
     results_data = DataTree.from_dict(results_groups)
 
     # Limit comparison of data
-    if limit_comparison_dimensions is not None:
-        reference_data = reference_data.isel(limit_comparison_dimensions)
-        results_data = results_data.isel(limit_comparison_dimensions)
+    if subset_selector is not None:
+        results_data = subset_datatree(results_data, subset_selector)
 
     if identical:
         assert results_data.identical(
@@ -63,6 +70,37 @@ def compare_results_to_reference_file(
 
     reference_data = None
     results_data = None
+
+
+def subset_datatree(dt: DataTree, selectors: dict[str, dict]) -> DataTree:
+    """Using a selector dictionary return a subset of the input DataTree.
+
+    Args:
+        dt: Input Datatree to subset
+        selectors: Dictionary mapping top level group names to dictionaries,
+                   where each dictionary contains dimension names to indices
+                   selected by slice.
+
+    a sample selector dictionary:
+    selectors = {
+        "Soil_Moisture_Retrieval_Data_3km": {
+            "y-dim": slice(1000, 2000),
+            "x-dim": slice(8800, 9800),
+        },
+        "Soil_Moisture_Retrieval_Data": {
+            "y-dim": slice(0, 1000),
+            "x-dim": slice(2500, 3500),
+        },
+    }
+
+    This is used to subset the SPL2SMAP granule, the data groups are the keys
+    and the dimensions are subset into 1000x1000 grids that include valid
+    output data.
+    """
+    out_dt = dt.copy()
+    for group_name, slices in selectors.items():
+        out_dt[group_name] = out_dt[group_name].isel(slices)
+    return out_dt
 
 
 def unalign_groups(
