@@ -5,6 +5,10 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-01-31 ([#130](https://github.com/nasa/harmony-regression-tests/pull/130))
+
+- Add tests and configuration for harmony-smap-l2-gridder.
+
 ## 2024-12-20([#126](https://github.com/nasa/harmony-regression-tests/pull/126))
 
 - Update configuration to run `opera-rtc-s1-browse` tests on HyBIG deployments.
