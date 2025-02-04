@@ -7,8 +7,6 @@ import subprocess
 
 from harmony import Client
 from numpy.testing import assert_array_almost_equal
-from rasterio.crs import CRS
-from rasterio.transform import Affine
 import rasterio
 
 
@@ -45,69 +43,29 @@ def validate_smap_outputs(
         assert len(downloaded_cog_outputs) == expected_file_count
         print_success('Correct number of generated output files.')
 
-        for cog_file in downloaded_cog_outputs:
-            print(f'Assessing: {basename(cog_file)}')
-            validate_cog(cog_file)
+        for downloaded_cog_file in downloaded_cog_outputs:
+            print(f'Assessing: {basename(downloaded_cog_file)}')
+            validate_cog(downloaded_cog_file)
 
-            expected_metadata = {
-                'driver': 'GTiff',
-                'dtype': get_expected_smap_dtype(cog_file),
-                'nodata': get_expected_smap_nodata(cog_file),
-                'width': 1440,
-                'height': 720,
-                'count': 1,
-                'crs': CRS.from_epsg(4326),
-                'transform': Affine(0.25, 0.0, 0.0, 0.0, 0.25, -90.0),
-            }
             reference_file = Path(
                 './reference_data',
-                basename(cog_file),
+                basename(downloaded_cog_file),
             )
 
-            assert_dataset_produced_correct_results(
-                cog_file, expected_metadata, reference_file
-            )
-
-
-def get_expected_smap_dtype(cog_file_name: str) -> str:
-    """Retrieve expected dtype for the COG metadata based on which
-    variable is being tested. The default value is 'float32', but
-    nobs and nobs_40km are 'int32' variables.
-
-    """
-    if 'nobs' in cog_file_name:
-        expected_dtype = 'int32'
-    else:
-        expected_dtype = 'float32'
-
-    return expected_dtype
-
-
-def get_expected_smap_nodata(cog_file_name: str) -> float:
-    """Retrieve expected nodata value for the COG metadata based on
-    which variable is being tested. The default value is -9999.0, but
-    nobs and nobs_40km have a nodata value of 0.0.
-
-    """
-    if 'nobs' in cog_file_name:
-        expected_nodata = 0.0
-    else:
-        expected_nodata = -9999.0
-
-    return expected_nodata
+            assert_dataset_produced_correct_results(downloaded_cog_file, reference_file)
 
 
 def assert_dataset_produced_correct_results(
-    generated_file: Path, expected_metadata: dict, reference_file: Path
+    generated_file: Path, reference_file: Path
 ) -> None:
     """Check that the generated data matches the expected data."""
     with rasterio.open(generated_file) as test_dataset:
-        assert (
-            test_dataset.meta == expected_metadata
-        ), f'output has incorrect metadata: {test_dataset.meta}'
-        print_success('Generated image has correct metadata.')
-
         with rasterio.open(reference_file) as reference_dataset:
+            assert (
+                test_dataset.meta == reference_dataset.meta
+            ), f'output has incorrect metadata: {test_dataset.meta}'
+            print_success('Generated image has correct metadata.')
+
             ref_image = reference_dataset.read()
             test_image = test_dataset.read()
             assert_array_almost_equal(ref_image, test_image)
