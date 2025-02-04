@@ -18,10 +18,19 @@ def compare_results_to_reference_file(
     reference_file_name: str,
     identical: bool = True,
     coordinates_to_fix: list[str] | None = None,
+    limit_comparison_dimensions: dict | None = None,
 ) -> None:
-    """Use `DataTree` functionality to compare data values, variables,
-    coordinates, metadata, and all their corresponding attributes of
-    downloaded results to a reference file.
+    """Compare two files as DataTrees
+
+    Args:
+        results_file_name: Path to the results file to validate
+        reference_file_name: Path to the reference file to compare against
+        identical: If True, use strict comparison including attributes; if False, compare only values
+        coordinates_to_fix: List of coordinate names to be renamed in the case that the input has "unalignable" names.
+        limit_comparison_dimensions: Dict of dimension names and indices to limit comparison scope
+
+    Raises:
+      AssertionError: when files don't match according to comparison criteria.
 
     """
     if coordinates_to_fix is None:
@@ -37,6 +46,11 @@ def compare_results_to_reference_file(
 
     reference_data = DataTree.from_dict(reference_groups)
     results_data = DataTree.from_dict(results_groups)
+
+    # Limit comparison of data
+    if limit_comparison_dimensions is not None:
+        reference_data = reference_data.isel(limit_comparison_dimensions)
+        results_data = results_data.isel(limit_comparison_dimensions)
 
     if identical:
         assert results_data.identical(
