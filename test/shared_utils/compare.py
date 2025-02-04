@@ -36,8 +36,8 @@ def compare_results_to_reference_file(
     if coordinates_to_fix is None:
         coordinates_to_fix = []
 
-    reference_groups = open_groups(reference_file_name, decode_timedelta=False)
-    results_groups = open_groups(results_file_name, decode_timedelta=False)
+    reference_groups = open_groups(reference_file_name, decode_times=False)
+    results_groups = open_groups(results_file_name, decode_times=False)
 
     # Fix unalignable coordinates
     for coord in coordinates_to_fix:
