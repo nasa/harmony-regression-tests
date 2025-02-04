@@ -35,7 +35,8 @@ def compare_results_to_reference_file(
 
         subset_selector: Dict of top level group names to selection
                          dictionaries used to subset the input DataTree to the
-                         reference data. (see subset_datatree)
+                         previously subsetted reference data. (see
+                         `subset_datatree`'s doc string for more information)
 
     Raises:
       AssertionError: when files don't match according to comparison criteria.
