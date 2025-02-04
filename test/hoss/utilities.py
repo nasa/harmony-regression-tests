@@ -66,7 +66,7 @@ def submit_and_download(
 
 
 def remove_results_files() -> None:
-    """Remove all NetCDF-4 files downloaded during the Swath Projector
+    """Remove all NetCDF-4 files downloaded during the 
     regression tests.
 
     """
