@@ -5,3 +5,4 @@ test/hybig/reference_data/**/*.png filter=lfs diff=lfs merge=lfs -text
 test/hybig/reference_data/**/*.jpg filter=lfs diff=lfs merge=lfs -text
 test/smap-l2-gridder/reference_files/SPL2SMP_E_reference.nc filter=lfs diff=lfs merge=lfs -text
 test/smap-l2-gridder/reference_files/SPL2SMAP_reference.nc filter=lfs diff=lfs merge=lfs -text
+test/smap-l2-gridder/reference_files/SPL2SMA_reference.nc filter=lfs diff=lfs merge=lfs -text
