@@ -42,7 +42,25 @@ echo "harmony host url: ${harmony_host_url}"
 ## e.g. if REGRESSION_TESTS_N2Z_IMAGE environment was set, the value would be used instead of the default.
 
 image_names=()
-all_tests=(harmony harmony-regression hoss hga n2z nsidc-icesat2 swath-projector trajectory-subsetter variable-subsetter regridder hybig geoloco net2cog subset-band-name sambah opera-rtc-s1-browse)
+all_tests=(
+    geoloco
+    harmony
+    harmony-regression
+    hga
+    hoss
+    hybig
+    n2z
+    net2cog
+    nsidc-icesat2
+    opera-rtc-s1-browse
+    regridder
+    sambah
+    smap-l2-gridder
+    subset-band-name
+    swath-projector
+    trajectory-subsetter
+    variable-subsetter
+)
 for image in "${all_tests[@]}"; do
     image_names+=($(image_name "$image" true))
 done
