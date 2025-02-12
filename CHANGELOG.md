@@ -5,9 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2025-02-12 ([#130](https://github.com/nasa/harmony-regression-tests/ ----- ))
+## 2025-02-12 ([#](https://github.com/nasa/harmony-regression-tests/ ----- ))
 - Added band subsetting test case to subset-band-name tests and added Production
   IDs to geoloco tests.
+
+## 2025-02-05 ([#134](https://github.com/nasa/harmony-regression-tests/pull/134))
+
+- Add configuration for the [SPL2SMA](https://nsidc.org/data/spl2smap/versions/3) collection to harmony-smap-l2-gridder.
 
 ## 2025-01-31 ([#130](https://github.com/nasa/harmony-regression-tests/pull/130))
 
