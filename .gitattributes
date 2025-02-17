@@ -3,4 +3,4 @@ test/subset-band-name/reference_data/*.hdf filter=lfs diff=lfs merge=lfs -text
 test/opera-rtc-s1-browse/reference_data/*.png filter=lfs diff=lfs merge=lfs -text
 test/hybig/reference_data/**/*.png filter=lfs diff=lfs merge=lfs -text
 test/hybig/reference_data/**/*.jpg filter=lfs diff=lfs merge=lfs -text
-test/smap-l2-gridder/reference_files/*.nc filter=lfs diff=lfs merge=lfs -text
+test/smap-l2-gridder/reference_files/**/*.nc filter=lfs diff=lfs merge=lfs -text
