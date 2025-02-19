@@ -9,6 +9,11 @@ to document pull requests to this repository.
 
 - Add configuration for the [SPL2SMP](https://nsidc.org/data/spl2smp/versions/9) collection to harmony-smap-l2-gridder.
 
+## 2025-02-12 ([#135](https://github.com/nasa/harmony-regression-tests/pull/135))
+
+- Added band subsetting test case to subset-band-name tests
+- Added Production IDs to geoloco tests.
+
 ## 2025-02-05 ([#134](https://github.com/nasa/harmony-regression-tests/pull/134))
 
 - Add configuration for the [SPL2SMA](https://nsidc.org/data/spl2sma/versions/3) collection to harmony-smap-l2-gridder.
