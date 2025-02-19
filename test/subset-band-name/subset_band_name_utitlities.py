@@ -30,7 +30,7 @@ def get_all_sds_names(file: str):
     datasets = file_sd.datasets()
     file_sd.end()
 
-    return datasets
+    return datasets.keys()
 
 
 def get_vdata(file: str, vdata_name: str):

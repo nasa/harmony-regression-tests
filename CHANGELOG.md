@@ -6,8 +6,8 @@ of regression tests that are each semi-independent.  This CHANGELOG file should 
 to document pull requests to this repository.
 
 ## 2025-02-12 ([#135](https://github.com/nasa/harmony-regression-tests/pull/135))
-- Added band subsetting test case to subset-band-name tests and added Production
-  IDs to geoloco tests.
+- Added band subsetting test case to subset-band-name tests
+- Added Production IDs to geoloco tests.
 
 ## 2025-02-05 ([#134](https://github.com/nasa/harmony-regression-tests/pull/134))
 
