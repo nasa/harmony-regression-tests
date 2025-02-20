@@ -1,4 +1,4 @@
-""""
+""" "
 Utility functions used by the subset-band-name regression tests.
 """
 

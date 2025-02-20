@@ -1,4 +1,4 @@
-""""
+""" "
 Common utility functions used by the geoloco regression tests.
 """
 
