@@ -1,6 +1,6 @@
-""" A module containing common functionality used by multiple
-    regression tests. These functions are kept out of the Jupyter notebook to
-    increase the readability of the regression test suite.
+"""A module containing common functionality used by multiple
+regression tests. These functions are kept out of the Jupyter notebook to
+increase the readability of the regression test suite.
 
 """
 

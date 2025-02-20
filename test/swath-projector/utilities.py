@@ -1,6 +1,6 @@
-""" A module containing utility functionality used by the Swath Projector
-    regression tests. These functions are kept out of the Jupyter notebook to
-    increase the readability of the regression test suite.
+"""A module containing utility functionality used by the Swath Projector
+regression tests. These functions are kept out of the Jupyter notebook to
+increase the readability of the regression test suite.
 
 """
 
