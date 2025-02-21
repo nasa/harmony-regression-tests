@@ -1,6 +1,6 @@
 {
-  "all": "harmony,harmony-regression,geoloco,hga,n2z,regridder,hoss,hybig,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,trajectory-subsetter,opera-rtc-s1-browse",
-  "batchee": "TBD",
+  "all": "harmony,harmony-regression,geoloco,hga,n2z,regridder,hoss,hybig,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,trajectory-subsetter,sambah,opera-rtc-s1-browse",
+  "batchee": "sambah",
   "geoloco": "geoloco",
   "giovanni-adapter": "TBD",
   "harmony-gdal-adapter": "hga",
@@ -15,7 +15,7 @@
   "query-cmr": "geoloco",
   "smap-l2-gridder": "smap-l2-gridder",
   "sds-maskfill": "TBD",
-  "stitchee": "TBD",
+  "stitchee": "sambah",
   "subset-band-name": "subset-band-name",
   "swath-projector": "swath-projector",
   "trajectory-subsetter": "nsidc-icesat2,trajectory-subsetter",
