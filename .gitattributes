@@ -1,5 +1,9 @@
 test/nsidc-icesat2/reference_files/*.h5 filter=lfs diff=lfs merge=lfs -text
 test/subset-band-name/reference_data/*.hdf filter=lfs diff=lfs merge=lfs -text
+test/sambah/reference_files/all_data.nc4 filter=lfs diff=lfs merge=lfs -text
+test/sambah/reference_files/spatial_only.nc4 filter=lfs diff=lfs merge=lfs -text
+test/sambah/reference_files/temp_var_bbox.nc4 filter=lfs diff=lfs merge=lfs -text
+test/sambah/reference_files/var_only.nc4 filter=lfs diff=lfs merge=lfs -text
 test/opera-rtc-s1-browse/reference_data/*.png filter=lfs diff=lfs merge=lfs -text
 test/hybig/reference_data/**/*.png filter=lfs diff=lfs merge=lfs -text
 test/hybig/reference_data/**/*.jpg filter=lfs diff=lfs merge=lfs -text
