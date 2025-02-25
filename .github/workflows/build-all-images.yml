@@ -44,6 +44,11 @@ jobs:
             shared-utils: "true"
             lfs: "true"
           -
+            image: "smap-l2-gridder"
+            notebook: "smap-l2-gridder_Regression.ipynb"
+            shared-utils: "true"
+            lfs: "true"
+          -
             image: "swath-projector"
             notebook: "SwathProjector_Regression.ipynb"
           -
@@ -59,6 +64,11 @@ jobs:
           -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
+          -
+            image: "sambah"
+            notebook: "SAMBAH_Regression.ipynb"
+            shared-utils: "true"
+            lfs: "true"
           -
             image: "opera-rtc-s1-browse"
             notebook: "opera-rtc-s1-browse_Regression.ipynb"

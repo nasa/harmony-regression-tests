@@ -31,6 +31,11 @@ regridder-image: Dockerfile regridder/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-regridder:latest -f ./Dockerfile \
 	--build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder .
 
+smap-l2-gridder-image: Dockerfile smap-l2-gridder/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-smap-l2-gridder:latest -f ./Dockerfile \
+	--build-arg notebook=smap-l2-gridder_Regression.ipynb --build-arg sub_dir=smap-l2-gridder \
+	--build-arg shared_utils=true .
+
 swath-projector-image: Dockerfile swath-projector/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-swath-projector:latest -f ./Dockerfile \
 	--build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
@@ -57,6 +62,11 @@ net2cog-image: Dockerfile net2cog/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-net2cog:latest -f ./Dockerfile \
 	--build-arg notebook=net2cog_Regression.ipynb --build-arg sub_dir=net2cog .
 
+sambah-image: Dockerfile sambah/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-sambah:latest -f ./Dockerfile \
+	--build-arg notebook=SAMBAH_Regression.ipynb --build-arg sub_dir=sambah \
+	--build-arg shared_utils=true .
+
 opera-rtc-s1-browse-image: Dockerfile opera-rtc-s1-browse/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-opera-rtc-s1-browse:latest -f ./Dockerfile \
 	--build-arg notebook=opera-rtc-s1-browse_Regression.ipynb --build-arg sub_dir=opera-rtc-s1-browse .
@@ -69,10 +79,12 @@ images: harmony-image \
 	n2z-image \
 	nsidc-icesat2-image \
 	regridder-image \
+	smap-l2-gridder-image \
 	subset-band-name-image \
 	swath-projector-image \
 	trajectory-subsetter-image \
 	variable-subsetter-image \
 	geoloco-image \
 	net2cog-image \
+	sambah-image \
 	opera-rtc-s1-browse-image
