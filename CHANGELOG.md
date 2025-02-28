@@ -27,7 +27,6 @@ to document pull requests to this repository.
 
 - Add tests for SAMBAH service chain
 
-======= end
 ## 2025-02-12 ([#135](https://github.com/nasa/harmony-regression-tests/pull/135))
 
 - Added band subsetting test case to subset-band-name tests
