@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-02-28 ([#142](https://github.com/nasa/harmony-regression-tests/pull/142))
+
+- Upgrade harmony-py to v1.0.0 for all tests that use the shared utilities. These are the nsidc-icesat2, sambah, smap-l2-gridder, subset-band-name and trajectory-subsetter tests.
+- Bumps patch versions of each test.
+- Adds version.txt to sambah tests.
+
 ## 2025-02-28 ([#139](https://github.com/nasa/harmony-regression-tests/pull/139))
 
 - Add missing SAMBAH references to GitHub Actions workflow
