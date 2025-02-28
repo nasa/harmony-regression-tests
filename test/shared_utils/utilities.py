@@ -7,7 +7,7 @@ increase the readability of the regression test suite.
 from shutil import move
 
 from harmony import Client, Request
-from harmony.harmony import ProcessingFailedException
+from harmony.client import ProcessingFailedException
 
 
 def print_error(error_string: str) -> str:

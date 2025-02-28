@@ -9,5 +9,5 @@ dependencies:
   - numpy=2.1.2
   - netCDF4=1.7.1
   - pip:
-    - harmony-py==0.4.15
+    - harmony-py==1.0.0
     - xarray==2024.9.0
