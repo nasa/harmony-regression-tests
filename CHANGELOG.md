@@ -11,6 +11,23 @@ to document pull requests to this repository.
 - Bumps patch versions of each test.
 - Adds version.txt to sambah tests.
 
+## 2025-02-28 ([#139](https://github.com/nasa/harmony-regression-tests/pull/139))
+
+- Add missing SAMBAH references to GitHub Actions workflow
+
+## 2025-02-25 ([#141](https://github.com/nasa/harmony-regression-tests/pull/141))
+
+- Update ATL10 v006 reference files for the NSIDC Trajectory Subsetter regression tests.
+
+## 2025-02-19 ([#137](https://github.com/nasa/harmony-regression-tests/pull/137))
+
+- Add configuration for the [SPL2SMP](https://nsidc.org/data/spl2smp/versions/9) collection to harmony-smap-l2-gridder.
+
+## 2025-02-12 ([#116](https://github.com/nasa/harmony-regression-tests/pull/116))
+
+- Add tests for SAMBAH service chain
+
+======= end
 ## 2025-02-12 ([#135](https://github.com/nasa/harmony-regression-tests/pull/135))
 
 - Added band subsetting test case to subset-band-name tests
@@ -18,7 +35,7 @@ to document pull requests to this repository.
 
 ## 2025-02-05 ([#134](https://github.com/nasa/harmony-regression-tests/pull/134))
 
-- Add configuration for the [SPL2SMA](https://nsidc.org/data/spl2smap/versions/3) collection to harmony-smap-l2-gridder.
+- Add configuration for the [SPL2SMA](https://nsidc.org/data/spl2sma/versions/3) collection to harmony-smap-l2-gridder.
 
 ## 2025-01-31 ([#130](https://github.com/nasa/harmony-regression-tests/pull/130))
 
