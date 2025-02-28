@@ -1,5 +1,9 @@
 test/nsidc-icesat2/reference_files/*.h5 filter=lfs diff=lfs merge=lfs -text
 test/subset-band-name/reference_data/*.hdf filter=lfs diff=lfs merge=lfs -text
+test/sambah/reference_files/all_data.nc4 filter=lfs diff=lfs merge=lfs -text
+test/sambah/reference_files/spatial_only.nc4 filter=lfs diff=lfs merge=lfs -text
+test/sambah/reference_files/temp_var_bbox.nc4 filter=lfs diff=lfs merge=lfs -text
+test/sambah/reference_files/var_only.nc4 filter=lfs diff=lfs merge=lfs -text
 test/opera-rtc-s1-browse/reference_data/*.png filter=lfs diff=lfs merge=lfs -text
 test/hybig/reference_data/**/*.png filter=lfs diff=lfs merge=lfs -text
 test/hybig/reference_data/**/*.jpg filter=lfs diff=lfs merge=lfs -text
@@ -13,5 +17,4 @@ test/net2cog/reference_data/RSS_smap_SSS_L3_8day_running_2015_136_FNL_v04.0_sss_
 test/net2cog/reference_data/RSS_smap_SSS_L3_8day_running_2015_136_FNL_v04.0_sss_smap_reformatted.tif filter=lfs diff=lfs merge=lfs -text
 test/net2cog/reference_data/RSS_smap_SSS_L3_8day_running_2015_136_FNL_v04.0_sss_smap_uncertainty_reformatted.tif filter=lfs diff=lfs merge=lfs -text
 test/net2cog/reference_data/RSS_smap_SSS_L3_8day_running_2015_136_FNL_v04.0_surtep_reformatted.tif filter=lfs diff=lfs merge=lfs -text
-test/smap-l2-gridder/reference_files/SPL2SMP_E_reference.nc filter=lfs diff=lfs merge=lfs -text
-test/smap-l2-gridder/reference_files/SPL2SMAP_reference.nc filter=lfs diff=lfs merge=lfs -text
+test/smap-l2-gridder/reference_files/**/*.nc filter=lfs diff=lfs merge=lfs -text

@@ -27,6 +27,7 @@ all_images=(
     nsidc-icesat2
     opera-rtc-s1-browse
     regridder
+    sambah
     smap-l2-gridder
     subset-band-name
     swath-projector
