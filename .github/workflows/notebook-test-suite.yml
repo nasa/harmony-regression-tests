@@ -55,7 +55,7 @@ on:
           - giovanni-adapter
           - harmony
           - harmony-gdal-adapter
-          # - harmony-netcdf-to-zarr": "n2z", (disabled for AWS Creds)
+          # - harmony-netcdf-to-zarr": "n2z", (disabled because AWS Credentials are needed to run)
           - harmony-regridder
           - harmony-service-example
           - hoss
