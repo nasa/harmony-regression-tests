@@ -3,6 +3,7 @@
   "batchee": "sambah",
   "geoloco": "geoloco",
   "giovanni-adapter": "TBD",
+  "harmony": "harmony",
   "harmony-gdal-adapter": "hga",
   "harmony-netcdf-to-zarr": "n2z",
   "harmony-regridder": "regridder",
@@ -10,14 +11,14 @@
   "hoss": "hoss, variable-subsetter",
   "hybig": "hybig,opera-rtc-s1-browse",
   "net2cog": "net2cog",
-  "podaac-concise": "TBD",
-  "podaac-l2-subsetter": "TBD",
+  "opera-rtc-s1-browse": "opera-rtc-s1-browse",
+  "podaac-concise": "sambah",
+  "podaac-l2-subsetter": "sambah",
   "query-cmr": "variable-subsetter",
+  "sds-maskfill": "hoss",
   "smap-l2-gridder": "smap-l2-gridder",
-  "sds-maskfill": "TBD",
   "stitchee": "sambah",
   "subset-band-name": "subset-band-name",
   "swath-projector": "swath-projector",
-  "trajectory-subsetter": "nsidc-icesat2,trajectory-subsetter",
-  "opera-rtc-s1-browse": "opera-rtc-s1-browse"
+  "trajectory-subsetter": "nsidc-icesat2,trajectory-subsetter"
 }
