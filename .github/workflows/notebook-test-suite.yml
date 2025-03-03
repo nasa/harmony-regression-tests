@@ -48,7 +48,7 @@ on:
         type: choice
         options:
           # This is a list of the aliases for the service images
-          # listed at the  harmony service image tags endpoint.
+          # found at the harmony service-image-tags endpoint.
           - all
           - batchee
           - geoloco
