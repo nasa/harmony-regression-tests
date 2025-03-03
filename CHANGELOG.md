@@ -5,9 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2025-02-28 ([#143](https://github.com/nasa/harmony-regression-tests/pull/143)]
+## 2025-03-03 ([#145](https://github.com/nasa/harmony-regression-tests/pull/145))
 
-- Forces samba image build.
+- Fixes mismatched service to regression links in config and test workflows.
+
+## 2025-02-28 ([#143](https://github.com/nasa/harmony-regression-tests/pull/143))
+
+- Forces sambah image build.
 
 ## 2025-02-28 ([#142](https://github.com/nasa/harmony-regression-tests/pull/142))
 
