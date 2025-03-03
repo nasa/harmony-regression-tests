@@ -47,18 +47,26 @@ on:
         required: true
         type: choice
         options:
+          # This is a list of the aliases for the service images
+          # found at the harmony service-image-tags endpoint.
+          - all
+          - batchee
           - geoloco
+          - giovanni-adapter
           - harmony
           - harmony-gdal-adapter
-          # - harmony-netcdf-to-zarr  # Commented out because needs AWS credentials
-          - harmony-regression
+          # - harmony-netcdf-to-zarr": "n2z", (disabled because AWS Credentials are needed to run)
           - harmony-regridder
           - harmony-service-example
           - hoss
           - hybig
+          - net2cog
+          - podaac-concise
+          - podaac-l2-subsetter
           - query-cmr
-          - sambah
           - smap-l2-gridder
+          - sds-maskfill
+          - stitchee
           - subset-band-name
           - swath-projector
           - trajectory-subsetter
