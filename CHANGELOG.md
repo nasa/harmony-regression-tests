@@ -7,8 +7,7 @@ to document pull requests to this repository.
 
 ### 2025-03-04 ([#146](https://github.com/nasa/harmony-regression-tests/pull/146))
 
-- Uncomments two ATL10 v006 tests in the nsidc-icesat2 regression notebook since
-  the Trajectory Subsetter is now compatible with ATL10 v006.
+- Re-enables two ATL10 v006 tests in the nsidc-icesat2 regression notebook, as the Trajectory Subsetter now supports ATL10 v006.
 
 ## 2025-03-03 ([#145](https://github.com/nasa/harmony-regression-tests/pull/145))
 
