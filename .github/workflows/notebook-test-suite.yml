@@ -43,7 +43,7 @@ on:
           - uat
           - prod
       service-name:
-        description: "Select the service to test or tests to run."
+        description: "Select the service to run its tests"
         required: true
         type: choice
         options:
@@ -85,7 +85,7 @@ on:
 
   repository_dispatch:
     types:
-      ## these are the events sent from harmony to the regression test repository via API to trigger tests.
+      ## These are the events sent from Harmony to this repository's API to trigger tests.
       ## They should align with the keys to the /service-image-tag endpoint (plus all)
       - all
       - batchee
