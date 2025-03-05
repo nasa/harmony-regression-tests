@@ -43,34 +43,40 @@ on:
           - uat
           - prod
       service-name:
-        description: "Select the service to run tests against"
+        description: "Select the service to run its tests"
         required: true
         type: choice
         options:
-          # This is a list of the aliases for the service images
-          # found at the harmony service-image-tags endpoint.
+          # Run all regression test suites
           - all
+          # These values are from Harmony's /service-image-tag endpoint and are associated
+          ## with 1 or more regression tests via the services_tests_config_[env].json files.
           - batchee
           - geoloco
           - giovanni-adapter
-          - harmony
           - harmony-gdal-adapter
-          # - harmony-netcdf-to-zarr": "n2z", (disabled because AWS Credentials are needed to run)
+          ## - harmony-netcdf-to-zarr": "n2z", (Disabled because of AWS credential requirements)
           - harmony-regridder
           - harmony-service-example
+          - harmony-smap-l2-gridder
           - hoss
           - hybig
           - net2cog
+          - opera-rtc-s1-browse
           - podaac-concise
           - podaac-l2-subsetter
           - query-cmr
-          - smap-l2-gridder
           - sds-maskfill
           - stitchee
           - subset-band-name
           - swath-projector
           - trajectory-subsetter
-          - opera-rtc-s1-browse
+          ## These run specific regression tests associated with service chains or core Harmony functionality.
+          - harmony
+          - harmony-regression
+          - sambah
+          - nsidc-icesat2
+
       docker-image-tag:
         description: "Optional Docker image tag to use for the tests"
         required: false
@@ -78,7 +84,29 @@ on:
         default: 'latest'
 
   repository_dispatch:
-    types: [all,geoloco,harmony-gdal-adapter,harmony-netcdf-to-zarr,harmony-service-example,hoss,hybig,net2cog,swath-projector,trajectory-subsetter,sambah,opera-rtc-s1-browse]
+    types:
+      ## These are the events sent from Harmony to this repository's API to trigger tests.
+      ## They should align with the keys to the /service-image-tag endpoint (plus all)
+      - all
+      - batchee
+      - geoloco
+      - harmony-gdal-adapter
+      ## - harmony-netcdf-to-zarr (Disabled because of AWS credential requirements)
+      - harmony-regridder
+      - harmony-service-example
+      - harmony-smap-l2-gridder
+      - hoss
+      - hybig
+      - net2cog
+      - opera-rtc-s1-browse
+      - podaac-concise
+      - podaac-l2-subsetter
+      - query-cmr
+      - sds-maskfill
+      - stitchee
+      - subset-band-name
+      - swath-projector
+      - trajectory-subsetter
     inputs:
       harmony-environment:
         required: true
