@@ -3,7 +3,6 @@
   "batchee": "sambah",
   "geoloco": "geoloco",
   "giovanni-adapter": "TBD",
-  "harmony": "harmony",
   "harmony-gdal-adapter": "hga",
   "harmony-netcdf-to-zarr": "n2z",
   "harmony-regridder": "regridder",
@@ -20,5 +19,9 @@
   "stitchee": "sambah",
   "subset-band-name": "subset-band-name",
   "swath-projector": "swath-projector",
-  "trajectory-subsetter": "nsidc-icesat2,trajectory-subsetter"
+  "trajectory-subsetter": "nsidc-icesat2,trajectory-subsetter",
+  "harmony": "harmony",
+  "harmony-regression": "harmony-regression",
+  "nsidc-icesat2": "nsidc-icesat2",
+  "sambah": "sambah"
 }
