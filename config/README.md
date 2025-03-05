@@ -1,4 +1,4 @@
-This directory has files containing dictionary mappings of a labels (keys) to a lists of regression tests that run when the label is selected (values)
+This directory has files containing dictionary mappings of labels (keys) to lists of regression tests that run when the label is selected (values)
 
 The two files describe the environments:
 - `services_tests_config_prod.json` for Production environment
