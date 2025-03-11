@@ -29,7 +29,8 @@ nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
 
 regridder-image: Dockerfile regridder/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-regridder:latest -f ./Dockerfile \
-	--build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder .
+	--build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder \
+	--build-arg shared_utils=true .
 
 smap-l2-gridder-image: Dockerfile smap-l2-gridder/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-smap-l2-gridder:latest -f ./Dockerfile \
