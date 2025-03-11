@@ -5,9 +5,9 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-### 2025-03-11 ([#150](https://github.com/nasa/harmony-regression-tests/pull/150))
+### 2025-03-11 ([#151](https://github.com/nasa/harmony-regression-tests/pull/151))
 
-- Upgrade regridder regression tests.  Upgrade python libraies. Add Git LFS to reference files.  Use shared utilities.
+- Upgrade regridder regression tests. Upgrade python libraies. Use shared utilities.
 
 ### 2025-03-06 ([#148](https://github.com/nasa/harmony-regression-tests/pull/148))
 
