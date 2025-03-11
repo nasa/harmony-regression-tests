@@ -39,6 +39,7 @@ jobs:
             image: "regridder"
             notebook: "Regridder_Regression.ipynb"
             lfs: "true"
+            shared-utils: "true"
           -
             image: "subset-band-name"
             notebook: "SubsetBandName_Regression.ipynb"
