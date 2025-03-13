@@ -22,8 +22,8 @@ def compare_results_to_reference_file(
     groups, see same-named function in `variable-subsetter/utilities.py`.
 
     """
-    reference_data = xr.open_dataset(reference_file_name, group=group_name)
-    results_data = xr.open_dataset(results_file_name, group=group_name)
+    reference_data = xr.open_datatree(reference_file_name, group=group_name)
+    results_data = xr.open_datatree(results_file_name, group=group_name)
 
     assert results_data.equals(reference_data), (
         'Output and reference files ' 'do not match.'
