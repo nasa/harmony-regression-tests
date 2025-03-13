@@ -9,6 +9,10 @@ to document pull requests to this repository.
 
 - Add SPL3SMP_E, SPL3SMP, and SPL3FTP_E tests to HOSS_Regression.ipynb.
 
+### 2025-03-06 ([#148](https://github.com/nasa/harmony-regression-tests/pull/148))
+
+- Fixes service name key missed in [#147](https://github.com/nasa/harmony-regression-tests/pull/147)
+
 ### 2025-03-05 ([#147](https://github.com/nasa/harmony-regression-tests/pull/147))
 
 - Cleans up `repository_dispatch` and `workflow_dispatch` options to be consistent with Harmony's service-image-tags endpoint.
