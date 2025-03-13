@@ -5,6 +5,11 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+### 2025-03-13 ([#149](https://github.com/nasa/harmony-regression-tests/pull/149))
+
+- Fixed a bug in subset-band-name band subsetting test case where file comparisons were being run when Production
+  testing is disabled.
+
 ### 2025-03-06 ([#148](https://github.com/nasa/harmony-regression-tests/pull/148))
 
 - Fixes service name key missed in [#147](https://github.com/nasa/harmony-regression-tests/pull/147)
