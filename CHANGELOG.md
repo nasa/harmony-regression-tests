@@ -10,6 +10,10 @@ to document pull requests to this repository.
 - Fixed a bug in subset-band-name band subsetting test case where file comparisons were being run when Production
   testing is disabled.
 
+### 2025-03-12 ([#152](https://github.com/nasa/harmony-regression-tests/pull/152))
+
+- Add SPL3SMP_E, SPL3SMP, and SPL3FTP_E tests to HOSS_Regression.ipynb.
+
 ### 2025-03-06 ([#148](https://github.com/nasa/harmony-regression-tests/pull/148))
 
 - Fixes service name key missed in [#147](https://github.com/nasa/harmony-regression-tests/pull/147)
