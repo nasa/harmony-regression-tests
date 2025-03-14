@@ -5,6 +5,11 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+### 2025-03-13 ([#153](https://github.com/nasa/harmony-regression-tests/pull/153))
+
+- Fixed a bug in subset-band-name band subsetting test case where file comparisons were being run when Production
+  testing is disabled.
+
 ### 2025-03-12 ([#152](https://github.com/nasa/harmony-regression-tests/pull/152))
 
 - Add SPL3SMP_E, SPL3SMP, and SPL3FTP_E tests to HOSS_Regression.ipynb.
