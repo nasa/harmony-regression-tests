@@ -8,7 +8,7 @@ from os import listdir, remove, replace
 from typing import Dict, Optional
 
 from harmony import Client, Request
-from harmony.harmony import ProcessingFailedException
+from harmony.client import ProcessingFailedException
 import xarray as xr
 
 
