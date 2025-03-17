@@ -61,6 +61,10 @@ to document pull requests to this repository.
 
 - Add configuration for the [SPL2SMA](https://nsidc.org/data/spl2sma/versions/3) collection to harmony-smap-l2-gridder.
 
+## 2025-02-04([#131](https://github.com/nasa/harmony-regression-tests/pull/131))
+
+- Updates net2cog tests to include single, multiple and all variable test cases.
+
 ## 2025-01-31 ([#130](https://github.com/nasa/harmony-regression-tests/pull/130))
 
 - Add tests and configuration for harmony-smap-l2-gridder.
