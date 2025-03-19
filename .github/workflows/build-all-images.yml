@@ -65,6 +65,7 @@ jobs:
           -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
+            lfs: "true"
           -
             image: "sambah"
             notebook: "SAMBAH_Regression.ipynb"

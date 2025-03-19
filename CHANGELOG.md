@@ -5,9 +5,18 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-### 2025-03-11 ([#151](https://github.com/nasa/harmony-regression-tests/pull/151))
+### 2025-03-19 ([#151](https://github.com/nasa/harmony-regression-tests/pull/151))
 
 - Upgrade regridder regression tests. Upgrade python libraies. Use shared utilities.
+
+### 2025-03-13 ([#153](https://github.com/nasa/harmony-regression-tests/pull/153))
+
+- Fixed a bug in subset-band-name band subsetting test case where file comparisons were being run when Production
+  testing is disabled.
+
+### 2025-03-12 ([#152](https://github.com/nasa/harmony-regression-tests/pull/152))
+
+- Add SPL3SMP_E, SPL3SMP, and SPL3FTP_E tests to HOSS_Regression.ipynb.
 
 ### 2025-03-06 ([#148](https://github.com/nasa/harmony-regression-tests/pull/148))
 
@@ -60,6 +69,10 @@ to document pull requests to this repository.
 ## 2025-02-05 ([#134](https://github.com/nasa/harmony-regression-tests/pull/134))
 
 - Add configuration for the [SPL2SMA](https://nsidc.org/data/spl2sma/versions/3) collection to harmony-smap-l2-gridder.
+
+## 2025-02-04([#131](https://github.com/nasa/harmony-regression-tests/pull/131))
+
+- Updates net2cog tests to include single, multiple and all variable test cases.
 
 ## 2025-01-31 ([#130](https://github.com/nasa/harmony-regression-tests/pull/130))
 
