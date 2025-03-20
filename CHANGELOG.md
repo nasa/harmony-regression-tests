@@ -8,7 +8,7 @@ to document pull requests to this repository.
 
 ### 2025-03-20 ([#155](https://github.com/nasa/harmony-regression-tests/pull/155))
 
-- Updated and renamed reference files in hoss test cases for SMAP L3 test cases
+- Updated HOSS tests for maskfill dimension order changes
 
 ### 2025-03-19 ([#151](https://github.com/nasa/harmony-regression-tests/pull/151))
 
