@@ -6,6 +6,11 @@ of regression tests that are each semi-independent.  This CHANGELOG file should 
 to document pull requests to this repository.
 
 
+### 2025-03-21 ([#156](https://github.com/nasa/harmony-regression-tests/pull/156))
+
+- Update the NSIDC regression test notebook to incorporate the ATL08 test and associated reference file
+  now that the bug that affected temporal subsetting for segmented collections has been resolved.
+
 ### 2025-03-20 ([#155](https://github.com/nasa/harmony-regression-tests/pull/155))
 
 - Updated and renamed reference files in HOSS test cases to reflect SMAP L3 maskfill spatial subsetting changes.
