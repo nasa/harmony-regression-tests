@@ -55,7 +55,6 @@ on:
           - geoloco
           - giovanni-adapter
           - harmony-gdal-adapter
-          ## - harmony-netcdf-to-zarr": "n2z", (Disabled because of AWS credential requirements)
           - harmony-regridder
           - harmony-service-example
           - harmony-smap-l2-gridder
@@ -91,7 +90,6 @@ on:
       - batchee
       - geoloco
       - harmony-gdal-adapter
-      ## - harmony-netcdf-to-zarr (Disabled because of AWS credential requirements)
       - harmony-regridder
       - harmony-service-example
       - harmony-smap-l2-gridder
