@@ -75,8 +75,6 @@ done
 ## run the tests
 cd test \
     && export HARMONY_HOST_URL="${harmony_host_url}" \
-              AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-              AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
               EDL_USER="${EDL_USER}" \
               EDL_PASSWORD="${EDL_PASSWORD}" \
     && ./run_notebooks.sh --use-versions
