@@ -8,7 +8,7 @@ from os import listdir, remove, replace
 from typing import Union
 
 from harmony import Client, Request
-from harmony.harmony import ProcessingFailedException
+from harmony.client import ProcessingFailedException
 from netCDF4 import Dataset, Group, Variable
 import numpy as np
 

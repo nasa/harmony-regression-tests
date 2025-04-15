@@ -9,4 +9,4 @@ dependencies:
   - numpy=1.24.3
   - netCDF4=1.6.3
   - pip:
-    - harmony-py
+    - harmony-py==1.1.0

@@ -11,4 +11,4 @@ dependencies:
   - netCDF4=1.6.3
   - xarray=2022.12.0
   - pip:
-    - harmony-py
+    - harmony-py==1.1.0

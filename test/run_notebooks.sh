@@ -10,8 +10,8 @@ NC='\033[0m' # No Color
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "${SCRIPT_DIR}/../script/image_name.sh"
 
-echo "Running regression tests"
-echo "Using ${HARMONY_HOST_URL}"
+echo -e "\nRunning regression tests"
+echo -e "Using ${HARMONY_HOST_URL}\n"
 
 
 # Specify the test images to run, by default all built by the Makefile. If
