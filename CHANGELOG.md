@@ -5,47 +5,60 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-### 2025-04-09 ([#159](https://github.com/nasa/harmony-regression-tests/pull/159))
+## 2025-04-15 ([#161](https://github.com/nasa/harmony-regression-tests/pull/161))
+
+### Removed
+
+- NetCDF-to-Zarr regression test suite, due to pending service deprecation.
+- AWS credentials within Docker images, as they were only used by NetCDF-to-Zarr.
+
+### Changed
+
+- Pinned `harmony-py` dependency for Swath Projector and Variable Subsetter test
+  suites. Updated utility functions for each to use updated import paths for
+  `ProcessingFailedException`.
+
+## 2025-04-09 ([#159](https://github.com/nasa/harmony-regression-tests/pull/159))
 
 - Update reference files in SAMBAH test case to reflect updates to Harmony UAT processing.
 
-### 2025-03-21 ([#156](https://github.com/nasa/harmony-regression-tests/pull/156))
+## 2025-03-21 ([#156](https://github.com/nasa/harmony-regression-tests/pull/156))
 
 - Update the NSIDC regression test notebook to incorporate the ATL08 test and
   associated reference file now that the bug that affected temporal subsetting
   for segmented collections has been resolved.
 
-### 2025-03-20 ([#155](https://github.com/nasa/harmony-regression-tests/pull/155))
+## 2025-03-20 ([#155](https://github.com/nasa/harmony-regression-tests/pull/155))
 
 - Update and rename reference files in HOSS test cases to reflect SMAP L3
   maskfill spatial subsetting changes.
 
-### 2025-03-19 ([#151](https://github.com/nasa/harmony-regression-tests/pull/151))
+## 2025-03-19 ([#151](https://github.com/nasa/harmony-regression-tests/pull/151))
 
 - Upgrade regridder regression tests. Upgrade python libraies. Use shared
   utilities.
 
-### 2025-03-13 ([#153](https://github.com/nasa/harmony-regression-tests/pull/153))
+## 2025-03-13 ([#153](https://github.com/nasa/harmony-regression-tests/pull/153))
 
 - Fix a bug in subset-band-name band subsetting test case where file
   comparisons were being run when Production testing is disabled.
 
-### 2025-03-12 ([#152](https://github.com/nasa/harmony-regression-tests/pull/152))
+## 2025-03-12 ([#152](https://github.com/nasa/harmony-regression-tests/pull/152))
 
 - Add SPL3SMP_E, SPL3SMP, and SPL3FTP_E tests to HOSS_Regression.ipynb.
 
-### 2025-03-06 ([#148](https://github.com/nasa/harmony-regression-tests/pull/148))
+## 2025-03-06 ([#148](https://github.com/nasa/harmony-regression-tests/pull/148))
 
 - Fix service name key missed in [#147](https://github.com/nasa/harmony-regression-tests/pull/147).
 
-### 2025-03-05 ([#147](https://github.com/nasa/harmony-regression-tests/pull/147))
+## 2025-03-05 ([#147](https://github.com/nasa/harmony-regression-tests/pull/147))
 
 - Clean up `repository_dispatch` and `workflow_dispatch` options to be
   consistent with Harmony's service-image-tags endpoint.
 - Adds documentation to clarify how the configuration works for mapping
   triggers to regression tests.
 
-### 2025-03-04 ([#146](https://github.com/nasa/harmony-regression-tests/pull/146))
+## 2025-03-04 ([#146](https://github.com/nasa/harmony-regression-tests/pull/146))
 
 - Re-enable two ATL10 v006 tests in the nsidc-icesat2 regression notebook, as
   the Trajectory Subsetter now supports ATL10 v006.
