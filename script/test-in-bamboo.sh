@@ -39,7 +39,7 @@ echo "harmony host url: ${harmony_host_url}"
 ## Images are pulled for each test in the all_tests array
 ## default images have a pattern: "ghrc.io/nasa/regression-tests-<test>:latest"
 ## Any bamboo variables named "REGRESSION_TESTS_<test>_IMAGE" will override the default value.
-## e.g. if REGRESSION_TESTS_N2Z_IMAGE environment was set, the value would be used instead of the default.
+## e.g. if REGRESSION_TESTS_HOSS_IMAGE environment was set, the value would be used instead of the default.
 
 image_names=()
 all_tests=(
@@ -49,7 +49,6 @@ all_tests=(
     hga
     hoss
     hybig
-    n2z
     net2cog
     nsidc-icesat2
     opera-rtc-s1-browse

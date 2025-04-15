@@ -19,7 +19,7 @@ locally in the browser against a single service regression test.
 * [pre-commit](https://pre-commit.com/) - to ensure code formatting. [See below](#pre-commit-hooks).
 
 
-### Cloning the repostiory.
+### Cloning the repository.
 
 To work with this repository, ensure git-lfs (Git Large File Storage) is
 installed on your system, as it's used to manage some large files stored in
@@ -66,8 +66,6 @@ Docker Desktop instabilities*
     $ export HARMONY_HOST_URL=<url of Harmony in the target environment>
     $ export EDL_PASSWORD=<your EDL password>
     $ export EDL_USER=<your EDL username>
-    $ export AWS_ACCESS_KEY_ID=<key for the target environment>
-    $ export AWS_SECRET_ACCESS_KEY=<key secret for the target environment>
     $ ./run_notebooks.sh
 
 Outputs can be found in the `tests/output/<image>` directory.
@@ -75,14 +73,11 @@ Outputs can be found in the `tests/output/<image>` directory.
 Notes:
 
 1. *All notebooks require variable `EDL_USER` and `EDL_PASSWORD` to
-be exported for authentication against earthdata login.  If you are including
-the NetCDF-to-Zarr (n2z) tests, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
-must be set to values for your current test environment to access the
-created Zarr store.*
+be exported for authentication against earthdata login.*
 
 1. *It's possible to run a selection of notebooks by providing a list of images
-   to run after the run_notebooks command.  e.g. `./run_notebooks.sh hga n2z`
-   would run the `harmony GDAL adapter` and `NetCDF-to-Zarr` regression tests.*
+   to run after the run_notebooks command.  e.g. `./run_notebooks.sh hga hoss`
+   would run the `harmony GDAL adapter` and `HOSS` regression tests.*
 
 1. *`HARMONY_HOST_URL` is the harmony base url for your target
    environment. e.g. `SIT` would be `https://harmony.sit.earthdata.nasa.gov`*
@@ -182,7 +177,6 @@ The above is the basic structure for adding a new image to the CI/CD.  Two addit
 
 ```
 
-
 ## Test suite contents:
 
 This section of the README describes the files that are expected in every test
@@ -200,7 +194,7 @@ For example, in the `swath-projector` directory we have
 
 * `reference_files` contains golden template files for expected outputs of
    `tests`.  When you add new binary files to your test, you should configure
-   them to to use Git LFS as well as keep them as small as possible.
+   them to to use Git LFS **as well as keep them as small as possible**.
 * `SwathProjector_Regression.ipynb` is the regression test Jupyter notebook
   itself, running tests in cells. A test suite fails when a Jupyter notebook
   cell returns an error from the execution. Each regression test is designed to

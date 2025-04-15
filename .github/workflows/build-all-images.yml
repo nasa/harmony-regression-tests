@@ -28,9 +28,6 @@ jobs:
             notebook: "HyBIG_Regression.ipynb"
             lfs: "true"
           -
-            image: "n2z"
-            notebook: "N2Z_Regression.ipynb"
-          -
             image: "nsidc-icesat2"
             notebook: "NSIDC-ICESAT2_Regression.ipynb"
             shared-utils: "true"

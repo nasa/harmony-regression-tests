@@ -7,12 +7,6 @@ ARG shared_utils=false
 ENV env_sub_dir=$sub_dir
 ENV env_notebook=$notebook
 
-
-ENV AWS_SECRET_ACCESS_KEY=no-access
-ENV AWS_ACCESS_KEY_ID=no-access
-ENV AWS_SESSION_TOKEN=no-access
-ENV AWS_REGION=us-west-2
-
 ENV PYTHONDONTWRITEBYTECODE=true
 
 WORKDIR /workdir
