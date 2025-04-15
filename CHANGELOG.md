@@ -11,6 +11,7 @@ to document pull requests to this repository.
 
 - NetCDF-to-Zarr regression test suite, due to pending service deprecation.
 - AWS credentials within Docker images, as they were only used by NetCDF-to-Zarr.
+- NetCDF-to-Zarr service invocation in `HarmonyRegression.ipynb`.
 
 ### Changed
 
