@@ -9,6 +9,7 @@ on:
 jobs:
   build-images:
     strategy:
+      fail-fast: false
       matrix:
         targets:
           -
