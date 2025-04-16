@@ -10,7 +10,8 @@ NC='\033[0m' # No Color
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "${SCRIPT_DIR}/../script/image_name.sh"
 
-echo "Running regression tests"
+echo -e "\nRunning regression tests"
+echo -e "Using ${HARMONY_HOST_URL}\n"
 
 
 # Specify the test images to run, by default all built by the Makefile. If
@@ -22,7 +23,6 @@ all_images=(
     hga
     hoss
     hybig
-    n2z
     net2cog
     nsidc-icesat2
     opera-rtc-s1-browse
@@ -56,19 +56,9 @@ images=("${specified_images[@]:-${all_images[@]}}")
 for image in "${images[@]}"; do
     echo -e "Test suite ${image} starting"
 
-    # insert AWS Credential variables for n2z only
-    if [[ $image == "n2z" ]]; then
-        creds="--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-               --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-	       --env AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}"
-    else
-        creds=""
-    fi
-
     full_image=$(image_name "$image" "$use_versions")
     echo "running test with $full_image"
     PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
-                      ${creds} \
                       --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
                       --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
 done
