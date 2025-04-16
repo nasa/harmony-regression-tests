@@ -18,10 +18,6 @@ hybig-image: Dockerfile hybig/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-hybig:latest -f ./Dockerfile \
 	--build-arg notebook=HyBIG_Regression.ipynb --build-arg sub_dir=hybig .
 
-n2z-image: Dockerfile n2z/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-n2z:latest -f ./Dockerfile \
-	--build-arg notebook=N2Z_Regression.ipynb --build-arg sub_dir=n2z .
-
 nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-nsidc-icesat2:latest -f ./Dockerfile \
 	--build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 \
@@ -77,7 +73,6 @@ images: harmony-image \
 	hga-image \
 	hoss-image \
 	hybig-image \
-	n2z-image \
 	nsidc-icesat2-image \
 	regridder-image \
 	smap-l2-gridder-image \

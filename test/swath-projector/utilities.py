@@ -7,7 +7,7 @@ increase the readability of the regression test suite.
 from os import listdir, remove, replace
 
 from harmony import Client, Request
-from harmony.harmony import ProcessingFailedException
+from harmony.client import ProcessingFailedException
 import xarray as xr
 
 
