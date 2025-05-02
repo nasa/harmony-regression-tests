@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-05-02 [#165](https://github.com/nasa/harmony-regression-tests/pull/165))
+
+### Changed
+
+- ATL08_subset_by_temporal_range_reference.h5
+- NSIDC-ICESAT2_Regression.ipynb, updated with correct granule IDs and temporal test for ATL08
+
 ## 2025-04-15 ([#161](https://github.com/nasa/harmony-regression-tests/pull/161))
 
 ### Removed
