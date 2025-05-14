@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-05-12 ([#167](https://github.com/nasa/harmony-regression-tests/pull/167))
+
+### Changed
+
+- ATL16 regridding service reference file updated to reflect corrected missing data handling.
+
+
 ## 2025-05-02 [#165](https://github.com/nasa/harmony-regression-tests/pull/165))
 
 ### Changed
