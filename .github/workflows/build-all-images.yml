@@ -27,7 +27,6 @@ jobs:
           -
             image: "hybig"
             notebook: "HyBIG_Regression.ipynb"
-            lfs: "true"
           -
             image: "nsidc-icesat2"
             notebook: "NSIDC-ICESAT2_Regression.ipynb"
@@ -63,7 +62,6 @@ jobs:
           -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
-            lfs: "true"
           -
             image: "sambah"
             notebook: "SAMBAH_Regression.ipynb"
@@ -72,7 +70,6 @@ jobs:
           -
             image: "opera-rtc-s1-browse"
             notebook: "opera-rtc-s1-browse_Regression.ipynb"
-            lfs: "true"
 
     uses: ./.github/workflows/build-target-image.yml
     with:
