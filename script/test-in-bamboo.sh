@@ -43,6 +43,7 @@ echo "harmony host url: ${harmony_host_url}"
 
 image_names=()
 all_tests=(
+    filtering
     geoloco
     harmony
     harmony-regression
