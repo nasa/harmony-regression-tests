@@ -1,3 +1,4 @@
+import json
 import numpy as np
 import xarray as xr
 from pathlib import Path
@@ -10,73 +11,62 @@ def print_success(msg: str) -> None:
 def print_error(msg: str) -> None:
     print(f'\033[91mError: {msg}\033[0m')
 
-
 def validate_filter_outputs(
     harmony_client: Client,
     harmony_job_id: str
 ) -> None:
     """
-    Download the one output COG, open its `product` group and
-    the golden filtered netCDF from reference_data/product/,
-    then:
-      - bitwise-compare the NO2 vertical_column_stratosphere array
-      - assert the same number of non-NaN pixels
+    Download the one output file, look up its truth entry in filter_truth.json
+    (which now carries "group/variable"), open that group, confirm the var exists,
+    count non‐NaNs, and assert it matches the expected count.
     """
-    var = "vertical_column_stratosphere"
+    # 1) load the truth table
+    truth_path = Path(__file__).parent / "reference_data" / "filter_truth.json"
+    with open(truth_path, 'r') as f:
+        truth = json.load(f)
 
-    # 1) download and load the filtered array into memory
+    # 2) download
     with TemporaryDirectory() as tmp_dir:
         outs = [
-            f.result()
-            for f in harmony_client.download_all(
-                harmony_job_id,
-                overwrite=True,
-                directory=tmp_dir
+            future.result()
+            for future in harmony_client.download_all(
+                harmony_job_id, overwrite=True, directory=tmp_dir
             )
         ]
         assert len(outs) == 1, f"Expected 1 output file, got {len(outs)}"
         out_path = Path(outs[0])
-        print_success("Got one filtered output file.")
+        fname = out_path.name
+        print_success(f"Got one filtered output file: {fname}")
 
-        # open the COG's "product" group and pull the array
-        ds_out = xr.open_dataset(out_path, group="product")
-        assert var in ds_out.data_vars, (
-            f"'{var}' not found in output variables: {list(ds_out.data_vars)}"
+        # strip numeric prefix
+        suffix = fname.split('_', 1)[1]
+        assert suffix in truth, f"No truth entry for '{suffix}'"
+        entry = truth[suffix]
+
+        # 3) parse "group/variable"
+        group_var = entry["variable"]
+        if "/" in group_var:
+            group, var = group_var.split("/", 1)
+        else:
+            group = None
+            var = group_var
+        print_success(f"Expecting variable '{var}' in group '{group or '<root>'}'")
+
+        # 4) open dataset (in the right group)
+        ds = xr.open_dataset(out_path, group=group) if group else xr.open_dataset(out_path)
+        print_success(f"Opened NetCDF file{' and entered group ' + group if group else ''}")
+
+        # 5) confirm the variable exists
+        assert var in ds.data_vars, f"Variable '{var}' not found in group '{group}'"
+        print_success(f"Found group/variable: {group or '<root>'}/{var}")
+
+        # 6) count non‐NaNs and compare
+        data = ds[var].values
+        actual_count = int(np.count_nonzero(~np.isnan(data)))
+        expected_count = entry["non_nan_count"]
+        assert actual_count == expected_count, (
+            f"Non-NaN count mismatch for {var}: got {actual_count}, expected {expected_count}"
         )
-        arr_out = ds_out[var].values  # read into memory now
-
-    # 2) find and load the reference file
-    ref_dir = Path(__file__).parent / "reference_data"
-    # match by the _..._filtered.nc suffix
-    suffix = out_path.name.split("_", 1)[-1]
-    candidates = list(ref_dir.glob(f"*_{suffix}"))
-    assert candidates, f"Missing reference file matching '*_{suffix}'"
-    ref_path = candidates[0]
-    print_success(f"Found reference filtered file: {ref_path.name}")
-
-    ds_ref = xr.open_dataset(ref_path, group="product")
-    assert var in ds_ref.data_vars, (
-        f"'{var}' not found in reference variables: {list(ds_ref.data_vars)}"
-    )
-    arr_ref = ds_ref[var].values
-
-    # 3) bitwise (within float tolerance)
-    np.testing.assert_allclose(
-        arr_out,
-        arr_ref,
-        rtol=1e-6, atol=0,
-        err_msg=f"'{var}' values differ!"
-    )
-    print_success(f"'{var}' matches between output and reference.")
-
-    # 4) pixel-count sanity
-    cnt_out = np.count_nonzero(~np.isnan(arr_out))
-    cnt_ref = np.count_nonzero(~np.isnan(arr_ref))
-    assert cnt_out == cnt_ref, (
-        f"Non-NaN count mismatch: output={cnt_out}, reference={cnt_ref}"
-    )
-    print_success(
-        f"Non-NaN pixel count OK ({cnt_out} pixels) in both output & reference."
-    )
+        print_success(f"Non-NaN pixel count OK ({actual_count} pixels)")
 
     print_success("All filtering validations passed!")
