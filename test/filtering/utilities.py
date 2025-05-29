@@ -5,16 +5,16 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from harmony import Client
 
+
 def print_success(msg: str) -> None:
     print(f'\033[92mSuccess: {msg}\033[0m')
+
 
 def print_error(msg: str) -> None:
     print(f'\033[91mError: {msg}\033[0m')
 
-def validate_filter_outputs(
-    harmony_client: Client,
-    harmony_job_id: str
-) -> None:
+
+def validate_filter_outputs(harmony_client: Client, harmony_job_id: str) -> None:
     """
     Download the one output file, look up its truth entry in filter_truth.json
     (which now carries "group/variable"), open that group, confirm the var exists,
@@ -53,8 +53,14 @@ def validate_filter_outputs(
         print_success(f"Expecting variable '{var}' in group '{group or '<root>'}'")
 
         # 4) open dataset (in the right group)
-        ds = xr.open_dataset(out_path, group=group) if group else xr.open_dataset(out_path)
-        print_success(f"Opened NetCDF file{' and entered group ' + group if group else ''}")
+        ds = (
+            xr.open_dataset(out_path, group=group)
+            if group
+            else xr.open_dataset(out_path)
+        )
+        print_success(
+            f"Opened NetCDF file{' and entered group ' + group if group else ''}"
+        )
 
         # 5) confirm the variable exists
         assert var in ds.data_vars, f"Variable '{var}' not found in group '{group}'"
@@ -64,9 +70,9 @@ def validate_filter_outputs(
         data = ds[var].values
         actual_count = int(np.count_nonzero(~np.isnan(data)))
         expected_count = entry["non_nan_count"]
-        assert actual_count == expected_count, (
-            f"Non-NaN count mismatch for {var}: got {actual_count}, expected {expected_count}"
-        )
+        assert (
+            actual_count == expected_count
+        ), f"Non-NaN count mismatch for {var}: got {actual_count}, expected {expected_count}"
         print_success(f"Non-NaN pixel count OK ({actual_count} pixels)")
 
     print_success("All filtering validations passed!")

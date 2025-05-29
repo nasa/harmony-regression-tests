@@ -1,7 +1,7 @@
 filtering-image: Dockerfile filtering/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-filtering:latest -f ./Dockerfile \
 	--build-arg notebook=Filtering_Regression.ipynb --build-arg sub_dir=filtering .
-	
+
 harmony-image: Dockerfile harmony/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-harmony:latest -f ./Dockerfile \
 	--build-arg notebook=Harmony.ipynb --build-arg sub_dir=harmony .
