@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-06-03 ([#175](https://github.com/nasa/harmony-regression-tests/pull/175))
+
+### Changed
+
+- net2cog, Add SMAP L4 SMLM verification into the Net2Cog Harmony regression tests 
+  for COG and CRS validation.
+
 ## 2025-05-22 ([#169](https://github.com/nasa/harmony-regression-tests/pull/169))
 
 ### Changed
