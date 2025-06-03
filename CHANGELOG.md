@@ -9,7 +9,7 @@ to document pull requests to this repository.
 
 ### Changed
 
-- net2cog, Add SMAP L4 SMLM verification into the Net2Cog Harmony regression tests 
+- net2cog, Add SMAP L4 SMLM verification into the Net2Cog Harmony regression tests
   for COG and CRS validation.
 
 ## 2025-05-22 ([#169](https://github.com/nasa/harmony-regression-tests/pull/169))
