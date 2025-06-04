@@ -10,7 +10,8 @@ to document pull requests to this repository.
 ### Changed
 
 - HOSS reference files have been updated for SMAP L3 tests that are now associated with the
-  sds/HOSS-HRS-GeoTIFF service chain.
+  sds/HOSS-HRS-GeoTIFF service chain, including the metadata annotator which changes some of the
+  metadata content in the outputs.
 
 ## 2025-05-22 ([#169](https://github.com/nasa/harmony-regression-tests/pull/169))
 
