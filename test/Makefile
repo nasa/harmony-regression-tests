@@ -1,3 +1,7 @@
+filtering-image: Dockerfile filtering/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-filtering:latest -f ./Dockerfile \
+	--build-arg notebook=Filtering_Regression.ipynb --build-arg sub_dir=filtering .
+
 harmony-image: Dockerfile harmony/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-harmony:latest -f ./Dockerfile \
 	--build-arg notebook=Harmony.ipynb --build-arg sub_dir=harmony .
@@ -68,7 +72,8 @@ opera-rtc-s1-browse-image: Dockerfile opera-rtc-s1-browse/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-opera-rtc-s1-browse:latest -f ./Dockerfile \
 	--build-arg notebook=opera-rtc-s1-browse_Regression.ipynb --build-arg sub_dir=opera-rtc-s1-browse .
 
-images: harmony-image \
+images: filtering-image \
+	harmony-image \
 	harmony-regression-image \
 	hga-image \
 	hoss-image \

@@ -1,0 +1,6 @@
+{
+  "TEMPO_NO2_L3_V03_20250422T114702Z_S003_filtered.nc": {
+    "variable": "product/vertical_column_stratosphere",
+    "non_nan_count": 3797206
+  }
+}

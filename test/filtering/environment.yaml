@@ -1,0 +1,13 @@
+name: papermill-filtering
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.12
+  - notebook=7.4.3
+  - papermill=2.6.0
+  - numpy=2.2.6
+  - netCDF4=1.7.2
+  - xarray=2025.4.0
+  - pip:
+    - harmony-py==1.2.0
