@@ -115,9 +115,9 @@ def validate_bounding_box_and_plot_cog_file(
 
         extent = [src.bounds.left, src.bounds.right, src.bounds.bottom, src.bounds.top]
 
-        # Graph is inverted if src.bounds.bottom > src.bounds.top.
-        # origin='lower', the [0, 0] index is placed at the lower-left
-        # corner of the axes. The vertical axis points upwards.
+        # If src.bounds.bottom > src.bounds.top, the graph will be inverted.
+        # When origin='lower' is used, the vertical axis points upward,
+        # ensuring a correctly oriented graph
         if src.bounds.bottom > src.bounds.top:
             plt.imshow(raster_data, extent=extent, origin='lower')
         else:
