@@ -5,6 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-06-03 ([#174](https://github.com/nasa/harmony-regression-tests/pull/174))
+
+### Changed
+
+- HOSS reference files have been updated for SMAP L3 tests that are now associated with the
+  sds/HOSS-HRS-GeoTIFF service chain, including the metadata annotator which changes some of the
+  metadata content in the outputs.
+
 ## 2025-05-22 ([#169](https://github.com/nasa/harmony-regression-tests/pull/169))
 
 ### Changed
