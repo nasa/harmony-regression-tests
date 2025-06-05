@@ -10,5 +10,6 @@ dependencies:
   - rio-cogeo=5.3.4
   - numpy=1.24.3
   - pip=23.1.2
+  - matplotlib=3.10.3
   - pip:
     - harmony-py==0.4.8
