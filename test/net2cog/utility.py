@@ -44,8 +44,7 @@ def validate_smap_outputs(
         ]
         assert len(downloaded_cog_outputs) == expected_results['expected_file_count']
         print_success(
-            'Correct number of generated output files: %d'
-            % expected_results['expected_file_count']
+            f"Correct number of generated output files: {expected_results['expected_file_count']}"
         )
 
         for downloaded_cog_file in downloaded_cog_outputs:
@@ -60,8 +59,7 @@ def validate_smap_outputs(
                 == expected_results['expected_crs']
             )
             print_success(
-                'Correct Coordinate Reference System (CRS): %s'
-                % cog_info(downloaded_cog_file).GEO.CRS
+                f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
             )
 
             reference_file = Path(
@@ -111,7 +109,7 @@ def validate_bounding_box_and_plot_cog_file(
         raster_data = src.read(1)  # Read the first band
 
         assert src.bounds in expected_results['expected_bounding_box']
-        print_success('Correct Bounding Box')
+        print_success(f"Correct Bounding Box: {src.bounds}")
 
         extent = [src.bounds.left, src.bounds.right, src.bounds.bottom, src.bounds.top]
 
