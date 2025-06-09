@@ -5,6 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-06-09 ([#177](https://github.com/nasa/harmony-regression-tests/pull/177))
+
+### Changed
+
+- The HOSS reference file for SPL3SMP has been updated to reflect the metadata-annotator change
+  to the `master_geotransform` attribute of the `EASE2_global_projection_36km` grid_mapping
+  variable.
+  
 ## 2025-06-03 ([#175](https://github.com/nasa/harmony-regression-tests/pull/175))
 
 ### Changed
