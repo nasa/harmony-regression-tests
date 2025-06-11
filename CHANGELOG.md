@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-06-10 ([#178](https://github.com/nasa/harmony-regression-tests/pull/178))
+
+### Changed
+
+- Disabled one non-critical HyBIG regression test temporarily to enable release of HyBIG 2.4.0 to production. One test related to JPEG support is failing, but this was accepted and will be fixed in a minor version shortly. One test had its reference data changed to
+ reflect new intended behavior.
+
 ## 2025-06-09 ([#177](https://github.com/nasa/harmony-regression-tests/pull/177))
 
 ### Changed
