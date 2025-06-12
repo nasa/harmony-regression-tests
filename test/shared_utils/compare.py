@@ -5,12 +5,42 @@ readability of the regression test suite.
 This module focuses on comparing output specifically with xarray.
 """
 
+import json
 from itertools import count
-
 
 from xarray.backends.api import open_groups
 from xarray.core.datatree import DataTree
 from xarray import Dataset
+
+from reference_hashing import get_hashes_from_xarray_input
+
+
+SKIPPED_VARIABLES_OR_GROUPS = {
+    '/subset_files'  # SAMBAH tests - different UAT vs production
+}
+
+
+def matches_reference_hash_file_using_xarray(
+    request_output_path: str,
+    reference_file_path: str,
+    xarray_kwargs: dict = {'decode_timedelta': False},
+) -> bool:
+    """Generate hashes for request output and compare to reference file."""
+    actual_hashes = get_hashes_from_xarray_input(request_output_path, xarray_kwargs)
+
+    with open(reference_file_path, 'r') as file_handler:
+        reference_hashes = json.load(file_handler)
+
+    has_expected_groups_and_variables = set(actual_hashes.keys()) == set(
+        reference_hashes.keys()
+    )
+    has_expected_hashes = all(
+        actual_hashes.get(variable_or_group_name) == reference_hash
+        for variable_or_group_name, reference_hash in reference_hashes.items()
+        if variable_or_group_name not in SKIPPED_VARIABLES_OR_GROUPS
+    )
+
+    return has_expected_groups_and_variables and has_expected_hashes
 
 
 def compare_results_to_reference_file(
