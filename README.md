@@ -235,6 +235,38 @@ dependencies:
     - harmony-py
 ```
 
+## Reference files
+
+As noted above, all reference files should be as small as possible. We have
+made use of Git LFS to attempt hosting larger reference files, but have hit
+limits within the NASA GitHub organisation for egress of Git LFS hosted data
+within a single month.
+
+The preferred alternative is to make use of new shared functionality that will
+generate smaller reference files by hashing the group and variable information
+for a file that can be opened with `xarray`. The produced file is a mapping of
+group and variable paths to a hash value. Information that is accounted for in
+the hash value:
+
+* Metadata attributes, excluding those with timestamps that will vary with
+  test execution time.
+* Dimensions of the variable or group.
+* (Variables) Array values and shape.
+
+Hashed reference files can be produced with the functionality in `shared_utils`:
+
+```
+from reference_hashing import create_xarray_reference_file
+
+create_xarray_reference_file(
+    '/path/to/netCDF4/or/HDF5/file.nc4',
+    '/path/to/JSON/output/location.json',
+)
+```
+
+The code above requires `xarray`, `netCDF4` and `numpy` in your local Python
+environment.
+
 ### Versioning
 
 The regression test notebooks try to follow semantic versioning:

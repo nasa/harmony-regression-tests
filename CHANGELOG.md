@@ -5,6 +5,18 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-06-12 ([#181](https://github.com/nasa/harmony-regression-tests/pull/181))
+
+### Added
+
+- shared_utils functionality to create reference files that contain hash values
+  for variables and groups, instead of storing whole netCDF4 or HDF-5 files.
+- shared_utils functionality to compare test results to hashed reference files.
+
+### Changed
+
+- Swath Projector v0.2.0, now uses shared utilities and hashed reference files.
+
 ## 2025-06-11 ([#180](https://github.com/nasa/harmony-regression-tests/pull/180))
 
 ### Changed

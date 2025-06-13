@@ -49,6 +49,7 @@ jobs:
           -
             image: "swath-projector"
             notebook: "SwathProjector_Regression.ipynb"
+            shared-utils: "true"
           -
             image: "trajectory-subsetter"
             notebook: "TrajectorySubsetter_Regression.ipynb"
