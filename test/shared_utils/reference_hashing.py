@@ -101,7 +101,7 @@ def get_hash_of_xarray_dataset(
 
 def get_full_variable_path(dataset_path: str, variable_path: str) -> str:
     """Combine xarray.Dataset path and xarray.Variable path."""
-    return str(Path(dataset_path).joinpath(variable_path))
+    return str(Path(dataset_path) / variable_path)
 
 
 def get_hash_value(
@@ -136,13 +136,13 @@ def get_dimensions_bytes(variable_dimensions: tuple[str]) -> bytes:
 def get_numpy_array_bytes(numpy_array: np.ndarray) -> bytes:
     """Convert a numpy array to a byte string.
 
-    The string is a combination of:
+    The bytes are a combination of:
 
     * The shape of the array.
     * The values of each element of the array.
 
     """
-    shape_byte_string = bytes(str(numpy_array.shape), encoding='utf-8')
+    shape_byte_string = str(numpy_array.shape).encode('utf-8')
     array_byte_representation = numpy_array.tobytes()
     return shape_byte_string + array_byte_representation
 

@@ -267,6 +267,22 @@ create_xarray_reference_file(
 The code above requires `xarray`, `netCDF4` and `numpy` in your local Python
 environment.
 
+### Hash reference file workflow:
+
+* While developing a test notebook, execute the Harmony requests to retrieve an
+  output file from Harmony.
+* Manually inspect the output file to ensure it is correct and can be used as
+  the basis for a long-term reference file.
+* Use `create_xarray_reference_file`, as shown above, to generate a JSON file
+  containing the mapping from group and variable names to a SHA256 hash.
+* Commit the JSON file containing the hashes to the repository along with the
+  notebook. **Do not commit the original output files.**
+* Save the original request output files somewhere to allow for easy comparison
+  if tests start to fail. (Centralised location TBD)
+* Within your test notebook use the `nc4_matches_reference_hash_file` or
+  `h5_matches_reference_hash_file` function as appropriate to generate hashes
+  from test output at runtime, and compare those hashes to the reference file.
+
 ### Versioning
 
 The regression test notebooks try to follow semantic versioning:

@@ -12,20 +12,30 @@ from xarray.backends.api import open_groups
 from xarray.core.datatree import DataTree
 from xarray import Dataset
 
-from reference_hashing import get_hashes_from_xarray_input
-
-
-SKIPPED_VARIABLES_OR_GROUPS = {
-    '/subset_files'  # SAMBAH tests - different UAT vs production
-}
+from reference_hashing import get_hashes_from_xarray_input, XARRAY_DECODE_DEFAULTS
 
 
 def matches_reference_hash_file_using_xarray(
     request_output_path: str,
     reference_file_path: str,
-    xarray_kwargs: dict = {'decode_timedelta': False},
+    skipped_variables_or_groups: set[str] = set(),
+    xarray_kwargs: dict = XARRAY_DECODE_DEFAULTS,
 ) -> bool:
-    """Generate hashes for request output and compare to reference file."""
+    """Generate hashes for request output and compare to reference file.
+
+    Args:
+        request_output_path: netCDF4 or HDF5 file retrieved from a Harmony
+        request.
+        reference_file_path: File containing generated SHA256 values for every
+        group and variable in the original test output.
+        skipped_variables_or_groups: Variables or groups that are known to vary
+        between different test executions. For example, `/subset_files` in the
+        output from SAMBAH, which varies between production and UAT.
+        xarray_kwargs: dict containing arguments used by `xarray` to open the
+        request output file as a `DataTree` object. Default is to switch off all
+        decoding options.
+
+    """
     actual_hashes = get_hashes_from_xarray_input(request_output_path, xarray_kwargs)
 
     with open(reference_file_path, 'r') as file_handler:
@@ -37,10 +47,15 @@ def matches_reference_hash_file_using_xarray(
     has_expected_hashes = all(
         actual_hashes.get(variable_or_group_name) == reference_hash
         for variable_or_group_name, reference_hash in reference_hashes.items()
-        if variable_or_group_name not in SKIPPED_VARIABLES_OR_GROUPS
+        if variable_or_group_name not in skipped_variables_or_groups
     )
 
     return has_expected_groups_and_variables and has_expected_hashes
+
+
+# Aliases for clearer use in notebooks
+nc4_matches_reference_hash_file = matches_reference_hash_file_using_xarray
+h5_matches_reference_hash_file = matches_reference_hash_file_using_xarray
 
 
 def compare_results_to_reference_file(

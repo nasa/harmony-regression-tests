@@ -15,7 +15,7 @@ to document pull requests to this repository.
 
 ### Changed
 
-- Swath Projector v0.2.0, now uses shared utilities and hashed reference files.
+- Swath Projector v1.0.0, now uses shared utilities and hashed reference files.
 
 ## 2025-06-11 ([#180](https://github.com/nasa/harmony-regression-tests/pull/180))
 
