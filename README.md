@@ -256,16 +256,17 @@ the hash value:
 Hashed reference files can be produced with the functionality in `shared_utils`:
 
 ```
-from reference_hashing import create_xarray_reference_file
+from reference_hashing import create_nc4_hash_file
 
-create_xarray_reference_file(
+create_nc4_hash_file(
     '/path/to/netCDF4/or/HDF5/file.nc4',
     '/path/to/JSON/output/location.json',
 )
 ```
 
 The code above requires `xarray`, `netCDF4` and `numpy` in your local Python
-environment.
+environment. There is an equivalent `create_h5_hash_file`, which both use
+`xarray` to read the input file.
 
 ### Hash reference file workflow:
 
@@ -273,8 +274,9 @@ environment.
   output file from Harmony.
 * Manually inspect the output file to ensure it is correct and can be used as
   the basis for a long-term reference file.
-* Use `create_xarray_reference_file`, as shown above, to generate a JSON file
-  containing the mapping from group and variable names to a SHA256 hash.
+* Use `create_nc4_hash_file` or `create_h5_hash_file`, as shown above, to
+  generate a JSON file containing the mapping from group and variable names to
+  a SHA256 hash.
 * Commit the JSON file containing the hashes to the repository along with the
   notebook. **Do not commit the original output files.**
 * Save the original request output files somewhere to allow for easy comparison
