@@ -68,6 +68,11 @@ def create_xarray_reference_file(
     write_reference_file(reference_file_path, parsed_hashes)
 
 
+# Aliases for function above:
+create_nc4_hash_file = create_xarray_reference_file
+create_h5_hash_file = create_xarray_reference_file
+
+
 def get_hashes_from_xarray_input(
     input_file_path: str,
     skipped_metadata_attributes: set[str] = set(),
