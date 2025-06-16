@@ -27,27 +27,78 @@ from pathlib import Path
 import numpy as np
 import xarray as xr
 
+# All decoding is switched off by default to ensure future changes to xarray do
+# not affect regression test results.
+XARRAY_DECODE_DEFAULTS = {
+    'decode_cf': False,
+    'decode_coords': False,
+    'decode_timedelta': False,
+    'decode_times': False,
+}
+
 
 def create_xarray_reference_file(
     input_file_path: str,
     reference_file_path: str,
-    xarray_kwargs: dict = {'decode_timedelta': False},
+    skipped_metadata_attributes: set[str] = set(),
+    xarray_kwargs: dict = XARRAY_DECODE_DEFAULTS,
 ):
-    """Calculate and output SHA256 hashs for an xarray compatible file."""
-    parsed_hashes = get_hashes_from_xarray_input(input_file_path, xarray_kwargs)
+    """Calculate and output SHA256 hashs for an xarray compatible file.
+
+    Args:
+        input_file_path: Input netCDF4 or HDF5 to parse and generate hashes
+        for each variable and group.
+        reference_file_path: Output path for JSON file containing mapping of
+        variables and groups to a SHA256 hash.
+        skipped_metadata_attributes: Names of metadata attributes to omit from
+        the derivation of the SHA256 has for all group and variable metadata.
+        These will be values that are known to vary and are in addition to
+        `history` and `history_json`. The main use-case is metadata attributes
+        with timestamps dependent on request execution time.
+        xarray_kwargs: dict containing arguments used by `xarray` to open the
+        input file as a `DataTree` object. Default is to switch off all decoding
+        options.
+
+    """
+    parsed_hashes = get_hashes_from_xarray_input(
+        input_file_path,
+        skipped_metdata_attributes=skipped_metadata_attributes,
+        xarray_kwargs=xarray_kwargs,
+    )
     write_reference_file(reference_file_path, parsed_hashes)
 
 
 def get_hashes_from_xarray_input(
     input_file_path: str,
-    xarray_kwargs: dict,
+    skipped_metadata_attributes: set[str] = set(),
+    xarray_kwargs: dict = XARRAY_DECODE_DEFAULTS,
 ) -> dict[str, str]:
-    """Open with xarray, generate hashes for all groups and variables."""
+    """Open with xarray, generate hashes for all groups and variables.
+
+    Args:
+        input_file_path: Input netCDF4 or HDF5 to parse and generate hashes
+        for each variable and group.
+        skipped_metadata_attributes: Names of metadata attributes to omit from
+        the derivation of the SHA256 has for all group and variable metadata.
+        These will be values that are known to vary and are in addition to
+        `history` and `history_json`. The main use-case is metadata attributes
+        with timestamps dependent on request execution time.
+        xarray_kwargs: dict containing arguments used by `xarray` to open the
+        input file as a `DataTree` object. Default is to switch off all decoding
+        options.
+
+    """
     parsed_hashes = {}
     input_groups = xr.open_groups(input_file_path, **xarray_kwargs)
 
     for dataset_path, dataset in input_groups.items():
-        parsed_hashes.update(**get_hash_of_xarray_dataset(dataset_path, dataset))
+        parsed_hashes.update(
+            **get_hash_of_xarray_dataset(
+                dataset_path,
+                dataset,
+                skipped_metadata_attributes,
+            )
+        )
 
     return parsed_hashes
 
@@ -58,7 +109,28 @@ def write_reference_file(reference_file_path: str, hash_output: dict[str, str]):
         json.dump(hash_output, file_handler, indent=2)
 
 
-def get_xarray_object_hash(xarray_object: xr.DataArray | xr.Dataset) -> str:
+def get_hash_of_xarray_dataset(
+    dataset_path: str,
+    dataset: xr.Dataset,
+    skipped_metadata_attributes: set[str],
+) -> dict[str, str]:
+    """Retrieve hashes of Dataset and all variables contained."""
+    return {
+        dataset_path: get_xarray_object_hash(dataset, skipped_metadata_attributes),
+        **{
+            get_full_variable_path(dataset_path, variable_path): get_xarray_object_hash(
+                variable,
+                skipped_metadata_attributes,
+            )
+            for variable_path, variable in dataset.variables.items()
+        },
+    }
+
+
+def get_xarray_object_hash(
+    xarray_object: xr.DataArray | xr.Dataset | xr.Variable,
+    skipped_metadata_attributes: set[str],
+) -> str:
     """Map an xarray.DataArray or xarray.Dataset to a SHA256 hash.
 
     The hash maps a combination of:
@@ -69,7 +141,9 @@ def get_xarray_object_hash(xarray_object: xr.DataArray | xr.Dataset) -> str:
     * For a variable, the array of data (values and shape).
 
     """
-    metadata_bytes = get_metadata_bytes(xarray_object.attrs)
+    metadata_bytes = get_metadata_bytes(
+        xarray_object.attrs, skipped_metadata_attributes
+    )
     dimensions_bytes = get_dimensions_bytes(xarray_object.dims)
 
     if isinstance(xarray_object, xr.Dataset):
@@ -82,21 +156,6 @@ def get_xarray_object_hash(xarray_object: xr.DataArray | xr.Dataset) -> str:
         dimensions_bytes,
         variable_array_bytes,
     )
-
-
-def get_hash_of_xarray_dataset(
-    dataset_path: str, dataset: xr.Dataset
-) -> dict[str, str]:
-    """Retrieve hashes of Dataset and all variables contained."""
-    return {
-        dataset_path: get_xarray_object_hash(dataset),
-        **{
-            get_full_variable_path(dataset_path, variable_path): get_xarray_object_hash(
-                variable
-            )
-            for variable_path, variable in dataset.variables.items()
-        },
-    }
 
 
 def get_full_variable_path(dataset_path: str, variable_path: str) -> str:
@@ -147,7 +206,10 @@ def get_numpy_array_bytes(numpy_array: np.ndarray) -> bytes:
     return shape_byte_string + array_byte_representation
 
 
-def get_metadata_bytes(variable_metadata: dict) -> bytes:
+def get_metadata_bytes(
+    variable_metadata: dict,
+    skipped_metadata_attributes: set[str],
+) -> bytes:
     """Convert xarray.DataArray.attrs to bytes.
 
     * The attributes are filtered for values that will contain
@@ -159,7 +221,7 @@ def get_metadata_bytes(variable_metadata: dict) -> bytes:
     cleaned_metadata = {
         key: serialise_metadata_value(value)
         for key, value in variable_metadata.items()
-        if not is_varying_attribute(key)
+        if (not is_varying_attribute(key) and key not in skipped_metadata_attributes)
     }
 
     return json.dumps(dict(sorted(cleaned_metadata.items()))).encode('utf-8')
