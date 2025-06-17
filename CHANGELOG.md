@@ -17,6 +17,13 @@ to document pull requests to this repository.
 
 - Swath Projector v1.0.0, now uses shared utilities and hashed reference files.
 
+## 2025-06-16 ([#182](https://github.com/nasa/harmony-regression-tests/pull/182))
+
+### Added
+
+- Regridding service tests updated with SMAP L3/L4 tests to verify implicit
+  grid determination as well as projected dimension resampling.
+
 ## 2025-06-11 ([#180](https://github.com/nasa/harmony-regression-tests/pull/180))
 
 ### Changed
