@@ -47,17 +47,17 @@ def create_xarray_reference_file(
 
     Args:
         input_file_path: Input netCDF4 or HDF5 to parse and generate hashes
-        for each variable and group.
+            for each variable and group.
         reference_file_path: Output path for JSON file containing mapping of
-        variables and groups to a SHA256 hash.
+            variables and groups to a SHA256 hash.
         skipped_metadata_attributes: Names of metadata attributes to omit from
-        the derivation of the SHA256 has for all group and variable metadata.
-        These will be values that are known to vary and are in addition to
-        `history` and `history_json`. The main use-case is metadata attributes
-        with timestamps dependent on request execution time.
+            the derivation of the SHA256 has for all group and variable metadata.
+            These will be values that are known to vary and are in addition to
+            `history` and `history_json`. The main use-case is metadata attributes
+            with timestamps dependent on request execution time.
         xarray_kwargs: dict containing arguments used by `xarray` to open the
-        input file as a `DataTree` object. Default is to switch off all decoding
-        options.
+            input file as a `DataTree` object. Default is to switch off all decoding
+            options.
 
     """
     parsed_hashes = get_hashes_from_xarray_input(
@@ -82,15 +82,15 @@ def get_hashes_from_xarray_input(
 
     Args:
         input_file_path: Input netCDF4 or HDF5 to parse and generate hashes
-        for each variable and group.
+            for each variable and group.
         skipped_metadata_attributes: Names of metadata attributes to omit from
-        the derivation of the SHA256 has for all group and variable metadata.
-        These will be values that are known to vary and are in addition to
-        `history` and `history_json`. The main use-case is metadata attributes
-        with timestamps dependent on request execution time.
+            the derivation of the SHA256 has for all group and variable metadata.
+            These will be values that are known to vary and are in addition to
+            `history` and `history_json`. The main use-case is metadata attributes
+            with timestamps dependent on request execution time.
         xarray_kwargs: dict containing arguments used by `xarray` to open the
-        input file as a `DataTree` object. Default is to switch off all decoding
-        options.
+            input file as a `DataTree` object. Default is to switch off all
+            decoding options.
 
     """
     parsed_hashes = {}
