@@ -35,7 +35,8 @@ smap-l2-gridder-image: Dockerfile smap-l2-gridder/environment.yaml
 
 swath-projector-image: Dockerfile swath-projector/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-swath-projector:latest -f ./Dockerfile \
-	--build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector .
+	--build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector \
+	--build-arg shared_utils=true .
 
 subset-band-name-image: Dockerfile subset-band-name/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-subset-band-name:latest -f ./Dockerfile \
