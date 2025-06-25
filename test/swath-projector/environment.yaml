@@ -3,12 +3,11 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  - python=3.10
-  - notebook=6.5.4
-  - papermill=2.3.4
-  - python-dateutil=2.7.5
-  - numpy=1.24.3
-  - netCDF4=1.6.3
-  - xarray=2022.12.0
+  - python=3.12
+  - notebook=7.3.2
+  - papermill=2.6
+  - numpy=2.2.3
+  - netCDF4=1.7.2
+  - xarray=2025.6.1
   - pip:
-    - harmony-py==1.1.0
+    - harmony-py==1.2.0
