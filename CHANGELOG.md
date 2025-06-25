@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-06-25 ([#184](https://github.com/nasa/harmony-regression-tests/pull/184))
+
+### Changed
+
+- HOSS reference updated to reflect metadata-annotator changes to fill values and coordinates
+  attributes for SMAP L3 collections.
+
 ## 2025-06-16 ([#182](https://github.com/nasa/harmony-regression-tests/pull/182))
 
 ### Added
