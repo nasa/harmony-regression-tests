@@ -235,6 +235,56 @@ dependencies:
     - harmony-py
 ```
 
+## Reference files
+
+As noted above, all reference files should be as small as possible. We have
+made use of Git LFS to attempt hosting larger reference files, but have hit
+limits within the NASA GitHub organisation for egress of Git LFS hosted data
+within a single month.
+
+The preferred alternative is to make use of new shared functionality that will
+generate smaller reference files by hashing the group and variable information
+for a file that can be opened with `xarray`. The produced file is a mapping of
+group and variable paths to a hash value. Information that is accounted for in
+the hash value:
+
+* Metadata attributes, excluding those with timestamps that will vary with
+  test execution time.
+* Dimensions of the variable or group.
+* (Variables) Array values and shape.
+
+Hashed reference files can be produced with the functionality in `shared_utils`:
+
+```
+from reference_hashing import create_nc4_hash_file
+
+create_nc4_hash_file(
+    '/path/to/netCDF4/or/HDF5/file.nc4',
+    '/path/to/JSON/output/location.json',
+)
+```
+
+The code above requires `xarray`, `netCDF4` and `numpy` in your local Python
+environment. There is an equivalent `create_h5_hash_file`, which both use
+`xarray` to read the input file.
+
+### Hash reference file workflow:
+
+* While developing a test notebook, execute the Harmony requests to retrieve an
+  output file from Harmony.
+* Manually inspect the output file to ensure it is correct and can be used as
+  the basis for a long-term reference file.
+* Use `create_nc4_hash_file` or `create_h5_hash_file`, as shown above, to
+  generate a JSON file containing the mapping from group and variable names to
+  a SHA256 hash.
+* Commit the JSON file containing the hashes to the repository along with the
+  notebook. **Do not commit the original output files.**
+* Save the original request output files somewhere to allow for easy comparison
+  if tests start to fail. (Centralised location TBD)
+* Within your test notebook use the `nc4_matches_reference_hash_file` or
+  `h5_matches_reference_hash_file` function as appropriate to generate hashes
+  from test output at runtime, and compare those hashes to the reference file.
+
 ### Versioning
 
 The regression test notebooks try to follow semantic versioning:
