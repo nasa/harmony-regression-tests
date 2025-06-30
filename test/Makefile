@@ -1,7 +1,3 @@
-filtering-image: Dockerfile filtering/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-filtering:latest -f ./Dockerfile \
-	--build-arg notebook=Filtering_Regression.ipynb --build-arg sub_dir=filtering .
-
 harmony-image: Dockerfile harmony/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-harmony:latest -f ./Dockerfile \
 	--build-arg notebook=Harmony.ipynb --build-arg sub_dir=harmony .
@@ -21,6 +17,10 @@ hoss-image: Dockerfile hoss/environment.yaml
 hybig-image: Dockerfile hybig/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-hybig:latest -f ./Dockerfile \
 	--build-arg notebook=HyBIG_Regression.ipynb --build-arg sub_dir=hybig .
+
+IMAGENATOR-image: Dockerfile IMAGENATOR/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-IMAGENATOR:latest -f ./Dockerfile \
+	--build-arg notebook=IMAGENATOR_Regression.ipynb --build-arg sub_dir=IMAGENATOR .
 
 nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-nsidc-icesat2:latest -f ./Dockerfile \
@@ -73,12 +73,12 @@ opera-rtc-s1-browse-image: Dockerfile opera-rtc-s1-browse/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-opera-rtc-s1-browse:latest -f ./Dockerfile \
 	--build-arg notebook=opera-rtc-s1-browse_Regression.ipynb --build-arg sub_dir=opera-rtc-s1-browse .
 
-images: filtering-image \
-	harmony-image \
+images: harmony-image \
 	harmony-regression-image \
 	hga-image \
 	hoss-image \
 	hybig-image \
+	IMAGENATOR-image \
 	nsidc-icesat2-image \
 	regridder-image \
 	smap-l2-gridder-image \

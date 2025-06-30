@@ -13,9 +13,6 @@ jobs:
       matrix:
         targets:
           -
-            image: "filtering"
-            notebook: "Filtering_Regression.ipynb"
-          -
             image: "harmony"
             notebook: "Harmony.ipynb"
           -
@@ -60,6 +57,9 @@ jobs:
           -
             image: "geoloco"
             notebook: "Geoloco_Regression.ipynb"
+          -
+            image: "IMAGENATOR"
+            notebook: "IMAGENATOR_Regression.ipynb"
           -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"

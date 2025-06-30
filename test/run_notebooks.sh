@@ -17,13 +17,13 @@ echo -e "Using ${HARMONY_HOST_URL}\n"
 # Specify the test images to run, by default all built by the Makefile. If
 # the script is invoked with a list of images, only run those.
 all_images=(
-    filtering
     geoloco
     harmony
     harmony-regression
     hga
     hoss
     hybig
+    IMAGENATOR
     net2cog
     nsidc-icesat2
     opera-rtc-s1-browse
