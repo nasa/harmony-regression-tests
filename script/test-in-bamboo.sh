@@ -43,13 +43,13 @@ echo "harmony host url: ${harmony_host_url}"
 
 image_names=()
 all_tests=(
-    filtering
     geoloco
     harmony
     harmony-regression
     hga
     hoss
     hybig
+    IMAGENATOR
     net2cog
     nsidc-icesat2
     opera-rtc-s1-browse
