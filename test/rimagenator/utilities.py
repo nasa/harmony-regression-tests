@@ -67,4 +67,4 @@ def validate_imagenator_outputs(
             print_success(f"{core} matches reference.")
 
         # exiting with-block will now clean up tmp_dir
-    print_success("All IMAGENATOR outputs match their reference files!")
+    print_success("All imagenator outputs match their reference files!")
