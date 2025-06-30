@@ -1,4 +1,4 @@
-name: papermill-IMAGENATOR
+name: papermill-imagenator
 channels:
   - conda-forge
   - nodefaults
