@@ -9,7 +9,7 @@ to document pull requests to this repository.
 
 ### Added
 
-- Adds regression tests for asdc/filtering service chain.
+- Adds regression tests for IMAGENATOR L2 and L3 service chains.
 
 ## 2025-05-22 ([#169](https://github.com/nasa/harmony-regression-tests/pull/169))
 
