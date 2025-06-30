@@ -10,6 +10,7 @@
   "harmony-smap-l2-gridder": "smap-l2-gridder",
   "hoss": "hoss,variable-subsetter",
   "hybig": "hybig,opera-rtc-s1-browse,imagenator",
+  "imagenator": "imagenator",
   "net2cog": "net2cog,imagenator",
   "opera-rtc-s1-browse": "opera-rtc-s1-browse",
   "podaac-concise": "sambah",
