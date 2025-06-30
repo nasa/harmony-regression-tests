@@ -60,8 +60,8 @@ jobs:
             image: "geoloco"
             notebook: "Geoloco_Regression.ipynb"
           -
-            image: "IMAGENATOR"
-            notebook: "IMAGENATOR_Regression.ipynb"
+            image: "imagenator"
+            notebook: "imagenator_Regression.ipynb"
           -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"

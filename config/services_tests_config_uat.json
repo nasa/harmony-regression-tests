@@ -1,5 +1,5 @@
 {
-  "all": "harmony,harmony-regression,geoloco,hga,regridder,hoss,variable-subsetter,hybig,IMAGENATOR,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,trajectory-subsetter,sambah,opera-rtc-s1-browse",
+  "all": "harmony,harmony-regression,geoloco,hga,regridder,hoss,variable-subsetter,hybig,imagenator,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,trajectory-subsetter,sambah,opera-rtc-s1-browse",
   "batchee": "sambah",
   "geoloco": "geoloco",
   "giovanni-adapter": "TBD",
@@ -9,7 +9,7 @@
   "harmony-smap-l2-gridder": "smap-l2-gridder",
   "hoss": "hoss,variable-subsetter",
   "hybig": "hybig,opera-rtc-s1-browse",
-  "IMAGENATOR": "IMAGENATOR",
+  "imagenator": "imagenator",
   "net2cog": "net2cog",
   "opera-rtc-s1-browse": "opera-rtc-s1-browse",
   "podaac-concise": "sambah",

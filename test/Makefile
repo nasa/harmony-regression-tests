@@ -18,9 +18,9 @@ hybig-image: Dockerfile hybig/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-hybig:latest -f ./Dockerfile \
 	--build-arg notebook=HyBIG_Regression.ipynb --build-arg sub_dir=hybig .
 
-IMAGENATOR-image: Dockerfile IMAGENATOR/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-IMAGENATOR:latest -f ./Dockerfile \
-	--build-arg notebook=IMAGENATOR_Regression.ipynb --build-arg sub_dir=IMAGENATOR .
+imagenator-image: Dockerfile imagenator/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-imagenator:latest -f ./Dockerfile \
+	--build-arg notebook=imagenator_Regression.ipynb --build-arg sub_dir=imagenator .
 
 nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-nsidc-icesat2:latest -f ./Dockerfile \
@@ -77,7 +77,7 @@ images: harmony-image \
 	hga-image \
 	hoss-image \
 	hybig-image \
-	IMAGENATOR-image \
+	imagenator-image \
 	nsidc-icesat2-image \
 	regridder-image \
 	smap-l2-gridder-image \
