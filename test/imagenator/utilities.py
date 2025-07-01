@@ -3,16 +3,16 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from harmony import Client
 
+
 def print_success(msg: str) -> None:
     print(f'\033[92mSuccess: {msg}\033[0m')
+
 
 def print_error(msg: str) -> None:
     print(f'\033[91mError: {msg}\033[0m')
 
-def validate_imagenator_outputs(
-    harmony_client: Client,
-    harmony_job_id: str
-) -> None:
+
+def validate_imagenator_outputs(harmony_client: Client, harmony_job_id: str) -> None:
     """
     Download all outputs for an Imagenator job (3 files: .paw, .png, .xml-aux, etc).
     Ignore any leading "<digits>_" prefix on the filename when matching
@@ -23,11 +23,11 @@ def validate_imagenator_outputs(
     # Keep the temp dir alive through download AND comparison
     with TemporaryDirectory() as tmp_dir:
         # 1) Download all outputs
-        futures = list(harmony_client.download_all(
-            harmony_job_id,
-            overwrite=True,
-            directory=tmp_dir
-        ))
+        futures = list(
+            harmony_client.download_all(
+                harmony_job_id, overwrite=True, directory=tmp_dir
+            )
+        )
         print(f"DEBUG: download_all returned {len(futures)} future(s)")
         outs = [f.result() for f in futures]
         print(f"DEBUG: downloaded files: {outs}")
@@ -46,7 +46,7 @@ def validate_imagenator_outputs(
             fname = out_path.name
 
             # strip leading digits: "12345_TEMPO_..." → "TEMPO_..."
-            if "_" in fname and fname.split("_",1)[0].isdigit():
+            if "_" in fname and fname.split("_", 1)[0].isdigit():
                 core = fname.split("_", 1)[1]
             else:
                 core = fname
