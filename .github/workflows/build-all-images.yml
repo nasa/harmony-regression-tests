@@ -31,7 +31,6 @@ jobs:
             image: "nsidc-icesat2"
             notebook: "NSIDC-ICESAT2_Regression.ipynb"
             shared-utils: "true"
-            lfs: "true"
           -
             image: "regridder"
             notebook: "Regridder_Regression.ipynb"
@@ -40,12 +39,10 @@ jobs:
             image: "subset-band-name"
             notebook: "SubsetBandName_Regression.ipynb"
             shared-utils: "true"
-            lfs: "true"
           -
             image: "smap-l2-gridder"
             notebook: "smap-l2-gridder_Regression.ipynb"
             shared-utils: "true"
-            lfs: "true"
           -
             image: "swath-projector"
             notebook: "SwathProjector_Regression.ipynb"
@@ -67,7 +64,6 @@ jobs:
             image: "sambah"
             notebook: "SAMBAH_Regression.ipynb"
             shared-utils: "true"
-            lfs: "true"
           -
             image: "opera-rtc-s1-browse"
             notebook: "opera-rtc-s1-browse_Regression.ipynb"
@@ -77,4 +73,3 @@ jobs:
       image-short-name: ${{ matrix.targets.image }}
       notebook-name: ${{ matrix.targets.notebook }}
       shared-utils: ${{ matrix.targets.shared-utils || 'false' }}
-      lfs: ${{ matrix.targets.lfs || '' }}

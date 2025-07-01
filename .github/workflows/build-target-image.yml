@@ -16,9 +16,6 @@ on:
       shared-utils:
         required: true
         type: string
-      lfs:
-        required: true
-        type: string
 
 env:
   REGISTRY: ghcr.io
@@ -29,8 +26,6 @@ jobs:
     steps:
       - name: Checkout regression test repository
         uses: actions/checkout@v4
-        with:
-          lfs: ${{inputs.lfs}}
 
       - name: Did this image's version change?
         uses: dorny/paths-filter@v3
