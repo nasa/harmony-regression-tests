@@ -23,6 +23,7 @@ all_images=(
     hga
     hoss
     hybig
+    imagenator
     net2cog
     nsidc-icesat2
     opera-rtc-s1-browse
