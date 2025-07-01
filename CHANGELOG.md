@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-07-01 ([#186](https://github.com/nasa/harmony-regression-tests/pull/186))
+
+### Removed
+
+- git lfs usage for cloning the repository has been removed from workflows to
+  build Docker images now that git lfs is no longer being used for to host
+  reference files.
 
 ## 2025-06-25 ([#185](https://github.com/nasa/harmony-regression-tests/pull/185))
 

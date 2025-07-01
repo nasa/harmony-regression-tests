@@ -1,5 +1,9 @@
 # Harmony Regression Tests
 
+> [!CAUTION]
+> Any local copies of this repository cloned prior to 2025-07-01 will need to
+> be recloned following a rewrite of the commit history to remove use of git lfs.
+
 Harmony regression tests run a series of self contained tests to ensure no
 regressions occur when portions of harmony are changed.
 
@@ -15,23 +19,7 @@ locally in the browser against a single service regression test.
 ## Install Prerequisites
 
 * [Docker](https://www.docker.com/get-started) - to run locally in docker
-* [git-lfs](https://git-lfs.com/) - to handle large files
 * [pre-commit](https://pre-commit.com/) - to ensure code formatting. [See below](#pre-commit-hooks).
-
-
-### Cloning the repository.
-
-To work with this repository, ensure git-lfs (Git Large File Storage) is
-installed on your system, as it's used to manage some large files stored in
-GitHub. To install git-lfs with Homebrew, enter the following commands:
-
-```
-brew install git-lfs
-git lfs install
-```
-
-If you have already cloned this repository, delete it and re-clone.
-
 
 ## Running the Tests in GitHub:
 
@@ -166,15 +154,16 @@ file is updated. To do so, simply add a new target to the
   notebook: <new-notebook-name>
 ```
 
-The above is the basic structure for adding a new image to the CI/CD.  Two additional options `shared-utils` and `lfs` default to off, but can be over-ridden as they are for the nsidc-icesat2 image. `shared-utils` controls the addition of the `tests/shared_utils` directory into your image. `lfs` enables git LFS for your image and should be enabled only if you have added reference files with git LFS.
+The above is the basic structure for adding a new image to the CI/CD.  An
+additional option, `shared-utils`, defaults to off, but can be over-ridden as
+it is for the nsidc-icesat2 image. `shared-utils` controls the addition of the
+`tests/shared_utils` directory into your image.
 
 ``` yaml
     -
       image: "nsidc-icesat2"
       notebook: "NSIDC-ICESAT2_Regression.ipynb"
       shared-utils: "true"
-      lfs: "true"
-
 ```
 
 ## Test suite contents:
@@ -193,8 +182,7 @@ For example, in the `swath-projector` directory we have
 ```
 
 * `reference_files` contains golden template files for expected outputs of
-   `tests`.  When you add new binary files to your test, you should configure
-   them to to use Git LFS **as well as keep them as small as possible**.
+  `tests`. Please see [further instructions on reference files](#reference-files).
 * `SwathProjector_Regression.ipynb` is the regression test Jupyter notebook
   itself, running tests in cells. A test suite fails when a Jupyter notebook
   cell returns an error from the execution. Each regression test is designed to
@@ -237,16 +225,23 @@ dependencies:
 
 ## Reference files
 
-As noted above, all reference files should be as small as possible. We have
-made use of Git LFS to attempt hosting larger reference files, but have hit
-limits within the NASA GitHub organisation for egress of Git LFS hosted data
-within a single month.
+> [!IMPORTANT]
+> Previously, git lfs was used to host large reference files. With an increased
+> number of large files, we exceeded budget limits within the NASA GitHub
+> organisation for egress of git lfs hosted data within a single month.
 
-The preferred alternative is to make use of new shared functionality that will
-generate smaller reference files by hashing the group and variable information
-for a file that can be opened with `xarray`. The produced file is a mapping of
-group and variable paths to a hash value. Information that is accounted for in
-the hash value:
+**All reference files should be as small as possible.** There are two options
+for hosting reference files within the git repository:
+
+1) Files that are small (≲ 1 MB) can be hosted directly in a `reference_data`
+   subdirectory for the tests. This is also the method, currently, for hosting
+   reference files that cannot be opened with `xarray`.
+2) For larger files, or files that can be opened with `xarray` (netCDF4, HDF-5),
+   it is strongly preferred that files make use of shared functionality that
+   will  generate smaller reference files by hashing the group and variable
+   information for a file that can be parsed with `xarray`. The produced file is
+   a JSON mapping of group and variable paths to a hash value. Information that
+   is accounted for in the hash value:
 
 * Metadata attributes, excluding those with timestamps that will vary with
   test execution time.
