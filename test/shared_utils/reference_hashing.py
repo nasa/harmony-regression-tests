@@ -62,7 +62,7 @@ def create_xarray_reference_file(
     """
     parsed_hashes = get_hashes_from_xarray_input(
         input_file_path,
-        skipped_metdata_attributes=skipped_metadata_attributes,
+        skipped_metadata_attributes=skipped_metadata_attributes,
         xarray_kwargs=xarray_kwargs,
     )
     write_reference_file(reference_file_path, parsed_hashes)

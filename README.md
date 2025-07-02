@@ -274,8 +274,14 @@ environment. There is an equivalent `create_h5_hash_file`, which both use
   a SHA256 hash.
 * Commit the JSON file containing the hashes to the repository along with the
   notebook. **Do not commit the original output files.**
-* Save the original request output files somewhere to allow for easy comparison
-  if tests start to fail. (Centralised location TBD)
+* Save the original request output files in AWS S3, in the UAT Harmony account
+  to allow for direct comparison if tests start to fail. The current location
+  to host files is the `harmony-uat-regression-tests` bucket. This bucket is
+  subdivided by test suite, so under the relevant test suite create a
+  `reference_files` folder, and then a further subdirectory for the semantic
+  version number. For example, reference files for version 1.0.0 of the
+  SMAP L2 Gridder would be in the `smap-l2-gridder/reference_files/1.0.0`
+  folder in S3.
 * Within your test notebook use the `nc4_matches_reference_hash_file` or
   `h5_matches_reference_hash_file` function as appropriate to generate hashes
   from test output at runtime, and compare those hashes to the reference file.
