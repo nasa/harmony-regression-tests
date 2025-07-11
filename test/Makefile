@@ -12,7 +12,8 @@ hga-image: Dockerfile hga/environment.yaml
 
 hoss-image: Dockerfile hoss/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-hoss:latest -f ./Dockerfile \
-	--build-arg notebook=HOSS_Regression.ipynb --build-arg sub_dir=hoss .
+	--build-arg notebook=HOSS_Regression.ipynb --build-arg sub_dir=hoss \
+	--build-arg shared_utils=true .
 
 hybig-image: Dockerfile hybig/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-hybig:latest -f ./Dockerfile \
