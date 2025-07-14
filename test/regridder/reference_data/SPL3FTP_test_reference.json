@@ -1,0 +1,23 @@
+{
+  "/": "535dd4a5fdfccb8754b1c97a837f18bc32da979f81f31d587a63e1b8fa8b7506",
+  "/EASE2_global_projection_36km": "6df26484d04304038307c67e4c9aa78bf75d7e1169a96c91544e96d151c5168e",
+  "/EASE2_north_polar_projection_36km": "95c754bb8ec1535583159eece364b2490ac014e8bde9ec2ba16b5701a0c5cd6b",
+  "/Freeze_Thaw_Retrieval_Data_Polar": "cde7a784c1bb6b51aa3a70eacd632bce475e0c5afe63491ee8aef916345afc27",
+  "/Freeze_Thaw_Retrieval_Data_Polar/crs": "c57f16f60616c5b122b01fe6c7d4564c50fe5f7fbf769091ee4d14a709578d69",
+  "/Freeze_Thaw_Retrieval_Data_Polar/am_pm": "cc2ccd6f9e70c683cd3e434ef57f4e51e1e281b3918914a03c565399885bb86c",
+  "/Freeze_Thaw_Retrieval_Data_Polar/x": "224e69314406fea00c58e38abeaf1900533cfb2333878217aaa8e09a05ff89f3",
+  "/Freeze_Thaw_Retrieval_Data_Polar/y": "5d2c16d26d03092509058bdc413d26ba5d63517cdeb57c7bd50f109f0de204d3",
+  "/Freeze_Thaw_Retrieval_Data_Polar/latitude": "65fdc1737be23c43d833e44bf6aec79e42f7924754be97fc6d1ce5d98c68adc6",
+  "/Freeze_Thaw_Retrieval_Data_Polar/longitude": "d443bb966162ac52f09cc12d3d807d9645ff4c5ae6c66a3f6d4bd7e426641813",
+  "/Freeze_Thaw_Retrieval_Data_Polar/altitude_dem": "8d09865766a9492b526fe827b755525fc7a36918f3eca7ebdd49ed2a687a5141",
+  "/Freeze_Thaw_Retrieval_Data_Polar/freeze_reference": "6cde8b54eed85c57aa9f08254b04aa10598f716f2dd639d50fdd59292b5f0133",
+  "/Freeze_Thaw_Retrieval_Data_Global": "cde7a784c1bb6b51aa3a70eacd632bce475e0c5afe63491ee8aef916345afc27",
+  "/Freeze_Thaw_Retrieval_Data_Global/crs": "c57f16f60616c5b122b01fe6c7d4564c50fe5f7fbf769091ee4d14a709578d69",
+  "/Freeze_Thaw_Retrieval_Data_Global/am_pm": "cc2ccd6f9e70c683cd3e434ef57f4e51e1e281b3918914a03c565399885bb86c",
+  "/Freeze_Thaw_Retrieval_Data_Global/x": "dbae12b9d68ab86046fdcb07238e47bc64cdac157b8a4a4081e7acff1bd53d92",
+  "/Freeze_Thaw_Retrieval_Data_Global/y": "196545b2df10ab96c32148e687a23919ac8560d93f1bbfb02a88ebe7f1eca1dd",
+  "/Freeze_Thaw_Retrieval_Data_Global/altitude_dem": "a27c710394123893b6345d22ba7b410ffd67b5cb60fea8d6550236db472617c6",
+  "/Freeze_Thaw_Retrieval_Data_Global/freeze_reference": "26a63d0dafc7e0a236230d4ae01fcdc3e19333d2c52a39593f2b55ac530d25a8",
+  "/Freeze_Thaw_Retrieval_Data_Global/latitude": "4fede59478c806c5c275e58e1db557e6ecbb1439fa857b7e8ef2f6e3eb9db84d",
+  "/Freeze_Thaw_Retrieval_Data_Global/longitude": "b82cb5e429612bd879e7be0306e081a93a4115705bffec823d3a9ade2894d2b0"
+}
