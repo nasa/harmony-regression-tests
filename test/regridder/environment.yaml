@@ -4,12 +4,12 @@ channels:
   - nodefaults
 dependencies:
   - python=3.12
-  - notebook==7.3.2
-  - papermill==2.6
-  - xarray==2025.1.2
-  - numpy==2.2.3
   - netCDF4==1.7.2
+  - notebook==7.3.2
+  - numpy==2.2.3
+  - papermill==2.6
   - pandas==2.2.3
+  - xarray==2025.6.1
   - pip:
     - pip==25.0.1
-    - harmony-py==1.0.0
+    - harmony-py==1.2.0

@@ -47,7 +47,7 @@ def matches_reference_hash_file_using_xarray(
         xarray_kwargs=xarray_kwargs,
     )
 
-    with open(reference_file_path, 'r') as file_handler:
+    with open(reference_file_path, 'r', encoding='utf-8') as file_handler:
         reference_hashes = json.load(file_handler)
 
     has_expected_groups_and_variables = set(actual_hashes.keys()) == set(

@@ -62,7 +62,7 @@ def create_xarray_reference_file(
     """
     parsed_hashes = get_hashes_from_xarray_input(
         input_file_path,
-        skipped_metdata_attributes=skipped_metadata_attributes,
+        skipped_metadata_attributes=skipped_metadata_attributes,
         xarray_kwargs=xarray_kwargs,
     )
     write_reference_file(reference_file_path, parsed_hashes)
@@ -149,7 +149,11 @@ def get_xarray_object_hash(
     metadata_bytes = get_metadata_bytes(
         xarray_object.attrs, skipped_metadata_attributes
     )
-    dimensions_bytes = get_dimensions_bytes(xarray_object.dims)
+
+    if isinstance(xarray_object, (xr.Variable, xr.DataArray)):
+        dimensions_bytes = get_variable_dimensions_bytes(xarray_object.dims)
+    else:
+        dimensions_bytes = get_group_dimensions_bytes(xarray_object.dims)
 
     if isinstance(xarray_object, xr.Dataset):
         variable_array_bytes = None
@@ -187,7 +191,21 @@ def get_hash_value(
     return sha256(all_bytes).hexdigest()
 
 
-def get_dimensions_bytes(variable_dimensions: tuple[str]) -> bytes:
+def get_group_dimensions_bytes(group_dimensions: tuple[str]) -> bytes:
+    """Convert xarray.DataTree.dims or xarray.Dataset.dims to bytes.
+
+    This differs from `get_variable_dimensions_bytes` by imposing an ordering
+    on the tuple of dimension. With variables, the intrinsic order of the
+    dimensions in important, as they define the ordering of array axes. That
+    same ordering is not important within a group for the purposes of
+    comparison, as there is no effective functional difference observed by
+    end users if dimensions are stored in a different order in an output file.
+
+    """
+    return str(sorted(group_dimensions)).encode('utf-8')
+
+
+def get_variable_dimensions_bytes(variable_dimensions: tuple[str]) -> bytes:
     """Convert xarray.DataArray.dims to bytes.
 
     For variables with no dimensions, xarray.DataArray.dims is an
@@ -239,8 +257,12 @@ def is_varying_attribute(attribute_name: str) -> bool:
     of names expected to contain a datetime value that will change
     based on when a file was transformed.
 
+    The name of the metadata attribute is converted to be entirely
+    lower-case to ensure possible permutations of the same attribute
+    name are all considered. E.g., "history", "HISTORY", "History".
+
     """
-    return attribute_name in {'history', 'history_json'}
+    return attribute_name.lower() in {'history', 'history_json'}
 
 
 def serialise_metadata_value(metadata_value):
