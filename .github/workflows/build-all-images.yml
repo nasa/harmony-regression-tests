@@ -24,6 +24,7 @@ jobs:
           -
             image: "hoss"
             notebook: "HOSS_Regression.ipynb"
+            shared-utils: "true"
           -
             image: "hybig"
             notebook: "HyBIG_Regression.ipynb"
