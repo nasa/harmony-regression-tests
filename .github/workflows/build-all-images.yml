@@ -59,6 +59,10 @@ jobs:
             image: "geoloco"
             notebook: "Geoloco_Regression.ipynb"
           -
+            image: "imagenator"
+            notebook: "imagenator_Regression.ipynb"
+            shared-utils: "true"
+          -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
           -
