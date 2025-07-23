@@ -5,11 +5,27 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2025-07-11 ([#191](https://github.com/nasa/harmony-regression-tests/pull/191))
+## 2025-07-23 ([#191](https://github.com/nasa/harmony-regression-tests/pull/191))
 
 ### Changed
 
 - The HOSS test suite 1.0.0, has been updated to use hashed reference files.
+
+## 2025-07-14 ([#192](https://github.com/nasa/harmony-regression-tests/pull/192))
+
+### Changed
+
+- The Harmony Regridding service test suite 1.0.0, has been updated to use
+  hashed reference files.
+- The shared utilities have been updated to ignore dimension ordering when
+  hashing groups within a netCDF4 or HDF-5 file. (Note, variable dimension
+  ordering is still respected by the hashing functions)
+- The NSIDC ICESat-2 test suite 1.0.1 has been updated to use the updated
+  hashing algorithm relating to group dimension ordering.
+- The Swath Projector test suite 1.0.1 has been updated to use the updated
+  hashing algorithm relating to group dimension ordering.
+- The SMAP L2 Gridder test suite 1.0.1 has been updated to use the updated
+  hashing algorithm relating to group dimension ordering.
 
 ## 2025-07-02 ([#189](https://github.com/nasa/harmony-regression-tests/pull/189))
 
