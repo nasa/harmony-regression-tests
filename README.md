@@ -202,8 +202,9 @@ For example, in the `swath-projector` directory we have
   that PR to the `main` branch will trigger the publication of a new version of
   that regression test Docker image.
 
- Notebook dependencies should be listed in file named `environment.yaml` at the top level of the
- subdirectory. The `name` field in the file should be `papermill`. For example:
+Notebook dependencies should be listed in file named `environment.yaml` at the
+top level of the subdirectory. The `name` field in the file should be
+`papermill`. For example:
 
  ```yaml
 name: papermill-<IMAGE>
@@ -221,6 +222,7 @@ dependencies:
   - ipytest
   - pip:
     - harmony-py
+    - earthdata-hashdiff
 ```
 
 ## Reference files
@@ -248,10 +250,11 @@ for hosting reference files within the git repository:
 * Dimensions of the variable or group.
 * (Variables) Array values and shape.
 
-Hashed reference files can be produced with the functionality in `shared_utils`:
+Hashed reference files can be produced with the functionality in
+`earthdata-hashdiff`, installed via `pip install earthdata-hashdiff`:
 
 ```
-from reference_hashing import create_nc4_hash_file
+from earthdata_hashdiff import create_nc4_hash_file
 
 create_nc4_hash_file(
     '/path/to/netCDF4/or/HDF5/file.nc4',
@@ -265,6 +268,8 @@ environment. There is an equivalent `create_h5_hash_file`, which both use
 
 ### Hash reference file workflow:
 
+* `pip install earthdata-hashdiff` to get functions for creating a JSON file
+  containing hashes of variables and groups.
 * While developing a test notebook, execute the Harmony requests to retrieve an
   output file from Harmony.
 * Manually inspect the output file to ensure it is correct and can be used as
@@ -283,8 +288,9 @@ environment. There is an equivalent `create_h5_hash_file`, which both use
   SMAP L2 Gridder would be in the `smap-l2-gridder/reference_files/1.0.0`
   folder in S3.
 * Within your test notebook use the `nc4_matches_reference_hash_file` or
-  `h5_matches_reference_hash_file` function as appropriate to generate hashes
-  from test output at runtime, and compare those hashes to the reference file.
+  `h5_matches_reference_hash_file` function from `earthdata-hashdiff`, as
+  appropriate, to generate hashes from test output at runtime, and compare
+  those hashes to the corresponding reference file.
 
 ### Versioning
 

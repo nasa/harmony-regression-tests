@@ -5,6 +5,24 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-07-23 ([#193](https://github.com/nasa/harmony-regression-tests/pull/193))
+
+### Removed
+
+- Hash generation and comparison functionality has been migrated out of the
+  shared utilities for the repository in favour of using
+  [earthdata-hashdiff](https://github.com/nasa/earthdata-hashdiff) as installed
+  from [PyPI](https://pypi.org/project/earthdata-hashdiff/).
+
+### Changed
+
+- The Swath Projector test suite 1.0.2 has been updated to use `earthdata-hashdiff`.
+- The HOSS test suite 1.0.1 has been updated to use `earthdata-hashdiff`.
+- The Harmony Regridding service test suite 1.0.1 has been updated to use
+  `earthdata-hashdiff`.
+- The NSIDC ICESat-2 test suite 1.0.2 has been updated to use `earthdata-hashdiff`.
+- The SMAP L2 Gridder test suite 1.0.2 has been updated to use `earthdata-hashdiff`.
+
 ## 2025-07-23 ([#187](https://github.com/nasa/harmony-regression-tests/pull/187))
 
 ### Added

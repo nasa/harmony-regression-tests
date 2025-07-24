@@ -10,5 +10,6 @@ dependencies:
   - papermill=2.6.0
   - pip
   - pip:
-    - harmony-py==1.0.0
-    - xarray==2025.1.2
+    - earthdata-hashdiff==1.0.0
+    - harmony-py==1.2.0
+    - xarray==2025.6.1
