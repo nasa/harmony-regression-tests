@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-07-25 ([#194](https://github.com/nasa/harmony-regression-tests/pull/194))
+
+### Changed
+
+- The Trajectory Subsetter test suite 1.0.0 has been updated to use hashed
+  reference files and perform comparisons using `earthdata-hashdiff`.
+
 ## 2025-07-23 ([#193](https://github.com/nasa/harmony-regression-tests/pull/193))
 
 ### Removed
