@@ -14,3 +14,4 @@ A short description of the changes in this PR...
 * [ ] Documentation updated (if needed)
 * [ ] CHANGELOG updated with the changes for this PR
 * [ ] Service's `version.txt` file changed if appropriate
+* [ ] Original file is uploaded to S3 if references are changed

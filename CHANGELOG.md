@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-07-29 ([#196](https://github.com/nasa/harmony-regression-tests/pull/196))
+
+### Changed
+
+- Updated `SPL2SMP_reference.json` reference file to reflect changes for preserving 3D variables introduced in smap-l2-gridder v1.0.0
+
 ## 2025-07-25 ([#194](https://github.com/nasa/harmony-regression-tests/pull/194))
 
 ### Changed
