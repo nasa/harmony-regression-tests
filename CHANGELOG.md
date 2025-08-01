@@ -9,7 +9,7 @@ to document pull requests to this repository.
 
 ### Changed
 
-- `SPL2SMP_reference.json` reference file updated in the smap-l2-gridder, to represent the changes to preserving 3D variables in v1.0.0 of the smap-l2-gridder.
+- Updated `SPL2SMP_reference.json` reference file to reflect changes for preserving 3D variables introduced in smap-l2-gridder v1.0.0
 
 ## 2025-07-25 ([#194](https://github.com/nasa/harmony-regression-tests/pull/194))
 
