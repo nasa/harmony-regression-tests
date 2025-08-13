@@ -33,6 +33,10 @@ jobs:
             notebook: "NSIDC-ICESAT2_Regression.ipynb"
             shared-utils: "true"
           -
+            image: "nsidc-smap"
+            notebook: "nsidc-smap_Regression.ipynb"
+            shared-utils: "true"
+          -
             image: "regridder"
             notebook: "Regridder_Regression.ipynb"
             shared-utils: "true"
