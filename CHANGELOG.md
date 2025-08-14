@@ -12,6 +12,13 @@ to document pull requests to this repository.
 - Updated HOSS reference files to reflect changes for removing temporary attribute annotations
   introduced in metadata-annotator v1.0.5
 
+## 2025-08-12 ([#199](https://github.com/nasa/harmony-regression-tests/pull/199))
+
+### Changed
+
+- The SAMBAH test suite 1.0.0 has been updated to use hashed reference files
+  and perform comparisons using `earthdata-hashdiff`.
+
 ## 2025-07-29 ([#196](https://github.com/nasa/harmony-regression-tests/pull/196))
 
 ### Changed
