@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-08-12 ([#199](https://github.com/nasa/harmony-regression-tests/pull/199))
+
+### Changed
+
+- The SAMBAH test suite 1.0.0 has been updated to use hashed reference files
+  and perform comparisons using `earthdata-hashdiff`.
+
 ## 2025-07-29 ([#196](https://github.com/nasa/harmony-regression-tests/pull/196))
 
 ### Changed
