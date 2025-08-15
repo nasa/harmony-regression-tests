@@ -10,7 +10,13 @@ to document pull requests to this repository.
 ### Changed
 
 - Updated HOSS reference files to reflect changes for removing temporary attribute annotations
-  introduced in metadata-annotator v1.0.5
+  introduced in metadata-annotator v1.1.0
+
+## 2025-08-14 ([#200](https://github.com/nasa/harmony-regression-tests/pull/200))
+
+### Changed
+
+- Updated regridder reference files to reflect changes made by dropping invalid crs variables in harmony-regression-service v1.5.0.
 
 ## 2025-08-12 ([#199](https://github.com/nasa/harmony-regression-tests/pull/199))
 
