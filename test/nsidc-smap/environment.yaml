@@ -11,5 +11,5 @@ dependencies:
   - pip
   - xarray=2025.6.1
   - pip:
-    - earthdata-hashdiff==1.0.0
+    - earthdata-hashdiff==1.0.1
     - harmony-py==1.3.0
