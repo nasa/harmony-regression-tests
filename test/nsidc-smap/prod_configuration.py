@@ -3,13 +3,17 @@ from harmony import BBox, Collection
 production_configuration = {
     'subset_bounding_box': {
         # Test 1
-        'SPL2SMA': {
-            'collection_concept_id': Collection(id='xxxx-NSIDC_PROD'),
-            'granule_id': 'xxx-NSIDC_PROD',
-            'spatial': BBox(-8.2, 42.0, 12.7, 52.8),
-            'variable': 'Radar_Data/sigma0_hh_mean',
-            'format': 'image/tiff',
-        }
+        "SPL2SMA": {
+            "request_params": {
+                "collection": Collection(id="C1242631429-NSIDC_CUAT"),
+                "granule_id": "G1260377350-NSIDC_CUAT",
+                "spatial": BBox(-8.2, 42.0, 12.7, 52.8),
+                "variables": ["Radar_Data/sigma0_hh_mean"],
+                "format": "image/tiff",
+                "labels": ["smap-rtest-1"],
+            },
+            "test_params": {"ext": "tif"},
+        },
         # Test 7
         # Test 12 + variable
         # *** Test 15 + variable ***
