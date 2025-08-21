@@ -1,4 +1,5 @@
 from harmony import BBox, Collection
+import copy
 
 non_production_configuration = {
     "single_output_tests": {
@@ -34,8 +35,8 @@ non_production_configuration = {
                 "request_params": {
                     "collection": Collection(id="C1242631429-NSIDC_CUAT"),
                     "granule_id": "G1260377350-NSIDC_CUAT",
-                    "labels": ["smap-rtest-2", "smap-rtests"],
                     "shape": "ancillary/France_simple.geojson",
+                    "labels": ["smap-rtest-2", "smap-rtests"],
                 },
                 "test_params": {"ext": ".h5"},
             },
@@ -148,3 +149,66 @@ non_production_configuration = {
         },
     },
 }
+
+
+## run the same tests with Different Production values for Collection and GranuleID
+production_overrides = {
+    ("single_output_tests", "subset_bounding_box", "SPL2SMA"): {
+        "collection": Collection(id="C2812935277-NSIDC_CPRD"),
+        "granule_id": "G2813012838-NSIDC_CPRD",
+    },
+    ("single_output_tests", "subset_bounding_box", "SPL3FTP_E"): {
+        "collection": Collection(id="C2938664439-NSIDC_CPRD"),
+        "granule_id": "G2940370330-NSIDC_CPRD",
+    },
+    ("single_output_tests", "subset_by_geojson", "SPL2SMA"): {
+        "collection": Collection(id="C2812935277-NSIDC_CPRD"),
+        "granule_id": "G2813012838-NSIDC_CPRD",
+    },
+    ("single_output_tests", "subset_by_shapefile", "SPL3FTP"): {
+        "collection": Collection(id="C2938664170-NSIDC_CPRD"),
+        "granule_id": "G2940362257-NSIDC_CPRD",
+    },
+    ("single_output_tests", "subset_by_variable", "SPL2SMP_E"): {
+        "collection": Collection(id="C2938663676-NSIDC_CPRD"),
+        "granule_id": "G3241947322-NSIDC_CPRD",
+    },
+    ("single_output_tests", "subset_by_variable", "SPL2SMP_E_2"): {
+        "collection": Collection(id="C2872766452-NSIDC_CPRD"),
+        "granule_id": "G2872934722-NSIDC_CPRD",
+    },
+    ("single_output_tests", "subset_by_kml", "SPL3SMP"): {
+        "collection": Collection(id="C2938664585-NSIDC_CPRD"),
+        "granule_id": "G2940373226-NSIDC_CPRD",
+    },
+    ("single_output_tests", "reprojection_to_geographic", "SPL4CMDL"): {
+        "collection": Collection(id="C3480440454-NSIDC_CPRD"),
+        "granule_id": "G3480457654-NSIDC_CPRD",
+    },
+    ("multiple_output_tests", "GeoTIFF_reformat", "SPL2SMP"): {
+        "collection": Collection(id="C3480440454-NSIDC_CPRD"),  #
+        "granule_id": "G3480457654-NSIDC_CPRD",
+    },
+}
+
+
+def _update_config_with_prod_values(in_config):
+    """Return a production configuration.
+
+    Make a copy of the input configuration and replace the collection and
+    granule ID with production values.
+
+    """
+    out_config = copy.copy(in_config)
+
+    for (test_suite, test_type, short_name), p_config in production_overrides.items():
+        out_config[test_suite][test_type][short_name]["request_params"][
+            "collection"
+        ] = p_config["collection"]
+        out_config[test_suite][test_type][short_name]["request_params"][
+            "granule_id"
+        ] = p_config["granule_id"]
+    return out_config
+
+
+production_configuration = _update_config_with_prod_values(non_production_configuration)
