@@ -29,6 +29,11 @@ nsidc-icesat2-image: Dockerfile nsidc-icesat2/environment.yaml
 	--build-arg notebook=NSIDC-ICESAT2_Regression.ipynb --build-arg sub_dir=nsidc-icesat2 \
 	--build-arg shared_utils=true .
 
+nsidc-smap-image: Dockerfile nsidc-smap/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-nsidc-smap:latest -f ./Dockerfile \
+	--build-arg notebook=nsidc-smap_Regression.ipynb --build-arg sub_dir=nsidc-smap \
+	--build-arg shared_utils=true .
+
 regridder-image: Dockerfile regridder/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-regridder:latest -f ./Dockerfile \
 	--build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder \
@@ -82,6 +87,7 @@ images: harmony-image \
 	hybig-image \
 	imagenator-image \
 	nsidc-icesat2-image \
+	nsidc-smap-image \
 	regridder-image \
 	smap-l2-gridder-image \
 	subset-band-name-image \

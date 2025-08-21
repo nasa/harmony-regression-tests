@@ -26,6 +26,7 @@ all_images=(
     imagenator
     net2cog
     nsidc-icesat2
+    nsidc-smap
     opera-rtc-s1-browse
     regridder
     sambah

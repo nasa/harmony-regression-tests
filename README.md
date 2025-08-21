@@ -132,39 +132,50 @@ environment before installing from the environment.yml.
    with a Harmony service and add it to the `all` list so that it will be run when
    the associated Harmony service or Harmony server is deployed.
 
-With this in place, the new test suite should be able to be built and run:
+1. With theses changes in place, the new test suite should be able to be built and run:
+        ```sh
+        EDL_USER=[use yours...]
+        EDL_PASSWORD=[use yours...]
+        HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov  # Or UAT or production
+        cd test
+        make <new-suite-name>-image
+        ./run_notebooks.sh <new-suite-name>
+        ```
 
-```bash
-EDL_USER=...
-EDL_PASSWORD=...
-HARMONY_HOST_URL=https://harmony.sit.earthdata.nasa.gov  # Or UAT or production
-cd test
-make <new-suite-name>-image
-./run_notebooks.sh <new-suite-name>
-```
-
-After this, the test suite will need to be integrated with the GitHub workflow
+1. After this, the test suite will need to be integrated with the GitHub workflow
 to create a new version of the test image any time the related `version.txt`
 file is updated. To do so, simply add a new target to the
 [build-all-images.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/build-all-images.yml) workflow in the `.github/workflows` directory:
 
-```yaml
--
-  image: <new-suite-name>
-  notebook: <new-notebook-name>
-```
+   ```yaml
+   -
+     image: <new-suite-name>
+     notebook: <new-notebook-name>
+     shared-utils: "true"
+   ```
 
-The above is the basic structure for adding a new image to the CI/CD.  An
-additional option, `shared-utils`, defaults to off, but can be over-ridden as
-it is for the nsidc-icesat2 image. `shared-utils` controls the addition of the
-`tests/shared_utils` directory into your image.
+1. If your test suite is for a new service. Meaning it has an entry on Harmony's [/service-image-tag](https://harmony.earthdata.nasa.gov/service-image-tag) endpoint you should add it to the:
+   ```yaml
+   on:
+     repository_dispatch:
+       types:
+         - all
+         - batchee
+         - your-new-service
+   ```
+   list in the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml)
 
-``` yaml
-    -
-      image: "nsidc-icesat2"
-      notebook: "NSIDC-ICESAT2_Regression.ipynb"
-      shared-utils: "true"
-```
+1. If you want to trigger your tests by hand on GitHub, add your test name to the:
+   ```yaml
+   on:
+     workflow_dispatch:
+       service-name:
+         options:
+           - all
+           - batchee
+           - your-new-service
+   ```
+list of the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml)
 
 ## Test suite contents:
 

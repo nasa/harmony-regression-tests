@@ -75,6 +75,7 @@ on:
           - harmony-regression
           - sambah
           - nsidc-icesat2
+          - nsidc-smap
 
       docker-image-tag:
         description: "Optional Docker image tag to use for the tests"
