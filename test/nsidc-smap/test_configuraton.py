@@ -199,7 +199,7 @@ def _update_config_with_prod_values(in_config):
     granule ID with production values.
 
     """
-    out_config = copy.copy(in_config)
+    out_config = copy.deepcopy(in_config)
 
     for (test_suite, test_type, short_name), p_config in production_overrides.items():
         out_config[test_suite][test_type][short_name]["request_params"][
