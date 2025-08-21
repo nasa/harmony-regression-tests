@@ -1,6 +1,5 @@
 """Collection of functions used for nsidc-smap regression tests."""
 
-from urllib import parse
 from earthdata_hashdiff import (
     create_geotiff_hash_file,
     create_nc4_hash_file,
@@ -87,18 +86,3 @@ def _generate_reference_files(test_config: dict, in_dir: Path, out_dir: Path):
             create_geotiff_hash_file(str(in_fn), str(out_fn))
         else:
             create_nc4_hash_file(str(in_fn), str(out_fn))
-
-
-def get_harmony_job_prefix(harmony_client, job_id):
-    """Get the prefix that harmony uses to rename files on download."""
-    urls = list(harmony_client.result_urls(job_id))
-
-    url_no_query = parse.urlunparse(parse.urlparse(urls[0])._replace(query=""))
-    url_parts = str(url_no_query).split("/")
-    item_id = url_parts[-2]
-    return item_id
-
-
-def get_outfile_prefix(filename):
-    """Parse the output file to get the prefix."""
-    return Path(filename).name.split("_")[0]
