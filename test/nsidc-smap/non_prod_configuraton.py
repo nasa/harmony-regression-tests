@@ -12,7 +12,7 @@ non_production_configuration = {
                     "format": "image/tiff",
                     "labels": ["smap-rtest-1", "smap-rtests"],
                 },
-                "test_params": {"ext": "tif"},
+                "test_params": {"ext": ".tif"},
             },
             "SPL3FTP_E": {
                 "request_params": {
@@ -26,7 +26,7 @@ non_production_configuration = {
                     ],
                     "labels": ["smap-rtest-15", "smap-rtests"],
                 },
-                "test_params": {"ext": "nc4"},
+                "test_params": {"ext": ".nc4"},
             },
         },
         "subset_by_geojson": {
@@ -37,7 +37,7 @@ non_production_configuration = {
                     "labels": ["smap-rtest-2", "smap-rtests"],
                     "shape": "ancillary/France_simple.geojson",
                 },
-                "test_params": {"ext": "h5"},
+                "test_params": {"ext": ".h5"},
             },
         },
         "subset_by_shapefile": {
@@ -54,7 +54,7 @@ non_production_configuration = {
                     "labels": ["smap-rtest-13", "smap-rtests"],
                     "shape": "ancillary/Semey.zip",
                 },
-                "test_params": {"ext": "nc4"},
+                "test_params": {"ext": ".nc4"},
             },
         },
         "subset_by_variable": {
@@ -74,7 +74,7 @@ non_production_configuration = {
                     ],
                     "labels": ["smap-rtest-10", "smap-rtests"],
                 },
-                "test_params": {"ext": "h5"},
+                "test_params": {"ext": ".h5"},
             },
             "SPL2SMP_E_2": {
                 "request_params": {
@@ -84,7 +84,7 @@ non_production_configuration = {
                     "format": "image/tiff",
                     "labels": ["smap-rtest-16", "smap-rtests"],
                 },
-                "test_params": {"ext": "tif"},
+                "test_params": {"ext": ".tif"},
             },
         },
         "subset_by_kml": {
@@ -96,7 +96,7 @@ non_production_configuration = {
                     "shape": "ancillary/EasternUS.kml",
                     "labels": ["smap-rtest-18", "smap-rtests"],
                 },
-                "test_params": {"ext": "nc4"},
+                "test_params": {"ext": ".nc4"},
             }
         },
         "reprojection_to_geographic": {
@@ -107,7 +107,7 @@ non_production_configuration = {
                     "crs": "EPSG:4326",
                     "labels": ["smap-rtest-21", "smap-rtests"],
                 },
-                "test_params": {"ext": "nc4"},
+                "test_params": {"ext": ".nc4"},
             }
         },
     },
@@ -143,7 +143,7 @@ non_production_configuration = {
                     ],
                     "labels": ["smap-rtest-8", "smap-rtests"],
                 },
-                "test_params": {"ext": "tif"},
+                "test_params": {"ext": ".tif"},
             },
         },
     },

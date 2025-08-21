@@ -1,7 +1,13 @@
 """Collection of functions used for nsidc-smap regression tests."""
 
 from urllib import parse
-from earthdata_hashdiff import create_geotiff_hash_file, create_nc4_hash_file
+from earthdata_hashdiff import (
+    create_geotiff_hash_file,
+    create_nc4_hash_file,
+    geotiff_matches_reference_hash_file,
+    nc4_matches_reference_hash_file,
+    h5_matches_reference_hash_file,
+)
 from pathlib import Path
 
 
@@ -17,6 +23,17 @@ def file_for_variable(directory: Path, glob: str) -> Path:
         raise ValueError(f"Incorrect Number of files found ({len(results)}) for {glob}")
 
     return results[0]
+
+
+def comparison_function_by_extension(ext: str) -> callable:
+    """Returns the correct function to call for the input file type's extension."""
+
+    compare_function_map = {
+        ".tif": geotiff_matches_reference_hash_file,
+        ".nc4": nc4_matches_reference_hash_file,
+        ".h5": h5_matches_reference_hash_file,
+    }
+    return compare_function_map[ext]
 
 
 def _generate_reference_files(test_config: dict, in_dir: Path, out_dir: Path):
@@ -66,7 +83,7 @@ def _generate_reference_files(test_config: dict, in_dir: Path, out_dir: Path):
         out_fn = out_dir / f"{inbase.stem}_reference.json"
         in_fn = in_dir / inbase
         print(f"generating geohash/hash for {in_fn}")
-        if inbase.suffix == '.tif':
+        if inbase.suffix == ".tif":
             create_geotiff_hash_file(str(in_fn), str(out_fn))
         else:
             create_nc4_hash_file(str(in_fn), str(out_fn))
@@ -84,4 +101,4 @@ def get_harmony_job_prefix(harmony_client, job_id):
 
 def get_outfile_prefix(filename):
     """Parse the output file to get the prefix."""
-    return Path(filename).name.split('_')[0]
+    return Path(filename).name.split("_")[0]
