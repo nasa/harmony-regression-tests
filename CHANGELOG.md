@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## YYYY-MM-DD ([???](https://github.com/nasa/harmony-regression-tests/pull/???))
+
+### Added
+
+- Adds production configuration for the `nsidc-smap` regression tests.
+
 ## 2025-08-21 ([204](https://github.com/nasa/harmony-regression-tests/pull/204))
 
 ### Added
