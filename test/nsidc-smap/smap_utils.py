@@ -35,6 +35,26 @@ def comparison_function_by_extension(ext: str) -> callable:
     return compare_function_map[ext]
 
 
+def exclusions_by_extension(ext: str) -> dict:
+    """Returns the exclusion dictionary for comparison based on the extension."""
+
+    geotiff_exclusions = {}
+    nc4_and_h5_exclusions = {
+        "skipped_metadata_attributes": {
+            "build_dmrpp_metadata.invocation",
+            "build_dmrpp_metadata.configuration",
+            "Processing Parameters",
+        }
+    }
+
+    compare_function_map = {
+        ".tif": geotiff_exclusions,
+        ".nc4": nc4_and_h5_exclusions,
+        ".h5": nc4_and_h5_exclusions,
+    }
+    return compare_function_map[ext]
+
+
 def _generate_reference_files(test_config: dict, in_dir: Path, out_dir: Path):
     """Process downloaded output into hashed files to be used as reference.
 
@@ -52,7 +72,7 @@ def _generate_reference_files(test_config: dict, in_dir: Path, out_dir: Path):
         from pathlib import Path
 
         in_dir = Path('temporary-directory/')
-        out_dir = Path('reference_files/')
+        out_dir = Path('new_reference_files/')
 
         from non_prod_configuraton import non_production_configuration
 
@@ -85,4 +105,12 @@ def _generate_reference_files(test_config: dict, in_dir: Path, out_dir: Path):
         if inbase.suffix == ".tif":
             create_geotiff_hash_file(str(in_fn), str(out_fn))
         else:
-            create_nc4_hash_file(str(in_fn), str(out_fn))
+            create_nc4_hash_file(
+                str(in_fn),
+                str(out_fn),
+                skipped_metadata_attributes={
+                    "build_dmrpp_metadata.invocation",
+                    "build_dmrpp_metadata.configuration",
+                    "Processing Parameters",
+                },
+            )
