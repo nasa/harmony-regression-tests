@@ -5,7 +5,7 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## YYYY-MM-DD ([???](https://github.com/nasa/harmony-regression-tests/pull/???))
+## 2025-09-08 ([209](https://github.com/nasa/harmony-regression-tests/pull/209))
 
 ### Added
 
