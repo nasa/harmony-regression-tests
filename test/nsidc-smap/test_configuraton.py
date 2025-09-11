@@ -186,8 +186,8 @@ production_overrides = {
         "granule_id": "G3480457654-NSIDC_CPRD",
     },
     ("multiple_output_tests", "GeoTIFF_reformat", "SPL2SMP"): {
-        "collection": Collection(id="C3480440454-NSIDC_CPRD"),  #
-        "granule_id": "G3480457654-NSIDC_CPRD",
+        "collection": Collection(id="C2938663609-NSIDC_CPRD"),  #
+        "granule_id": "G3241897046-NSIDC_CPRD",
     },
 }
 
