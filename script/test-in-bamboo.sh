@@ -18,15 +18,15 @@ fi
 case $HARMONY_ENVIRONMENT in
 uat)
   harmony_host_url="https://harmony.uat.earthdata.nasa.gov"
-  configuration_file="config/services_tests_config_uat.json"
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_uat.json"
   ;;
 prod)
   harmony_host_url="https://harmony.earthdata.nasa.gov"
-  configuration_file="config/services_tests_config_prod.json"
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_prod.json"
   ;;
 sit)
   harmony_host_url="https://harmony.sit.earthdata.nasa.gov"
-  configuration_file="config/services_tests_config_uat.json"
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_uat.json"
   ;;
 *)
   echo "Valid environments are sit, uat, and prod."
