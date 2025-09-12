@@ -1,9 +1,8 @@
 {
-  "all": "harmony,harmony-regression,geoloco,hga,regridder,hoss,hybig,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,trajectory-subsetter,sambah,opera-rtc-s1-browse",
+  "all": "harmony,harmony-regression,geoloco,regridder,hoss,hybig,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,trajectory-subsetter,sambah,opera-rtc-s1-browse",
   "batchee": "sambah",
   "geoloco": "geoloco",
   "giovanni-time-series-adapter": "TBD",
-  "harmony-gdal-adapter": "hga",
   "harmony-regression": "harmony-regression",
   "harmony-service-example": "harmony-regression",
   "harmony-smap-l2-gridder": "smap-l2-gridder",
