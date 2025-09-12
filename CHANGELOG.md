@@ -5,13 +5,28 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2025-09-?? ([???](https://github.com/nasa/harmony-regression-tests/pull/???))
+
+## 2025-09-12 ([211](https://github.com/nasa/harmony-regression-tests/pull/211))
 
 ### Changed
 
 - Updates references for nsidc-smap regression tests in response to the changed behavior of harmony-regridding-service v1.6.0, exclusion of unprocessable variables.
-Comment
 
+## 2025-09-12 ([210](https://github.com/nasa/harmony-regression-tests/pull/210))
+
+### Removed
+
+- The HGA regression test suite has been removed from production test execution
+  as the service is being removed from the production Harmony environment.
+
+### Changed
+
+- Tests to be run within Bamboo for a specific Harmony environment are now
+  derived from those listed under the "all" key in either
+  `config/services_tests_config_prod.json` for production or
+  `config/services_tests_config_uat.json` for UAT or SIT environments.
+- `run_notebooks.sh` has also been updated to derive `all_images` from the
+  relevant JSON configuration file.
 
 ## 2025-08-21 ([204](https://github.com/nasa/harmony-regression-tests/pull/204))
 
