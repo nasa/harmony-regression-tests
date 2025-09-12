@@ -18,6 +18,8 @@ to document pull requests to this repository.
   derived from those listed under the "all" key in either
   `config/services_tests_config_prod.json` for production or
   `config/services_tests_config_uat.json` for UAT or SIT environments.
+- `run_notebooks.sh` has also been updated to derive `all_images` from the
+  relevant JSON configuration file.
 
 ## 2025-08-21 ([204](https://github.com/nasa/harmony-regression-tests/pull/204))
 
