@@ -9,7 +9,8 @@ to document pull requests to this repository.
 
 ### Changed
 
-- Updates references for nsidc-smap regression tests in reponse to the changed behavior of harmony-regridding-servcie v1.6.0, exclusion of unprocessable variables.
+- Updates references for nsidc-smap regression tests in response to the changed behavior of harmony-regridding-service v1.6.0, exclusion of unprocessable variables.
+Comment
 
 
 ## 2025-08-21 ([204](https://github.com/nasa/harmony-regression-tests/pull/204))
