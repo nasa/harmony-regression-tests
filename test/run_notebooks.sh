@@ -17,7 +17,7 @@ echo -e "Using ${HARMONY_HOST_URL}\n"
 # Specify the test images to run, by default all built by the Makefile. If
 # the script is invoked with a list of images, only run those.
 
-# choose the correct configuration file.
+# Choose the correct configuration file.
 case $HARMONY_HOST_URL in
 "https://harmony.earthdata.nasa.gov")
   configuration_file="${SCRIPT_DIR}/../config/services_tests_config_prod.json"

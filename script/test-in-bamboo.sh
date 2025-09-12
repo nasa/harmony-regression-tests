@@ -14,7 +14,7 @@ if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   exit 1
 fi
 
-# choose the correct harmony host.
+# Choose the correct harmony host.
 case $HARMONY_ENVIRONMENT in
 uat)
   harmony_host_url="https://harmony.uat.earthdata.nasa.gov"
