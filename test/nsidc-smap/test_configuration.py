@@ -77,7 +77,7 @@ non_production_configuration = {
                 },
                 "test_params": {"ext": ".h5"},
             },
-            "SPL2SMP_E_2": {
+            "SPL3SMA": {
                 "request_params": {
                     "collection": Collection(id="C1242581633-NSIDC_CUAT"),
                     "granule_id": "G1260703508-NSIDC_CUAT",
@@ -173,7 +173,7 @@ production_overrides = {
         "collection": Collection(id="C2938663676-NSIDC_CPRD"),
         "granule_id": "G3241947322-NSIDC_CPRD",
     },
-    ("single_output_tests", "subset_by_variable", "SPL2SMP_E_2"): {
+    ("single_output_tests", "subset_by_variable", "SPL3SMA"): {
         "collection": Collection(id="C2872766452-NSIDC_CPRD"),
         "granule_id": "G2872934722-NSIDC_CPRD",
     },
