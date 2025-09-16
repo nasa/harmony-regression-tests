@@ -77,7 +77,7 @@ non_production_configuration = {
                 },
                 "test_params": {"ext": ".h5"},
             },
-            "SPL2SMP_E_2": {
+            "SPL3SMA": {
                 "request_params": {
                     "collection": Collection(id="C1242581633-NSIDC_CUAT"),
                     "granule_id": "G1260703508-NSIDC_CUAT",
