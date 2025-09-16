@@ -6,6 +6,14 @@ of regression tests that are each semi-independent.  This CHANGELOG file should 
 to document pull requests to this repository.
 
 
+## 2025-09-16 [213](https://github.com/nasa/harmony-regression-tests/pull/213)
+
+### Changed
+
+- Added ATL24_subset_bounding_box_reference.json
+- Updated NSIDC-ICESAT2_Regression.ipynb with new ATL24 spatial subsetting test.
+
+
 ## 2025-09-12 ([211](https://github.com/nasa/harmony-regression-tests/pull/211))
 
 ### Changed
