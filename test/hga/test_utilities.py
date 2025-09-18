@@ -4,7 +4,6 @@ from typing import Dict
 
 from harmony import Client, Environment, Request
 from imghdr import what as what_file_type
-from netCDF4 import Dataset as NetCDF4Dataset
 from osgeo.gdal import Info as GdalInfo, Open as GdalOpen
 from osgeo.osr import SpatialReference
 from numpy import array_equal
@@ -57,14 +56,8 @@ def clean_test_artefacts(output_directory: str):
 
 
 def check_request_output(output_path: str, expected: Dict):
-    """Extract information from a Harmony GDAL Adapter request output
-    and compare to the expected results.
-
-    """
-    if output_path.endswith(('.nc', '.nc4')):
-        output = get_netcdf_information(output_path)
-    else:
-        output = get_geotiff_information(output_path)
+    """Compare Harmony GDAL Adapter request output GeoTIFF to expected results."""
+    output = get_geotiff_information(output_path)
 
     base_error = f'{output_path} has an unexpected'
 
@@ -100,58 +93,7 @@ def check_request_output(output_path: str, expected: Dict):
     print_success('All assertions passed')
 
 
-def get_netcdf_information(file_path: str):
-    """Extract information from a NetCDF-4 output file. The spatial extents
-    for projected outputs are not converted to geographic coordinates in
-    this function.
-
-    """
-    with NetCDF4Dataset(file_path) as dataset:
-        variable_set = set(dataset.variables.keys())
-        bands = len(variable_set)
-
-        if 'lat' in variable_set:
-            height = len(dataset['lat'])
-            min_y = dataset['lat'][:].min()
-            max_y = dataset['lat'][:].max()
-        elif 'y' in variable_set:
-            height = len(dataset['y'])
-            min_y = dataset['y'][:].min()
-            max_y = dataset['y'][:].max()
-        else:
-            height = None
-            min_y = None
-            max_y = None
-
-        if 'lon' in variable_set:
-            width = len(dataset['lon'])
-            min_x = dataset['lon'][:].min()
-            max_x = dataset['lon'][:].max()
-        elif 'x' in variable_set:
-            width = len(dataset['x'])
-            min_x = dataset['x'][:].min()
-            max_x = dataset['x'][:].max()
-        else:
-            width = None
-            min_y = None
-            max_y = None
-
-    return {
-        'cs': None,
-        'proj_cs': None,
-        'gcs': None,
-        'authority': None,
-        'proj_epsg': None,
-        'gcs_epsg': None,
-        'spatial_extent': [min_y, max_y, min_x, max_x],
-        'variables': variable_set,
-        'n_bands': bands,
-        'height': height,
-        'width': width,
-    }
-
-
-def get_geotiff_information(file_path: str):
+def get_geotiff_information(file_path: str) -> dict:
     """Read information from a specified GeoTIFF file."""
     dataset = GdalOpen(file_path)
     bands = dataset.RasterCount
@@ -248,45 +190,19 @@ def get_geotiff_information(file_path: str):
 
 
 def compare_to_reference_image(test_output: str, reference_image: str) -> bool:
-    """Compare the array values of the output results to those of a reference
+    """Compare the array values of the output GeoTIFF to those of a reference
     image.
 
     """
-    if test_output.endswith(('.nc', '.nc4')):
-        files_match = compare_netcdf_files(test_output, reference_image)
-    else:
-        output_dataset = GdalOpen(test_output)
-        output_raster = output_dataset.ReadAsArray()
-        output_dataset = None
+    output_dataset = GdalOpen(test_output)
+    output_raster = output_dataset.ReadAsArray()
+    output_dataset = None
 
-        reference_dataset = GdalOpen(reference_image)
-        reference_raster = reference_dataset.ReadAsArray()
-        reference_dataset = None
+    reference_dataset = GdalOpen(reference_image)
+    reference_raster = reference_dataset.ReadAsArray()
+    reference_dataset = None
 
-        files_match = array_equal(output_raster, reference_raster)
-
-    return files_match
-
-
-def compare_netcdf_files(test_output: str, reference_image: str) -> bool:
-    """Check all variables from the reference image are in the test output
-    and have the same value. This function assumes the NetCDF-4 file to be
-    flat.
-
-    """
-    with NetCDF4Dataset(test_output) as output_ds, NetCDF4Dataset(
-        reference_image
-    ) as reference_ds:
-
-        variables_equal = all(
-            [
-                variable_name in output_ds.variables
-                and array_equal(output_ds[variable_name][:], ref_variable[:])
-                for variable_name, ref_variable in reference_ds.variables.items()
-            ]
-        )
-
-    return variables_equal
+    return array_equal(output_raster, reference_raster)
 
 
 def print_error(error_string: str) -> str:

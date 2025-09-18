@@ -6,6 +6,13 @@ of regression tests that are each semi-independent.  This CHANGELOG file should 
 to document pull requests to this repository.
 
 
+## 2025-09-18 [214](http://github.com/nasa/harmony-regression-tests/pull/214)
+
+### Removed
+
+- The HGA regression test suite v0.1.9 has been updated to remove tests for
+  netCDF4 input files, accounting for updates to HGA v3.0.0.
+
 ## 2025-09-16 [213](https://github.com/nasa/harmony-regression-tests/pull/213)
 
 ### Changed
