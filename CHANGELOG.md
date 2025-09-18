@@ -10,7 +10,7 @@ to document pull requests to this repository.
 
 ### Removed
 
-- The HGA regression test suite v0.1.9 has been updated to remove tests for
+- The HGA regression test suite v0.2.0 has been updated to remove tests for
   netCDF4 input files, accounting for updates to HGA v3.0.0.
 
 ## 2025-09-16 [213](https://github.com/nasa/harmony-regression-tests/pull/213)
