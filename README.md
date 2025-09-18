@@ -318,6 +318,15 @@ version increment. This will likely occur for one of three reasons:
 * Updating the overall Docker image for all test suites, in which case all
   suites should have their `version.txt` incremented.
 
+Generally:
+
+* A major version will break one or more test suites when run against previous
+  versions of a service. This usually occurs when a test suite is updated to
+  account for breaking changes in the service itself.
+* A minor version will add or remove tests from a notebook, but the notebook
+  will still run against existing versions of the service.
+* A patch version updates existing tests only.
+
 The CI/CD pipeline for this repository will release a new Docker image for a
 test suite to
 [ghcr.io](https://github.com/orgs/nasa/packages?repo_name=harmony-regression-tests)
