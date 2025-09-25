@@ -5,8 +5,16 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-09-24 [216](https://github.com/nasa/harmony-regression-tests/pull/215)
 
-## 2025-09-18 [214](http://github.com/nasa/harmony-regression-tests/pull/214)
+### Added
+
+- The HGA regression test suite 1.0.0 has been updated to use
+  `earthdata-hashdiff` for test comparisons. Tests have also been added for
+  when no format is specified, and so a GeoTIFF should be returned, or if a
+  netCDF4 format is requested.
+
+## 2025-09-18 [214](https://github.com/nasa/harmony-regression-tests/pull/214)
 
 ### Removed
 

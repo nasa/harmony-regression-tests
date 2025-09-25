@@ -8,7 +8,8 @@ harmony-regression-image: Dockerfile harmony-regression/environment.yaml
 
 hga-image: Dockerfile hga/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-hga:latest -f ./Dockerfile \
-	--build-arg notebook=HGA_Regression.ipynb --build-arg sub_dir=hga .
+	--build-arg notebook=HGA_Regression.ipynb --build-arg sub_dir=hga \
+	--build-arg shared_utils=true .
 
 hoss-image: Dockerfile hoss/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-hoss:latest -f ./Dockerfile \

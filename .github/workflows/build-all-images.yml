@@ -21,6 +21,7 @@ jobs:
           -
             image: "hga"
             notebook: "HGA_Regression.ipynb"
+            shared-utils: "true"
           -
             image: "hoss"
             notebook: "HOSS_Regression.ipynb"
