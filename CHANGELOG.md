@@ -9,9 +9,10 @@ to document pull requests to this repository.
 
 ### Added
 
-- The HGA regression test suite 0.3.0 has been updated to add tests where no
-  format is specified, and so a GeoTIFF should be returned, or if netCDF4
-  format is requested.
+- The HGA regression test suite 1.0.0 has been updated to use
+  `earthdata-hashdiff` for test comparisons. Tests have also been added for
+  when no format is specified, and so a GeoTIFF should be returned, or if a
+  netCDF4 format is requested.
 
 ## 2025-09-18 [214](https://github.com/nasa/harmony-regression-tests/pull/214)
 
