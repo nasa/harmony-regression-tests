@@ -9,7 +9,8 @@ to document pull requests to this repository.
 
 ### Changed
 
-- Updates regridder reference files to account for implicit grid changes changes introduced in harmony-regridding-service v1.8.0.
+- Updates regridder reference files to account for changes to implicit grid
+  computation introduced in harmony-regridding-service v1.8.0.
 
 
 ## 2025-09-24 [216](https://github.com/nasa/harmony-regression-tests/pull/216)
