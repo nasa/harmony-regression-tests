@@ -5,7 +5,15 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2025-09-24 [216](https://github.com/nasa/harmony-regression-tests/pull/215)
+## 2025-09-26 [217](https://github.com/nasa/harmony-regression-tests/pull/217)
+
+### Changed
+
+- Updates regridder reference files to account for changes to implicit grid
+  computation introduced in harmony-regridding-service v1.8.0.
+
+
+## 2025-09-24 [216](https://github.com/nasa/harmony-regression-tests/pull/216)
 
 ### Added
 
