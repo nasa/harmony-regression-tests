@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-10-02 [219](https://github.com/nasa/harmony-regression-tests/pull/219)
+
+### Changed
+
+- Updates `nsidc-smap` reference files to account for changes to implicit grid computation introduced in harmony-regridding-service v1.8.0. `SPL3SMP_subset_by_kml`, and `SPL4CMDL_reprojection_to_geographic_reference` are the only requests that need an implicit grid and are affected.
+- Updates `nsidc-smap` reference file for `SPL3SMP_subset_by_kml` to reflect metadata-annotator v1.4.0 changes to time variable attributes.
+
 ## 2025-09-26 [217](https://github.com/nasa/harmony-regression-tests/pull/217)
 
 ### Changed
