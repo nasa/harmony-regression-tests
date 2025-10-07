@@ -91,7 +91,7 @@ def _generate_reference_files(test_config: dict, in_dir: Path, out_dir: Path):
     input_files = [
         Path("SPL2SMA_subset_bounding_box.tif"),
         Path("SPL2SMA_subset_by_geojson.h5"),
-        Path("SPL2SMP_E_2_subset_by_variable.tif"),
+        Path("SPL3SMA_subset_by_variable.tif"),
         Path("SPL2SMP_E_subset_by_variable.h5"),
         Path("SPL3FTP_E_subset_bounding_box.nc4"),
         Path("SPL3FTP_subset_by_shapefile.nc4"),

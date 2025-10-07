@@ -5,7 +5,6 @@
 
 set -ex
 
-
 ## Import function image_name that determines the images to pull from docker.
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "${SCRIPT_DIR}/image_name.sh"
@@ -15,16 +14,19 @@ if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   exit 1
 fi
 
-# choose the correct harmony host.
+# Choose the correct harmony host.
 case $HARMONY_ENVIRONMENT in
 uat)
   harmony_host_url="https://harmony.uat.earthdata.nasa.gov"
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_uat.json"
   ;;
 prod)
   harmony_host_url="https://harmony.earthdata.nasa.gov"
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_prod.json"
   ;;
 sit)
   harmony_host_url="https://harmony.sit.earthdata.nasa.gov"
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_uat.json"
   ;;
 *)
   echo "Valid environments are sit, uat, and prod."
@@ -35,33 +37,19 @@ esac
 echo "harmony host url: ${harmony_host_url}"
 
 
-## Download test versions of the regression images from GitHub container registry.
-## Images are pulled for each test in the all_tests array
-## default images have a pattern: "ghrc.io/nasa/regression-tests-<test>:latest"
-## Any bamboo variables named "REGRESSION_TESTS_<test>_IMAGE" will override the default value.
-## e.g. if REGRESSION_TESTS_HOSS_IMAGE environment was set, the value would be used instead of the default.
+
+# Retrieve all tests to be run from "all" in the appropriate configuration file
+IFS=","
+read -ra all_tests <<< "$(jq -r '.all' ${configuration_file})"
+unset IFS
+
+# Download test versions of the regression images from GitHub container registry.
+# Images are pulled for each test in the all_tests array
+# default images have a pattern: "ghrc.io/nasa/regression-tests-<test>:latest"
+# Any bamboo variables named "REGRESSION_TESTS_<test>_IMAGE" will override the default value.
+# e.g. if REGRESSION_TESTS_HOSS_IMAGE environment was set, the value would be used instead of the default.
 
 image_names=()
-all_tests=(
-    geoloco
-    harmony
-    harmony-regression
-    hga
-    hoss
-    hybig
-    imagenator
-    net2cog
-    nsidc-icesat2
-    nsidc-smap
-    opera-rtc-s1-browse
-    regridder
-    sambah
-    smap-l2-gridder
-    subset-band-name
-    swath-projector
-    trajectory-subsetter
-    variable-subsetter
-)
 for image in "${all_tests[@]}"; do
     image_names+=($(image_name "$image" true))
 done

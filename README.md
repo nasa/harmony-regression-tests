@@ -123,11 +123,7 @@ environment before installing from the environment.yml.
    ```
    images: <pre existing rules already listed> <new-suite-name>-image
    ```
-1. Update `test/run_notebooks.sh` to include the new test image in `all_images`:
-   ```
-   all_images=(<pre existing test suites> <new-suite-name>)
-   ```
-1. Update `script/test-in-bamboo.sh` to list the new suite name in `all_tests`.
+
 1. Update `config/services_tests_config_<env>.json` to associate the new suite name
    with a Harmony service and add it to the `all` list so that it will be run when
    the associated Harmony service or Harmony server is deployed.
@@ -322,6 +318,15 @@ version increment. This will likely occur for one of three reasons:
 * Updating the overall Docker image for all test suites, in which case all
   suites should have their `version.txt` incremented.
 
+Generally:
+
+* A major version will break one or more test suites when run against previous
+  versions of a service. This usually occurs when a test suite is updated to
+  account for breaking changes in the service itself.
+* A minor version will add or remove tests from a notebook, but the notebook
+  will still run against existing versions of the service.
+* A patch version updates existing tests only.
+
 The CI/CD pipeline for this repository will release a new Docker image for a
 test suite to
 [ghcr.io](https://github.com/orgs/nasa/packages?repo_name=harmony-regression-tests)
@@ -360,11 +365,6 @@ should be added as a dependency of the `images` target. The docker image should 
 To build the test images on github, add a new matrix target that includes the
 image base name and notbook name to the list of targets in the
 `.github/workflows/build-all-images.yml` file.
-
-Finally, add the image base name to the `all_images` array in the
-`run_notebooks.sh` file and the `all_tests` array in `scripts/test-in-bamboo.sh` script. For instance,
-if the new image is named `ghcr.io/nasa/regression-tests-foo`, then we would add
-`foo` to both arrays.
 
 The `run_notebooks.sh` file can be used as described above to run the test suite. Notebooks are
 expected to exit with a non-zero exit code on failure when run from `papermill`.

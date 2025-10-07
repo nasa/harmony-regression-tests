@@ -5,11 +5,72 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2025-09-08 ([209](https://github.com/nasa/harmony-regression-tests/pull/209))
+## 2025-10-07 ([209](https://github.com/nasa/harmony-regression-tests/pull/209))
 
 ### Added
 
 - Adds production configuration for the `nsidc-smap` regression tests.
+
+## 2025-10-02 [219](https://github.com/nasa/harmony-regression-tests/pull/219)
+
+### Changed
+
+- Updates `nsidc-smap` reference files to account for changes to implicit grid computation introduced in harmony-regridding-service v1.8.0. `SPL3SMP_subset_by_kml`, and `SPL4CMDL_reprojection_to_geographic_reference` are the only requests that need an implicit grid and are affected.
+- Updates `nsidc-smap` reference file for `SPL3SMP_subset_by_kml` to reflect metadata-annotator v1.4.0 changes to time variable attributes.
+
+## 2025-09-26 [217](https://github.com/nasa/harmony-regression-tests/pull/217)
+
+### Changed
+
+- Updates regridder reference files to account for changes to implicit grid
+  computation introduced in harmony-regridding-service v1.8.0.
+
+
+## 2025-09-24 [216](https://github.com/nasa/harmony-regression-tests/pull/216)
+
+### Added
+
+- The HGA regression test suite 1.0.0 has been updated to use
+  `earthdata-hashdiff` for test comparisons. Tests have also been added for
+  when no format is specified, and so a GeoTIFF should be returned, or if a
+  netCDF4 format is requested.
+
+## 2025-09-18 [214](https://github.com/nasa/harmony-regression-tests/pull/214)
+
+### Removed
+
+- The HGA regression test suite v0.2.0 has been updated to remove tests for
+  netCDF4 input files, accounting for updates to HGA v3.0.0.
+
+## 2025-09-16 [213](https://github.com/nasa/harmony-regression-tests/pull/213)
+
+### Changed
+
+- Added ATL24_subset_bounding_box_reference.json
+- Updated NSIDC-ICESAT2_Regression.ipynb with new ATL24 spatial subsetting test.
+
+
+## 2025-09-12 ([211](https://github.com/nasa/harmony-regression-tests/pull/211))
+
+### Changed
+
+- Updates references for nsidc-smap regression tests in response to the changed behavior of harmony-regridding-service v1.6.0, exclusion of unprocessable variables.
+
+## 2025-09-12 ([210](https://github.com/nasa/harmony-regression-tests/pull/210))
+
+### Removed
+
+- The HGA regression test suite has been removed from production test execution
+  as the service is being removed from the production Harmony environment.
+
+### Changed
+
+- Tests to be run within Bamboo for a specific Harmony environment are now
+  derived from those listed under the "all" key in either
+  `config/services_tests_config_prod.json` for production or
+  `config/services_tests_config_uat.json` for UAT or SIT environments.
+- `run_notebooks.sh` has also been updated to derive `all_images` from the
+  relevant JSON configuration file.
 
 ## 2025-08-21 ([204](https://github.com/nasa/harmony-regression-tests/pull/204))
 

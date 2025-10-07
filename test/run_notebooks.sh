@@ -16,26 +16,22 @@ echo -e "Using ${HARMONY_HOST_URL}\n"
 
 # Specify the test images to run, by default all built by the Makefile. If
 # the script is invoked with a list of images, only run those.
-all_images=(
-    geoloco
-    harmony
-    harmony-regression
-    hga
-    hoss
-    hybig
-    imagenator
-    net2cog
-    nsidc-icesat2
-    nsidc-smap
-    opera-rtc-s1-browse
-    regridder
-    sambah
-    smap-l2-gridder
-    subset-band-name
-    swath-projector
-    trajectory-subsetter
-    variable-subsetter
-)
+
+# Choose the correct configuration file.
+case $HARMONY_HOST_URL in
+"https://harmony.earthdata.nasa.gov")
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_prod.json"
+  ;;
+*)
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_uat.json"
+  ;;
+esac
+
+# Retrieve all tests to be run from "all" in the appropriate configuration file
+IFS=","
+read -ra all_images <<< "$(jq -r '.all' ${configuration_file})"
+unset IFS
+
 specified_images=()
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
