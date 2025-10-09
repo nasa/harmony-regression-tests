@@ -5,6 +5,7 @@ increase the readability of the regression test suite.
 """
 
 from shutil import move
+from pathlib import Path
 
 from harmony import Client, Request
 from harmony.client import ProcessingFailedException
@@ -48,3 +49,27 @@ def submit_and_download(
     except ProcessingFailedException as exception:
         print_error('Harmony request failed to complete successfully.')
         raise exception
+
+
+def download_file_from_harmony(
+    harmony_client: Client,
+    job_id: str,
+    target_filename: str | Path,
+    working_dir: str | Path = "",
+):
+    """Download a single file result from Harmony into the target_filename provided."""
+
+    files = [
+        file_future.result()
+        for file_future in harmony_client.download_all(
+            job_id, overwrite=True, directory=str(working_dir)
+        )
+    ]
+
+    if len(files) > 1:
+        print(
+            f"Warning: Harmony job generated {len(files)} files. Only first file is saved at {target_filename}."
+        )
+
+    Path(files[0]).replace(target_filename)
+    print(f"Downloaded to: {target_filename}")

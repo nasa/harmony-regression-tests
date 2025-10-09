@@ -10,6 +10,7 @@ to document pull requests to this repository.
 ### Changed
 
 - Updates the `nsidc-smap` and `nsidc-icesat2` regression test to submit requests before processing them, to allow the tests to complete faster.
+- Adds shared_utility function `download_file_from_harmony` to download a single file from harmony into a target location.
 
 
 ## 2025-10-02 [219](https://github.com/nasa/harmony-regression-tests/pull/219)
