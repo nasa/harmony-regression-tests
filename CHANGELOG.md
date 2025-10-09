@@ -13,6 +13,12 @@ to document pull requests to this repository.
 - Adds shared_utility function `download_file_from_harmony` to download a single file from harmony into a target location.
 
 
+## 2025-10-07 ([209](https://github.com/nasa/harmony-regression-tests/pull/209))
+
+### Added
+
+- Adds production configuration for the `nsidc-smap` regression tests.
+
 ## 2025-10-02 [219](https://github.com/nasa/harmony-regression-tests/pull/219)
 
 ### Changed
