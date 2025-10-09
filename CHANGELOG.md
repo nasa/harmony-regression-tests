@@ -9,7 +9,7 @@ to document pull requests to this repository.
 
 ### Changed
 
-- Updates the `nsidc-smap` regression test to submit all requests before processing them.
+- Updates the `nsidc-smap` and `nsidc-icesat2` regression test to submit requests before processing them, to allow the tests to complete faster.
 
 
 ## 2025-10-02 [219](https://github.com/nasa/harmony-regression-tests/pull/219)
