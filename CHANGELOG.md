@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-10-10 [222](https://github.com/nasa/harmony-regression-tests/pull/222)
+
+### Removed
+
+- `shared_utils/compare.py` was removed as the comparison functions within it
+  have been replaced by `earthdata-hashdiff`.
+
 ## 2025-10-09 [221](https://github.com/nasa/harmony-regression-tests/pull/221)
 
 ### Changed
