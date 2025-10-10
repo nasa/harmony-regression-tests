@@ -5,6 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-10-09 [221](https://github.com/nasa/harmony-regression-tests/pull/221)
+
+### Changed
+
+- Updates the `nsidc-smap` and `nsidc-icesat2` regression test to submit requests before processing them, to allow the tests to complete faster.
+- Adds shared_utility function `download_file_from_harmony` to download a single file from harmony into a target location.
+
+
 ## 2025-10-07 ([209](https://github.com/nasa/harmony-regression-tests/pull/209))
 
 ### Added
