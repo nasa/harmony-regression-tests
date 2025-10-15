@@ -5,6 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-10-15 [224](https://github.com/nasa/harmony-regression-tests/pull/224)
+
+### Changed
+
+- Updates regridder SPL4SMAU reference file to account for difference in the naming of phony
+dimensions introduced in metadata-annotator v1.5.0 due to the switch from using the default netcdf4
+engine to h5netcdf.
+
 ## 2025-10-10 [222](https://github.com/nasa/harmony-regression-tests/pull/222)
 
 ### Removed
