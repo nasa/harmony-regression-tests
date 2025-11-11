@@ -5,6 +5,15 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-11-10 [229](https://github.com/nasa/harmony-regression-tests/pull/229)
+
+### Changed
+
+- Updates the HyBIG regression tests to add several new tests, as well as associated reference data.
+- Modified the PREFIRE regression test reference data to account for new nodata index behavior implemented in
+[GITC-8020](https://bugs.earthdata.nasa.gov/browse/GITC-8020), part of [HyBIG 2.4.2](https://github.com/nasa/harmony-browse-image-generator/releases/tag/2.4.2)
+
+
 ## 2025-10-15 [224](https://github.com/nasa/harmony-regression-tests/pull/224)
 
 ### Changed
