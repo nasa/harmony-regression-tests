@@ -5,6 +5,15 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-11-17 [233](https://github.com/nasa/harmony-regression-tests/pull/233)
+
+### Changed
+
+- Updates hoss and nsidc-smap reference files to account for shared root-level dimensions
+  introduced by metadata-annotator v.1.6.0 and regidder v1.10.0.
+- Add README to nsidc-smap test suite to document required use of `skipped_metadata_attributes` argument when generating JSON reference hash files.
+
+
 ## 2025-11-10 [229](https://github.com/nasa/harmony-regression-tests/pull/229)
 
 ### Changed
