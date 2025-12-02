@@ -53,7 +53,7 @@ on:
           ## with 1 or more regression tests via the services_tests_config_[env].json files.
           - batchee
           - geoloco
-          - giovanni-adapter
+          - giovanni-averaging-service
           - harmony-gdal-adapter
           - harmony-regridder
           - harmony-service-example
@@ -90,6 +90,7 @@ on:
       - all
       - batchee
       - geoloco
+      - giovanni-averaging-service
       - harmony-gdal-adapter
       - harmony-regridder
       - harmony-service-example
