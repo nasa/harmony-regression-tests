@@ -6,6 +6,13 @@ of regression tests that are each semi-independent.  This CHANGELOG file should 
 to document pull requests to this repository.
 
 
+## 2025-12-03 ([#237](https://github.com/nasa/harmony-regression-tests/pull/237))
+
+### Changed
+
+- Updates the configuration for maskfill's new service image tag value.
+
+
 ## 2025-11-19 ([#231](https://github.com/nasa/harmony-regression-tests/pull/231))
 
 ### Changed

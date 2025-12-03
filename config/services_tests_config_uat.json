@@ -16,7 +16,7 @@
   "podaac-concise": "sambah",
   "podaac-l2-subsetter": "sambah",
   "query-cmr": "variable-subsetter",
-  "sds-maskfill": "hoss",
+  "maskfill": "hoss",
   "stitchee": "sambah",
   "subset-band-name": "subset-band-name",
   "swath-projector": "swath-projector,nsidc-smap,imagenator",
