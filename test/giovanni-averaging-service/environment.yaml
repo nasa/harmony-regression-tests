@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  - python=3.11exit
+  - python=3.11
   - notebook=7.5.0
   - papermill=2.6.0
   - rasterio=1.4.3
