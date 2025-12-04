@@ -2,7 +2,7 @@
   "all": "harmony,harmony-regression,geoloco,giovanni-averaging-service,regridder,hoss,hybig,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,nsidc-smap,trajectory-subsetter,sambah,opera-rtc-s1-browse",
   "batchee": "sambah",
   "geoloco": "geoloco",
-  "giovanni-averaging-service": "giovanni-averaging-service",
+  "giovanni-averaging-service-adapter": "giovanni-averaging-service",
   "harmony-regression": "harmony-regression",
   "harmony-service-example": "harmony-regression",
   "harmony-smap-l2-gridder": "nsidc-smap,smap-l2-gridder",
