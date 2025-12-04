@@ -90,7 +90,7 @@ on:
       - all
       - batchee
       - geoloco
-      - giovanni-averaging-service
+      - giovanni-averaging-service-adapter
       - harmony-gdal-adapter
       - harmony-regridder
       - harmony-service-example
