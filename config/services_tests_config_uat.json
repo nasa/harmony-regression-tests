@@ -3,7 +3,7 @@
   "batchee": "sambah",
   "filtering": "imagenator",
   "geoloco": "geoloco",
-  "giovanni-averaging-service": "giovanni-averaging-service",
+  "giovanni-averaging-service-adapter": "giovanni-averaging-service",
   "harmony-gdal-adapter": "hga",
   "harmony-regridder": "regridder",
   "harmony-service-example": "harmony-regression",
