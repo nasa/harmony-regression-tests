@@ -50,7 +50,9 @@ def build_file_list(basename: str, path: Path, file_type: str) -> list[Path]:
     return [Path(str(path / basename) + ext) for ext in exts]
 
 
-def build_file_list_downloads(downloaded_files: list[Path], file_type: str) -> list[Path]:
+def build_file_list_downloads(
+    downloaded_files: list[Path], file_type: str
+) -> list[Path]:
     """Build a file list from actually downloaded files, filtering by file type."""
     if file_type.upper() == 'PNG':
         main_ext = '.png'
@@ -69,7 +71,9 @@ def build_file_list_downloads(downloaded_files: list[Path], file_type: str) -> l
             break
 
     if main_file is None:
-        raise FileNotFoundError(f"No {file_type} file found in downloaded files: {downloaded_files}")
+        raise FileNotFoundError(
+            f"No {file_type} file found in downloaded files: {downloaded_files}"
+        )
 
     # Build the expected auxiliary file paths based on the main file
     main_str = str(main_file)
