@@ -5,6 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2025-12-09 ([#238](https://github.com/nasa/harmony-regression-tests/pull/238))
+
+### Changed
+
+- Updated dependencies in HyBIG Regression test notebook.
+- Modified file list generation behavior to reflect newer harmony-py (1.3.3) convention.
+- Added regression test for TEMPO Imagenator-L2 processing.
+
 
 ## 2025-11-19 ([#231](https://github.com/nasa/harmony-regression-tests/pull/231))
 
