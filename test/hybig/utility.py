@@ -31,7 +31,7 @@ def assert_dataset_produced_correct_results(
         with rasterio.open(reference_file) as reference_dataset:
             assert (
                 test_dataset.meta == reference_dataset.meta
-            ), f'output {file_type} has incorrect metadata:\nTest Result Metadata:\n{test_dataset.meta}\nReference Metadata\n{reference_dataset.meta}'
+            ), f'output {file_type} has incorrect metadata:\nTest Result Metadata ({generated_file}):\n{test_dataset.meta}\nReference Metadata ({reference_file})\n{reference_dataset.meta}'
             print_success('Generated image has correct metadata.')
 
             ref_image = reference_dataset.read()
@@ -48,3 +48,32 @@ def build_file_list(basename: str, path: Path, file_type: str) -> list[Path]:
         exts = ['.jpg', '.jgw', '.jpg.aux.xml']
 
     return [Path(str(path / basename) + ext) for ext in exts]
+
+
+def build_file_list_downloads(downloaded_files: list[Path], file_type: str) -> list[Path]:
+    """Build a file list from actually downloaded files, filtering by file type."""
+    if file_type.upper() == 'PNG':
+        main_ext = '.png'
+        world_ext = '.pgw'
+        aux_ext = '.png.aux.xml'
+    else:  # JPEG/JPG
+        main_ext = '.jpg'
+        world_ext = '.jgw'
+        aux_ext = '.jpg.aux.xml'
+
+    # Find the main image file
+    main_file = None
+    for f in downloaded_files:
+        if str(f).endswith(main_ext) and not str(f).endswith(aux_ext):
+            main_file = Path(f)
+            break
+
+    if main_file is None:
+        raise FileNotFoundError(f"No {file_type} file found in downloaded files: {downloaded_files}")
+
+    # Build the expected auxiliary file paths based on the main file
+    main_str = str(main_file)
+    world_file = Path(main_str.replace(main_ext, world_ext))
+    aux_file = Path(main_str + '.aux.xml')
+
+    return [main_file, world_file, aux_file]
