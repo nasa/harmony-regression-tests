@@ -14,6 +14,13 @@ to document pull requests to this repository.
 - Added regression test for TEMPO Imagenator-L2 processing.
 
 
+## 2025-12-03 ([#237](https://github.com/nasa/harmony-regression-tests/pull/237))
+
+### Changed
+
+- Updates the configuration for maskfill's new service image tag value.
+
+
 ## 2025-11-19 ([#231](https://github.com/nasa/harmony-regression-tests/pull/231))
 
 ### Changed

@@ -65,7 +65,7 @@ on:
           - podaac-concise
           - podaac-l2-subsetter
           - query-cmr
-          - sds-maskfill
+          - maskfill
           - stitchee
           - subset-band-name
           - swath-projector
@@ -101,7 +101,7 @@ on:
       - podaac-concise
       - podaac-l2-subsetter
       - query-cmr
-      - sds-maskfill
+      - maskfill
       - stitchee
       - subset-band-name
       - swath-projector

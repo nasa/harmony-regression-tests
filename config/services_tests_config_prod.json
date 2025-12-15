@@ -13,7 +13,7 @@
   "podaac-concise": "sambah",
   "podaac-l2-subsetter": "sambah",
   "query-cmr": "geoloco",
-  "sds-maskfill": "hoss",
+  "maskfill": "hoss",
   "stitchee": "sambah",
   "subset-band-name": "subset-band-name",
   "swath-projector": "swath-projector,nsidc-smap",
