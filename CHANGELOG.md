@@ -5,6 +5,17 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-01-15 ([241](https://github.com/nasa/harmony-regression-tests/pull/241)]
+
+### Changed
+
+- Updated the skipped metadata for HOSS hash file generation. A number of new
+  top level metadata variables differed between PROD granules and UAT
+  ones. These are demonstrated in the new `README.md` file in the
+  `hoss/reference_files` directory.
+- HOSS regression tests are given labels for easier identification in the
+  Harmony workflow-ui.
+
 ## 2025-12-17 ([236](https://github.com/nasa/harmony-regression-tests/pull/236))
 
 ### Added
