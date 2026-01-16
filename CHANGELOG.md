@@ -11,6 +11,13 @@ to document pull requests to this repository.
 
 - Updated reference PNG associated with TEMPO NO2 L2 in HyBIG regression tests.
 
+## 2026-01-16 ([#242](https://github.com/nasa/harmony-regression-tests/pull/242))
+
+### Changed
+
+- Update the SPL3SMA_subset_by_variable_reference.json reference file to reflect
+  changes introduced by the net2cog update addressing Snyk security patches.
+
 ## 2025-12-17 ([236](https://github.com/nasa/harmony-regression-tests/pull/236))
 
 ### Added
