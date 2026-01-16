@@ -9,7 +9,7 @@ to document pull requests to this repository.
 
 ### Added
 
-- Updated reference PNG associated with TEMPO NO2 L2 in HyBIG regression tests. 
+- Updated reference PNG associated with TEMPO NO2 L2 in HyBIG regression tests.
 
 ## 2025-12-17 ([236](https://github.com/nasa/harmony-regression-tests/pull/236))
 
