@@ -15,6 +15,12 @@ to document pull requests to this repository.
   `hoss/reference_files` directory.
 - HOSS regression tests are given labels for easier identification in the
   Harmony workflow-ui.
+  
+## 2026-01-16 ([243](https://github.com/nasa/harmony-regression-tests/pull/243))
+
+### Added
+
+- Updated reference PNG associated with TEMPO NO2 L2 in HyBIG regression tests.
 
 ## 2026-01-16 ([#242](https://github.com/nasa/harmony-regression-tests/pull/242))
 
