@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-01-16 ([#242](https://github.com/nasa/harmony-regression-tests/pull/242))
+
+### Changed
+
+- Update the SPL3SMA_subset_by_variable_reference.json reference file to reflect
+  changes introduced by the net2cog update addressing Snyk security patches.”
+
 ## 2025-12-17 ([236](https://github.com/nasa/harmony-regression-tests/pull/236))
 
 ### Added
