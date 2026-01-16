@@ -15,7 +15,7 @@ to document pull requests to this repository.
   `hoss/reference_files` directory.
 - HOSS regression tests are given labels for easier identification in the
   Harmony workflow-ui.
-  
+
 ## 2026-01-16 ([243](https://github.com/nasa/harmony-regression-tests/pull/243))
 
 ### Added
