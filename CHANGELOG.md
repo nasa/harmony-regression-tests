@@ -10,7 +10,7 @@ to document pull requests to this repository.
 ### Changed
 
 - Update the SPL3SMA_subset_by_variable_reference.json reference file to reflect
-  changes introduced by the net2cog update addressing Snyk security patches.”
+  changes introduced by the net2cog update addressing Snyk security patches.
 
 ## 2025-12-17 ([236](https://github.com/nasa/harmony-regression-tests/pull/236))
 
