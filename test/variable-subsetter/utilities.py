@@ -12,7 +12,6 @@ from harmony.client import ProcessingFailedException
 from netCDF4 import Dataset, Group, Variable
 import numpy as np
 
-
 GroupOrVariable = Union[Group, Variable]
 
 
