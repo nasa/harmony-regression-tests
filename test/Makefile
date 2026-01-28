@@ -85,6 +85,11 @@ opera-rtc-s1-browse-image: Dockerfile opera-rtc-s1-browse/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-opera-rtc-s1-browse:latest -f ./Dockerfile \
 	--build-arg notebook=opera-rtc-s1-browse_Regression.ipynb --build-arg sub_dir=opera-rtc-s1-browse .
 
+casper-image: Dockerfile casper/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-casper:latest -f ./Dockerfile \
+	--build-arg notebook=CASPER_Regression.ipynb --build-arg sub_dir=casper \
+	--build-arg shared_utils=true .
+
 images: harmony-image \
 	harmony-regression-image \
 	hga-image \
@@ -103,4 +108,5 @@ images: harmony-image \
 	giovanni-averaging-service-image \
 	net2cog-image \
 	sambah-image \
-	opera-rtc-s1-browse-image
+	opera-rtc-s1-browse-image \
+	casper-image
