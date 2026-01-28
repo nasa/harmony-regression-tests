@@ -25,5 +25,6 @@
   "harmony-regression": "harmony-regression",
   "nsidc-icesat2": "nsidc-icesat2",
   "nsidc-smap": "nsidc-smap",
-  "sambah": "sambah"
+  "sambah": "sambah",
+  "casper": "casper"
 }
