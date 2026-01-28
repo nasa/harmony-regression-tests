@@ -5,7 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-01-16 ([241](https://github.com/nasa/harmony-regression-tests/pull/241)]
+## 2026-01-28 ([#246](https://github.com/nasa/harmony-regression-tests/pull/246))
+
+### Changed
+
+- Removed comments referring to ATL08 segment verification issues in the
+  NSIDC-ICESAT2_Regression.ipynb regression test notebook.
+
+## 2026-01-16 ([#241](https://github.com/nasa/harmony-regression-tests/pull/241))
 
 ### Changed
 
@@ -16,7 +23,7 @@ to document pull requests to this repository.
 - HOSS regression tests are given labels for easier identification in the
   Harmony workflow-ui.
 
-## 2026-01-16 ([243](https://github.com/nasa/harmony-regression-tests/pull/243))
+## 2026-01-16 ([#243](https://github.com/nasa/harmony-regression-tests/pull/243))
 
 ### Added
 
@@ -29,7 +36,7 @@ to document pull requests to this repository.
 - Update the SPL3SMA_subset_by_variable_reference.json reference file to reflect
   changes introduced by the net2cog update addressing Snyk security patches.
 
-## 2025-12-17 ([236](https://github.com/nasa/harmony-regression-tests/pull/236))
+## 2025-12-17 ([#236](https://github.com/nasa/harmony-regression-tests/pull/236))
 
 ### Added
 
