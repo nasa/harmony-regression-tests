@@ -80,6 +80,11 @@ jobs:
           -
             image: "opera-rtc-s1-browse"
             notebook: "opera-rtc-s1-browse_Regression.ipynb"
+          -
+            image: "casper"
+            notebook: "CASPER_Regression.ipynb"
+            shared-utils: "true"
+
 
     uses: ./.github/workflows/build-target-image.yml
     with:

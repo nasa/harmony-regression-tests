@@ -52,6 +52,7 @@ on:
           # These values are from Harmony's /service-image-tag endpoint and are associated
           ## with 1 or more regression tests via the services_tests_config_[env].json files.
           - batchee
+          - casper
           - geoloco
           - giovanni-averaging-service-adapter
           - harmony-gdal-adapter
@@ -89,6 +90,7 @@ on:
       ## They should align with the keys to the /service-image-tag endpoint (plus all)
       - all
       - batchee
+      - casper
       - geoloco
       - giovanni-averaging-service-adapter
       - harmony-gdal-adapter
