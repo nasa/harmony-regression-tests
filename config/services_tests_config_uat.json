@@ -1,5 +1,5 @@
 {
-  "all": "harmony,harmony-regression,geoloco,giovanni-averaging-service,hga,regridder,hoss,variable-subsetter,hybig,imagenator,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,nsidc-smap,trajectory-subsetter,sambah,opera-rtc-s1-browse",
+  "all": "harmony,harmony-regression,geoloco,giovanni-averaging-service,hga,regridder,hoss,variable-subsetter,hybig,imagenator,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,nsidc-smap,trajectory-subsetter,sambah,opera-rtc-s1-browse,casper",
   "batchee": "sambah",
   "filtering": "imagenator",
   "geoloco": "geoloco",
@@ -26,5 +26,5 @@
   "nsidc-icesat2": "nsidc-icesat2",
   "nsidc-smap": "nsidc-smap",
   "sambah": "sambah",
-  "casper": "casper"
+  "casper": "casper,sambah"
 }
