@@ -3,6 +3,7 @@ import hashlib
 import pandas as pd
 from zipfile import ZipFile
 
+
 def create_csv_hash_file(input_file_path: str, reference_file_path: str):
     ref_output = []
     with ZipFile(input_file_path, "r") as z:
@@ -18,12 +19,14 @@ def create_csv_hash_file(input_file_path: str, reference_file_path: str):
         json.dump(ref_output, fout, indent=2)
     return reference_file_path
 
+
 def csv_matches_reference_hash_file(input_file_path: str, reference_file_path: str):
-    json_file_path = create_csv_hash_file(input_file_path, input_file_path.with_suffix('.json'))
+    json_file_path = create_csv_hash_file(
+        input_file_path, input_file_path.with_suffix('.json')
+    )
     with open(json_file_path) as file1:
         inp = json.load(file1)
     with open(reference_file_path) as file2:
         ref = json.load(file2)
 
-    return set(inp)==set(ref)
-    
+    return set(inp) == set(ref)
