@@ -81,6 +81,9 @@ jobs:
             image: "opera-rtc-s1-browse"
             notebook: "opera-rtc-s1-browse_Regression.ipynb"
           -
+            image: "nisar-py"
+            notebook: "nisar-py_Regression.ipynb"
+          -
             image: "casper"
             notebook: "CASPER_Regression.ipynb"
             shared-utils: "true"
