@@ -1,8 +1,7 @@
 import json
 import hashlib
-import numpy as np
 import pandas as pd
-from zipfile import Path, ZipFile
+from zipfile import ZipFile
 
 def create_csv_hash_file(input_file_path: str, reference_file_path: str):
     ref_output = []
