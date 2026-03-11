@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-03-11 ([#253](https://github.com/nasa/harmony-regression-tests/pull/253))
+
+### Added
+
+- Added regression test for new asf/nisar-py service
+
 ## 2026-03-10 ([#258](https://github.com/nasa/harmony-regression-tests/pull/258))
 
 ### Changed
@@ -18,7 +24,6 @@ to document pull requests to this repository.
 
 - Introduced a regression test to validate CASPER functionality within SAMBAH chain.
 - Revised reference files to reflect recent l2ss and stitchee updates.
-
 
 ## 2026-01-28 ([#246](https://github.com/nasa/harmony-regression-tests/pull/246))
 
