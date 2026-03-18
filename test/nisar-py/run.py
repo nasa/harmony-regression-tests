@@ -85,5 +85,5 @@ for test_case in test_cases:
             md5sum = hashlib.md5(file.read_bytes()).hexdigest()
             md5sums[key] = md5sum
 
-    with open(f"md5sums/{granule}.json", "w") as f:
+    with open(f"md5sums/{test_case['granule_name']}.json", "w") as f:
         json.dump(md5sums, f, indent=4)
