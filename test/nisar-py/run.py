@@ -95,5 +95,6 @@ for test_case in test_cases:
     else:
         print(f"Verifying existing md5sums for {test_case['granule_name']}")
         expected_md5sums = json.load(md5sums_path.open())
-        # TODO: display diff on failure
-        assert actual_md5sums == expected_md5sums
+        assert actual_md5sums == expected_md5sums, (
+            f"md5sums for {test_case['granule_name']} do not match expected"
+        )
