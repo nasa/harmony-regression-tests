@@ -17,27 +17,42 @@ assert harmony_host_url in environments
 
 harmony_client = harmony.Client(env=environments[harmony_host_url])
 
-# TODO: keep original test case?
-# granule = "NISAR_L2_PR_GCOV_015_156_A_010_2005_DVDV_A_20230619T000803_20230619T000818_T05000_N_P_J_001"
-granules = [
-    # 20m north polar QP granule in png output (interior Alaska)
-    "NISAR_L2_PR_GCOV_008_145_D_054_2005_QPDH_A_20251226T061551_20251226T061609_X05010_N_P_J_001",
-    # 10m utm DH granule in png output (coast of Yemen)
-    "NISAR_L2_PR_GCOV_010_136_D_082_4005_DHDH_A_20260118T153232_20260118T153308_X05010_N_F_J_001",
-    # 80m frequencyB DV granule in png output (gulf of mexico)
-    "NISAR_L2_PR_GCOV_010_156_D_078_0005_NADV_A_20260120T004801_20260120T004836_X05010_N_F_J_001",
-    # 40m DH granule In geotiff output (new zealand)
-    "NISAR_L2_PR_GCOV_004_051_A_155_2005_DHDH_A_20251101T184355_20251101T184430_X05009_N_F_J_001",
+test_cases = [
+    {
+        # TODO: still needed?
+        # original test case
+        "granule_name": "NISAR_L2_PR_GCOV_015_156_A_010_2005_DVDV_A_20230619T000803_20230619T000818_T05000_N_P_J_001",
+        "format": "image/png",
+    },
+    {
+        # 20m north polar QP granule in png output (interior Alaska)
+        "granule_name": "NISAR_L2_PR_GCOV_008_145_D_054_2005_QPDH_A_20251226T061551_20251226T061609_X05010_N_P_J_001",
+        "format": "image/png",
+    },
+    {
+        # 10m utm DH granule in png output (coast of Yemen)
+        "granule_name": "NISAR_L2_PR_GCOV_010_136_D_082_4005_DHDH_A_20260118T153232_20260118T153308_X05010_N_F_J_001",
+        "format": "image/png",
+    },
+    {
+        # 80m frequencyB DV granule in png output (gulf of mexico)
+        "granule_name": "NISAR_L2_PR_GCOV_010_156_D_078_0005_NADV_A_20260120T004801_20260120T004836_X05010_N_F_J_001",
+        "format": "image/png",
+    },
+    {
+        # 40m DH granule In geotiff output (new zealand)
+        "granule_name": "NISAR_L2_PR_GCOV_004_051_A_155_2005_DHDH_A_20251101T184355_20251101T184430_X05009_N_F_J_001",
+        "format": "image/tiff",
+    },
     # 20m north polar SH (should fail because it’s single-pol)
     # TODO: test the failure
     # "NISAR_L2_PR_GCOV_010_112_A_045_7700_SHNA_A_20260116T231413_20260116T231433_X05010_N_P_J_001",
 ]
-for granule in granules:
+for test_case in test_cases:
     request = harmony.Request(
         collection=harmony.Collection(id="C1273831195-ASF"),
-        granule_name=[granule],
-        format="image/png",
         labels=["nisar-py-rtests"],
+        **test_case,
     )
     job_id = harmony_client.submit(request)
     harmony_client.wait_for_processing(job_id)
