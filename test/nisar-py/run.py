@@ -5,6 +5,13 @@ from tempfile import TemporaryDirectory
 
 import harmony
 
+# TODO: parameterize via papermill?
+#
+# Enable this option if you want to save the md5sums for each test case
+# rather than verify them. This is useful for adding new test cases
+# or updating existing ones.
+save_md5sums = False
+
 harmony_host_url = "https://harmony.uat.earthdata.nasa.gov"
 
 environments = {
@@ -57,33 +64,28 @@ for test_case in test_cases:
     job_id = harmony_client.submit(request)
     harmony_client.wait_for_processing(job_id)
 
-    # TODO: add an option for saving the md5sums?
-
-    # with open("expected_md5sums.json") as f:
-    #     expected_md5sums = json.load(f)
-
-    md5sums = {}
-
     with TemporaryDirectory() as temp_dir:
         urls = list(harmony_client.result_urls(job_id))
+        assert len([url for url in urls if url.endswith(".txt")]) == 1
 
-        # Verify that there are the expected number of files for each filetype.
-        # assert len(urls) == 109
-        # assert len([url for url in urls if url.endswith(".txt")]) == 1
-        # assert len([url for url in urls if url.endswith(".png")]) == 36
-        # assert len([url for url in urls if url.endswith(".pgw")]) == 36
-        # assert len([url for url in urls if url.endswith(".png.aux.xml")]) == 36
-
-        # Verify that the output file checksums match the expected checksums.
         output_files = [
             Path(harmony_client.download(url, temp_dir).result())
             for url in urls
             if not url.endswith(".txt")
         ]
-        for file in output_files:
-            key = file.name.split(".", maxsplit=1)[1]
-            md5sum = hashlib.md5(file.read_bytes()).hexdigest()
-            md5sums[key] = md5sum
+        actual_md5sums = {
+            file.name.split(".", maxsplit=1)[1]: hashlib.md5(
+                file.read_bytes()
+            ).hexdigest()
+            for file in output_files
+        }
 
-    with open(f"md5sums/{test_case['granule_name']}.json", "w") as f:
-        json.dump(md5sums, f, indent=4)
+    md5sums_path = Path("md5sums") / f"{test_case['granule_name']}.json"
+    if save_md5sums:
+        print(f"Saving md5sums to {md5sums_path}")
+        json.dump(actual_md5sums, md5sums_path.open("w"), indent=4)
+    else:
+        print(f"Verifying existing md5sums for {test_case['granule_name']}")
+        expected_md5sums = json.load(md5sums_path.open())
+        # TODO: display diff on failure
+        assert actual_md5sums == expected_md5sums
