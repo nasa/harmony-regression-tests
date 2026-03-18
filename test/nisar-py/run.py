@@ -5,11 +5,19 @@ from tempfile import TemporaryDirectory
 
 import harmony
 
-# TODO: parameterize via papermill?
+# TODO: convert these instructions to a markdown block
+# TODO: parameterize `save_md5sums` via papermill? and update instructions
 #
-# Enable this option if you want to save the md5sums for each test case
-# rather than verify them. This is useful for adding new test cases
-# or updating existing ones.
+# Adding new test cases or updating existing ones:
+# 1. Set `save_md5sums = True` below. This will cause the notebook to
+#    save the md5sums for each test case rather than verify them.
+# 2. Add any new test cases to the `test_cases` list below.
+#    Skip this step if you're only updating existing test cases.
+# 3. If you want the notebook to run faster,
+#    comment out any existing test cases that you don't want to update.
+# 4. Run the notebook, confirm that the expected md5sum files were created or updated,
+#    reset `save_md5sums` to `False`, and then commit and push the changes.
+# 5. Re-run the test and confirm it passes.
 save_md5sums = False
 
 harmony_host_url = "https://harmony.uat.earthdata.nasa.gov"
