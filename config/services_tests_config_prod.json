@@ -23,5 +23,5 @@
   "nsidc-icesat2": "nsidc-icesat2",
   "nsidc-smap": "nsidc-smap",
   "sambah": "sambah",
-  "casper": "casper,sambah"
+  "casper": "sambah"
 }
