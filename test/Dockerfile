@@ -1,4 +1,4 @@
-FROM mambaorg/micromamba:1.5.8-jammy
+FROM mambaorg/micromamba:2.5.0-ubuntu22.04
 USER root
 
 ARG sub_dir
