@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-03-18 ([#262](https://github.com/nasa/harmony-regression-tests/pull/262))
+
+### Changed
+
+- Updated services_tests_config_prod.json to add CASPER
+
 ## 2026-03-11 ([#253](https://github.com/nasa/harmony-regression-tests/pull/253))
 
 ### Added
