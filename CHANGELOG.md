@@ -5,6 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-04-01
+
+### Changed ([#266](https://github.com/nasa/harmony-regression-tests/pull/266))
+
+- Updated the reference csv file for the giovanni averaging service to reflect changes to make time format more consistent.
+- Added an assertion to fail giovanni averaging service test suite when no files are available to download.
+- Updated the readme to include reference to the wiki page for regression failure points of contact.
+
 ## 2026-03-31 ([#264](https://github.com/nasa/harmony-regression-tests/pull/264))
 
 ### Changed
