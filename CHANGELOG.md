@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-04-03
+
+### Changed ([#267](https://github.com/nasa/harmony-regression-tests/pull/267))
+
+- Updated the version for the giovanni averaging service to a valid service version.
+
 ## 2026-04-01
 
 ### Changed ([#266](https://github.com/nasa/harmony-regression-tests/pull/266))
