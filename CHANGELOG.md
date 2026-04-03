@@ -4,6 +4,7 @@ The harmony-regression-tests repository does not follow semantic
 versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
+
 ## 2026-04-03
 
 ### Changed ([#267](https://github.com/nasa/harmony-regression-tests/pull/267))
