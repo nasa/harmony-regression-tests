@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-04-07 ([#269](https://github.com/nasa/harmony-regression-tests/pull/269))
+
+### Added
+
+- Add additional regression test cases for the asf/nisar-py service.
+- Add a `save_md5sums` papermill parameter for the asf/nisar-py regression test.
+
 ## 2026-03-11 ([#253](https://github.com/nasa/harmony-regression-tests/pull/253))
 
 ### Added
