@@ -12,6 +12,32 @@ to document pull requests to this repository.
 - Add additional regression test cases for the asf/nisar-py service.
 - Add a `save_md5sums` papermill parameter for the asf/nisar-py regression test.
 
+## 2026-04-03
+
+### Changed ([#267](https://github.com/nasa/harmony-regression-tests/pull/267))
+
+- Updated the version for the giovanni averaging service to a valid service version.
+
+## 2026-04-01
+
+### Changed ([#266](https://github.com/nasa/harmony-regression-tests/pull/266))
+
+- Updated the reference csv file for the giovanni averaging service to reflect changes to make time format more consistent.
+- Added an assertion to fail giovanni averaging service test suite when no files are available to download.
+- Updated the readme to include reference to the wiki page for regression failure points of contact.
+
+## 2026-03-31 ([#264](https://github.com/nasa/harmony-regression-tests/pull/264))
+
+### Changed
+
+- Updates the underlying docker image that the tests run on and increases the patch version on all tests.
+
+## 2026-03-18 ([#262](https://github.com/nasa/harmony-regression-tests/pull/262))
+
+### Changed
+
+- Updated services_tests_config_prod.json to add CASPER
+
 ## 2026-03-11 ([#253](https://github.com/nasa/harmony-regression-tests/pull/253))
 
 ### Added
