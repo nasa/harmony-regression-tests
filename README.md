@@ -161,7 +161,7 @@ file is updated. To do so, simply add a new target to the
    ```
    list in the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml)
 
-1. If you want to trigger your tests by hand on GitHub, add your test name to the:
+1. If you want to trigger your tests by hand on GitHub, add your test name to the list of the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml):
    ```yaml
    on:
      workflow_dispatch:
@@ -171,12 +171,7 @@ file is updated. To do so, simply add a new target to the
            - batchee
            - your-new-service
    ```
-list of the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml)
-
-1. Provide the Harmony team with an email address and Slack user that can be
-contacted if your test suite fails during an automated run either in GitHub or
-Bamboo. Please also let the Harmony team know if either of these pieces of
-information need to be updated.
+1. Provide the Harmony team with an email address and Slack user that can be contacted if your test suite fails during an automated run either in GitHub or Bamboo. This can be added to the wiki page here: https://wiki.earthdata.nasa.gov/spaces/HARMONY/pages/474940034/Harmony+Regression+Tests+Points+of+Contact. Please also update this wiki page if either of these pieces of information need to be changed
 
 ## Test suite contents:
 
