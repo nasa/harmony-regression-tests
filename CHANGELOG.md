@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-04-16 ([#271](https://github.com/nasa/harmony-regression-tests/pull/271))
+
+### Added
+
+- Updated IMAGENATOR reference data to reflect current filtering outputs
+
 ## 2026-04-07 ([#269](https://github.com/nasa/harmony-regression-tests/pull/269))
 
 ### Added
