@@ -130,6 +130,5 @@ def validate_bounding_box_and_plot_cog_file(
             plt.imshow(raster_data, extent=extent)
 
         plt.title(f'{basename(cog_file)}')
-        # plt.xticks([]), plt.yticks([])
         plt.show()
         print(f'{basename(cog_file)}: {src.bounds}\n')
