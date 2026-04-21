@@ -3,6 +3,7 @@
 from os.path import basename
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from typing import Any
 
 from harmony import Client
 from numpy.testing import assert_array_almost_equal
@@ -11,18 +12,20 @@ import rasterio
 import matplotlib.pyplot as plt
 
 
-def print_error(error_string: str) -> str:
+def print_error(error_string: str) -> None:
     """Print an error, with formatting for red text."""
     print(f'\033[91m{error_string}\033[0m')
+    return
 
 
-def print_success(success_string: str) -> str:
+def print_success(success_string: str) -> None:
     """Print a success message, with formatting for green text."""
     print(f'\033[92mSuccess: {success_string}\033[0m')
+    return
 
 
 def validate_smap_outputs(
-    harmony_client: Client, harmony_job_id: str, expected_results: list
+    harmony_client: Client, harmony_job_id: str, expected_results: dict[str, Any]
 ):
     """Helper function to retrieve outputs from Harmony request and compare to reference
     metadata and files.
@@ -96,7 +99,7 @@ def assert_dataset_produced_correct_results(
 
 
 def validate_bounding_box_and_plot_cog_file(
-    cog_file: str, expected_results: list
+    cog_file: str, expected_results: dict[str, Any]
 ) -> None:
     """Helper function to open, validate the bounding box, and plot the COG file.
 
@@ -111,7 +114,12 @@ def validate_bounding_box_and_plot_cog_file(
         assert src.bounds in expected_results['expected_bounding_box']
         print_success(f"Correct Bounding Box: {src.bounds}")
 
-        extent = [src.bounds.left, src.bounds.right, src.bounds.bottom, src.bounds.top]
+        extent = (
+            float(src.bounds.left),
+            float(src.bounds.right),
+            float(src.bounds.bottom),
+            float(src.bounds.top),
+        )
 
         # If src.bounds.bottom > src.bounds.top, the graph will be inverted.
         # When origin='lower' is used, the vertical axis points upward,
@@ -122,6 +130,6 @@ def validate_bounding_box_and_plot_cog_file(
             plt.imshow(raster_data, extent=extent)
 
         plt.title(f'{basename(cog_file)}')
-        plt.xticks([]), plt.yticks([])
+        # plt.xticks([]), plt.yticks([])
         plt.show()
         print(f'{basename(cog_file)}: {src.bounds}\n')
