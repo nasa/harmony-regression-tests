@@ -1,5 +1,6 @@
 """Simple utility functions used in the net2cog test notebook."""
-
+import hashlib
+import json
 from os.path import basename
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -23,6 +24,20 @@ def print_success(success_string: str) -> None:
     print(f'\033[92mSuccess: {success_string}\033[0m')
     return
 
+def verify_cog(downloaded_cog_file, expected_results: dict):
+    print(f'Assessing: {basename(downloaded_cog_file)}')
+
+    # Verify output file is valid COG and CRS is correct
+    assert cog_validate(downloaded_cog_file)[0]
+    print_success('Generated output files is a valid COG.')
+
+    assert (
+            cog_info(downloaded_cog_file).GEO.CRS
+            == expected_results['expected_crs']
+    )
+    print_success(
+        f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
+    )
 
 def validate_smap_outputs(
     harmony_client: Client, harmony_job_id: str, expected_results: dict[str, Any]
@@ -51,19 +66,7 @@ def validate_smap_outputs(
         )
 
         for downloaded_cog_file in downloaded_cog_outputs:
-            print(f'Assessing: {basename(downloaded_cog_file)}')
-
-            # Verify output file is valid COG and CRS is correct
-            assert cog_validate(downloaded_cog_file)[0]
-            print_success('Generated output files is a valid COG.')
-
-            assert (
-                cog_info(downloaded_cog_file).GEO.CRS
-                == expected_results['expected_crs']
-            )
-            print_success(
-                f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
-            )
+            verify_cog(downloaded_cog_file, expected_results)
 
             reference_file = Path(
                 './reference_data',
@@ -78,6 +81,43 @@ def validate_smap_outputs(
             validate_bounding_box_and_plot_cog_file(
                 downloaded_cog_file, expected_results
             )
+
+def validate_nisar_outputs(
+        harmony_client: Client, harmony_job_id: str, expected_results: dict[str, Any], test_case, save_md5sums: bool = False,
+):
+    harmony_client.wait_for_processing(harmony_job_id)
+
+    with TemporaryDirectory() as temp_dir:
+        output_files = [
+            Path(harmony_client.download(url, temp_dir).result())
+            for url in harmony_client.result_urls(harmony_job_id)
+            if not url.endswith(".txt")
+        ]
+
+        for file in output_files:
+            verify_cog(file, expected_results)
+
+        science_files = []
+
+        actual_md5sums = {
+            # file extension: md5sum
+            f'science{file.name.split('science')[1]}': hashlib.md5(
+                file.read_bytes()
+            ).hexdigest()
+            for file in output_files
+        }
+
+
+    md5sums_path = Path("md5sums") / f"{test_case}.json"
+    if save_md5sums:
+        print(f"Saving md5sums to {md5sums_path}")
+        md5sums_path.write_text(json.dumps(actual_md5sums, indent=4) + "\n")
+    else:
+        print(f"Verifying existing md5sums for test case {test_case}")
+        expected_md5sums = json.load(md5sums_path.open())
+        assert (
+                actual_md5sums == expected_md5sums
+        ), f"md5sums for {test_case} do not match expected"
 
 
 def assert_dataset_produced_correct_results(
