@@ -96,7 +96,9 @@ def validate_nisar_outputs(
 
         for file in output_files:
             verify_cog(file, expected_results)
-
+            validate_bounding_box_and_plot_cog_file(
+                file, expected_results
+            )
         science_files = []
 
         actual_md5sums = {
