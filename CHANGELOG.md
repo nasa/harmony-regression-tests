@@ -5,6 +5,18 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-04-24 ([#277](https://github.com/nasa/harmony-regression-tests/pull/277))
+
+### Changed
+
+- Updated SAMBAH request information and reference files to work with TEMPO V04 files
+
+## 2026-04-24 ([#274](https://github.com/nasa/harmony-regression-tests/pull/274))
+
+### Removed
+
+- Drops the geotiff test case for the nisar-py service.
+
 ## 2026-04-21 ([#273](https://github.com/nasa/harmony-regression-tests/pull/273))
 
 ### Added
