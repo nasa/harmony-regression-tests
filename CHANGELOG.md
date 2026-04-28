@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-04-28 ([#275](https://github.com/nasa/harmony-regression-tests/pull/275))
+
+### Added
+
+- Added basic GCOV net2cog test cases
+
 ## 2026-04-24 ([#277](https://github.com/nasa/harmony-regression-tests/pull/277))
 
 ### Changed
