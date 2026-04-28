@@ -174,7 +174,7 @@ def validate_bounding_box_and_plot_cog_file(
     with rasterio.open(cog_file) as src:
         raster_data = src.read(1)  # Read the first band
 
-        assert src.bounds in expected_results['expected_bounding_box'], f'Bounds didn\'t match: Expected {expected_results["expected_bounding_box"]}, got {src.bounds}'
+        assert src.bounds in expected_results['expected_bounding_box'], f'Bounds did not match: Expected {expected_results["expected_bounding_box"]}, got {src.bounds}'
         print_success(f"Correct Bounding Box: {src.bounds}")
 
         extent = (
