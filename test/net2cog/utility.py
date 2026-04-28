@@ -24,17 +24,17 @@ def print_success(success_string: str) -> None:
     print(f'\033[92mSuccess: {success_string}\033[0m')
     return
 
-def verify_cog(downloaded_cog_file, expected_results: dict):
+def verify_cog_crs(downloaded_cog_file, expected_crs: str):
+    """Verify output file is valid COG and CRS is correct"""
     print(f'Assessing: {basename(downloaded_cog_file)}')
 
-    # Verify output file is valid COG and CRS is correct
     assert cog_validate(downloaded_cog_file)[0]
     print_success('Generated output files is a valid COG.')
 
     assert (
             cog_info(downloaded_cog_file).GEO.CRS
-            == expected_results['expected_crs']
-    ), f'Expected crs {expected_results["expected_crs"]}, got {cog_info(downloaded_cog_file).GEO.CRS}'
+            == expected_crs
+    ), f'Expected crs {expected_crs}, got {cog_info(downloaded_cog_file).GEO.CRS}'
 
     print_success(
         f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
@@ -67,7 +67,7 @@ def validate_smap_outputs(
         )
 
         for downloaded_cog_file in downloaded_cog_outputs:
-            verify_cog(downloaded_cog_file, expected_results)
+            verify_cog_crs(downloaded_cog_file, expected_results['expected_crs'])
 
             reference_file = Path(
                 './reference_data',
@@ -86,30 +86,48 @@ def validate_smap_outputs(
 def validate_nisar_outputs(
         harmony_client: Client, harmony_job_id: str, expected_results: dict[str, Any], test_case, save_md5sums: bool = False,
 ):
+    """Helper function to retrieve outputs from Harmony GCOV net2cog request and compare to reference
+    metadata and files.
+
+    Checks:
+
+    * The expected number of files are returned.
+    * The output files are valid Cloud Optimized GeoTIFFs.
+    * The expected CRS value and output file CRS match.
+    * The data's md5sum matches reference md5sum.
+
+    """
+
     harmony_client.wait_for_processing(harmony_job_id)
 
     with TemporaryDirectory() as temp_dir:
-        output_files = [
+        downloaded_cog_outputs = [
             Path(harmony_client.download(url, temp_dir).result())
             for url in harmony_client.result_urls(harmony_job_id)
             if not url.endswith(".txt")
         ]
 
-        for file in output_files:
-            verify_cog(file, expected_results)
+        assert len(downloaded_cog_outputs) == expected_results['expected_file_count']
+        print_success(
+            f"Correct number of generated output files: {expected_results['expected_file_count']}"
+        )
+
+        for file in downloaded_cog_outputs:
+            verify_cog_crs(file, expected_results['expected_crs'])
             with rasterio.open(file) as src:
-                raster_data = src.read(1)  # Read the first band
+                src.read(1)  # Read the first band
 
                 assert src.bounds in expected_results[
-                    'expected_bounding_box'], f'Bounds didn\'t match: Expected {expected_results["expected_bounding_box"]}, got {src.bounds}'
+                    'expected_bounding_box'], f"Bounds didn't match: Expected {expected_results['expected_bounding_box']}, got {src.bounds}"
                 print_success(f"Correct Bounding Box: {src.bounds}")
 
+        # Use md5sums to compare previously returned outputs
         actual_md5sums = {
             # file extension: md5sum
             f'science{file.name.split('science')[1]}': hashlib.md5(
                 file.read_bytes()
             ).hexdigest()
-            for file in output_files
+            for file in downloaded_cog_outputs
         }
 
 
