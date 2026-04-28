@@ -34,7 +34,8 @@ def verify_cog(downloaded_cog_file, expected_results: dict):
     assert (
             cog_info(downloaded_cog_file).GEO.CRS
             == expected_results['expected_crs']
-    )
+    ), f'Expected crs {expected_results["expected_crs"]}, got {cog_info(downloaded_cog_file).GEO.CRS}'
+
     print_success(
         f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
     )
@@ -96,10 +97,12 @@ def validate_nisar_outputs(
 
         for file in output_files:
             verify_cog(file, expected_results)
-            validate_bounding_box_and_plot_cog_file(
-                file, expected_results
-            )
-        science_files = []
+            with rasterio.open(file) as src:
+                raster_data = src.read(1)  # Read the first band
+
+                assert src.bounds in expected_results[
+                    'expected_bounding_box'], f'Bounds didn\'t match: Expected {expected_results["expected_bounding_box"]}, got {src.bounds}'
+                print_success(f"Correct Bounding Box: {src.bounds}")
 
         actual_md5sums = {
             # file extension: md5sum
@@ -153,7 +156,7 @@ def validate_bounding_box_and_plot_cog_file(
     with rasterio.open(cog_file) as src:
         raster_data = src.read(1)  # Read the first band
 
-        assert src.bounds in expected_results['expected_bounding_box']
+        assert src.bounds in expected_results['expected_bounding_box'], f'Bounds didn\'t match: Expected {expected_results["expected_bounding_box"]}, got {src.bounds}'
         print_success(f"Correct Bounding Box: {src.bounds}")
 
         extent = (
