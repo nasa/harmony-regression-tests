@@ -1,5 +1,5 @@
 {
-  "all": "harmony,harmony-regression,geoloco,giovanni-averaging-service,regridder,hoss,hybig,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,nsidc-smap,trajectory-subsetter,sambah,opera-rtc-s1-browse,casper",
+  "all": "harmony-regression,geoloco,giovanni-averaging-service,regridder,hoss,hybig,net2cog,smap-l2-gridder,subset-band-name,swath-projector,nsidc-icesat2,nsidc-smap,trajectory-subsetter,sambah,opera-rtc-s1-browse,casper",
   "batchee": "sambah",
   "geoloco": "geoloco",
   "giovanni-averaging-service-adapter": "giovanni-averaging-service",
@@ -18,7 +18,6 @@
   "subset-band-name": "subset-band-name",
   "swath-projector": "swath-projector,nsidc-smap",
   "trajectory-subsetter": "nsidc-icesat2,nsidc-smap,trajectory-subsetter",
-  "harmony": "harmony",
   "harmony-regridder": "regridder",
   "nsidc-icesat2": "nsidc-icesat2",
   "nsidc-smap": "nsidc-smap",

@@ -73,7 +73,6 @@ on:
           - swath-projector
           - trajectory-subsetter
           ## These run specific regression tests associated with service chains or core Harmony functionality.
-          - harmony
           - harmony-regression
           - sambah
           - nsidc-icesat2

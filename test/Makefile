@@ -1,7 +1,3 @@
-harmony-image: Dockerfile harmony/environment.yaml
-	docker build -t ghcr.io/nasa/regression-tests-harmony:latest -f ./Dockerfile \
-	--build-arg notebook=Harmony.ipynb --build-arg sub_dir=harmony .
-
 harmony-regression-image: Dockerfile harmony-regression/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-harmony-regression:latest -f ./Dockerfile \
 	--build-arg notebook=HarmonyRegression.ipynb --build-arg sub_dir=harmony-regression .
@@ -94,8 +90,7 @@ casper-image: Dockerfile casper/environment.yaml
 	--build-arg notebook=CASPER_Regression.ipynb --build-arg sub_dir=casper \
 	--build-arg shared_utils=true .
 
-images: harmony-image \
-	harmony-regression-image \
+images: harmony-regression-image \
 	hga-image \
 	hoss-image \
 	hybig-image \

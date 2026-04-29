@@ -352,12 +352,12 @@ dependency management is entirely defined by the `environment.yaml` file.
 Test notebooks should not rely on other forms of dependency management or expect user input.
 They _should_ utilize the `harmony_host_url` global variable to communicate with Harmony
 or to determine the Harmony environment. This variable is set by `papermill` - see the
-`Harmony.ipynb` for how to make use of this variable. More information can be found
+`HyBIG_Regression.ipynb` for how to make use of this variable. More information can be found
 in the [papermill](https://papermill.readthedocs.io/en/latest/usage-parameterize.html)
 documentation on setting parameters.
 
 New test suites must be added to the `Makefile`. A new `name-image` target (where name is the name of
-the test suite) should be added (see the `harmony-image` example), and the new image target
+the test suite) should be added (see the `harmony-regression-image` example), and the new image target
 should be added as a dependency of the `images` target. The docker image should have a name like
 `ghcr.io/nasa/regression-tests-<base_name>`, where `base_name` is the name of the test suite.
 

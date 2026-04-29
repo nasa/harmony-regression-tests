@@ -13,7 +13,6 @@ Generally the mappings are:
 There are a few additional keys/values beyond the keys returned from the Harmony service-image-tags endpoint.
 
 `"all"` is used to trigger every harmony regression test.
-`"harmony"` - triggers harmony regression test
 `"nsidc-icesat2"`- triggers nsidc-icesat2 regression test
 `"sambah"` - triggers samba regression test
 `"harmony-regression"` - triggers harmony-regression test

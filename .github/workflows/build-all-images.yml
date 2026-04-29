@@ -13,9 +13,6 @@ jobs:
       matrix:
         targets:
           -
-            image: "harmony"
-            notebook: "Harmony.ipynb"
-          -
             image: "harmony-regression"
             notebook: "HarmonyRegression.ipynb"
           -
