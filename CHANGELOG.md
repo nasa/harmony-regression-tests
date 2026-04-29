@@ -9,7 +9,7 @@ to document pull requests to this repository.
 
 ### Added
 
-- Added basic GCOV net2cog test cases
+- Added basic GCOV test cases to `net2cog` test.
 
 ## 2026-04-24 ([#277](https://github.com/nasa/harmony-regression-tests/pull/277))
 
