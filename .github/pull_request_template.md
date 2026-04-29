@@ -9,9 +9,8 @@ A short description of the changes in this PR...
 
 
 ## PR Acceptance Checklist
-* [ ] Acceptance criteria met
-* [ ] Tests added/updated (if needed) and passing
+* [ ] CHANGELOG.md updated with a short description of the changes for this PR
+* [ ] Changed service's `version.txt` file updated
 * [ ] Documentation updated (if needed)
-* [ ] CHANGELOG updated with the changes for this PR
-* [ ] Service's `version.txt` file changed if appropriate
+* [ ] Acceptance criteria met
 * [ ] Original file is uploaded to S3 if references are changed
