@@ -124,7 +124,7 @@ def validate_nisar_outputs(
         # Use md5sums to compare previously returned outputs
         actual_md5sums = {
             # file extension: md5sum
-            f'science{file.name.split('science')[1]}': hashlib.md5(
+            f"science{file.name.split('science')[1]}": hashlib.md5(
                 file.read_bytes()
             ).hexdigest()
             for file in downloaded_cog_outputs
