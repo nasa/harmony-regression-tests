@@ -9,9 +9,10 @@ to document pull requests to this repository.
 
 ### Changed
 
-- Fixed `harmony-regression` regression test. Updated reqests to select correct
-  service. Added guards to ensure correct responses pulled back from harmony.
-
+- Fixes `harmony-regression` regression test.
+  - Updates requests to select `harmony/service-example` service.
+  - Adds guards to ensure correct responses pulled back from harmony.
+  - Replaces deprecated sat-stac with pystac.
 
 ## 2026-04-29 ([#281](https://github.com/nasa/harmony-regression-tests/pull/281))
 
