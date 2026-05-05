@@ -15,7 +15,7 @@ import numpy as np
 import geopandas as gpd
 import contextily as ctx
 
-from satstac import Catalog
+import pystac
 
 import requests
 from cachecontrol import CacheController, CacheControlAdapter
@@ -392,20 +392,22 @@ def check_status(response):
 
 
 def check_stac(response):
-    """Asserts if the response contains a valid STAC catalog and prints it out.  More robust assertions could
+    """Asserts if the response contains a valid STAC catalog and prints it out. More robust assertions could
       be done here in the future to confirm that the STAC metadata is valid per the request parameters
-
     Arguments:
         response {response.Response} -- the response to display
     """
-    for i in range(len(response.json()['links'])):
-        if response.json()['links'][i]['title'] == 'STAC catalog':
-            stac_url = response.json()['links'][i]['href']
+    stac_url = None
+    for link in response.json()['links']:
+        if link['title'] == 'STAC catalog':
+            stac_url = link['href']
+            break
 
     assert stac_url
-    cat = Catalog.open(stac_url)
 
-    for i in cat.items():
+    cat = pystac.read_file(stac_url)
+
+    for i in cat.get_all_items():
         assert i.id
         assert i.datetime
         assert i.bbox
