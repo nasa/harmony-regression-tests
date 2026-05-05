@@ -9,8 +9,8 @@ to document pull requests to this repository.
 
 ### Changed
 
-- The `harmony` regression tests has been changed to verify the a successful
-  harmony deployment by ensuring expected returns from a number of endpoints.
+- The `harmony` regression test has been changed to verify harmony's successful
+  deployment by verifying expected returns from a selection of endpoints.
 
 ## 2026-04-24 ([#277](https://github.com/nasa/harmony-regression-tests/pull/277))
 
