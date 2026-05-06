@@ -12,6 +12,7 @@ to document pull requests to this repository.
 - Fixes `harmony-regression` regression test.
   - Updates requests to select `harmony/service-example` service.
   - Adds guards to ensure correct responses pulled back from harmony.
+  - Removes unused code.
   - Upgrades python and libraries.
   - Replaces deprecated sat-stac with pystac.
 
