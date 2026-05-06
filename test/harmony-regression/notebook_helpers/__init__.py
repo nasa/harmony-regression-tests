@@ -161,7 +161,7 @@ def show(response, varList=[], color_index=None, immediate=True):
             # plot the 3D data
             plt.imshow(np.dstack(arrays))
     elif content_type in ['application/zip', 'application/shapefile+zip']:
-        print('Unused shapefile dipslay removed in PR #282')
+        print('Unused shapefile display function removed in PR #282')
     elif 'application/json' in content_type:
         # Most likely an error
         print(response.json())
