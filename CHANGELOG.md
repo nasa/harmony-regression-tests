@@ -5,7 +5,7 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-05-06 ([#282](https://github.com/nasa/harmony-regression-tests/pull/282))
+## 2026-05-06 ([#283](https://github.com/nasa/harmony-regression-tests/pull/283))
 
 - Removes protected endpoints from `harmony` regression test.
 
