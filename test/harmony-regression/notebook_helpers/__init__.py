@@ -330,7 +330,7 @@ def check_status(response):
 
 
 def check_stac(response):
-    """Asserts if the response contains a valid STAC catalog and prints it out. More robust assertions could
+    """Asserts if the response contains a valid STAC catalog and prints it out.  More robust assertions could
       be done here in the future to confirm that the STAC metadata is valid per the request parameters
     Arguments:
         response {response.Response} -- the response to display
