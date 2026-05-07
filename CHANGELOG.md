@@ -12,6 +12,13 @@ to document pull requests to this repository.
 - Updated expected outputs of nisar-py test to reflect HyBIG [v2.7.0](https://github.com/nasa/harmony-browse-image-generator/releases/tag/2.7.0)
   no longer producing all-nan output files
 
+## 2026-04-29 ([#281](https://github.com/nasa/harmony-regression-tests/pull/281))
+
+### Changed
+
+- The `harmony` regression test has been changed to verify harmony's successful
+  deployment by verifying expected returns from a selection of endpoints.
+
 ## 2026-04-24 ([#277](https://github.com/nasa/harmony-regression-tests/pull/277))
 
 ### Changed
