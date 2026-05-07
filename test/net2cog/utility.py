@@ -56,6 +56,8 @@ def validate_smap_outputs(
     * The expected CRS value and output file CRS match.
 
     """
+    harmony_client.wait_for_processing(harmony_job_id, show_progress=True)
+
     with TemporaryDirectory() as temp_dir:
         downloaded_cog_outputs = [
             file_future.result()
