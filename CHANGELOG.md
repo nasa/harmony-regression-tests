@@ -18,7 +18,7 @@ to document pull requests to this repository.
 
 ## 2026-05-08 ([#283](https://github.com/nasa/harmony-regression-tests/pull/283))
 
-### Changed 
+### Changed
 
 - Removes protected endpoints from `harmony` regression test.
 
