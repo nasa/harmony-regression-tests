@@ -4,18 +4,13 @@ from datetime import datetime
 from time import sleep
 import json
 
-import tempfile
-import os
-
 from io import BytesIO
 from matplotlib import pyplot as plt
 from PIL import Image
 from h5py import File as H5File
 import numpy as np
-import geopandas as gpd
-import contextily as ctx
 
-from satstac import Catalog
+import pystac
 
 import requests
 from cachecontrol import CacheController, CacheControlAdapter
@@ -94,21 +89,6 @@ def post(*args, **kwargs):
     return request('POST', *args, **kwargs)
 
 
-def show_shape(filename, basemap=True):
-    """Plots the shapefile in the given filename with optional basemap (ESRI or GeoJSON)
-
-    Arguments:
-        filename {string} -- The filename of the shapefile to display
-
-    Keyword Arguments:
-        basemap {bool} -- Whether to display a basemap under the shapefile (default: {True})
-    """
-    shape = gpd.read_file(filename).to_crs(epsg=3857)
-    plot = shape.plot(alpha=0.5, edgecolor='k', figsize=(8, 8))
-    if basemap:
-        ctx.add_basemap(plot)
-
-
 def show(response, varList=[], color_index=None, immediate=True):
     """Shows a variety of responses possible from Harmony for its example data
 
@@ -181,13 +161,7 @@ def show(response, varList=[], color_index=None, immediate=True):
             # plot the 3D data
             plt.imshow(np.dstack(arrays))
     elif content_type in ['application/zip', 'application/shapefile+zip']:
-        # Show ESRI Shapefiles
-        tmp = tempfile.NamedTemporaryFile(suffix='.shp.zip', delete=False)
-        try:
-            tmp.write(response.content)
-            show_shape('zip://' + tmp.name, immediate)
-        finally:
-            os.unlink(tmp.name)
+        print('Unused shapefile display function removed in PR #282')
     elif 'application/json' in content_type:
         # Most likely an error
         print(response.json())
@@ -344,42 +318,6 @@ def show_async_condensed(response, varList=[], show_results=True):
     print('Async request is complete')
 
 
-def check_bbox_subset(response, req_lat_min, req_lat_max, req_lon_min, req_lon_max):
-    """Asserts if the spatial extents of the data in the response are within the requested bbox of a spatial subset
-
-    #####  CHECK_BBOX_SUBSET currently is not in use; placeholder for the next round of regression test work
-
-    Arguments:
-        response {response.Response} -- the response to display
-        req_lat_min -- The minimimum latitude from the request bbox for a spatial subset
-        req_lat_max -- The maximum latitude from the request bbox for a spatial subset
-        req_lon_min -- The minimimum longitude from the request bbox for a spatial subset
-        req_lon_max -- The maximum longitude from the request bbox for a spatial subset
-    """
-
-    data = H5File(BytesIO(response.content), 'r')
-
-    attr_data = data['lat'][:]
-
-    print('Orig min and max: ', attr_data.min(), attr_data.max())
-    lat_min = (attr_data.min() + 180) % 360 - 180
-    lat_max = (attr_data.max() + 180) % 360 - 180
-    print(lat_min)
-    print(lat_max)
-
-    assert lat_max <= req_lat_max
-    assert lat_min >= req_lat_min
-
-    attr_data = data['lon'][:]
-    lon_min = (attr_data.min() + 180) % 360 - 180
-    lon_max = (attr_data.max() + 180) % 360 - 180
-    print(lon_min)
-    print(lon_max)
-
-    assert lon_max <= req_lon_max
-    assert lon_min >= req_lon_min
-
-
 def check_status(response):
     """Asserts if the response is a 200, if not, print out the response code
 
@@ -394,18 +332,20 @@ def check_status(response):
 def check_stac(response):
     """Asserts if the response contains a valid STAC catalog and prints it out.  More robust assertions could
       be done here in the future to confirm that the STAC metadata is valid per the request parameters
-
     Arguments:
         response {response.Response} -- the response to display
     """
-    for i in range(len(response.json()['links'])):
-        if response.json()['links'][i]['title'] == 'STAC catalog':
-            stac_url = response.json()['links'][i]['href']
+    stac_url = None
+    for link in response.json()['links']:
+        if link['title'] == 'STAC catalog':
+            stac_url = link['href']
+            break
 
     assert stac_url
-    cat = Catalog.open(stac_url)
 
-    for i in cat.items():
+    cat = pystac.read_file(stac_url)
+
+    for i in cat.get_all_items():
         assert i.id
         assert i.datetime
         assert i.bbox

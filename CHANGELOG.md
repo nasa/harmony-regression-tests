@@ -5,11 +5,38 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-05-07 ([#275](https://github.com/nasa/harmony-regression-tests/pull/275))
+## 2026-05-12 ([#275](https://github.com/nasa/harmony-regression-tests/pull/275))
 
 ### Added
 
 - Added basic GCOV test cases to `net2cog` test.
+
+### Changed
+
+- Parallelize `net2cog` tests
+
+## 2026-05-08 ([#282](https://github.com/nasa/harmony-regression-tests/pull/282))
+
+### Changed
+
+- Fixes `harmony-regression` regression test.
+  - Updates requests to select `harmony/service-example` service.
+  - Adds guards to ensure correct responses pulled back from harmony.
+  - Removes unused code.
+  - Upgrades python and libraries.
+  - Replaces deprecated sat-stac with pystac.
+
+## 2026-05-08 ([#283](https://github.com/nasa/harmony-regression-tests/pull/283))
+
+### Changed
+
+- Removes protected endpoints from `harmony` regression test.
+
+## 2026-05-08 ([#286](https://github.com/nasa/harmony-regression-tests/pull/287))
+
+### Changed
+
+- Updated expected outputs of nisar-py test to reflect changes in nisar-py [v0.2.0](https://github.com/ASFHyP3/nisar-py/releases/tag/v0.2.0)
 
 ## 2026-05-06 ([#286](https://github.com/nasa/harmony-regression-tests/pull/286))
 
