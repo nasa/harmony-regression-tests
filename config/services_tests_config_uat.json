@@ -9,7 +9,7 @@
   "harmony-service-example": "harmony-regression",
   "harmony-smap-l2-gridder": "nsidc-smap,smap-l2-gridder",
   "hoss": "hoss,variable-subsetter",
-  "hybig": "hybig,opera-rtc-s1-browse,imagenator",
+  "hybig": "hybig,opera-rtc-s1-browse,imagenator,nisar-py",
   "imagenator": "imagenator",
   "net2cog": "net2cog,nsidc-smap,imagenator",
   "opera-rtc-s1-browse": "opera-rtc-s1-browse",
