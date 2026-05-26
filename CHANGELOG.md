@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-05-22 ([#290](https://github.com/nasa/harmony-regression-tests/pull/290))
+
+### Changed
+
+- Updated expected outputs of nisar-py test to reflect changes in nisar-py v0.4.0.
+
 ## 2026-05-19 ([#289](https://github.com/nasa/harmony-regression-tests/pull/289))
 
 ### Changed
