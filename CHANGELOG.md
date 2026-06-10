@@ -5,6 +5,16 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-06-10 ([#294](https://github.com/nasa/harmony-regression-tests/pull/294))
+
+### Added
+
+- Created a regression test suite for the giovanni-time-series-adapter.
+
+### Changed
+
+- Updated the configuration of the giovanni-averaging-service test suite in the github workflows and config to match the change in service name from giovanni-averaging-service-adapter to giovanni-averaging-service.
+
 ## 2026-05-22 ([#290](https://github.com/nasa/harmony-regression-tests/pull/290))
 
 ### Changed

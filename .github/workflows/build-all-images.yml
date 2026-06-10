@@ -64,6 +64,9 @@ jobs:
             image: "geoloco"
             notebook: "Geoloco_Regression.ipynb"
           -
+            image: "giovanni-time-series-adapter"
+            notebook: "GiovanniTimeSeriesAdapter_Regression.ipynb"
+          -
             image: "giovanni-averaging-service"
             notebook: "GiovanniAveragingService_Regression.ipynb"
           -
