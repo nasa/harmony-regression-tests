@@ -94,8 +94,8 @@ on:
       - batchee
       - casper
       - geoloco
-      - giovanni-time-series-adapter
       - giovanni-averaging-service
+      - giovanni-time-series-adapter
       - harmony-gdal-adapter
       - harmony-regridder
       - harmony-service-example
