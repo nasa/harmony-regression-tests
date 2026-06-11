@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  - python=3.11
+  - python=3.13
   - notebook=7.5.0
   - papermill=2.6.0
   - pip:
