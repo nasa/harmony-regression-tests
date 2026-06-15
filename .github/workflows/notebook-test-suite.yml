@@ -55,6 +55,7 @@ on:
           - casper
           - geoloco
           - giovanni-averaging-service-adapter
+          - giovanni-time-series-adapter
           - harmony-gdal-adapter
           - harmony-regridder
           - harmony-service-example
@@ -94,6 +95,7 @@ on:
       - casper
       - geoloco
       - giovanni-averaging-service-adapter
+      - giovanni-time-series-adapter
       - harmony-gdal-adapter
       - harmony-regridder
       - harmony-service-example
