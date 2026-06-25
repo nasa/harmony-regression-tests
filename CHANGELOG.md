@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-06-24 ([#297](https://github.com/nasa/harmony-regression-tests/pull/297))
+
+### Changed
+
+- Update the landcover_class_fraction_reference.json reference file to reflect
+  rio-cogeo 7.0.1 package update introduced by the net2cog 1.3.0.
+
 ## 2026-06-10 ([#294](https://github.com/nasa/harmony-regression-tests/pull/294))
 
 ### Added
