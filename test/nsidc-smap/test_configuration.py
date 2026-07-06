@@ -7,7 +7,7 @@ non_production_configuration = {
             "SPL2SMA": {
                 "request_params": {
                     "collection": Collection(id="C1242631429-NSIDC_CUAT"),
-                    "granule_id": "G1260377350-NSIDC_CUAT",
+                    "granule_name": "SMAP_L2_SM_A_01063_D_20150414T061416_R13080_001.h5",
                     "spatial": BBox(-8.2, 42.0, 12.7, 52.8),
                     "variables": ["Radar_Data/sigma0_hh_mean"],
                     "format": "image/tiff",
@@ -18,7 +18,7 @@ non_production_configuration = {
             "SPL3FTP_E": {
                 "request_params": {
                     "collection": Collection(id="C1263071066-NSIDC_CUAT"),
-                    "granule_id": "G1263078049-NSIDC_CUAT",
+                    "granule_name": "SMAP_L3_FT_P_E_20231212_R19240_001.h5",
                     "spatial": BBox(-26, 63, -12, 67),
                     "variables": [
                         "Freeze_Thaw_Retrieval_Data_Polar/freeze_thaw",
@@ -34,7 +34,7 @@ non_production_configuration = {
             "SPL2SMA": {
                 "request_params": {
                     "collection": Collection(id="C1242631429-NSIDC_CUAT"),
-                    "granule_id": "G1260377350-NSIDC_CUAT",
+                    "granule_name": "SMAP_L2_SM_A_01063_D_20150414T061416_R13080_001.h5",
                     "shape": "ancillary/France_simple.geojson",
                     "labels": ["smap-rtest-2", "smap-rtests"],
                 },
@@ -45,7 +45,7 @@ non_production_configuration = {
             "SPL3FTP": {
                 "request_params": {
                     "collection": Collection(id="C1263071065-NSIDC_CUAT"),
-                    "granule_id": "G1263076419-NSIDC_CUAT",
+                    "granule_name": "SMAP_L3_FT_P_20231212_R19240_001.h5",
                     "variables": [
                         "Freeze_Thaw_Retrieval_Data_Polar/freeze_thaw",
                         "Freeze_Thaw_Retrieval_Data_Polar/latitude",
@@ -62,7 +62,7 @@ non_production_configuration = {
             "SPL2SMP_E": {
                 "request_params": {
                     "collection": Collection(id="C1263071064-NSIDC_CUAT"),
-                    "granule_id": "G1273163898-NSIDC_CUAT",
+                    "granule_name": "SMAP_L2_SM_P_E_47223_A_20231204T105336_R19240_001.h5",
                     "variables": [
                         "Soil_Moisture_Retrieval_Data/latitude",
                         "Soil_Moisture_Retrieval_Data/longitude",
@@ -80,7 +80,7 @@ non_production_configuration = {
             "SPL3SMA": {
                 "request_params": {
                     "collection": Collection(id="C1242581633-NSIDC_CUAT"),
-                    "granule_id": "G1260703508-NSIDC_CUAT",
+                    "granule_name": "SMAP_L3_SM_A_20150423_R13080_001.h5",
                     "variables": ["Soil_Moisture_Retrieval_Data/soil_moisture"],
                     "format": "image/tiff",
                     "labels": ["smap-rtest-16", "smap-rtests"],
@@ -92,7 +92,7 @@ non_production_configuration = {
             "SPL3SMP": {
                 "request_params": {
                     "collection": Collection(id="C1263071067-NSIDC_CUAT"),
-                    "granule_id": "G1263078590-NSIDC_CUAT",
+                    "granule_name": "SMAP_L3_SM_P_20231212_R19240_001.h5",
                     "crs": "EPSG:4326",
                     "shape": "ancillary/EasternUS.kml",
                     "labels": ["smap-rtest-18", "smap-rtests"],
@@ -104,7 +104,7 @@ non_production_configuration = {
             "SPL4CMDL": {
                 "request_params": {
                     "collection": Collection(id="C1273193292-NSIDC_CUAT"),
-                    "granule_id": "G1273435798-NSIDC_CUAT",
+                    "granule_name": "SMAP_L4_C_mdl_20150401T000000_Vv8020_001.h5",
                     "crs": "EPSG:4326",
                     "labels": ["smap-rtest-21", "smap-rtests"],
                 },
@@ -118,7 +118,7 @@ non_production_configuration = {
             "SPL2SMP": {
                 "request_params": {
                     "collection": Collection(id="C1263071063-NSIDC_CUAT"),
-                    "granule_id": "G1273158728-NSIDC_CUAT",
+                    "granule_name": "SMAP_L2_SM_P_47226_A_20231204T154857_R19240_001.h5",
                     "format": "image/tiff",
                     "variables": [
                         "Soil_Moisture_Retrieval_Data/EASE_column_index",
@@ -155,39 +155,30 @@ non_production_configuration = {
 production_overrides = {
     ("single_output_tests", "subset_bounding_box", "SPL2SMA"): {
         "collection": Collection(id="C2812935277-NSIDC_CPRD"),
-        "granule_id": "G2813012838-NSIDC_CPRD",
     },
     ("single_output_tests", "subset_bounding_box", "SPL3FTP_E"): {
         "collection": Collection(id="C2938664439-NSIDC_CPRD"),
-        "granule_id": "G2940370330-NSIDC_CPRD",
     },
     ("single_output_tests", "subset_by_geojson", "SPL2SMA"): {
         "collection": Collection(id="C2812935277-NSIDC_CPRD"),
-        "granule_id": "G2813012838-NSIDC_CPRD",
     },
     ("single_output_tests", "subset_by_shapefile", "SPL3FTP"): {
         "collection": Collection(id="C2938664170-NSIDC_CPRD"),
-        "granule_id": "G2940362257-NSIDC_CPRD",
     },
     ("single_output_tests", "subset_by_variable", "SPL2SMP_E"): {
         "collection": Collection(id="C2938663676-NSIDC_CPRD"),
-        "granule_id": "G3241947322-NSIDC_CPRD",
     },
     ("single_output_tests", "subset_by_variable", "SPL3SMA"): {
         "collection": Collection(id="C2872766452-NSIDC_CPRD"),
-        "granule_id": "G2872934722-NSIDC_CPRD",
     },
     ("single_output_tests", "subset_by_kml", "SPL3SMP"): {
         "collection": Collection(id="C2938664585-NSIDC_CPRD"),
-        "granule_id": "G2940373226-NSIDC_CPRD",
     },
     ("single_output_tests", "reprojection_to_geographic", "SPL4CMDL"): {
         "collection": Collection(id="C3480440454-NSIDC_CPRD"),
-        "granule_id": "G3480457654-NSIDC_CPRD",
     },
     ("multiple_output_tests", "GeoTIFF_reformat", "SPL2SMP"): {
         "collection": Collection(id="C2938663609-NSIDC_CPRD"),
-        "granule_id": "G3241897046-NSIDC_CPRD",
     },
 }
 
@@ -205,9 +196,6 @@ def _update_config_with_prod_values(in_config):
         out_config[test_suite][test_type][short_name]["request_params"][
             "collection"
         ] = p_config["collection"]
-        out_config[test_suite][test_type][short_name]["request_params"][
-            "granule_id"
-        ] = p_config["granule_id"]
     return out_config
 
 
