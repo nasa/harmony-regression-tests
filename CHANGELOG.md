@@ -5,6 +5,15 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-07-06 ([#299](https://github.com/nasa/harmony-regression-tests/pull/299/))
+
+### Changed
+
+- Update `nsidc-icesat2` tests to use granule_name instead of granule_id.
+- Update from ATL24 v1 to v2 in `nsidc-icesat2`
+- Remove ATL12 prod test in `nsidc-icesat2` due to revised granule ingest and removal of existing granule
+- Update `nsidc-smap` tests to use granule_name instead of granule_id
+
 ## 2026-06-24 ([#297](https://github.com/nasa/harmony-regression-tests/pull/297))
 
 ### Changed
