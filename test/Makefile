@@ -98,6 +98,11 @@ casper-image: Dockerfile casper/environment.yaml
 	--build-arg notebook=CASPER_Regression.ipynb --build-arg sub_dir=casper \
 	--build-arg shared_utils=true .
 
+podaac-l2-subsetter-image: Dockerfile podaac-l2-subsetter/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-podaac-l2-subsetter:latest -f ./Dockerfile \
+	--build-arg notebook=podaac-l2-subsetter_Regression.ipynb --build-arg sub_dir=podaac-l2-subsetter \
+	--build-arg shared_utils=true .
+
 images: harmony-image \
 	harmony-regression-image \
 	hga-image \
@@ -119,4 +124,5 @@ images: harmony-image \
 	sambah-image \
 	opera-rtc-s1-browse-image \
 	nisar-py-image \
-	casper-image
+	casper-image \
+	podaac-l2-subsetter-image
