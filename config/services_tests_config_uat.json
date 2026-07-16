@@ -16,7 +16,7 @@
   "opera-rtc-s1-browse": "opera-rtc-s1-browse",
   "nisar-py": "nisar-py",
   "podaac-concise": "sambah",
-  "podaac-l2-subsetter": "podaac-l2-subsetter",
+  "podaac-l2-subsetter": "podaac-l2-subsetter,sambah",
   "query-cmr": "variable-subsetter",
   "maskfill": "hoss",
   "stitchee": "sambah",
