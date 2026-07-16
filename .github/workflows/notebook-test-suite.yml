@@ -192,6 +192,17 @@ jobs:
           HARMONY_HOST_URL: ${{ needs.base.outputs.harmony_host_url }}
         run: ./run_notebooks.sh ${{ matrix.service }}
 
+      - name: Record failed suite
+        if: always() && steps.test-step.outcome == 'failure'
+        run: echo "${{ matrix.service }}" > failed-suite-${{ matrix.service }}.txt
+
+      - name: Save failed suite as an artifact
+        if: always() && steps.test-step.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: failed-suite-${{ matrix.service }}
+          path: failed-suite-${{ matrix.service }}.txt
+
       - name: Save notebook as an artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -205,13 +216,57 @@ jobs:
     environment: ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}
     runs-on: ubuntu-latest
     steps:
+      - name: Download failed suite artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: failed-suite-*
+          path: failed-suites
+          merge-multiple: true
+          if-no-files-found: ignore
+
       - name: Get TO_EMAIL
         run: |
-          SERVICE_EMAILS=$(echo '${{ vars.SERVICES_EMAILS_CONFIG }}' | jq -r '."${{ github.event.action || inputs.service-name }}"')
-          if [ "$SERVICE_EMAILS" == "null" ]; then
-            SERVICE_EMAILS=${{ vars.TO_EMAIL_DEFAULT }}
+          SERVICE_NAME="${{ github.event.action || inputs.service-name }}"
+          SERVICE_EMAILS=$(echo '${{ vars.SERVICES_EMAILS_CONFIG }}' | jq -r --arg service "$SERVICE_NAME" '.[$service] // empty')
+          if [ -z "$SERVICE_EMAILS" ]; then
+            SERVICE_EMAILS='${{ vars.TO_EMAIL_DEFAULT }}'
           fi
-          echo "TO_EMAIL=$SERVICE_EMAILS" >> $GITHUB_ENV
+
+          ALL_EMAILS="$SERVICE_EMAILS"
+          FAILED_SUITES_LIST=""
+
+          if [ -d failed-suites ]; then
+            for file in failed-suites/*.txt; do
+              [ -e "$file" ] || continue
+              FAILED_SUITE=$(awk '{$1=$1;print}' "$file")
+              if [ -n "$FAILED_SUITE" ]; then
+                if [ -n "$FAILED_SUITES_LIST" ]; then
+                  FAILED_SUITES_LIST="$FAILED_SUITES_LIST,$FAILED_SUITE"
+                else
+                  FAILED_SUITES_LIST="$FAILED_SUITE"
+                fi
+              fi
+              FAILED_SUITE_EMAILS=$(echo '${{ vars.SERVICES_EMAILS_CONFIG }}' | jq -r --arg service "$FAILED_SUITE" '.[$service] // empty')
+              if [ -n "$FAILED_SUITE_EMAILS" ]; then
+                ALL_EMAILS="$ALL_EMAILS,$FAILED_SUITE_EMAILS"
+              fi
+            done
+          fi
+
+          TO_EMAIL=$(echo "$ALL_EMAILS" | tr ',' '\n' | awk '{$1=$1; if (length) print tolower($0)}' | awk '!seen[$0]++' | paste -sd, -)
+          echo "TO_EMAIL=$TO_EMAIL" >> $GITHUB_ENV
+          FAILED_SUITES_LIST=$(echo "$FAILED_SUITES_LIST" | tr ',' '\n' | awk '{$1=$1; if (length) print tolower($0)}' | awk '!seen[$0]++' | sort | paste -sd, -)
+          if [ -z "$FAILED_SUITES_LIST" ]; then
+            FAILED_SUITES_LIST="none"
+          fi
+          echo "FAILED_SUITES=$FAILED_SUITES_LIST" >> $GITHUB_ENV
+          if [ "$FAILED_SUITES_LIST" = "none" ]; then
+            echo "FAILED_SUITES_SUBJECT_SUFFIX=" >> $GITHUB_ENV
+            echo "FAILED_SUITES_BODY_LINE=" >> $GITHUB_ENV
+          else
+            echo "FAILED_SUITES_SUBJECT_SUFFIX= (failed suites: $FAILED_SUITES_LIST)" >> $GITHUB_ENV
+            echo "FAILED_SUITES_BODY_LINE= Failed suites: $FAILED_SUITES_LIST." >> $GITHUB_ENV
+          fi
 
       - name: Send mail
         uses: dawidd6/action-send-mail@v3
@@ -220,7 +275,16 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ github.event.action || inputs.service-name }} ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }} regression test result is ${{ needs.test.result }}
+          subject: >-
+            ${{ github.event.action || inputs.service-name }}
+            ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}
+            regression test result is ${{ needs.test.result }}
+            ${{ env.FAILED_SUITES_SUBJECT_SUFFIX }}
           to: ${{ env.TO_EMAIL }}
           from: ${{ secrets.FROM_EMAIL }}
-          body: ${{ github.event.action || inputs.service-name }} ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }} regression test result is ${{ needs.test.result }}! View the details at ${{ needs.test.outputs.run_url }}.
+          body: >-
+            ${{ github.event.action || inputs.service-name }}
+            ${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}
+            regression test result is ${{ needs.test.result }}!
+            ${{ env.FAILED_SUITES_BODY_LINE }}
+            View the details at ${{ needs.test.outputs.run_url }}.

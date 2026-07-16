@@ -11,6 +11,12 @@ to document pull requests to this repository.
 
 - Add `l2ss-py` regression tests.
 
+=======
+## 2026-07-15 ([#302](https://github.com/nasa/harmony-regression-tests/pull/302/))
+
+### Changed
+
+- Add email notification to test suite maintainers on test failures in regression test.
 
 ## 2026-07-07 ([#299](https://github.com/nasa/harmony-regression-tests/pull/299/))
 
