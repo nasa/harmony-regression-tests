@@ -98,6 +98,10 @@ casper-image: Dockerfile casper/environment.yaml
 	--build-arg notebook=CASPER_Regression.ipynb --build-arg sub_dir=casper \
 	--build-arg shared_utils=true .
 
+harmony-flow-image: Dockerfile harmony-flow/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-harmony-flow:latest -f ./Dockerfile \
+	--build-arg notebook=harmony-flow_Regression.ipynb --build-arg sub_dir=harmony-flow .
+
 images: harmony-image \
 	harmony-regression-image \
 	hga-image \
@@ -119,4 +123,5 @@ images: harmony-image \
 	sambah-image \
 	opera-rtc-s1-browse-image \
 	nisar-py-image \
-	casper-image
+	casper-image \
+	harmony-flow-image

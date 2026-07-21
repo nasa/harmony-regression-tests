@@ -1,0 +1,12 @@
+name: papermill-harmony-flow
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.12
+  - notebook=7.5.0
+  - papermill=2.6.0
+  - rasterio=1.5.0
+  - numpy=2.3.0
+  - pip:
+    - harmony-py==1.3.3
