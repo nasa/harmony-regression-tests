@@ -5,6 +5,10 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-07-21 ([#306](https://github.com/nasa/harmony-regression-tests/pull/306))
+- Added a `harmony-flow` regression test for processing OSCAR L4 NRT V2.0 granules
+
+
 ## 2026-07-20 ([#304](https://github.com/nasa/harmony-regression-tests/pull/304/))
 
 ### Added
