@@ -5,6 +5,24 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-07-21 ([#306](https://github.com/nasa/harmony-regression-tests/pull/306))
+- Added a `harmony-flow` regression test for processing OSCAR L4 NRT V2.0 granules
+
+
+## 2026-07-20 ([#304](https://github.com/nasa/harmony-regression-tests/pull/304/))
+
+### Added
+
+- Added an `imagenator` regression test for GAMSSA (inverted lat convention)
+- Added a `HyBIG` regression test for no-op jobs (e.g., OPERA DSWx-S1 empty granules)
+
+## 2026-07-16 ([#303](https://github.com/nasa/harmony-regression-tests/pull/303/))
+
+### Added
+
+- Add `l2ss-py` regression tests.
+
+=======
 ## 2026-07-15 ([#302](https://github.com/nasa/harmony-regression-tests/pull/302/))
 
 ### Changed

@@ -90,6 +90,10 @@ jobs:
             image: "casper"
             notebook: "CASPER_Regression.ipynb"
             shared-utils: "true"
+          -
+            image: "podaac-l2-subsetter"
+            notebook: "podaac-l2-subsetter_Regression.ipynb"
+            shared-utils: "true"
 
 
     uses: ./.github/workflows/build-target-image.yml
