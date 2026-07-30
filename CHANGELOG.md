@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+
+## 2026-07-30 ([#307](https://github.com/nasa/harmony-regression-tests/pull/307))
+
+### Changed
+- Modified reference data for nisar-py regression tests to reflect changes to tiling in HyBIG 2.8.2
+
+
 ## 2026-07-21 ([#306](https://github.com/nasa/harmony-regression-tests/pull/306))
 - Added a `harmony-flow` regression test for processing OSCAR L4 NRT V2.0 granules
 
