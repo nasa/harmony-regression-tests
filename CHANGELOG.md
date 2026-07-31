@@ -6,6 +6,12 @@ of regression tests that are each semi-independent.  This CHANGELOG file should 
 to document pull requests to this repository.
 
 
+## 2026-07-30 ([#308](https://github.com/nasa/harmony-regression-tests/pull/308))
+
+### Changed
+- Modified reference data for nisar-py regression tests (fixing discrepancy in previous change)
+
+
 ## 2026-07-30 ([#307](https://github.com/nasa/harmony-regression-tests/pull/307))
 
 ### Changed
