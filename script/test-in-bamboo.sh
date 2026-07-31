@@ -5,9 +5,9 @@
 
 set -ex
 
-## Import function image_name that determines the images to pull from docker.
+## Import function compute_regression_image_tag that determines the images to pull from docker.
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-source "${SCRIPT_DIR}/image_name.sh"
+source "${SCRIPT_DIR}/compute-regression-image-tag.sh"
 
 if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
   echo "HARMONY_ENVIRONMENT must be set to run this script"
@@ -49,9 +49,13 @@ unset IFS
 # Any bamboo variables named "REGRESSION_TESTS_<test>_IMAGE" will override the default value.
 # e.g. if REGRESSION_TESTS_HOSS_IMAGE environment was set, the value would be used instead of the default.
 
+echo "Fetching /service-image-tag once and reusing it for all suites"
+prefetch_service_image_tags "$harmony_host_url"
+
 image_names=()
 for image in "${all_tests[@]}"; do
-    image_names+=($(image_name "$image" true))
+    computed_tag=$(compute_regression_image_tag "$image" "$harmony_host_url")
+    image_names+=("ghcr.io/nasa/regression-tests-${image}:${computed_tag}")
 done
 
 # download all of the images and output their names
@@ -67,7 +71,7 @@ cd test \
     && export HARMONY_HOST_URL="${harmony_host_url}" \
               EDL_USER="${EDL_USER}" \
               EDL_PASSWORD="${EDL_PASSWORD}" \
-    && ./run_notebooks.sh --use-versions
+    && ./run_notebooks.sh --dynamic
 
 # Copy the notebook artefacts up to S3:
 if [[ -z "${REGRESSION_TEST_OUTPUT_BUCKET}" ]]; then
