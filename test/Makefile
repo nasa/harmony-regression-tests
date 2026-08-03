@@ -103,6 +103,10 @@ podaac-l2-subsetter-image: Dockerfile podaac-l2-subsetter/environment.yaml
 	--build-arg notebook=podaac-l2-subsetter_Regression.ipynb --build-arg sub_dir=podaac-l2-subsetter \
 	--build-arg shared_utils=true .
 
+harmony-flow-image: Dockerfile harmony-flow/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-harmony-flow:latest -f ./Dockerfile \
+	--build-arg notebook=harmony-flow_Regression.ipynb --build-arg sub_dir=harmony-flow .
+
 images: harmony-image \
 	harmony-regression-image \
 	hga-image \
@@ -125,4 +129,5 @@ images: harmony-image \
 	opera-rtc-s1-browse-image \
 	nisar-py-image \
 	casper-image \
-	podaac-l2-subsetter-image
+	podaac-l2-subsetter-image \
+	harmony-flow-image
