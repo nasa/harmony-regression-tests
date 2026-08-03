@@ -161,6 +161,8 @@ file is updated. To do so, simply add a new target to the
    ```
    list in the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml)
 
+1. Tag the published regression test image in GitHub Container Registry (GHCR) with the computed regression-test image tag. Use the script `script/compute-regression-image-tag.sh` to compute and apply the tag so the CI can select the correct image automatically. If a matching tagged image does not exist at runtime, the image defined by `version.txt` will be used as a fallback.
+
 1. If you want to trigger your tests by hand on GitHub, add your test name to the list of the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml):
    ```yaml
    on:

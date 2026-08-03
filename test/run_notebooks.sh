@@ -17,7 +17,8 @@ Options:
   --use-versions  Use per-suite version.txt tags (or suite IMAGE env var override)
   --dynamic       Compute expected regression image tag from services_tested.txt
                   and deployed Harmony service versions; use matching tagged
-                  image when available, otherwise fall back to :latest
+                  image when available, otherwise fall back to the suite's
+                  version from test/<suite>/version.txt
   -h, --help      Show this help text
 
 Environment:
@@ -48,27 +49,30 @@ fi
 
 ## Returns the image name to use for a suite when --dynamic is set.
 ## Computes the expected tag via compute-regression-image-tag.sh and checks
-## whether an image with that tag exists in the registry. Falls back to
-## "latest" if no matching image is found.
+## whether an image with that tag exists in the registry. Falls back to the
+## suite's version file (test/<suite>/version.txt) if no matching image is
+## found.
 function dynamic_image_name () {
     local suite="$1"
     local harmony_host_url="$2"
     local base="ghcr.io/nasa/regression-tests-${suite}"
 
     local computed_tag
-    computed_tag=$(compute_regression_image_tag "$suite" "$harmony_host_url" 2>/dev/null) || true
+    if ! computed_tag=$(compute_regression_image_tag "$suite" "$harmony_host_url"); then
+      return 1
+    fi
 
     if [[ -n "$computed_tag" ]] && \
        docker manifest inspect "${base}:${computed_tag}" >/dev/null 2>&1; then
         echo "${base}:${computed_tag}"
     else
         if [[ -n "$computed_tag" ]]; then
-            echo "No image found for tag '${computed_tag}', falling back to latest" >&2
-            echo "You can add the tag to the desired image version by running './script/add-ghcr-tag.sh ${base}:<version> ${computed_tag}'" >&2
+          echo "No image found for tag '${computed_tag}', falling back to version in ${SCRIPT_DIR}/../test/${suite}/version.txt" >&2
+          echo "You can add the tag to the desired image version by running './script/add-ghcr-tag.sh ${base}:<version> ${computed_tag}'" >&2
         else
-            echo "Could not compute image tag for '${suite}', falling back to latest" >&2
+          echo "Could not compute image tag for '${suite}', falling back to version in ${SCRIPT_DIR}/../test/${suite}/version.txt" >&2
         fi
-        echo "${base}:latest"
+        echo "${base}:$(<"${SCRIPT_DIR}/../test/${suite}/version.txt")"
     fi
 }
 
@@ -125,7 +129,10 @@ images=("${specified_images[@]:-${all_images[@]}}")
 # standard image naming rules from image_name.sh.
 if [[ "${dynamic:-false}" == true ]]; then
   echo "Dynamic mode: fetching /service-image-tag once and reusing it for all suites"
-  prefetch_service_image_tags "$HARMONY_HOST_URL"
+  if ! prefetch_service_image_tags "$HARMONY_HOST_URL"; then
+    echo "Failed to fetch /service-image-tag from ${HARMONY_HOST_URL}" >&2
+    exit 1
+  fi
 fi
 
 # launch all the docker containers and store their process IDs
@@ -133,14 +140,17 @@ for image in "${images[@]}"; do
     echo -e "Test suite ${image} starting"
 
     if [[ "${dynamic:-false}" == true ]]; then
-      full_image=$(dynamic_image_name "$image" "$HARMONY_HOST_URL")
+      if ! full_image=$(dynamic_image_name "$image" "$HARMONY_HOST_URL"); then
+        echo "Failed to determine image for ${image}" >&2
+        exit 1
+      fi
     else
       full_image=$(image_name "$image" "$use_versions")
     fi
     echo "running test with $full_image"
-    PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
-              --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
-              --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
+    # PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
+    #           --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
+    #           --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
 done
 
 trap ctrl_c SIGINT SIGTERM

@@ -32,7 +32,13 @@ prefetch_service_image_tags() {
     return 0
   fi
 
-  service_tag_url=$(service_image_tag_url_for_host "$harmony_host_url")
+  service_tag_url=$(service_image_tag_url_for_host "$harmony_host_url") || return 1
+
+  if [[ -z "${HARMONY_TOKEN:-}" ]]; then
+    echo "HARMONY_TOKEN must be set" >&2
+    return 1
+  fi
+
   SERVICE_IMAGE_TAG_JSON=$(curl --fail --silent --show-error \
     -H "Authorization: Bearer $HARMONY_TOKEN" \
     "$service_tag_url")
@@ -59,7 +65,7 @@ compute_regression_image_tag() {
     return 1
   fi
 
-  service_tag_url=$(service_image_tag_url_for_host "$harmony_host_url")
+  service_tag_url=$(service_image_tag_url_for_host "$harmony_host_url") || return 1
 
   if ! command -v jq >/dev/null 2>&1; then
     echo "jq is required but not found in PATH" >&2
