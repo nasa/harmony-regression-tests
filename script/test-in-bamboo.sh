@@ -5,7 +5,7 @@
 
 set -ex
 
-## Import function compute_regression_image_tag that determines the images to pull from docker.
+## Import functions that determine the images to pull from docker.
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "${SCRIPT_DIR}/compute-regression-image-tag.sh"
 source "${SCRIPT_DIR}/image_name.sh"
@@ -58,8 +58,8 @@ else
   echo "Fetching /service-image-tag once and reusing it for all suites"
   prefetch_service_image_tags "$harmony_host_url"
   for image in "${all_tests[@]}"; do
-      computed_tag=$(compute_regression_image_tag "$image" "$harmony_host_url")
-      image_names+=("ghcr.io/nasa/regression-tests-${image}:${computed_tag}")
+      full_image=$(dynamic_image_name "$image" "$harmony_host_url")
+      image_names+=("${full_image}")
   done
 fi
 

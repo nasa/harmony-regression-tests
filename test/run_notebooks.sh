@@ -47,35 +47,6 @@ if [[ -z "${HARMONY_HOST_URL:-}" ]]; then
   exit 1
 fi
 
-## Returns the image name to use for a suite when --dynamic is set.
-## Computes the expected tag via compute-regression-image-tag.sh and checks
-## whether an image with that tag exists in the registry. Falls back to the
-## suite's version file (test/<suite>/version.txt) if no matching image is
-## found.
-function dynamic_image_name () {
-    local suite="$1"
-    local harmony_host_url="$2"
-    local base="ghcr.io/nasa/regression-tests-${suite}"
-
-    local computed_tag
-    if ! computed_tag=$(compute_regression_image_tag "$suite" "$harmony_host_url"); then
-      return 1
-    fi
-
-    if [[ -n "$computed_tag" ]] && \
-       docker manifest inspect "${base}:${computed_tag}" >/dev/null 2>&1; then
-        echo "${base}:${computed_tag}"
-    else
-        if [[ -n "$computed_tag" ]]; then
-          echo "No image found for tag '${computed_tag}', falling back to version in ${SCRIPT_DIR}/../test/${suite}/version.txt" >&2
-          echo "You can add the tag to the desired image version by running './script/add-ghcr-tag.sh ${base}:<version> ${computed_tag}'" >&2
-        else
-          echo "Could not compute image tag for '${suite}', falling back to version in ${SCRIPT_DIR}/../test/${suite}/version.txt" >&2
-        fi
-        echo "${base}:$(<"${SCRIPT_DIR}/../test/${suite}/version.txt")"
-    fi
-}
-
 echo -e "\nRunning regression tests"
 echo -e "Using ${HARMONY_HOST_URL}\n"
 
