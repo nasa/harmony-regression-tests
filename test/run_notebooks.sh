@@ -119,9 +119,9 @@ for image in "${images[@]}"; do
       full_image=$(image_name "$image" "$use_versions")
     fi
     echo "running test with $full_image"
-    # PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
-    #           --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
-    #           --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
+    PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
+              --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
+              --env HARMONY_HOST_URL="${HARMONY_HOST_URL}" "${full_image}"))
 done
 
 trap ctrl_c SIGINT SIGTERM
