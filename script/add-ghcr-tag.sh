@@ -19,9 +19,14 @@ TARGET_IMAGE="${IMAGE_NAME}:${NEW_TAG}"
 echo "Source image: $SOURCE_IMAGE"
 echo "New image tag: $TARGET_IMAGE"
 
-# Authenticate to GHCR (expects GHCR_TOKEN env var)
+# Authenticate to GHCR (expects GHCR_TOKEN and GHCR_USERNAME env vars)
 if [[ -z "${GHCR_TOKEN:-}" ]]; then
   echo "Error: GHCR_TOKEN environment variable not set"
+  exit 1
+fi
+
+if [[ -z "${GHCR_USERNAME:-}" ]]; then
+  echo "Error: GHCR_USERNAME environment variable not set"
   exit 1
 fi
 
