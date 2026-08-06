@@ -174,7 +174,7 @@ file is updated. To do so, simply add a new target to the
 
 1. When a new version of any service covered by a test suite is deployed to Harmony, or when a test suite is updated and a new test image is built, the regression tests must be executed to ensure they pass successfully.
 
-    After a successful run, tag the regression test image in GitHub Container Registry (GHCR) using the computed regression test image tag for the target Harmony environment. Use the script `script/compute-regression-image-tag.sh` to generate and apply this tag, enabling CI to automatically select the correct image.
+    After a successful run, tag the regression test image in GitHub Container Registry (GHCR) using the computed regression test image tag for the target Harmony environment. Use the script `script/compute-regression-image-tag.sh` to generate and `add-ghcr-tag.sh` to apply this tag, enabling CI to automatically select the correct image.
 
     If no matching tagged image is found at runtime, the image specified in `version.txt` will be used as a fallback. Test suite maintainers will get email notifications when a computed regression test image tag is missing in a Harmony environment.
 
