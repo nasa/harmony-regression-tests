@@ -34,13 +34,13 @@ prefetch_service_image_tags() {
 
   service_tag_url=$(service_image_tag_url_for_host "$harmony_host_url") || return 1
 
-  if [[ -z "${HARMONY_TOKEN:-}" ]]; then
-    echo "HARMONY_TOKEN must be set" >&2
+  if [[ -z "${SECRET_HARMONY_TOKEN:-}" ]]; then
+    echo "SECRET_HARMONY_TOKEN must be set" >&2
     return 1
   fi
 
   SERVICE_IMAGE_TAG_JSON=$(curl --fail --silent --show-error \
-    -H "Authorization: Bearer $HARMONY_TOKEN" \
+    -H "Authorization: Bearer $SECRET_HARMONY_TOKEN" \
     "$service_tag_url")
 
   if ! echo "$SERVICE_IMAGE_TAG_JSON" | jq -e . >/dev/null 2>&1; then
@@ -72,8 +72,8 @@ compute_regression_image_tag() {
     return 1
   fi
 
-  if [[ -z "${HARMONY_TOKEN:-}" ]]; then
-    echo "HARMONY_TOKEN must be set" >&2
+  if [[ -z "${SECRET_HARMONY_TOKEN:-}" ]]; then
+    echo "SECRET_HARMONY_TOKEN must be set" >&2
     return 1
   fi
 
@@ -81,7 +81,7 @@ compute_regression_image_tag() {
     service_tags_json="$SERVICE_IMAGE_TAG_JSON"
   else
     service_tags_json=$(curl --fail --silent --show-error \
-      -H "Authorization: Bearer $HARMONY_TOKEN" \
+      -H "Authorization: Bearer $SECRET_HARMONY_TOKEN" \
       "$service_tag_url")
   fi
   if ! echo "$service_tags_json" | jq -e . >/dev/null 2>&1; then
@@ -157,7 +157,7 @@ Arguments:
   environment    One of: uat, prod
 
 Environment:
-  HARMONY_TOKEN  Bearer token used to call Harmony /service-image-tag
+  SECRET_HARMONY_TOKEN  Bearer token used to call Harmony /service-image-tag
 
 Examples:
   ./script/compute-regression-image-tag.sh sambah uat

@@ -37,6 +37,11 @@ esac
 
 echo "harmony host url: ${harmony_host_url}"
 
+# If running in Bamboo, plan variables are exposed as environment variables
+# prefixed with `bamboo_`. Ensure `SECRET_HARMONY_TOKEN` is exported so
+# sourced scripts can access it (preferring any already-set value).
+export SECRET_HARMONY_TOKEN="${SECRET_HARMONY_TOKEN:-${bamboo_SECRET_HARMONY_TOKEN:-}}"
+
 # Retrieve all tests to be run from "all" in the appropriate configuration file
 IFS=","
 read -ra all_tests <<< "$(jq -r '.all' ${configuration_file})"
