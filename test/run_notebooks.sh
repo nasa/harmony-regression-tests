@@ -106,6 +106,8 @@ if [[ "${dynamic:-false}" == true ]]; then
   fi
 fi
 
+exit_code=0
+PIDS=()
 # launch all the docker containers and store their process IDs
 for image in "${images[@]}"; do
     echo -e "Test suite ${image} starting"
@@ -119,9 +121,18 @@ for image in "${images[@]}"; do
       full_image=$(image_name "$image" "$use_versions")
     fi
     echo "running test with $full_image"
-    PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
-              --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
-              --env HARMONY_HOST_URL="${HARMONY_HOST_URL}" "${full_image}"))
+    # Start the container and capture either the container id or the error message.
+    container_out=$(docker run -d -v "${PWD}/output:/workdir/output" \
+          --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
+          --env harmony_host_url="${HARMONY_HOST_URL}" \
+          "${full_image}" 2>&1) || {
+      echo -e "${RED}Failed to start test suite ${image}: ${container_out}${NC}" 1>&2
+      exit_code=1
+      # don't add a PIDS entry for this failed start; continue with other suites
+      continue
+    }
+    # container_out should contain the container id on success
+    PIDS+=("${image},${container_out}")
 done
 
 trap ctrl_c SIGINT SIGTERM
@@ -137,8 +148,6 @@ function ctrl_c() {
   echo "Exiting"
   exit 1
 }
-
-exit_code=0
 # wait for processes to finish and store each exit code into array STATUS'
 for name_comma_pid in "${PIDS[@]}"; do
   name_pid=(${name_comma_pid//,/ })

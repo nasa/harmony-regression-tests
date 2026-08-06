@@ -66,9 +66,12 @@ fi
 # download all of the images and output their names
 /bin/rm -f pulled-images.txt
 for image in "${image_names[@]}"; do
-    echo "Pulling image: ${image}"
-    echo "${image}" >> pulled-images.txt
-    docker pull "${image}"
+  echo "Pulling image: ${image}"
+  echo "${image}" >> pulled-images.txt
+  if ! docker pull "${image}"; then
+    echo "ERROR: Failed to pull image: ${image}" >&2
+    continue
+  fi
 done
 
 ## run the tests
