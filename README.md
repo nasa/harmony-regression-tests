@@ -103,6 +103,17 @@ environment before installing from the environment.yml.
    version and supporting files, as described in the next section. For ease, it
    is simplest to use the same string for the subdirectory name and the suite
    name.
+
+1. Add test/services_tested.txt file to document the services tested by the test suite. Service names are comma-delimited.
+
+    The list of services in this file is used to compute the regression test image tag that identifies the exact set of service versions required by the test suite.
+
+    For example, the sambah test suite has the following entry in services_tested.txt:
+
+    ```
+    batchee,casper,podaac-concise,podaac-l2-subsetter,stitchee
+    ```
+
 1. Update the `test/Makefile` to be able to build a Docker image for the new
    test suite optionally including the shared utility directory:
 
@@ -160,6 +171,12 @@ file is updated. To do so, simply add a new target to the
          - your-new-service
    ```
    list in the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml)
+
+1. When a new version of any service covered by a test suite is deployed to Harmony, or when a test suite is updated and a new test image is built, the regression tests must be executed to ensure they pass successfully.
+
+    After a successful run, tag the regression test image in GitHub Container Registry (GHCR) using the computed regression test image tag for the target Harmony environment. Use the script `script/compute-regression-image-tag.sh` to generate and `add-ghcr-tag.sh` to apply this tag, enabling CI to automatically select the correct image.
+
+    If no matching tagged image is found at runtime, the image specified in `version.txt` will be used as a fallback. Test suite maintainers will get email notifications when a computed regression test image tag is missing in a Harmony environment.
 
 1. If you want to trigger your tests by hand on GitHub, add your test name to the list of the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml):
    ```yaml

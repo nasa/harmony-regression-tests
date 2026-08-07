@@ -4,18 +4,56 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-## Import function that returns correct image names.  if flag --use-versions is
-## set when this script is called, it will use names form versions.txt
-## otherwise it will default to "latest"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "${SCRIPT_DIR}/../script/image_name.sh"
+source "${SCRIPT_DIR}/../script/compute-regression-image-tag.sh"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  ./test/run_notebooks.sh [options] [suite ...]
+
+Options:
+  --use-versions  Use per-suite version.txt tags (or suite IMAGE env var override)
+  --dynamic       Compute expected regression image tag from services_tested.txt
+                  and deployed Harmony service versions; use matching tagged
+                  image when available, otherwise fall back to the suite's
+                  version from test/<suite>/version.txt
+  -h, --help      Show this help text
+
+Environment:
+  HARMONY_HOST_URL  Required. Set to the Harmony environment URL to run tests.
+
+Arguments:
+  suite           Optional suite names (e.g. sambah hga). If omitted, run all
+                  suites listed in the environment config file.
+
+Examples:
+  ./test/run_notebooks.sh --dynamic sambah
+EOF
+}
+
+for arg in "$@"; do
+  case "$arg" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+  esac
+done
+
+if [[ -z "${HARMONY_HOST_URL:-}" ]]; then
+  echo "HARMONY_HOST_URL must be set to run this script" >&2
+  exit 1
+fi
 
 echo -e "\nRunning regression tests"
 echo -e "Using ${HARMONY_HOST_URL}\n"
 
 
-# Specify the test images to run, by default all built by the Makefile. If
-# the script is invoked with a list of images, only run those.
+# Specify the test images to run. By default, run all suites listed in the
+# selected configuration file. If the script is invoked with a list of suites,
+# only run those.
 
 # Choose the correct configuration file.
 case $HARMONY_HOST_URL in
@@ -36,8 +74,16 @@ specified_images=()
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
         --use-versions)
             use_versions=true
+            shift
+            ;;
+        --dynamic)
+            dynamic=true
             shift
             ;;
         *)
@@ -50,15 +96,43 @@ done
 ## use the user supplied images or the default list of all images.
 images=("${specified_images[@]:-${all_images[@]}}")
 
+# Select images using the dynamic tag lookup when requested; otherwise use the
+# standard image naming rules from image_name.sh.
+if [[ "${dynamic:-false}" == true ]]; then
+  echo "Dynamic mode: fetching /service-image-tag once and reusing it for all suites"
+  if ! prefetch_service_image_tags "$HARMONY_HOST_URL"; then
+    echo "Failed to fetch /service-image-tag from ${HARMONY_HOST_URL}" >&2
+    exit 1
+  fi
+fi
+
+exit_code=0
+PIDS=()
 # launch all the docker containers and store their process IDs
 for image in "${images[@]}"; do
     echo -e "Test suite ${image} starting"
 
-    full_image=$(image_name "$image" "$use_versions")
+    if [[ "${dynamic:-false}" == true ]]; then
+      if ! full_image=$(dynamic_image_name "$image" "$HARMONY_HOST_URL"); then
+        echo "Failed to determine image for ${image}" >&2
+        exit 1
+      fi
+    else
+      full_image=$(image_name "$image" "$use_versions")
+    fi
     echo "running test with $full_image"
-    PIDS+=(${image},$(docker run -d -v ${PWD}/output:/workdir/output \
-                      --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
-                      --env harmony_host_url="${HARMONY_HOST_URL}" "${full_image}"))
+    # Start the container and capture either the container id or the error message.
+    container_out=$(docker run -d -v "${PWD}/output:/workdir/output" \
+          --env EDL_PASSWORD="${EDL_PASSWORD}" --env EDL_USER="${EDL_USER}" \
+          --env harmony_host_url="${HARMONY_HOST_URL}" \
+          "${full_image}" 2>&1) || {
+      echo -e "${RED}Failed to start test suite ${image}: ${container_out}${NC}" 1>&2
+      exit_code=1
+      # don't add a PIDS entry for this failed start; continue with other suites
+      continue
+    }
+    # container_out should contain the container id on success
+    PIDS+=("${image},${container_out}")
 done
 
 trap ctrl_c SIGINT SIGTERM
@@ -74,8 +148,6 @@ function ctrl_c() {
   echo "Exiting"
   exit 1
 }
-
-exit_code=0
 # wait for processes to finish and store each exit code into array STATUS'
 for name_comma_pid in "${PIDS[@]}"; do
   name_pid=(${name_comma_pid//,/ })
