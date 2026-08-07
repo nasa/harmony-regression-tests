@@ -1,8 +1,9 @@
 This directory has files containing dictionary mappings of labels (keys) to lists of regression tests that run when the label is selected (values)
 
-The two files describe the environments:
+The three files describe the environments:
 - `services_tests_config_prod.json` for Production environment
 - `services_tests_config_uat.json` for UAT environment
+- `services_tests_config_sit.json` for SIT environment
 
 Generally the mappings are:
 

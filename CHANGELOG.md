@@ -11,6 +11,11 @@ to document pull requests to this repository.
 
 - Added basic GUNW test cases to `net2cog` test.
 
+## 2026-08-03 ([#309](https://github.com/nasa/harmony-regression-tests/pull/309))
+
+### Changed
+- Dynamic regression image selection based on deployed service version in Harmony
+
 ## 2026-07-30 ([#308](https://github.com/nasa/harmony-regression-tests/pull/308))
 
 ### Changed

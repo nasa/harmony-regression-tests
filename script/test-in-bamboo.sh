@@ -5,8 +5,9 @@
 
 set -ex
 
-## Import function image_name that determines the images to pull from docker.
+## Import functions that determine the images to pull from docker.
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source "${SCRIPT_DIR}/compute-regression-image-tag.sh"
 source "${SCRIPT_DIR}/image_name.sh"
 
 if [[ -z "${HARMONY_ENVIRONMENT}" ]]; then
@@ -26,7 +27,7 @@ prod)
   ;;
 sit)
   harmony_host_url="https://harmony.sit.earthdata.nasa.gov"
-  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_uat.json"
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_sit.json"
   ;;
 *)
   echo "Valid environments are sit, uat, and prod."
@@ -36,7 +37,10 @@ esac
 
 echo "harmony host url: ${harmony_host_url}"
 
-
+# If running in Bamboo, plan variables are exposed as environment variables
+# prefixed with `bamboo_`. Ensure `SECRET_HARMONY_TOKEN` is exported so
+# sourced scripts can access it (preferring any already-set value).
+export SECRET_HARMONY_TOKEN="${SECRET_HARMONY_TOKEN:-${bamboo_SECRET_HARMONY_TOKEN:-}}"
 
 # Retrieve all tests to be run from "all" in the appropriate configuration file
 IFS=","
@@ -50,24 +54,42 @@ unset IFS
 # e.g. if REGRESSION_TESTS_HOSS_IMAGE environment was set, the value would be used instead of the default.
 
 image_names=()
-for image in "${all_tests[@]}"; do
-    image_names+=($(image_name "$image" true))
-done
+if [ "${HARMONY_ENVIRONMENT}" = "sit" ]; then
+  # Use version from each test's version.txt (or overridden env var) for SIT
+  for image in "${all_tests[@]}"; do
+      image_names+=("$(image_name "$image" true)")
+  done
+else
+  echo "Fetching /service-image-tag once and reusing it for all suites"
+  prefetch_service_image_tags "$harmony_host_url"
+  for image in "${all_tests[@]}"; do
+      full_image=$(dynamic_image_name "$image" "$harmony_host_url")
+      image_names+=("${full_image}")
+  done
+fi
 
 # download all of the images and output their names
 /bin/rm -f pulled-images.txt
 for image in "${image_names[@]}"; do
-    echo "Pulling image: ${image}"
-    echo "${image}" >> pulled-images.txt
-    docker pull "${image}"
+  echo "Pulling image: ${image}"
+  echo "${image}" >> pulled-images.txt
+  if ! docker pull "${image}"; then
+    echo "ERROR: Failed to pull image: ${image}" >&2
+    continue
+  fi
 done
 
 ## run the tests
+RUN_ARGS="--dynamic"
+if [ "${HARMONY_ENVIRONMENT}" = "sit" ]; then
+  RUN_ARGS="--use-versions"
+fi
+
 cd test \
     && export HARMONY_HOST_URL="${harmony_host_url}" \
               EDL_USER="${EDL_USER}" \
               EDL_PASSWORD="${EDL_PASSWORD}" \
-    && ./run_notebooks.sh --use-versions
+    && ./run_notebooks.sh ${RUN_ARGS}
 
 # Copy the notebook artefacts up to S3:
 if [[ -z "${REGRESSION_TEST_OUTPUT_BUCKET}" ]]; then
