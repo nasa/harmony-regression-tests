@@ -5,6 +5,11 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-08-07 ([#311](https://github.com/nasa/harmony-regression-tests/pull/311))
+
+### Changed
+- Add harmony-flow to image build and regression test workflows
+
 ## 2026-08-05 ([#310](https://github.com/nasa/harmony-regression-tests/pull/310))
 
 ### Added
@@ -15,6 +20,7 @@ to document pull requests to this repository.
 
 ### Changed
 - Dynamic regression image selection based on deployed service version in Harmony
+
 
 ## 2026-07-30 ([#308](https://github.com/nasa/harmony-regression-tests/pull/308))
 

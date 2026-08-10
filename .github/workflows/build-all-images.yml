@@ -94,6 +94,9 @@ jobs:
             image: "podaac-l2-subsetter"
             notebook: "podaac-l2-subsetter_Regression.ipynb"
             shared-utils: "true"
+          -
+            image: "harmony-flow"
+            notebook: "harmony-flow_Regression.ipynb"
 
 
     uses: ./.github/workflows/build-target-image.yml
