@@ -1,0 +1,221 @@
+# This workflow validates that each configured regression test suite has an
+# image tag matching currently deployed Harmony service versions.
+#
+# Required repository settings in each environment (uat, prod):
+# Secrets:
+# - HARMONY_TOKEN
+# - SMTP_USER
+# - SMTP_PASSWORD
+# - FROM_EMAIL
+# Variables:
+# - SERVICES_EMAILS_CONFIG
+# - TO_EMAIL_DEFAULT
+
+name: Validate regression image tags
+run-name: Validate regression image tags
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        harmony-environment:
+          - uat
+          - prod
+    environment: ${{ matrix.harmony-environment }}
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Validate required regression image tags
+        id: validate
+        env:
+          HARMONY_TOKEN: ${{ secrets.HARMONY_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${HARMONY_TOKEN:-}" ]]; then
+            echo "HARMONY_TOKEN secret is required for environment '${{ matrix.harmony-environment }}'" >&2
+            exit 1
+          fi
+
+          case "${{ matrix.harmony-environment }}" in
+            uat)
+              harmony_host_url="https://harmony.uat.earthdata.nasa.gov"
+              ;;
+            prod)
+              harmony_host_url="https://harmony.earthdata.nasa.gov"
+              ;;
+            *)
+              echo "Invalid harmony environment '${{ matrix.harmony-environment }}'" >&2
+              exit 1
+              ;;
+          esac
+
+          configuration_file="./config/services_tests_config_${{ matrix.harmony-environment }}.json"
+          if [[ ! -f "$configuration_file" ]]; then
+            echo "Configuration file not found: $configuration_file" >&2
+            exit 1
+          fi
+
+          source ./script/compute-regression-image-tag.sh
+          prefetch_service_image_tags "$harmony_host_url"
+
+          IFS=',' read -r -a suites <<< "$(jq -r '.all' "$configuration_file")"
+
+          missing_file="missing-tags-${{ matrix.harmony-environment }}.txt"
+          : > "$missing_file"
+
+          missing_count=0
+          for suite in "${suites[@]}"; do
+            suite="$(echo "$suite" | awk '{$1=$1;print}')"
+            [[ -z "$suite" ]] && continue
+
+            computed_tag="$(compute_regression_image_tag "$suite" "$harmony_host_url")"
+            image="ghcr.io/${{ github.repository_owner }}/regression-tests-${suite}:${computed_tag}"
+
+            if docker manifest inspect "$image" >/dev/null 2>&1; then
+              echo "Found required tag for ${suite}: ${computed_tag}"
+            else
+              echo "Missing required tag for ${suite}: ${computed_tag}"
+              echo "${suite}:${computed_tag}" >> "$missing_file"
+              missing_count=$((missing_count + 1))
+            fi
+          done
+
+          if [[ "$missing_count" -gt 0 ]]; then
+            missing_suites="$(cut -d: -f1 "$missing_file" | awk '!seen[$0]++' | paste -sd, -)"
+            echo "has_missing=true" >> "$GITHUB_OUTPUT"
+            echo "missing_count=$missing_count" >> "$GITHUB_OUTPUT"
+            echo "missing_suites=$missing_suites" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_missing=false" >> "$GITHUB_OUTPUT"
+            echo "missing_count=0" >> "$GITHUB_OUTPUT"
+            echo "missing_suites=none" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload missing tag report
+        if: always() && steps.validate.outputs.has_missing == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: missing-regression-image-tags-${{ matrix.harmony-environment }}
+          path: missing-tags-${{ matrix.harmony-environment }}.txt
+
+      - name: Send personalized missing-tag emails
+        if: steps.validate.outputs.has_missing == 'true'
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          TO_EMAIL_DEFAULT: ${{ vars.TO_EMAIL_DEFAULT }}
+          SERVICES_EMAILS_CONFIG: ${{ vars.SERVICES_EMAILS_CONFIG }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+          HARMONY_ENVIRONMENT: ${{ matrix.harmony-environment }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          MISSING_FILE: missing-tags-${{ matrix.harmony-environment }}.txt
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import json
+          import os
+          import smtplib
+          from email.message import EmailMessage
+
+          smtp_user = os.environ.get('SMTP_USER', '').strip()
+          smtp_password = os.environ.get('SMTP_PASSWORD', '').strip()
+          from_email = os.environ.get('FROM_EMAIL', '').strip()
+          to_email_default = os.environ.get('TO_EMAIL_DEFAULT', '').strip()
+          services_emails_config_raw = os.environ.get('SERVICES_EMAILS_CONFIG', '').strip()
+          repository_owner = os.environ.get('REPOSITORY_OWNER', '').strip()
+          harmony_environment = os.environ.get('HARMONY_ENVIRONMENT', '').strip()
+          run_url = os.environ.get('RUN_URL', '').strip()
+          missing_file = os.environ.get('MISSING_FILE', '').strip()
+
+          if not smtp_user or not smtp_password or not from_email:
+            raise SystemExit('SMTP_USER, SMTP_PASSWORD, and FROM_EMAIL must be set')
+          if not missing_file or not os.path.exists(missing_file):
+            raise SystemExit(f'Missing file not found: {missing_file}')
+
+          try:
+            services_emails_config = json.loads(services_emails_config_raw) if services_emails_config_raw else {}
+          except json.JSONDecodeError as exc:
+            raise SystemExit(f'SERVICES_EMAILS_CONFIG is not valid JSON: {exc}')
+
+          def normalize_recipients(raw_value):
+            if isinstance(raw_value, list):
+              candidates = raw_value
+            else:
+              candidates = str(raw_value or '').split(',')
+            unique = []
+            seen = set()
+            for item in candidates:
+              email = str(item).strip().lower()
+              if email and email not in seen:
+                unique.append(email)
+                seen.add(email)
+            return unique
+
+          sent_count = 0
+          with open(missing_file, 'r', encoding='utf-8') as handle:
+            lines = [line.strip() for line in handle if line.strip()]
+
+          if not lines:
+            print('No missing-tag lines found; no emails sent')
+            raise SystemExit(0)
+
+          with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(smtp_user, smtp_password)
+
+            for line in lines:
+              suite, separator, computed_tag = line.partition(':')
+              suite = suite.strip()
+              computed_tag = computed_tag.strip()
+              if not suite or not separator or not computed_tag:
+                print(f'Skipping malformed missing-tag line: {line}')
+                continue
+
+              recipients = normalize_recipients(services_emails_config.get(suite, ''))
+              if not recipients and to_email_default:
+                recipients = normalize_recipients(to_email_default)
+              if not recipients:
+                print(f'No recipients available for suite {suite}; skipping email')
+                continue
+
+              image = f'ghcr.io/{repository_owner}/regression-tests-{suite}:{computed_tag}'
+
+              msg = EmailMessage()
+              msg['From'] = from_email
+              msg['To'] = ', '.join(recipients)
+              msg['Subject'] = f"Missing regression image tag [{harmony_environment}] {suite}"
+              msg.set_content(
+                f"A required regression image tag is missing for suite '{suite}' in {harmony_environment}.\n\n"
+                f"Missing image tag:\n"
+                f"- {image}\n\n"
+                f"Computed tag: {computed_tag}\n"
+                f"Environment: {harmony_environment}\n"
+                f"Workflow run: {run_url}\n"
+              )
+
+              smtp.send_message(msg)
+              sent_count += 1
+              print(f"Sent missing-tag email for suite '{suite}' to: {', '.join(recipients)}")
+
+          print(f'Sent {sent_count} personalized missing-tag email(s)')
+          PY
+
+      - name: Fail when required tags are missing
+        if: steps.validate.outputs.has_missing == 'true'
+        run: |
+          echo "Missing required regression image tags for ${{ matrix.harmony-environment }}: ${{ steps.validate.outputs.missing_suites }}" >&2
+          exit 1
