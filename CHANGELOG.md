@@ -10,6 +10,11 @@ to document pull requests to this repository.
 ### Changed
 - Add harmony-flow to image build and regression test workflows
 
+## 2026-08-05 ([#310](https://github.com/nasa/harmony-regression-tests/pull/310))
+
+### Added
+
+- Added basic GUNW test cases to `net2cog` test.
 
 ## 2026-08-03 ([#309](https://github.com/nasa/harmony-regression-tests/pull/309))
 
