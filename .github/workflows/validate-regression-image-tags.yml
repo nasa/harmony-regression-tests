@@ -40,11 +40,11 @@ jobs:
       - name: Validate required regression image tags
         id: validate
         env:
-          HARMONY_TOKEN: ${{ secrets.HARMONY_TOKEN }}
+          SECRET_HARMONY_TOKEN: ${{ secrets.HARMONY_TOKEN }}
         run: |
           set -euo pipefail
 
-          if [[ -z "${HARMONY_TOKEN:-}" ]]; then
+          if [[ -z "${SECRET_HARMONY_TOKEN:-}" ]]; then
             echo "HARMONY_TOKEN secret is required for environment '${{ matrix.harmony-environment }}'" >&2
             exit 1
           fi
@@ -202,9 +202,10 @@ jobs:
                 f"A required regression image tag is missing for suite '{suite}' in {harmony_environment}.\n\n"
                 f"Missing image tag:\n"
                 f"- {image}\n\n"
-                f"Computed tag: {computed_tag}\n"
                 f"Environment: {harmony_environment}\n"
                 f"Workflow run: {run_url}\n"
+                f"You can add the tag to the desired image version by running:\n"
+                f"  ./script/add-ghcr-tag.sh ghcr.io/{repository_owner}/regression-tests-{suite}:<version> {computed_tag}\n\n"
               )
 
               smtp.send_message(msg)
