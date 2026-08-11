@@ -1,0 +1,152 @@
+name: Validate regression image tag (manual)
+run-name: Validate regression image tag - ${{ github.event.inputs.harmony-environment }} ${{ github.event.inputs.test-suite }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      harmony-environment:
+        description: "Select the Harmony environment to run the validation in"
+        required: true
+        type: choice
+        options:
+          - uat
+          - prod
+      test-suite:
+        description: "Select the regression test suite to validate"
+        required: true
+        type: choice
+        options:
+          - all
+          - casper
+          - geoloco
+          - giovanni-averaging-service
+          - giovanni-time-series-adapter
+          - hga
+          - harmony
+          - harmony-flow
+          - harmony-regression
+          - hoss
+          - hybig
+          - imagenator
+          - net2cog
+          - nisar-py
+          - nsidc-icesat2
+          - nsidc-smap
+          - opera-rtc-s1-browse
+          - podaac-l2-subsetter
+          - regridder
+          - sambah
+          - smap-l2-gridder
+          - subset-band-name
+          - swath-projector
+          - trajectory-subsetter
+          - variable-subsetter
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      suites: ${{ steps.get-suites.outputs.suites }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: get-suites
+        run: |
+          SELECTED="${{ github.event.inputs.test-suite }}"
+          if [ "$SELECTED" = "all" ]; then
+            # Extract only the filename from the workflow reference (e.g., validate.yml)
+            WORKFLOW_FILENAME=$(basename "${GITHUB_WORKFLOW_REF%%@*}")
+            WORKFLOW_FILE=".github/workflows/$WORKFLOW_FILENAME"
+
+            # Use modern yq syntax to output single-line JSON array
+            SUITES=$(yq eval '.on.workflow_dispatch.inputs.test-suite.options | del(.[] | select(. == "all"))' "$WORKFLOW_FILE" -o=json -I=0)
+            echo "suites=$SUITES" >> "$GITHUB_OUTPUT"
+          else
+            echo "suites=[\"$SELECTED\"]" >> "$GITHUB_OUTPUT"
+          fi
+
+  validate:
+    needs: setup
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.harmony-environment }}
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ${{ fromJSON(needs.setup.outputs.suites) }}
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Validate required regression image tag for a single suite
+        id: validate
+        env:
+          SECRET_HARMONY_TOKEN: ${{ secrets.HARMONY_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${SECRET_HARMONY_TOKEN:-}" ]]; then
+            echo "HARMONY_TOKEN secret is required for environment '${{ github.event.inputs.harmony-environment }}'" >&2
+            exit 1
+          fi
+
+          case "${{ github.event.inputs.harmony-environment }}" in
+            uat)
+              harmony_host_url="https://harmony.uat.earthdata.nasa.gov"
+              ;;
+            prod)
+              harmony_host_url="https://harmony.earthdata.nasa.gov"
+              ;;
+            *)
+              echo "Invalid harmony environment '${{ github.event.inputs.harmony-environment }}'" >&2
+              exit 1
+              ;;
+          esac
+
+          suite="${{ matrix.suite }}"
+          if [[ -z "$suite" ]]; then
+            echo "suite is required" >&2
+            exit 1
+          fi
+
+          configuration_file="./config/services_tests_config_${{ github.event.inputs.harmony-environment }}.json"
+          if [[ ! -f "$configuration_file" ]]; then
+            echo "Configuration file not found: $configuration_file" >&2
+            exit 1
+          fi
+
+          source ./script/compute-regression-image-tag.sh
+          prefetch_service_image_tags "$harmony_host_url"
+
+          computed_tag="$(compute_regression_image_tag "$suite" "$harmony_host_url")"
+          image="ghcr.io/${{ github.repository_owner }}/regression-tests-${suite}:${computed_tag}"
+
+          echo "computed_tag=$computed_tag" >> "$GITHUB_OUTPUT"
+
+          if docker manifest inspect "$image" >/dev/null 2>&1; then
+            echo "Found required tag for ${suite}: ${computed_tag}"
+            echo "has_missing=false" >> "$GITHUB_OUTPUT"
+            echo "missing_count=0" >> "$GITHUB_OUTPUT"
+            echo "missing_suites=none" >> "$GITHUB_OUTPUT"
+          else
+            echo "Missing required tag for ${suite}: ${computed_tag}"
+            echo "has_missing=true" >> "$GITHUB_OUTPUT"
+            echo "missing_count=1" >> "$GITHUB_OUTPUT"
+            echo "missing_suites=${suite}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Log missing-tag status and fail step
+        if: steps.validate.outputs.has_missing == 'true'
+        env:
+          HARMONY_ENVIRONMENT: ${{ github.event.inputs.harmony-environment }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          echo "Validation failed for suite '${{ matrix.suite }}' in $HARMONY_ENVIRONMENT"
+          echo "Missing image tag: ghcr.io/${{ github.repository_owner }}/regression-tests-${{ matrix.suite }}:${{ steps.validate.outputs.computed_tag }}"
+          echo "Workflow run: $RUN_URL"
+          echo "You can add the tag to the desired image version by running:"
+          echo "  ./script/add-ghcr-tag.sh ghcr.io/${{ github.repository_owner }}/regression-tests-${{ matrix.suite }}:<version> ${{ steps.validate.outputs.computed_tag }}"
+          exit 1
