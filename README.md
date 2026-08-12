@@ -97,6 +97,43 @@ environment before installing from the environment.yml.
 1. Update the `harmony_host_url` in the notebook.
 1. Run the tests.
 
+
+## Tag regression test images
+
+Each regression test suite contains a services_tested.txt file that lists the services covered by the test suite. Service names are comma-delimited.
+
+The list of services in this file is used to compute the regression test image tag that identifies the exact set of service versions required by the test suite.
+
+For example, the sambah test suite has the following entry in services_tested.txt:
+```
+batchee,casper,podaac-concise,podaac-l2-subsetter,stitchee
+```
+Based on the service image versions currently deployed in PROD:
+```
+{
+  "batchee": "1.5.2",
+  "casper": "0.2.0",
+  "podaac-concise": "0.11.0",
+  "podaac-l2-subsetter": "3.3.2",
+  "stitchee": "1.9.0"
+}
+```
+The computed regression test image tag for the sambah test suite is:
+```
+batchee1.5.2_casper0.2.0_podaac-concise0.11.0_podaac-l2-subsetter3.3.2_stitchee1.9.0
+```
+This tag uniquely identifies the regression test image that contains the required service versions for that test suite. Service providers is responsible for tagging the regression test image once a new version of their service is deployed and tested with a regression test image or when a new version of the regression test image is built and tested.
+
+### Validate regression image tag workflows
+
+We provide two GitHub Actions workflows to validate that the computed regression test image tags exist for a given Harmony environment and test suite:
+
+- `validate-regression-image-tags.yml` — an automated workflow that validates computed regression image tags that runs daily and send tag validation failure emails to service providers to remind them to update their regression test image tag if it becomes obsolete due to new service versions deployed to Harmony.
+
+- `validate-regression-image-tag-manual.yml` — a manual workflow that can be run in the github Actions UI so maintainers can validate regression test images for all test suites or a specific test suite in a Harmony environment on demand.
+This manual workflow exposes a `test-suite` choice input in the workflow dispatch UI. Pick `all` will validate the image tags for all test suite; Pick a specific test suite will run validation for that test suite only.
+
+
 ## Adding a new test suite:
 
 1. Create a subdirectory within `test` that contains a notebook, environment,
@@ -178,7 +215,21 @@ file is updated. To do so, simply add a new target to the
 
     If no matching tagged image is found at runtime, the image specified in `version.txt` will be used as a fallback. Test suite maintainers will get email notifications when a computed regression test image tag is missing in a Harmony environment.
 
-1. If you want to trigger your tests by hand on GitHub, add your test name to the list of the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml):
+1. If you want to manually trigger the test image validation for your test suite on GitHub, add your test suite name to the list of the [validate-regression-image-tag-manual.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/validate-regression-image-tag-manual.yml):
+   ```yaml
+   on:
+     workflow_dispatch:
+       test-suite:
+       description: "Select the regression test suite to validate"
+         required: true
+         type: choice
+         options:
+           - all
+           - casper
+           - your-test-suite
+   ```
+
+1. If you want to manually trigger regression tests for your service on GitHub, add your service name to the list of the [notebook-test-suite.yml](https://github.com/nasa/harmony-regression-tests/blob/main/.github/workflows/notebook-test-suite.yml):
    ```yaml
    on:
      workflow_dispatch:
@@ -188,6 +239,7 @@ file is updated. To do so, simply add a new target to the
            - batchee
            - your-new-service
    ```
+
 1. Provide the Harmony team with an email address and Slack user that can be contacted if your test suite fails during an automated run either in GitHub or Bamboo. This can be added to the wiki page here: https://wiki.earthdata.nasa.gov/spaces/HARMONY/pages/474940034/Harmony+Regression+Tests+Points+of+Contact. Please also update this wiki page if either of these pieces of information need to be changed
 
 ## Test suite contents:
