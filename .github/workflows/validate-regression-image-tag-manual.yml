@@ -1,3 +1,14 @@
+# This workflow validates the regression test images are correctly tagged for the specified test suite
+# in a Harmony environment on demand. Pick `all` as the test suite name will validate the image tags
+# for all test suites.
+#
+# Required repository settings in each environment (uat, prod):
+# Secrets:
+# - HARMONY_TOKEN
+# Variables:
+# - SERVICES_EMAILS_CONFIG
+# - TO_EMAIL_DEFAULT
+
 name: Validate regression image tag (manual)
 run-name: Validate regression image tag - ${{ github.event.inputs.harmony-environment }} ${{ github.event.inputs.test-suite }}
 
