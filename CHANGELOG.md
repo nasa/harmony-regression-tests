@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-08-13
+
+### Added
+
+- Added basic GOFF and SME2 test cases to `net2cog` test.
+
 ## 2026-08-11 ([#312](https://github.com/nasa/harmony-regression-tests/pull/312))
 
 ### Added
