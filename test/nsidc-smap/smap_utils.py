@@ -1,13 +1,14 @@
 """Collection of functions used for nsidc-smap regression tests."""
 
+from pathlib import Path
+
 from earthdata_hashdiff import (
     create_geotiff_hash_file,
     create_nc4_hash_file,
     geotiff_matches_reference_hash_file,
-    nc4_matches_reference_hash_file,
     h5_matches_reference_hash_file,
+    nc4_matches_reference_hash_file,
 )
-from pathlib import Path
 
 
 def file_for_variable(directory: Path, glob: str) -> Path:

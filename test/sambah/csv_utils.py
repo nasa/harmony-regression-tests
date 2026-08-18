@@ -1,7 +1,8 @@
-import json
 import hashlib
-import pandas as pd
+import json
 from zipfile import ZipFile
+
+import pandas as pd
 
 
 def create_csv_hash_file(input_file_path: str, reference_file_path: str):

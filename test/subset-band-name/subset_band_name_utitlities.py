@@ -3,10 +3,11 @@ Utility functions used by the subset-band-name regression tests.
 """
 
 import os
-from pyhdf.SD import SD, SDC
-from pyhdf.HDF import HDF
-from pyhdf.VS import VS
+
 import numpy
+from pyhdf.HDF import HDF
+from pyhdf.SD import SD, SDC
+from pyhdf.VS import VS
 
 
 def get_sds_data(file: str, sds_name: str):

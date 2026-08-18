@@ -4,8 +4,8 @@ increase the readability of the regression test suite.
 
 """
 
-from shutil import move
 from pathlib import Path
+from shutil import move
 
 from harmony import Client, Request
 from harmony.client import ProcessingFailedException

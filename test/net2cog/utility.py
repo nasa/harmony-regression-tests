@@ -7,23 +7,21 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
+import matplotlib.pyplot as plt
+import rasterio
 from harmony import Client
 from numpy.testing import assert_array_almost_equal
-from rio_cogeo.cogeo import cog_validate, cog_info
-import rasterio
-import matplotlib.pyplot as plt
+from rio_cogeo.cogeo import cog_info, cog_validate
 
 
 def print_error(error_string: str) -> None:
     """Print an error, with formatting for red text."""
     print(f"\033[91m{error_string}\033[0m")
-    return
 
 
 def print_success(success_string: str) -> None:
     """Print a success message, with formatting for green text."""
     print(f"\033[92mSuccess: {success_string}\033[0m")
-    return
 
 
 def verify_cog_crs(downloaded_cog_file, expected_crs: str):

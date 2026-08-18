@@ -1,14 +1,14 @@
 "Utility functions for comparing csv and geotiff data produced by a harmony request to their reference files"
 
-import rasterio
+from io import StringIO
+
 import numpy as np
 import pandas as pd
 import pandas.testing as pdt
-from typing import List, Tuple
-from io import StringIO
+import rasterio
 
 
-def split_csv_header_and_data(csv_rows: List[str]) -> Tuple[List[str], List[str]]:
+def split_csv_header_and_data(csv_rows: list[str]) -> tuple[list[str], list[str]]:
     """This is a helper function which splits an area averaged time series CSV into its data header and the data itself"""
     for i, row in enumerate(csv_rows):
         if row.strip() == ",":
