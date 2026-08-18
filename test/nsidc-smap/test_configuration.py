@@ -1,5 +1,6 @@
-from harmony import BBox, Collection
 import copy
+
+from harmony import BBox, Collection
 
 non_production_configuration = {
     "single_output_tests": {

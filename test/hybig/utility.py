@@ -1,6 +1,7 @@
 """Simple utility functions used in the regridder test notebook."""
 
 from pathlib import Path
+
 import rasterio
 from numpy.testing import assert_array_almost_equal
 

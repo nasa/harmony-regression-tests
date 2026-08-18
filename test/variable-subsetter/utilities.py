@@ -7,10 +7,10 @@ increase the readability of the regression test suite.
 from os import listdir, remove, replace
 from typing import Union
 
+import numpy as np
 from harmony import Client, Request
 from harmony.client import ProcessingFailedException
 from netCDF4 import Dataset, Group, Variable
-import numpy as np
 
 GroupOrVariable = Union[Group, Variable]
 

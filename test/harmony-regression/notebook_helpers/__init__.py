@@ -1,19 +1,17 @@
 import http.client as http_client
+import json
 import logging
 from datetime import datetime
-from time import sleep
-import json
-
 from io import BytesIO
+from time import sleep
+
+import numpy as np
+import pystac
+import requests
+from cachecontrol import CacheControlAdapter, CacheController
+from h5py import File as H5File
 from matplotlib import pyplot as plt
 from PIL import Image
-from h5py import File as H5File
-import numpy as np
-
-import pystac
-
-import requests
-from cachecontrol import CacheController, CacheControlAdapter
 
 
 def _build_session():
