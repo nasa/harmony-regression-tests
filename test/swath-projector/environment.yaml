@@ -4,11 +4,12 @@ channels:
   - nodefaults
 dependencies:
   - python=3.12
+  - pip
   - notebook=7.3.2
   - papermill=2.6
   - numpy=2.2.3
   - netCDF4=1.7.2
   - xarray=2025.6.1
   - pip:
-    - earthdata-hashdiff==1.0.0
-    - harmony-py==1.2.0
+    - earthdata-hashdiff==1.2.0
+    - harmony-py==1.6.0

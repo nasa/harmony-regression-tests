@@ -5,7 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-08-13
+## 2026-08-18 ([#314](https://github.com/nasa/harmony-regression-tests/pull/314))
+
+### Changed
+
+- Updated the swath-projector reference hashes for changes introduced by in library updates in swath-projector 1.5.1.
+
+## 2026-08-13 ([#313](https://github.com/nasa/harmony-regression-tests/pull/313))
 
 ### Added
 
