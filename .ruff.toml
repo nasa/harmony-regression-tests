@@ -1,3 +1,5 @@
+required-version = ">=0.16.4"
+
 [format]
 quote-style = "preserve"
 
