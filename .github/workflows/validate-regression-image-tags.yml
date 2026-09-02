@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Authenticate to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
@@ -106,7 +106,7 @@ jobs:
 
       - name: Upload missing tag report
         if: always() && steps.validate.outputs.has_missing == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: missing-regression-image-tags-${{ matrix.harmony-environment }}
           path: missing-tags-${{ matrix.harmony-environment }}.txt
