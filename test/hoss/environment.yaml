@@ -3,12 +3,12 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  - python=3.12
-  - netCDF4=1.7.2
-  - notebook=7.5.2
-  - numpy=2.2.3
-  - papermill=2.6.0
-  - xarray=2025.6.1
+  - python=3.13
+  - netCDF4=1.7.4
+  - notebook=7.6.2
+  - numpy=2.5.2
+  - papermill=2.7.0
+  - xarray=2026.7.0
   - pip:
-    - earthdata-hashdiff==1.0.0
-    - harmony-py==1.2.0
+    - earthdata-hashdiff==1.2.0
+    - harmony-py==1.6.0
