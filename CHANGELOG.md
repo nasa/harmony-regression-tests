@@ -10,6 +10,7 @@ to document pull requests to this repository.
 ### Changes
 
 - Updates HOSS regression test library versions. Primarily to increase harmony-py to a version that has a backoff / retry to prevent EDL connection issues.
+- Updates HOSS to ruff 0.16.x ruleset.
 
 ## 2026-08-18 ([#314](https://github.com/nasa/harmony-regression-tests/pull/314))
 
