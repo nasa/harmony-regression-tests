@@ -32,7 +32,8 @@ on:
           - geoloco
           - giovanni-averaging-service
           - giovanni-time-series-adapter
-          - hga
+          # HGA is disabled until redeveloped for TRT-645
+          # - hga
           - harmony
           - harmony-flow
           - harmony-regression
@@ -59,7 +60,7 @@ jobs:
     outputs:
       suites: ${{ steps.get-suites.outputs.suites }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: get-suites
         run: |
           SELECTED="${{ github.event.inputs.test-suite }}"
@@ -86,7 +87,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Authenticate to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin

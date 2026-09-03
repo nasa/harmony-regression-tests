@@ -137,7 +137,7 @@ jobs:
       run_url: ${{ env.RUN_URL }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Get the URL of the current workflow run
         run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
@@ -176,7 +176,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Pull Docker image
         run: docker pull ghcr.io/${{github.repository_owner}}/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}
@@ -200,14 +200,14 @@ jobs:
 
       - name: Save failed suite as an artifact
         if: always() && steps.test-step.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: failed-suite-${{ matrix.service }}
           path: failed-suite-${{ matrix.service }}.txt
 
       - name: Save notebook as an artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: notebook-output-${{ matrix.service }}
           path: test/output/${{ matrix.service }}/Results.ipynb
@@ -219,12 +219,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download failed suite artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: failed-suite-*
           path: failed-suites
           merge-multiple: true
-          if-no-files-found: ignore
 
       - name: Get TO_EMAIL
         run: |
@@ -271,10 +270,11 @@ jobs:
           fi
 
       - name: Send mail
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v18
         with:
           server_address: smtp.gmail.com
           server_port: 465
+          secure: true
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: >-
