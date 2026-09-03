@@ -32,7 +32,8 @@ on:
           - geoloco
           - giovanni-averaging-service
           - giovanni-time-series-adapter
-          - hga
+          # HGA is disabled until redeveloped for TRT-645
+          # - hga
           - harmony
           - harmony-flow
           - harmony-regression
