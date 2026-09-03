@@ -224,7 +224,6 @@ jobs:
           pattern: failed-suite-*
           path: failed-suites
           merge-multiple: true
-          if-no-files-found: ignore
 
       - name: Get TO_EMAIL
         run: |
