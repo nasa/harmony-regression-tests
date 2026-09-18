@@ -33,8 +33,8 @@ workflow.
 The regression test GitHub actions can also be invoked through different event types
 after a Harmony service is successfully deployed in Harmony or after a new version of
 the Harmony server is deployed. For each test suite that completes successfully, the
-workflow automatically tags the latest version of the test suite image with a computed
-tag representing the versions of the Harmony services tested.
+workflow automatically tags the test suite image version with the computed tag
+representing the versions of the Harmony services tested.
 
 Note: Only the `latest` tag of the regression docker image will be used to run the
 Jupyter notebook tests.
