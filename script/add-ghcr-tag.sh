@@ -10,9 +10,9 @@ set -euo pipefail
 #
 # Behavior:
 #
-# Add the new-tag to source-image if the source version is "latest" or 
-# if the source version is a semantic version that is greater than the current version 
-# associated with new-tag or the new-tag is not currently associated with any version.
+# Add the new-tag to source-image if the source version is "latest" or if the source version
+# is a semantic version that is greater than the current version associated with new-tag
+# or the new-tag is not currently associated with any version.
 
 SOURCE_IMAGE="$1"
 NEW_TAG="$2"
