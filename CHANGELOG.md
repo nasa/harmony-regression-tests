@@ -12,7 +12,7 @@ to document pull requests to this repository.
 - Enable CSV-conversion test in PROD environment
 
 
-## 2026-08-13 ([#323](https://github.com/nasa/harmony-regression-tests/pull/323))
+## 2026-09-18 ([#323](https://github.com/nasa/harmony-regression-tests/pull/323))
 
 ### Added
 
