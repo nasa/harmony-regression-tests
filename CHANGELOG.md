@@ -5,6 +5,15 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-09-22 ([#326](https://github.com/nasa/harmony-regression-tests/pull/326))
+
+### Fixed
+
+- Fixed dependency in HOSS environment.
+- HOSS regression version to 1.1.4
+
+## 2026-09-23 ([#325](https://github.com/nasa/harmony-regression-tests/pull/325))
+
 ### Changes
 
 - Update Casper regression test and reference files for recent Casper updates.
