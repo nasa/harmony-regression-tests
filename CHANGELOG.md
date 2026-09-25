@@ -6,7 +6,7 @@ of regression tests that are each semi-independent.  This CHANGELOG file should 
 to document pull requests to this repository.
 
 
-## 2026-09-25 https://github.com/nasa/harmony-regression-tests/pull/327
+## 2026-09-25 ([#327](https://github.com/nasa/harmony-regression-tests/pull/327))
 
 ### Fixed
 
