@@ -5,6 +5,49 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-09-22 ([#326](https://github.com/nasa/harmony-regression-tests/pull/326))
+
+### Fixed
+
+- Fixed dependency in HOSS environment.
+- HOSS regression version to 1.1.4
+
+## 2026-09-23 ([#325](https://github.com/nasa/harmony-regression-tests/pull/325))
+
+### Changes
+
+- Update Casper regression test and reference files for recent Casper updates.
+- Update Casper to use csv_utils for creating hash and comparing test results.
+- Update SAMBAH regression test to reflect csv_utils.py move to shared_utils.
+
+## 2026-09-22 ([#324](https://github.com/nasa/harmony-regression-tests/pull/324))
+
+### Changed
+
+- Enable CSV-conversion test in PROD environment
+
+
+## 2026-09-18 ([#323](https://github.com/nasa/harmony-regression-tests/pull/323))
+
+### Added
+
+- Add auto-tagging of test image version when test runs successfully.
+
+
+## 2026-09-16 ([#319](https://github.com/nasa/harmony-regression-tests/pull/319))
+
+### Changes
+
+- Updates HOSS regression test library versions.
+- Updates HOSS to ruff 0.16.x ruleset.
+
+## 2026-09-08 ([#321](https://github.com/nasa/harmony-regression-tests/pull/321))
+
+### Changed
+
+- Updated the sambah reference hashes for changes introduced by updates in l2ss-py 3.3.3.
+
+
 ## 2026-08-18 ([#314](https://github.com/nasa/harmony-regression-tests/pull/314))
 
 ### Changed

@@ -18,10 +18,11 @@ jobs:
           -
             image: "harmony-regression"
             notebook: "HarmonyRegression.ipynb"
-          -
-            image: "hga"
-            notebook: "HGA_Regression.ipynb"
-            shared-utils: "true"
+          # To be reenabled when HGA is redeveloped for TRT-645
+          # -
+          #   image: "hga"
+          #   notebook: "HGA_Regression.ipynb"
+          #   shared-utils: "true"
           -
             image: "hoss"
             notebook: "HOSS_Regression.ipynb"

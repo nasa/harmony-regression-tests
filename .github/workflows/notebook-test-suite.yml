@@ -16,6 +16,9 @@
 # Secrets in each environment:
 # - EDL_USER
 # - EDL_PASSWORD
+# - HARMONY_TOKEN (for computing regression image tag)
+# - GHCR_USERNAME (for GHCR login in tag-image job)
+# - GHCR_TOKEN (for GHCR login/tag operations in tag-image job)
 #
 # Note: A workflow_call event can only have inputs of type boolean, number or
 # string.
@@ -137,7 +140,7 @@ jobs:
       run_url: ${{ env.RUN_URL }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Get the URL of the current workflow run
         run: echo "RUN_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
@@ -176,7 +179,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Pull Docker image
         run: docker pull ghcr.io/${{github.repository_owner}}/regression-tests-${{ matrix.service }}:${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}
@@ -200,17 +203,63 @@ jobs:
 
       - name: Save failed suite as an artifact
         if: always() && steps.test-step.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: failed-suite-${{ matrix.service }}
           path: failed-suite-${{ matrix.service }}.txt
 
       - name: Save notebook as an artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: notebook-output-${{ matrix.service }}
           path: test/output/${{ matrix.service }}/Results.ipynb
+
+      - name: Authenticate to GHCR
+        if: steps.test-step.outcome == 'success'
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+        run: echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+
+      - name: Add computed image tag
+        if: steps.test-step.outcome == 'success'
+        env:
+          SECRET_HARMONY_TOKEN: ${{ secrets.HARMONY_TOKEN }}
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+        run: |
+          set -euo pipefail
+
+          case "${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}" in
+            uat)
+              harmony_host_url="https://harmony.uat.earthdata.nasa.gov"
+              ;;
+            prod)
+              harmony_host_url="https://harmony.earthdata.nasa.gov"
+              ;;
+            *)
+              echo "Invalid harmony environment '${{ github.event.client_payload.harmony-environment || inputs.harmony-environment }}'" >&2
+              exit 1
+              ;;
+          esac
+
+          suite="${{ matrix.service }}"
+
+          source ./script/compute-regression-image-tag.sh
+          prefetch_service_image_tags "$harmony_host_url"
+
+          computed_tag="$(compute_regression_image_tag "$suite" "$harmony_host_url")"
+
+          source_image="ghcr.io/${{ github.repository_owner }}/regression-tests-${suite}:${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}"
+          target_image="ghcr.io/${{ github.repository_owner }}/regression-tests-${suite}:${computed_tag}"
+
+          if docker manifest inspect "$target_image" >/dev/null 2>&1; then
+            echo "Computed tag already exists for ${suite}: ${computed_tag}"
+          else
+            echo "Computed tag missing for ${suite}. Adding ${computed_tag} to ${source_image}"
+            ./script/add-ghcr-tag.sh "$source_image" "$computed_tag"
+          fi
 
   email:
     needs: test
@@ -219,12 +268,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download failed suite artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: failed-suite-*
           path: failed-suites
           merge-multiple: true
-          if-no-files-found: ignore
 
       - name: Get TO_EMAIL
         run: |
@@ -271,10 +319,11 @@ jobs:
           fi
 
       - name: Send mail
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v18
         with:
           server_address: smtp.gmail.com
           server_port: 465
+          secure: true
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: >-
