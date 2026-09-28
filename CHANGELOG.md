@@ -9,8 +9,9 @@ to document pull requests to this repository.
 
 ### Changed
 
-- smap-l2-gridder regression tests modified to subset by variable before gridding to make the test use less memory.
-- `nc_matches_reference_hash_file`given additional parameter `'cache': False` further reduce memory usage during hash computations.
+- smap-l2-gridder (v1.1.0)
+  + smap-l2-gridder regression tests modified to subset by variable before gridding to make the test use less memory.
+  + `nc_matches_reference_hash_file`given additional parameter `'cache': False` further reduce memory usage during hash computations.
 
 
 ## 2026-09-22 ([#326](https://github.com/nasa/harmony-regression-tests/pull/326))
