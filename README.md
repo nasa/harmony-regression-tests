@@ -304,6 +304,16 @@ dependencies:
     - earthdata-hashdiff
 ```
 
+Alternatively, a suite can use a pip `requirements.txt` instead of an
+`environment.yaml`. Those suites are built from `test/Dockerfile.pip` (a plain
+`python:3.12-slim` image, packages pip-installed into its Python) rather than
+the micromamba-based `test/Dockerfile`. To use it, add a `requirements.txt` with
+pinned versions (it must include `papermill` and `ipykernel`), pass
+`-f ./Dockerfile.pip` in the suite's `test/Makefile` target, and add
+`dockerfile: "Dockerfile.pip"` to the suite's matrix entry in
+`.github/workflows/build-all-images.yml`. See `test/smap-l2-gridder` for an
+example.
+
 ## Reference files
 
 > [!IMPORTANT]
@@ -385,8 +395,8 @@ version increment. This will likely occur for one of three reasons:
 
 * Adding, updating or removing tests within the notebook (or associated utility
   functionality).
-* Adding or updating Python dependencies in the `environment.yaml` file for
-  the test suite.
+* Adding or updating Python dependencies in the `environment.yaml` (or
+  `requirements.txt`) file for the test suite.
 * Updating the overall Docker image for all test suites, in which case all
   suites should have their `version.txt` incremented.
 
@@ -420,6 +430,7 @@ To increase runtime efficiency, the build relies on
 Micromamba and mamba are meant to be drop in replacements for miniconda and
 conda. The fast solving allows us to skip creating a conda-lock file, and the
 dependency management is entirely defined by the `environment.yaml` file.
+Suites using a `requirements.txt` are built with pip instead (see above for instructions).
 
 Test notebooks should not rely on other forms of dependency management or expect user input.
 They _should_ utilize the `harmony_host_url` global variable to communicate with Harmony

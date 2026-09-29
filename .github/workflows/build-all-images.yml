@@ -50,6 +50,7 @@ jobs:
             image: "smap-l2-gridder"
             notebook: "smap-l2-gridder_Regression.ipynb"
             shared-utils: "true"
+            dockerfile: "Dockerfile.pip"
           -
             image: "swath-projector"
             notebook: "SwathProjector_Regression.ipynb"
@@ -105,3 +106,4 @@ jobs:
       image-short-name: ${{ matrix.targets.image }}
       notebook-name: ${{ matrix.targets.notebook }}
       shared-utils: ${{ matrix.targets.shared-utils || 'false' }}
+      dockerfile: ${{ matrix.targets.dockerfile || 'Dockerfile' }}
