@@ -28,4 +28,4 @@ RUN if [ "$shared_utils" = "false" ]; then \
 
 COPY ${sub_dir} ./${sub_dir}
 
-ENTRYPOINT /bin/bash ./notebook-entrypoint.sh
+ENTRYPOINT ["/bin/bash", "./notebook-entrypoint.sh"]
