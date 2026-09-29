@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+
+## 2026-09-25 ([#327](https://github.com/nasa/harmony-regression-tests/pull/327))
+
+### Fixed
+
+- Fixed l2ss-py regression reference files for new l2ss-py on how fill values are handled
+
 ## 2026-09-22 ([#326](https://github.com/nasa/harmony-regression-tests/pull/326))
 
 ### Fixed
