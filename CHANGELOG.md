@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-09-29 ([#330](https://github.com/nasa/harmony-regression-tests/pull/330))
+
+### Changed
+
+- nsidc-smap (v1.4.4)
+  + Upgrades service libraries including earthdata-hashdiff to reduce memory usage.
+
 ## 2026-09-29 ([#329](https://github.com/nasa/harmony-regression-tests/pull/329))
 
 ### Added
