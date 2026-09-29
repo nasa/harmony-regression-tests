@@ -16,6 +16,10 @@ on:
       shared-utils:
         required: true
         type: string
+      dockerfile:
+        required: false
+        type: string
+        default: Dockerfile
 
 env:
   REGISTRY: ghcr.io
@@ -73,7 +77,7 @@ jobs:
               sub_dir=${{inputs.image-short-name}}
               shared_utils=${{inputs.shared-utils}}
 
-          file: ./test/Dockerfile
+          file: ./test/${{ inputs.dockerfile }}
           context: ./test
           push: true
           tags: ${{ steps.meta.outputs.tags }}
