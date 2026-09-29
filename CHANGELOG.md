@@ -5,6 +5,13 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-09-29 ([#328](https://github.com/nasa/harmony-regression-tests/pull/328))
+
+### Changed
+
+- smap-l2-gridder (v1.1.0)
+  + smap-l2-gridder regression tests modified to subset by variable before gridding to make the test use less memory.
+  + `nc_matches_reference_hash_file`given additional parameter `'cache': False` further reduce memory usage during hash computations.
 
 ## 2026-09-25 ([#327](https://github.com/nasa/harmony-regression-tests/pull/327))
 
