@@ -254,12 +254,11 @@ jobs:
           source_image="ghcr.io/${{ github.repository_owner }}/regression-tests-${suite}:${{ github.event.client_payload.docker-image-tag || inputs.docker-image-tag || 'latest' }}"
           target_image="ghcr.io/${{ github.repository_owner }}/regression-tests-${suite}:${computed_tag}"
 
-          if docker manifest inspect "$target_image" >/dev/null 2>&1; then
-            echo "Computed tag already exists for ${suite}: ${computed_tag}"
-          else
-            echo "Computed tag missing for ${suite}. Adding ${computed_tag} to ${source_image}"
-            ./script/add-ghcr-tag.sh "$source_image" "$computed_tag"
-          fi
+          # Ensure the computed tag points to the appropriate image. The
+          # script `add-ghcr-tag.sh` contains logic to create the tag or move
+          # it if the source version is a newer semantic version.
+          echo "Ensuring computed tag '${computed_tag}' points to appropriate image (may move if source version is newer)"
+          ./script/add-ghcr-tag.sh "$source_image" "$computed_tag"
 
   email:
     needs: test
