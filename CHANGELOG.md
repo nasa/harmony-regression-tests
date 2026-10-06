@@ -5,7 +5,7 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-10-05 ([#329](https://github.com/nasa/harmony-regression-tests/pull/329))
+## 2026-10-06 ([#329](https://github.com/nasa/harmony-regression-tests/pull/329))
 
 ### Added
 
@@ -16,6 +16,15 @@ to document pull requests to this repository.
 - smap-l2-gridder (v1.1.1)
   + Built from the new pip-based `test/pip.Dockerfile` (`python:3.12-slim`) instead of micromamba. `environment.yaml` replaced by `requirements.txt`.
 - `build-target-image.yml` updated to accept an optional `dockerfile` input (default `Dockerfile`), set per suite from the `build-all-images.yml` matrix.
+
+
+## 2026-10-05 ([#330](https://github.com/nasa/harmony-regression-tests/pull/330))
+
+### Changed
+
+- nsidc-smap (v1.4.4)
+  + Upgrades service libraries including earthdata-hashdiff to reduce memory usage.
+
 
 ## 2026-10-05 ([#332](https://github.com/nasa/harmony-regression-tests/pull/332))
 
