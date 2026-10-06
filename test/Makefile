@@ -40,8 +40,8 @@ regridder-image: Dockerfile regridder/environment.yaml
 	--build-arg notebook=Regridder_Regression.ipynb --build-arg sub_dir=regridder \
 	--build-arg shared_utils=true .
 
-smap-l2-gridder-image: Dockerfile.pip smap-l2-gridder/requirements.txt
-	docker build -t ghcr.io/nasa/regression-tests-smap-l2-gridder:latest -f ./Dockerfile.pip \
+smap-l2-gridder-image: pip.Dockerfile smap-l2-gridder/requirements.txt
+	docker build -t ghcr.io/nasa/regression-tests-smap-l2-gridder:latest -f ./pip.Dockerfile \
 	--build-arg notebook=smap-l2-gridder_Regression.ipynb --build-arg sub_dir=smap-l2-gridder \
 	--build-arg shared_utils=true .
 

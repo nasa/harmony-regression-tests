@@ -305,12 +305,12 @@ dependencies:
 ```
 
 Alternatively, a suite can use a pip `requirements.txt` instead of an
-`environment.yaml`. Those suites are built from `test/Dockerfile.pip` (a plain
+`environment.yaml`. Those suites are built from `test/pip.Dockerfile` (a plain
 `python:3.12-slim` image, packages pip-installed into its Python) rather than
 the micromamba-based `test/Dockerfile`. To use it, add a `requirements.txt` with
 pinned versions (it must include `papermill` and `ipykernel`), pass
-`-f ./Dockerfile.pip` in the suite's `test/Makefile` target, and add
-`dockerfile: "Dockerfile.pip"` to the suite's matrix entry in
+`-f ./pip.Dockerfile` in the suite's `test/Makefile` target, and add
+`dockerfile: "pip.Dockerfile"` to the suite's matrix entry in
 `.github/workflows/build-all-images.yml`. See `test/smap-l2-gridder` for an
 example.
 
