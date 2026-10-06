@@ -289,9 +289,11 @@ For example, in the `swath-projector` directory we have
 
 ### Choosing an environment
 
-Each suite defines its Python environment either via pip in a requirements.txt file or via conda via an environment.yaml file. Use pip if all
-your dependencies are on PyPI and your test python version is flexible, currently using python:3.12-slim; use conda if you need conda-forge packages
-(e.g. GDAL) or need to specify your python version explicitly.
+Each suite defines its Python environment either via pip in a requirements.txt
+file or via conda via an environment.yaml file. Use pip if all your
+dependencies are on PyPI and your test python version is flexible, currently
+using python:3.12-slim; use conda if you need conda-forge packages (e.g. GDAL)
+or need to specify your python version explicitly.
 
 |                        | conda                          | pip                                               |
 |------------------------|--------------------------------|---------------------------------------------------|
