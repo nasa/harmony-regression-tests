@@ -306,7 +306,7 @@ dependencies:
 
 Alternatively, a suite can use a pip `requirements.txt` instead of an
 `environment.yaml`. Those suites are built from `test/pip.Dockerfile` (a plain
-`python:3.12-slim` image, packages pip-installed into its Python) rather than
+`python:3.12-slim` image, packages installed into its Python with `uv pip`) rather than
 the micromamba-based `test/Dockerfile`. To use it, add a `requirements.txt` with
 pinned versions (it must include `papermill` and `ipykernel`), pass
 `-f ./pip.Dockerfile` in the suite's `test/Makefile` target, and add
