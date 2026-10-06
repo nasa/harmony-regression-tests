@@ -158,9 +158,15 @@ This manual workflow exposes a `test-suite` choice input in the workflow dispatc
    test suite optionally including the shared utility directory:
 
    ```
-   <new-suite-name>-image
-       docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./Dockerfile --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> [--build-arg shared_utils=true] .
+   <new-suite-name>-image: Dockerfile <new-suite-name>/environment.yaml
+       docker build -t ghcr.io/nasa/regression-tests-<new-suite-name>:latest -f ./[pip.]Dockerfile \
+       --build-arg notebook=<new-test-notebook-name> --build-arg sub_dir=<new-suite-subdirectory> \
+       [--build-arg shared_utils=true] .
    ```
+
+   *Suites that use a pip `requirements.txt` instead of a conda `environment.yaml` build with `-f ./pip.Dockerfile` (see [Choosing an environment](#choosing-an-environment)).*
+
+
 
 1. If you would like to use shared utilities to help ease the coding you can
    add the shared_util build-arg to your docker build command in the Makefile
@@ -281,38 +287,37 @@ For example, in the `swath-projector` directory we have
   that PR to the `main` branch will trigger the publication of a new version of
   that regression test Docker image.
 
-Notebook dependencies should be listed in file named `environment.yaml` at the
-top level of the subdirectory. The `name` field in the file should be
-`papermill`. For example:
+### Choosing an environment
 
- ```yaml
-name: papermill-<IMAGE>
+Each suite defines its Python environment either via pip in a requirements.txt file or via conda via an environment.yaml file. Use pip if all
+your dependencies are on PyPI and your test python version is flexible, currently using python:3.12-slim; use conda if you need conda-forge packages
+(e.g. GDAL) or need to specify your python version explicitly.
+
+|                        | conda                          | pip                                               |
+|------------------------|--------------------------------|---------------------------------------------------|
+| Dependency file        | `environment.yaml`             | `requirements.txt` (pinned versions)              |
+| Dockerfile             | `test/Dockerfile` (micromamba) | `test/pip.Dockerfile` (`python:3.12-slim` + `uv`) |
+| `test/Makefile` target | `-f ./Dockerfile`              | `-f ./pip.Dockerfile`                             |
+| `build-all-images.yml` | nothing extra                  | `dockerfile: "pip.Dockerfile"`                    |
+| Example suite          | `test/hoss`                    | `test/smap-l2-gridder`                            |
+
+Either way the environment must include `papermill` and `ipykernel`. A conda
+environment must be named `papermill-<suite>`:
+
+```yaml
+name: papermill-<suite>
 channels:
   - conda-forge
   - nodefaults
 dependencies:
-- python=3.12
-  - jupyter
-  - requests
-  - netcdf4
-  - matplotlib
+  - python=3.12
   - papermill
-  - pytest
-  - ipytest
+  - ipykernel
+  - netcdf4
   - pip:
     - harmony-py
     - earthdata-hashdiff
 ```
-
-Alternatively, a suite can use a pip `requirements.txt` instead of an
-`environment.yaml`. Those suites are built from `test/pip.Dockerfile` (a plain
-`python:3.12-slim` image, packages installed into its Python with `uv pip`) rather than
-the micromamba-based `test/Dockerfile`. To use it, add a `requirements.txt` with
-pinned versions (it must include `papermill` and `ipykernel`), pass
-`-f ./pip.Dockerfile` in the suite's `test/Makefile` target, and add
-`dockerfile: "pip.Dockerfile"` to the suite's matrix entry in
-`.github/workflows/build-all-images.yml`. See `test/smap-l2-gridder` for an
-example.
 
 ## Reference files
 
@@ -328,7 +333,7 @@ for hosting reference files within the git repository:
    subdirectory for the tests. This is also the method, currently, for hosting
    reference files that cannot be opened with `xarray`.
 2) For larger files, or files that can be opened with `xarray` (netCDF4, HDF-5),
-   it is strongly preferred that files make use of shared functionality that
+   it is **strongly** preferred that files make use of shared functionality that
    will  generate smaller reference files by hashing the group and variable
    information for a file that can be parsed with `xarray`. The produced file is
    a JSON mapping of group and variable paths to a hash value. Information that
@@ -430,7 +435,7 @@ To increase runtime efficiency, the build relies on
 Micromamba and mamba are meant to be drop in replacements for miniconda and
 conda. The fast solving allows us to skip creating a conda-lock file, and the
 dependency management is entirely defined by the `environment.yaml` file.
-Suites using a `requirements.txt` are built with pip instead (see above for instructions).
+Suites using a `requirements.txt` are built from `pip.Dockerfile` with `uv pip` instead (see above for instructions).
 
 Test notebooks should not rely on other forms of dependency management or expect user input.
 They _should_ utilize the `harmony_host_url` global variable to communicate with Harmony
