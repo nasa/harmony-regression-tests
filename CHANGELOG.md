@@ -5,6 +5,17 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-10-07 ([#334](https://github.com/nasa/harmony-regression-tests/pull/334))
+
+### Fixed
+
+- nsidc-smap (v1.4.5)
+  + Reverts `landcover_class_fraction_reference.json` to its pre-#297 hash. The
+    #297 reference was generated from net2cog 1.3.0 output in which 20,307
+    fill pixels in bands 2 and 3 were `-9998.999` (one float32 step above the
+    `-9999` nodata value). Current net2cog output has every fill pixel at
+    exactly `-9999`, matching the original reference.
+
 ## 2026-10-05 ([#330](https://github.com/nasa/harmony-regression-tests/pull/330))
 
 ### Changed
