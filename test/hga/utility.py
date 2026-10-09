@@ -3,12 +3,10 @@ import json
 from os.path import basename
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Any, TypedDict
+from typing import Any
 
-import harmony
 import rasterio
 from harmony import Client
-from harmony.client import ProcessingFailedException
 from numpy.testing import assert_array_almost_equal
 from rio_cogeo.cogeo import cog_info
 
