@@ -27,9 +27,9 @@ def verify_cog_crs(downloaded_cog_file, expected_crs: str):
     """Verify output file is valid COG and CRS is correct"""
     print(f"Assessing: {basename(downloaded_cog_file)}")
 
-    assert cog_info(downloaded_cog_file).GEO.CRS == expected_crs, (
-        f"Expected crs {expected_crs}, got {cog_info(downloaded_cog_file).GEO.CRS}"
-    )
+    assert (
+        cog_info(downloaded_cog_file).GEO.CRS == expected_crs
+    ), f"Expected crs {expected_crs}, got {cog_info(downloaded_cog_file).GEO.CRS}"
 
     print_success(
         f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
@@ -64,9 +64,9 @@ def validate_nisar_outputs(
             if not url.endswith(".txt")
         ]
 
-        assert len(downloaded_cog_outputs) == expected_results["expected_file_count"], (
-            f"Invalid output count expected {expected_results['expected_file_count']} got {len(downloaded_cog_outputs)}."
-        )
+        assert (
+            len(downloaded_cog_outputs) == expected_results["expected_file_count"]
+        ), f"Invalid output count expected {expected_results['expected_file_count']} got {len(downloaded_cog_outputs)}."
         print_success(
             f"Correct number of generated output files: {expected_results['expected_file_count']}"
         )
@@ -76,9 +76,9 @@ def validate_nisar_outputs(
             with rasterio.open(file) as src:
                 src.read(1)  # Read the first band
 
-                assert src.bounds in expected_results["expected_bounding_box"], (
-                    f"Bounds didn't match: Expected {expected_results['expected_bounding_box']}, got {src.bounds}"
-                )
+                assert (
+                    src.bounds in expected_results["expected_bounding_box"]
+                ), f"Bounds didn't match: Expected {expected_results['expected_bounding_box']}, got {src.bounds}"
                 print_success(f"Correct Bounding Box: {src.bounds}")
 
         # Use md5sums to compare previously returned outputs
@@ -97,9 +97,9 @@ def validate_nisar_outputs(
     else:
         print(f"Verifying existing md5sums for test case {test_case}")
         expected_md5sums = json.load(md5sums_path.open())
-        assert actual_md5sums == expected_md5sums, (
-            f"md5sums for {test_case} do not match expected"
-        )
+        assert (
+            actual_md5sums == expected_md5sums
+        ), f"md5sums for {test_case} do not match expected"
 
 
 def assert_dataset_produced_correct_results(
@@ -110,9 +110,9 @@ def assert_dataset_produced_correct_results(
         rasterio.open(generated_file) as test_dataset,
         rasterio.open(reference_file) as reference_dataset,
     ):
-        assert test_dataset.meta == reference_dataset.meta, (
-            f"output has incorrect metadata: {test_dataset.meta}"
-        )
+        assert (
+            test_dataset.meta == reference_dataset.meta
+        ), f"output has incorrect metadata: {test_dataset.meta}"
         print_success("Generated image has correct metadata.")
 
         ref_image = reference_dataset.read()
@@ -132,7 +132,7 @@ def validate_bounding_box(cog_file: str, expected_results: dict[str, Any]) -> No
     """
     with rasterio.open(cog_file) as src:
         expected_bboxs = expected_results["expected_bounding_box"]
-        assert src.bounds in expected_bboxs, (
-            f"Bounds did not match: Expected {expected_bboxs}, got {src.bounds}"
-        )
+        assert (
+            src.bounds in expected_bboxs
+        ), f"Bounds did not match: Expected {expected_bboxs}, got {src.bounds}"
         print_success(f"Correct Bounding Box: {src.bounds}")
