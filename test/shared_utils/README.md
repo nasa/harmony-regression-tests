@@ -26,7 +26,7 @@ To include the shared_utils directory on the regression image built by GitHub yo
 
 ## Include the necessary python packages in your test's environment.yaml
 
-The test environment is determined by the environment.yaml in the test directory, but if you are using routines from `shared_utils` you will need to also update your test's `environment.yaml` to include the libraries that are imported in the shared modules. That means `harmony-py` to use routines from utilities.py. As always you should look in the files to see if there are new requirements.  Note: the harmony-py library must be >= 1.0.0 to use the shared-utilities.
+The test environment can be built using either conda or pip. Conda based test images use the `test/Dockerfile` and an environment.yaml, while pip-based test images use the equivalent `test/pip.Dockerfile` and a requirements.txt file. If you are using routines from the shared_utils you will need to also update your test's `environment.yaml` (or `requirements.txt`) to include the libraries that are imported in the shared modules. That means `harmony-py` to use routines from utilities.py. As always you should look in the files to see if there are new requirements.  Note: the harmony-py library must be >= 1.0.0 to use the shared-utilities.
 
 For example the pip requirements in the nsidc_icesat2 environment file :
 ```
