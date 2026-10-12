@@ -76,6 +76,10 @@ giovanni-time-series-adapter-image: Dockerfile giovanni-time-series-adapter/envi
 	docker build -t ghcr.io/nasa/regression-tests-giovanni-time-series-adapter:latest -f ./Dockerfile \
 	--build-arg notebook=GiovanniTimeSeriesAdapter_Regression.ipynb --build-arg sub_dir=giovanni-time-series-adapter .
 
+hga-image: Dockerfile hga/environment.yaml
+	docker build -t ghcr.io/nasa/regression-tests-hga:latest -f ./Dockerfile \
+	--build-arg notebook=HGA_Regression.ipynb --build-arg sub_dir=hga .
+
 net2cog-image: Dockerfile net2cog/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-net2cog:latest -f ./Dockerfile \
 	--build-arg notebook=net2cog_Regression.ipynb --build-arg sub_dir=net2cog .
@@ -130,4 +134,5 @@ images: harmony-image \
 	nisar-py-image \
 	casper-image \
 	podaac-l2-subsetter-image \
+	hga-image \
 	harmony-flow-image
