@@ -3,8 +3,6 @@
   "batchee": "sambah",
   "filtering": "imagenator",
   "geoloco": "geoloco",
-  "giovanni-averaging-service-adapter": "giovanni-averaging-service",
-  "giovanni-time-series-adapter": "giovanni-time-series-adapter",
   "harmony-regridder": "regridder",
   "harmony-service-example": "harmony-regression",
   "harmony-smap-l2-gridder": "nsidc-smap,smap-l2-gridder",
