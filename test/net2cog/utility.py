@@ -81,6 +81,9 @@ def validate_smap_outputs(
             assert (
                 not missing_substrings
             ), f"Substrings {missing_substrings} not found in {downloaded_cog_outputs}"
+            print_success(
+                f"Correct output file substrings found: {expected_results['expected_file_substrings']}"
+            )
 
         for downloaded_cog_file in downloaded_cog_outputs:
             verify_cog_crs(downloaded_cog_file, expected_results["expected_crs"])
