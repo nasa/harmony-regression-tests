@@ -70,6 +70,18 @@ def validate_smap_outputs(
             f"Correct number of generated output files: {expected_results['expected_file_count']}"
         )
 
+        if expected_results.get("expected_file_substrings"):
+            missing_substrings = [
+                sub_string
+                for sub_string in expected_results["expected_file_substrings"]
+                if not any(
+                    sub_string in cog_output for cog_output in downloaded_cog_outputs
+                )
+            ]
+            assert (
+                not missing_substrings
+            ), f"Substrings {missing_substrings} not found in {downloaded_cog_outputs}"
+
         for downloaded_cog_file in downloaded_cog_outputs:
             verify_cog_crs(downloaded_cog_file, expected_results["expected_crs"])
 
