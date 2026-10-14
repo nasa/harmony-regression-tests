@@ -5,6 +5,21 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-10-14 ([#337](https://github.com/nasa/harmony-regression-tests/pull/337))
+
+### Changed
+
+- Pip.Dockerfile
+   + updated base image to python-slim:3.13.
+
+- smap-l2-gridder (v1.1.2)
+   + updated to use new Pip.Dockerfile and upgraded all python libs.
+
+### Added
+
+- run-local.sh
+  + Helper function to run a regression tests' notebook via papermill after activating your local virtual environment.
+
 
 ## 2026-10-14 ([#336](https://github.com/nasa/harmony-regression-tests/pull/336))
 

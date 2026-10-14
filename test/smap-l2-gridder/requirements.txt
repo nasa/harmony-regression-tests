@@ -1,8 +1,8 @@
-earthdata-hashdiff==1.2.0
-harmony-py==1.7.0
-ipykernel==7.3.0
-netCDF4==1.7.2
-notebook==7.2.2
-numpy==2.2.3
-papermill==2.6.0
-xarray==2025.6.1
+earthdata-hashdiff==1.2.1
+harmony-py==1.8.0
+ipykernel==7.4.0
+netCDF4==1.7.4
+notebook==7.6.3
+numpy==2.5.4
+papermill==2.7.0
+xarray==2026.9.0
