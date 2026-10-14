@@ -28,6 +28,6 @@
   "nsidc-smap": "nsidc-smap",
   "sambah": "sambah",
   "casper": "casper,sambah",
-  "hga": "harmony-gdal-adapter",
+  "harmony-gdal-adapter": "hga",
   "harmony-flow": "harmony-flow"
 }

@@ -34,7 +34,7 @@ on:
       docker-image-tag:
         required: false
         type: string
-        default: 'latest'
+        default: "latest"
 
   workflow_dispatch:
     inputs:
@@ -60,7 +60,7 @@ on:
           - giovanni-averaging-service-adapter
           - giovanni-time-series-adapter
           - harmony-flow
-          - harmony-gdal-adapter
+          - hga
           - harmony-regridder
           - harmony-service-example
           - harmony-smap-l2-gridder
@@ -88,7 +88,7 @@ on:
         description: "Optional Docker image tag to use for the tests"
         required: false
         type: string
-        default: 'latest'
+        default: "latest"
 
   repository_dispatch:
     types:
@@ -101,7 +101,7 @@ on:
       - giovanni-averaging-service-adapter
       - giovanni-time-series-adapter
       - harmony-flow
-      - harmony-gdal-adapter
+      - hga
       - harmony-regridder
       - harmony-service-example
       - harmony-smap-l2-gridder
@@ -128,7 +128,7 @@ on:
       docker-image-tag:
         required: false
         type: string
-        default: 'latest'
+        default: "latest"
 
 jobs:
   base:
