@@ -19,6 +19,9 @@ Options:
                   and deployed Harmony service versions; use matching tagged
                   image when available, otherwise fall back to the suite's
                   version from test/<suite>/version.txt
+  (default)       No option is needed; uses standard image naming rules,
+                  which default to ghcr.io/nasa/regression-tests-<suite>:latest
+                  unless a suite IMAGE env var override is set
   -h, --help      Show this help text
 
 Environment:
@@ -59,6 +62,9 @@ echo -e "Using ${HARMONY_HOST_URL}\n"
 case $HARMONY_HOST_URL in
 "https://harmony.earthdata.nasa.gov")
   configuration_file="${SCRIPT_DIR}/../config/services_tests_config_prod.json"
+  ;;
+"https://harmony.sit.earthdata.nasa.gov")
+  configuration_file="${SCRIPT_DIR}/../config/services_tests_config_sit.json"
   ;;
 *)
   configuration_file="${SCRIPT_DIR}/../config/services_tests_config_uat.json"

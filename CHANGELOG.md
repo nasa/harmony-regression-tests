@@ -5,12 +5,19 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent.  This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-10-13 ([#336](https://github.com/nasa/harmony-regression-tests/pull/336))
+
+## 2026-10-14 ([#336](https://github.com/nasa/harmony-regression-tests/pull/336))
 
 ### Changed
 
 - net2cog (v0.7.1)
   + Adds test for filename substring matching to ensure every expected variable file was retrieved.
+
+## 2026-10-13 ([#337](https://github.com/nasa/harmony-regression-tests/pull/337))
+
+### Changed
+
+- Enable SIT regression tests in Bamboo and remove giovanni tests from SIT regresssion tests.
 
 ## 2026-10-06 ([#329](https://github.com/nasa/harmony-regression-tests/pull/329))
 
