@@ -2,8 +2,18 @@
 
 The harmony-regression-tests repository does not follow semantic
 versioning. Rather than a static releases, this repository contains of a number
-of regression tests that are each semi-independent.  This CHANGELOG file should be used
+of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
+
+## 2026-10-15 ([#335](https://github.com/nasa/harmony-regression-tests/pull/335))
+
+### Added
+
+- Registered the Harmony GDAL Adapter regression tests which test the rewrite of the Harmony GDAL Adapter against various NISAR granules.
+
+### Changed
+
+- The net2cog regression tests no longer test against NISAR granules.
 
 ## 2026-10-06 ([#329](https://github.com/nasa/harmony-regression-tests/pull/329))
 
@@ -14,7 +24,7 @@ to document pull requests to this repository.
 ### Changed
 
 - smap-l2-gridder (v1.1.1)
-  + Built from the new pip-based `test/pip.Dockerfile` (`python:3.12-slim`) instead of micromamba. `environment.yaml` replaced by `requirements.txt`.
+  - Built from the new pip-based `test/pip.Dockerfile` (`python:3.12-slim`) instead of micromamba. `environment.yaml` replaced by `requirements.txt`.
 - `build-target-image.yml` updated to accept an optional `dockerfile` input (default `Dockerfile`), set per suite from the `build-all-images.yml` matrix.
 
 ## 2026-10-07 ([#334](https://github.com/nasa/harmony-regression-tests/pull/334))
@@ -22,7 +32,7 @@ to document pull requests to this repository.
 ### Fixed
 
 - nsidc-smap (v1.4.5)
-  + Reverts `landcover_class_fraction_reference.json` to its pre-#297 hash. The
+  - Reverts `landcover_class_fraction_reference.json` to its pre-#297 hash. The
     #297 reference was generated from net2cog 1.3.0 output in which 20,307
     fill pixels in bands 2 and 3 were `-9998.999` (one float32 step above the
     `-9999` nodata value). Current net2cog output has every fill pixel at
@@ -33,8 +43,7 @@ to document pull requests to this repository.
 ### Changed
 
 - nsidc-smap (v1.4.4)
-  + Upgrades service libraries including earthdata-hashdiff to reduce memory usage.
-
+  - Upgrades service libraries including earthdata-hashdiff to reduce memory usage.
 
 ## 2026-10-05 ([#332](https://github.com/nasa/harmony-regression-tests/pull/332))
 
@@ -47,8 +56,8 @@ to document pull requests to this repository.
 ### Changed
 
 - smap-l2-gridder (v1.1.0)
-  + smap-l2-gridder regression tests modified to subset by variable before gridding to make the test use less memory.
-  + `nc_matches_reference_hash_file`given additional parameter `'cache': False` further reduce memory usage during hash computations.
+  - smap-l2-gridder regression tests modified to subset by variable before gridding to make the test use less memory.
+  - `nc_matches_reference_hash_file`given additional parameter `'cache': False` further reduce memory usage during hash computations.
 
 ## 2026-09-25 ([#327](https://github.com/nasa/harmony-regression-tests/pull/327))
 
@@ -77,13 +86,11 @@ to document pull requests to this repository.
 
 - Enable CSV-conversion test in PROD environment
 
-
 ## 2026-09-18 ([#323](https://github.com/nasa/harmony-regression-tests/pull/323))
 
 ### Added
 
 - Add auto-tagging of test image version when test runs successfully.
-
 
 ## 2026-09-16 ([#319](https://github.com/nasa/harmony-regression-tests/pull/319))
 
@@ -97,7 +104,6 @@ to document pull requests to this repository.
 ### Changed
 
 - Updated the sambah reference hashes for changes introduced by updates in l2ss-py 3.3.3.
-
 
 ## 2026-08-18 ([#314](https://github.com/nasa/harmony-regression-tests/pull/314))
 
@@ -117,12 +123,11 @@ to document pull requests to this repository.
 
 - Add regression test image tag validation workflows
 
-
 ## 2026-08-07 ([#311](https://github.com/nasa/harmony-regression-tests/pull/311))
 
 ### Changed
-- Add harmony-flow to image build and regression test workflows
 
+- Add harmony-flow to image build and regression test workflows
 
 ## 2026-08-05 ([#310](https://github.com/nasa/harmony-regression-tests/pull/310))
 
@@ -130,28 +135,27 @@ to document pull requests to this repository.
 
 - Added basic GUNW test cases to `net2cog` test.
 
-
 ## 2026-08-03 ([#309](https://github.com/nasa/harmony-regression-tests/pull/309))
 
 ### Changed
-- Dynamic regression image selection based on deployed service version in Harmony
 
+- Dynamic regression image selection based on deployed service version in Harmony
 
 ## 2026-07-30 ([#308](https://github.com/nasa/harmony-regression-tests/pull/308))
 
 ### Changed
-- Modified reference data for nisar-py regression tests (fixing discrepancy in previous change)
 
+- Modified reference data for nisar-py regression tests (fixing discrepancy in previous change)
 
 ## 2026-07-30 ([#307](https://github.com/nasa/harmony-regression-tests/pull/307))
 
 ### Changed
+
 - Modified reference data for nisar-py regression tests to reflect changes to tiling in HyBIG 2.8.2
 
-
 ## 2026-07-21 ([#306](https://github.com/nasa/harmony-regression-tests/pull/306))
-- Added a `harmony-flow` regression test for processing OSCAR L4 NRT V2.0 granules
 
+- Added a `harmony-flow` regression test for processing OSCAR L4 NRT V2.0 granules
 
 ## 2026-07-20 ([#304](https://github.com/nasa/harmony-regression-tests/pull/304/))
 
@@ -167,6 +171,7 @@ to document pull requests to this repository.
 - Add `l2ss-py` regression tests.
 
 =======
+
 ## 2026-07-15 ([#302](https://github.com/nasa/harmony-regression-tests/pull/302/))
 
 ### Changed
@@ -188,7 +193,6 @@ to document pull requests to this repository.
 
 - Updates notebook-entrypoint.sh to ensure the correct python kernel is used
   when running the docker container tests. Fixes #121
-
 
 ## 2026-06-24 ([#297](https://github.com/nasa/harmony-regression-tests/pull/297))
 
@@ -391,20 +395,17 @@ to document pull requests to this repository.
 - Modified file list generation behavior to reflect newer harmony-py (1.3.3) convention.
 - Added regression test for TEMPO Imagenator-L2 processing.
 
-
 ## 2025-12-03 ([#237](https://github.com/nasa/harmony-regression-tests/pull/237))
 
 ### Changed
 
 - Updates the configuration for maskfill's new service image tag value.
 
-
 ## 2025-11-19 ([#231](https://github.com/nasa/harmony-regression-tests/pull/231))
 
 ### Changed
 
 - NSIDC's ICESat-2 regression tests are updated to run against V7 collections and granules.
-
 
 ## 2025-11-17 ([#233](https://github.com/nasa/harmony-regression-tests/pull/233))
 
@@ -414,23 +415,21 @@ to document pull requests to this repository.
   introduced by metadata-annotator v.1.6.0 and regidder v1.10.0.
 - Add README to nsidc-smap test suite to document required use of `skipped_metadata_attributes` argument when generating JSON reference hash files.
 
-
 ## 2025-11-10 ([#229](https://github.com/nasa/harmony-regression-tests/pull/229))
 
 ### Changed
 
 - Updates the HyBIG regression tests to add several new tests, as well as associated reference data.
 - Modified the PREFIRE regression test reference data to account for new nodata index behavior implemented in
-[GITC-8020](https://bugs.earthdata.nasa.gov/browse/GITC-8020), part of [HyBIG 2.4.2](https://github.com/nasa/harmony-browse-image-generator/releases/tag/2.4.2)
-
+  [GITC-8020](https://bugs.earthdata.nasa.gov/browse/GITC-8020), part of [HyBIG 2.4.2](https://github.com/nasa/harmony-browse-image-generator/releases/tag/2.4.2)
 
 ## 2025-10-15 ([#224](https://github.com/nasa/harmony-regression-tests/pull/224))
 
 ### Changed
 
 - Updates regridder SPL4SMAU reference file to account for difference in the naming of phony
-dimensions introduced in metadata-annotator v1.5.0 due to the switch from using the default netcdf4
-engine to h5netcdf.
+  dimensions introduced in metadata-annotator v1.5.0 due to the switch from using the default netcdf4
+  engine to h5netcdf.
 
 ## 2025-10-10 ([#222](https://github.com/nasa/harmony-regression-tests/pull/222))
 
@@ -445,7 +444,6 @@ engine to h5netcdf.
 
 - Updates the `nsidc-smap` and `nsidc-icesat2` regression test to submit requests before processing them, to allow the tests to complete faster.
 - Adds shared_utility function `download_file_from_harmony` to download a single file from harmony into a target location.
-
 
 ## 2025-10-07 (([#209](https://github.com/nasa/harmony-regression-tests/pull/209)))
 
@@ -466,7 +464,6 @@ engine to h5netcdf.
 
 - Updates regridder reference files to account for changes to implicit grid
   computation introduced in harmony-regridding-service v1.8.0.
-
 
 ## 2025-09-24 ([#216](https://github.com/nasa/harmony-regression-tests/pull/216))
 
@@ -490,7 +487,6 @@ engine to h5netcdf.
 
 - Added ATL24_subset_bounding_box_reference.json
 - Updated NSIDC-ICESAT2_Regression.ipynb with new ATL24 spatial subsetting test.
-
 
 ## 2025-09-12 ([#211](https://github.com/nasa/harmony-regression-tests/pull/211))
 
@@ -664,7 +660,8 @@ engine to h5netcdf.
 ### Changed
 
 - Disabled one non-critical HyBIG regression test temporarily to enable release of HyBIG 2.4.0 to production. One test related to JPEG support is failing, but this was accepted and will be fixed in a minor version shortly. One test had its reference data changed to
- reflect new intended behavior.
+  reflect new intended behavior.
+
 ## 2025-06-09 ([#177](https://github.com/nasa/harmony-regression-tests/pull/177))
 
 ### Changed
@@ -701,7 +698,6 @@ engine to h5netcdf.
 ### Changed
 
 - ATL16 regridding service reference file updated to reflect corrected missing data handling.
-
 
 ## 2025-05-02 [#165](https://github.com/nasa/harmony-regression-tests/pull/165))
 
@@ -893,7 +889,6 @@ engine to h5netcdf.
   set to `False` the Datatree comparison falls back to an `equals` test
   ignoring metadata in its reference file comparisons.
 
-
 ## 2024-09-24 ([#92](https://github.com/nasa/harmony-regression-tests/pull/92))
 
 - Add NSIDC ICESat2 Regression test suite.
@@ -907,7 +902,6 @@ engine to h5netcdf.
 
 - Add Git LFS functionality. Large files can be configured to use [Git LFS](https://git-lfs.com/).
   This PR configures the NSIDC reference files `test/nsidc-icesat2/reference_files/*.h5`.
-
 
 ## 2024-08-30 ([#94](https://github.com/nasa/harmony-regression-tests/pull/94))
 
