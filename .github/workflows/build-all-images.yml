@@ -74,7 +74,7 @@ jobs:
             image: "hga"
             notebook: "HGA_Regression.ipynb"
             shared-utils: "true"
-            dockerfile: "pip.Dockerfile" 
+            dockerfile: "pip.Dockerfile"
           -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
