@@ -8,10 +8,8 @@ from os.path import basename
 from pathlib import Path
 from shutil import move
 
-import rasterio
 from harmony import Client, Request
 from harmony.client import ProcessingFailedException
-from numpy.testing import assert_array_almost_equal
 from rio_cogeo.cogeo import cog_info, cog_validate
 
 
@@ -23,9 +21,9 @@ def verify_cog_crs(downloaded_cog_file, expected_crs: str, check_cog: bool):
         assert cog_validate(downloaded_cog_file)[0]
         print_success("Generated output files is a valid COG.")
 
-    assert cog_info(downloaded_cog_file).GEO.CRS == expected_crs, (
-        f"Expected crs {expected_crs}, got {cog_info(downloaded_cog_file).GEO.CRS}"
-    )
+    assert (
+        cog_info(downloaded_cog_file).GEO.CRS == expected_crs
+    ), f"Expected crs {expected_crs}, got {cog_info(downloaded_cog_file).GEO.CRS}"
 
     print_success(
         f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
@@ -34,12 +32,12 @@ def verify_cog_crs(downloaded_cog_file, expected_crs: str, check_cog: bool):
 
 def print_error(error_string: str):
     """Print an error, with formatting for red text."""
-    print(f'\033[91m{error_string}\033[0m')
+    print(f"\033[91m{error_string}\033[0m")
 
 
 def print_success(success_string: str):
     """Print a success message, with formatting for green text."""
-    print(f'\033[92mSuccess: {success_string}\033[0m')
+    print(f"\033[92mSuccess: {success_string}\033[0m")
 
 
 def submit_and_download(
@@ -59,15 +57,15 @@ def submit_and_download(
             file_future.result()
             for file_future in harmony_client.download_all(job_id, overwrite=True)
         ]:
-            print(f'Downloaded: {filename}')
+            print(f"Downloaded: {filename}")
             downloaded_filename = filename
 
         if downloaded_filename is not None:
             move(downloaded_filename, output_file_name)
-            print(f'Saved output to: {output_file_name}')
+            print(f"Saved output to: {output_file_name}")
 
     except ProcessingFailedException as exception:
-        print_error('Harmony request failed to complete successfully.')
+        print_error("Harmony request failed to complete successfully.")
         raise exception
 
 
