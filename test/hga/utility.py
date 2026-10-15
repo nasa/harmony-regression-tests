@@ -1,6 +1,5 @@
 import hashlib
 import json
-from os.path import basename
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
@@ -38,9 +37,9 @@ def validate_nisar_outputs(
             if not url.endswith(".txt")
         ]
 
-        assert len(downloaded_cog_outputs) == expected_results["expected_file_count"], (
-            f"Invalid output count expected {expected_results['expected_file_count']} got {len(downloaded_cog_outputs)}."
-        )
+        assert (
+            len(downloaded_cog_outputs) == expected_results["expected_file_count"]
+        ), f"Invalid output count expected {expected_results['expected_file_count']} got {len(downloaded_cog_outputs)}."
         print_success(
             f"Correct number of generated output files: {expected_results['expected_file_count']}"
         )
@@ -50,9 +49,9 @@ def validate_nisar_outputs(
             with rasterio.open(file) as src:
                 src.read(1)  # Read the first band
 
-                assert src.bounds in expected_results["expected_bounding_box"], (
-                    f"Bounds didn't match: Expected {expected_results['expected_bounding_box']}, got {src.bounds}"
-                )
+                assert (
+                    src.bounds in expected_results["expected_bounding_box"]
+                ), f"Bounds didn't match: Expected {expected_results['expected_bounding_box']}, got {src.bounds}"
                 print_success(f"Correct Bounding Box: {src.bounds}")
 
         # Use md5sums to compare previously returned outputs
@@ -71,6 +70,6 @@ def validate_nisar_outputs(
     else:
         print(f"Verifying existing md5sums for test case {test_case}")
         expected_md5sums = json.load(md5sums_path.open())
-        assert actual_md5sums == expected_md5sums, (
-            f"md5sums for {test_case} do not match expected"
-        )
+        assert (
+            actual_md5sums == expected_md5sums
+        ), f"md5sums for {test_case} do not match expected"
