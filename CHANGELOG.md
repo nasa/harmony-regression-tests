@@ -16,6 +16,21 @@ to document pull requests to this repository.
 - The net2cog regression tests no longer test against NISAR granules.
 - The net2cog `verify_cog_crs` function for verifying COG output is correct has been moved to `shared_utils/cog_utils`.
 
+## 2026-10-14 ([#338](https://github.com/nasa/harmony-regression-tests/pull/338))
+
+### Changed
+
+- Pip.Dockerfile
+  - updated base image to python-slim:3.14.
+
+- smap-l2-gridder (v1.1.2)
+  - updated to use new Pip.Dockerfile and upgraded all python libs.
+
+### Added
+
+- run-local.sh
+  - Helper function to run a regression tests' notebook via papermill after activating your local virtual environment.
+
 ## 2026-10-14 ([#336](https://github.com/nasa/harmony-regression-tests/pull/336))
 
 ### Changed
