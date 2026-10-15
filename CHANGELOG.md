@@ -14,6 +14,7 @@ to document pull requests to this repository.
 ### Changed
 
 - The net2cog regression tests no longer test against NISAR granules.
+- The net2cog `verify_cog_crs` function for verifying COG output is correct has been moved to `shared_utils/cog_utils`.
 
 ## 2026-10-14 ([#336](https://github.com/nasa/harmony-regression-tests/pull/336))
 
