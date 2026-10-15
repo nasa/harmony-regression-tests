@@ -1,0 +1,8 @@
+ipykernel==7.4.0
+notebook==7.6.3
+papermill==2.7.0
+rasterio==1.5.2
+rio-cogeo==7.0.2
+numpy==2.5.4
+pip==26.2.1
+harmony-py==1.8.0
