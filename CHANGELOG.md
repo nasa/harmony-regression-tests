@@ -10,7 +10,7 @@ to document pull requests to this repository.
 ### Changed
 
 - Pip.Dockerfile
-   + updated base image to python-slim:3.13.
+   + updated base image to python-slim:3.14.
 
 - smap-l2-gridder (v1.1.2)
    + updated to use new Pip.Dockerfile and upgraded all python libs.

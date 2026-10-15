@@ -29,7 +29,7 @@ fi
 
 # The Makefile is the source of truth for each suite's notebook name.
 notebook=$(grep -oE "notebook=[^ ]+ --build-arg sub_dir=${suite}( |$)" "${SCRIPT_DIR}/Makefile" \
-  | head -1 | sed -E 's/notebook=([^ ]+) .*/\1/')
+  | head -1 | sed -E 's/notebook=([^ ]+) .*/\1/' || true)
 if [[ -z "${notebook}" ]]; then
   echo "Could not find the notebook for '${suite}' in ${SCRIPT_DIR}/Makefile" >&2
   exit 1
