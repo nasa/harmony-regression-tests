@@ -5,39 +5,11 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
+import matplotlib.pyplot as plt
+import rasterio
 from harmony import Client
 from numpy.testing import assert_array_almost_equal
-from rio_cogeo.cogeo import cog_validate, cog_info
-import rasterio
-import matplotlib.pyplot as plt
-
-
-def print_error(error_string: str) -> None:
-    """Print an error, with formatting for red text."""
-    print(f"\033[91m{error_string}\033[0m")
-    return
-
-
-def print_success(success_string: str) -> None:
-    """Print a success message, with formatting for green text."""
-    print(f"\033[92mSuccess: {success_string}\033[0m")
-    return
-
-
-def verify_cog_crs(downloaded_cog_file, expected_crs: str):
-    """Verify output file is valid COG and CRS is correct"""
-    print(f"Assessing: {basename(downloaded_cog_file)}")
-
-    assert cog_validate(downloaded_cog_file)[0]
-    print_success("Generated output files is a valid COG.")
-
-    assert (
-        cog_info(downloaded_cog_file).GEO.CRS == expected_crs
-    ), f"Expected crs {expected_crs}, got {cog_info(downloaded_cog_file).GEO.CRS}"
-
-    print_success(
-        f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
-    )
+from shared_utils import print_success, verify_cog_crs
 
 
 def validate_smap_outputs(
@@ -69,7 +41,7 @@ def validate_smap_outputs(
         )
 
         for downloaded_cog_file in downloaded_cog_outputs:
-            verify_cog_crs(downloaded_cog_file, expected_results["expected_crs"])
+            verify_cog_crs(downloaded_cog_file, expected_results["expected_crs"], True)
 
             reference_file = Path(
                 "./reference_data",
