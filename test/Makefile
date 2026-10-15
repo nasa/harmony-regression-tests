@@ -82,7 +82,8 @@ hga-image: Dockerfile hga/environment.yaml
 
 net2cog-image: Dockerfile net2cog/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-net2cog:latest -f ./Dockerfile \
-	--build-arg notebook=net2cog_Regression.ipynb --build-arg sub_dir=net2cog .
+	--build-arg notebook=net2cog_Regression.ipynb --build-arg sub_dir=net2cog \
+	--build-arg shared_utils=true .
 
 sambah-image: Dockerfile sambah/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-sambah:latest -f ./Dockerfile \

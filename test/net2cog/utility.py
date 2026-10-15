@@ -1,5 +1,6 @@
 """Simple utility functions used in the net2cog test notebook."""
 
+import sys
 from os.path import basename
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -9,7 +10,10 @@ import matplotlib.pyplot as plt
 import rasterio
 from harmony import Client
 from numpy.testing import assert_array_almost_equal
-from shared_utils import print_success, verify_cog_crs
+
+sys.path.append("../shared_utils")
+from cog_utils import verify_cog_crs
+from utilities import print_success
 
 
 def validate_smap_outputs(

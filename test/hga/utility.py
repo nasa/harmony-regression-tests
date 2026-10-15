@@ -1,12 +1,16 @@
 import hashlib
 import json
+import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
 import rasterio
 from harmony import Client
-from shared_utils import print_success, verify_cog_crs
+
+sys.path.append("../shared_utils")
+from cog_utils import verify_cog_crs
+from utilities import print_success
 
 
 def validate_nisar_outputs(

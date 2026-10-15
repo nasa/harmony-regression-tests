@@ -4,30 +4,11 @@ increase the readability of the regression test suite.
 
 """
 
-from os.path import basename
 from pathlib import Path
 from shutil import move
 
 from harmony import Client, Request
 from harmony.client import ProcessingFailedException
-from rio_cogeo.cogeo import cog_info, cog_validate
-
-
-def verify_cog_crs(downloaded_cog_file, expected_crs: str, check_cog: bool):
-    """Verify output file is valid COG and CRS is correct"""
-    print(f"Assessing: {basename(downloaded_cog_file)}")
-
-    if check_cog:
-        assert cog_validate(downloaded_cog_file)[0]
-        print_success("Generated output files is a valid COG.")
-
-    assert (
-        cog_info(downloaded_cog_file).GEO.CRS == expected_crs
-    ), f"Expected crs {expected_crs}, got {cog_info(downloaded_cog_file).GEO.CRS}"
-
-    print_success(
-        f"Correct Coordinate Reference System (CRS): {cog_info(downloaded_cog_file).GEO.CRS}"
-    )
 
 
 def print_error(error_string: str):
