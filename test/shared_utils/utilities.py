@@ -4,21 +4,21 @@ increase the readability of the regression test suite.
 
 """
 
-from shutil import move
 from pathlib import Path
+from shutil import move
 
 from harmony import Client, Request
 from harmony.client import ProcessingFailedException
 
 
-def print_error(error_string: str) -> str:
+def print_error(error_string: str):
     """Print an error, with formatting for red text."""
-    print(f'\033[91m{error_string}\033[0m')
+    print(f"\033[91m{error_string}\033[0m")
 
 
-def print_success(success_string: str) -> str:
+def print_success(success_string: str):
     """Print a success message, with formatting for green text."""
-    print(f'\033[92mSuccess: {success_string}\033[0m')
+    print(f"\033[92mSuccess: {success_string}\033[0m")
 
 
 def submit_and_download(
@@ -38,16 +38,15 @@ def submit_and_download(
             file_future.result()
             for file_future in harmony_client.download_all(job_id, overwrite=True)
         ]:
-
-            print(f'Downloaded: {filename}')
+            print(f"Downloaded: {filename}")
             downloaded_filename = filename
 
         if downloaded_filename is not None:
             move(downloaded_filename, output_file_name)
-            print(f'Saved output to: {output_file_name}')
+            print(f"Saved output to: {output_file_name}")
 
     except ProcessingFailedException as exception:
-        print_error('Harmony request failed to complete successfully.')
+        print_error("Harmony request failed to complete successfully.")
         raise exception
 
 

@@ -18,11 +18,6 @@ jobs:
           -
             image: "harmony-regression"
             notebook: "HarmonyRegression.ipynb"
-          # To be reenabled when HGA is redeveloped for TRT-645
-          # -
-          #   image: "hga"
-          #   notebook: "HGA_Regression.ipynb"
-          #   shared-utils: "true"
           -
             image: "hoss"
             notebook: "HOSS_Regression.ipynb"
@@ -76,8 +71,14 @@ jobs:
             notebook: "imagenator_Regression.ipynb"
             shared-utils: "true"
           -
+            image: "hga"
+            notebook: "HGA_Regression.ipynb"
+            shared-utils: "true"
+            dockerfile: "pip.Dockerfile"
+          -
             image: "net2cog"
             notebook: "net2cog_Regression.ipynb"
+            shared-utils: "true"
           -
             image: "sambah"
             notebook: "SAMBAH_Regression.ipynb"

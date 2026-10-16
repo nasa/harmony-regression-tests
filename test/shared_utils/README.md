@@ -34,15 +34,15 @@ name: papermill-nsidc-icesat2
 channels:
   - conda-forge
 dependencies:
-  - python=3.11.5
+  - python=3.13
   - netCDF4
-  - notebook=7.2.1
+  - notebook=7.4.0
   - numpy
   - papermill
   - pip
   - pip:
-    - harmony-py==1.0.0
-    - xarray==2025.1.2
+    - harmony-py==1.8.0
+    - xarray==2026.9.0
 ```
 
 ## Using the shared utility routines
@@ -62,3 +62,7 @@ from utilities import (
 
 print_success('yay! you imported the functions.')
 ```
+
+## Adding shared utility routines
+
+If you find that your utilties are useful for other regression tests, it can be helpful to add them to the shared utils.  Routines that do not require specific python libraries beyond `harmony-py` can go into the main `utilities.py`. Routines that require specific python imports should be isolated to separate files so that libraries that don't use or need those libraries can continue to use the shared_utilities without having to add those packages to their python run environments.
