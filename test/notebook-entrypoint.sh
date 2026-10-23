@@ -19,8 +19,8 @@ if [ $exit_code -ne 0 ]; then
   status="failed"
 fi
 
-if [ -f "${env_sub_dir}/report.py" ]; then
-  if ! python3 "${env_sub_dir}/report.py" "$status" "$start" "$end"; then
+if [ "${ASTRA:-false}" = "true" ]; then
+  if ! python3 /workdir/report.py "$status" "$start" "$end"; then
     echo "Failed to submit results to the reporting service." >&2
     exit_code=1
   fi

@@ -12,7 +12,7 @@ ENV PYTHONDONTWRITEBYTECODE=true
 
 WORKDIR /workdir
 
-COPY build-netrc.sh notebook-entrypoint.sh ./
+COPY build-netrc.sh notebook-entrypoint.sh fetch-edl-credentials.py report.py requirements-astra.txt ./
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libexpat1 \
@@ -22,6 +22,9 @@ RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/requirements.txt ./${sub_dir}
 
 RUN uv pip install --system --no-cache -r ${sub_dir}/requirements.txt
+
+# fetch-edl-credentials.py/report.py's dependencies, needed when ASTRA=true.
+RUN uv pip install --system --no-cache -r requirements-astra.txt
 
 # Include shared utility functions if requested.  This is a bit awkward, it
 # always copies the shared utils directory to the image, but then deletes it if

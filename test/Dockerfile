@@ -11,13 +11,18 @@ ENV PYTHONDONTWRITEBYTECODE=true
 
 WORKDIR /workdir
 
-COPY build-netrc.sh notebook-entrypoint.sh ./
+COPY build-netrc.sh notebook-entrypoint.sh fetch-edl-credentials.py report.py requirements-astra.txt ./
 
 RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/environment.yaml ./${sub_dir}
 
 RUN micromamba create -y -f ${sub_dir}/environment.yaml \
     && micromamba clean --all --force-pkgs-dirs --yes
+
+# fetch-edl-credentials.py/report.py's dependencies, needed when ASTRA=true.
+# Installed unconditionally here, rather than per-suite environment.yaml, so every
+# suite image supports ASTRA=true regardless of its own notebook dependencies.
+RUN micromamba run -n papermill-${sub_dir} pip install -r requirements-astra.txt
 
 # Include shared utility functions if requested.  This is a bit awkward, it
 # always copies the shared utils directory to the image, but then deletes it if

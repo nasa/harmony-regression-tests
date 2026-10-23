@@ -1,4 +1,4 @@
-"""Submit harmony-regression results to ASTRA's reporting service."""
+"""Submit a regression suite's results to ASTRA's reporting service."""
 
 import os
 import sys
@@ -13,6 +13,8 @@ def main() -> None:
         print("ETQ_REPORTING_URL is not set; skipping results submission.")
         return
 
+    sub_dir = os.environ["env_sub_dir"]
+    notebook = os.environ["env_notebook"]
     status, start_raw, end_raw = sys.argv[1], sys.argv[2], sys.argv[3]
     start = datetime.strptime(start_raw, "%Y-%m-%dT%H:%M:%S.%f%z")
     end = datetime.strptime(end_raw, "%Y-%m-%dT%H:%M:%S.%f%z")
@@ -21,13 +23,13 @@ def main() -> None:
     response = requests.post(
         url=f"{reporting_url}/v1/results",
         json={
-            "title": "Harmony Regression",
+            "title": sub_dir,
             "start": start.isoformat(),
             "end": end.isoformat(),
             "duration": duration,
             "tests": [
                 {
-                    "title": "HarmonyRegression.ipynb",
+                    "title": notebook,
                     "status": status,
                     "duration": duration,
                 }

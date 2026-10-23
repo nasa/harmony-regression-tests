@@ -1,0 +1,26 @@
+services:
+  reporter:
+    image: maven.earthdata.nasa.gov/etq/reporting-api:1
+    attach: false
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/v1/docs')"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+  test:
+    image: ghcr.io/nasa/regression-tests-casper:latest
+    depends_on:
+      reporter:
+        condition: service_healthy
+    environment:
+      ASTRA: "true"
+      ETQ_REPORTING_URL: http://reporter:8000
+      harmony_host_url: ${HARMONY_HOST_URL}
+      EDL_USER: ${EDL_USER}
+      EDL_PASSWORD: ${EDL_PASSWORD}
+      EDL_SECRETS_ROLE_ARN: ${EDL_SECRETS_ROLE_ARN}
+      AWS_PROFILE: ${AWS_PROFILE}
+      AWS_REGION: ${AWS_REGION}
+    volumes:
+      - ../output:/workdir/output
+      - ${HOME}/.aws:/root/.aws:ro
