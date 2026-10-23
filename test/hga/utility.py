@@ -49,7 +49,7 @@ def validate_nisar_outputs(
         )
 
         for file in downloaded_cog_outputs:
-            verify_cog_crs(file, expected_results["expected_crs"], False)
+            verify_cog_crs(file, expected_results["expected_crs"], True)
             with rasterio.open(file) as src:
                 src.read(1)  # Read the first band
 
