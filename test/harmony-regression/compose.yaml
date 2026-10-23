@@ -17,5 +17,9 @@ services:
       harmony_host_url: ${HARMONY_HOST_URL}
       EDL_USER: ${EDL_USER}
       EDL_PASSWORD: ${EDL_PASSWORD}
+      EDL_SECRETS_ROLE_ARN: ${EDL_SECRETS_ROLE_ARN}
+      AWS_PROFILE: ${AWS_PROFILE}
+      AWS_REGION: ${AWS_REGION}
     volumes:
       - ../output:/workdir/output
+      - ${HOME}/.aws:/root/.aws:ro
