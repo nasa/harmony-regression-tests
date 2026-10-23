@@ -1,0 +1,8 @@
+{
+    "science_LSAR_SME2_grids_ancillaryData_localIncidenceAngle_subsetted.tif": "40a2e568c2bc77e7eb82c18a9657a79f",
+    "science_LSAR_SME2_grids_radarData_frequencyB_sigma0VV_subsetted.tif": "d71e6106fc8bd389974f48af8bd16b2c",
+    "science_LSAR_SME2_grids_retrievalQualityFlag_subsetted.tif": "955d9fd932be0e938be842a3ac65107c",
+    "science_LSAR_SME2_grids_soilMoisture_subsetted.tif": "de8c08f09aa90c5e354bac838a695433",
+    "science_LSAR_SME2_grids_soilMoistureUncertainty_subsetted.tif": "3448a85be953ac1a7c60974d597d6292",
+    "science_LSAR_SME2_grids_surfaceQualityFlag_subsetted.tif": "07d48cfe8ad799bd6e3d1b3ceee42e00"
+}

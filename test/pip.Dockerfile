@@ -14,6 +14,10 @@ WORKDIR /workdir
 
 COPY build-netrc.sh notebook-entrypoint.sh ./
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libexpat1 \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/requirements.txt ./${sub_dir}
 
