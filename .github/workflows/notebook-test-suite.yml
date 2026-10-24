@@ -60,7 +60,7 @@ on:
           - giovanni-averaging-service-adapter
           - giovanni-time-series-adapter
           - harmony-flow
-          - hga
+          - harmony-gdal-adapter
           - harmony-regridder
           - harmony-service-example
           - harmony-smap-l2-gridder
@@ -101,7 +101,7 @@ on:
       - giovanni-averaging-service-adapter
       - giovanni-time-series-adapter
       - harmony-flow
-      - hga
+      - harmony-gdal-adapter
       - harmony-regridder
       - harmony-service-example
       - harmony-smap-l2-gridder

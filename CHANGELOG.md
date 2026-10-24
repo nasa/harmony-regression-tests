@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-10-24 ([#339](https://github.com/nasa/harmony-regression-tests/pull/339))
+
+### Fixed
+
+- Fixed actions to use correct value for harmony-gdal-adapter.
+
 ## 2026-10-15 ([#335](https://github.com/nasa/harmony-regression-tests/pull/335))
 
 ### Added
