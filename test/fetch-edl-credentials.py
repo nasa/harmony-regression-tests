@@ -14,11 +14,16 @@ import boto3
 def main() -> None:
     role_arn = os.getenv("EDL_SECRETS_ROLE_ARN")
     if not role_arn:
-        print("EDL_SECRETS_ROLE_ARN is not set; skipping SSM credential fetch.", file=sys.stderr)
+        print(
+            "EDL_SECRETS_ROLE_ARN is not set; skipping SSM credential fetch.",
+            file=sys.stderr,
+        )
         return
 
     sts = boto3.client("sts")
-    assumed = sts.assume_role(RoleArn=role_arn, RoleSessionName="harmony-regression")["Credentials"]
+    assumed = sts.assume_role(RoleArn=role_arn, RoleSessionName="harmony-regression")[
+        "Credentials"
+    ]
 
     ssm = boto3.client(
         "ssm",
@@ -27,8 +32,12 @@ def main() -> None:
         aws_session_token=assumed["SessionToken"],
     )
 
-    user = ssm.get_parameter(Name="/astra/harmony-regression-tests/EDL_USER", WithDecryption=True)["Parameter"]["Value"]
-    password = ssm.get_parameter(Name="/astra/harmony-regression-tests/EDL_PASSWORD", WithDecryption=True)["Parameter"]["Value"]
+    user = ssm.get_parameter(
+        Name="/astra/harmony-regression-tests/EDL_USER", WithDecryption=True
+    )["Parameter"]["Value"]
+    password = ssm.get_parameter(
+        Name="/astra/harmony-regression-tests/EDL_PASSWORD", WithDecryption=True
+    )["Parameter"]["Value"]
 
     print(f"export EDL_USER={user}")
     print(f"export EDL_PASSWORD={password}")
