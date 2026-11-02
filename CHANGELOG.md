@@ -5,6 +5,16 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-11-02 ([#341](https://github.com/nasa/harmony-regression-tests/pull/341))
+
+### Added
+
+- Add support to build and publish all Harmony regression test images that can be run in ETQ/ASTRA.
+
+### Changed
+
+- Incremented the version of all 24 regression test suites to force a rebuild of their Docker images with ASTRA support.
+
 ## 2026-10-24 ([#339](https://github.com/nasa/harmony-regression-tests/pull/339))
 
 ### Fixed
