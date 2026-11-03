@@ -104,21 +104,21 @@ environment before installing from the environment.yml.
 ## Running the Tests in ASTRA
 
 Setting `ASTRA=true` changes container behavior to integrate with ASTRA.
-Each test suite directory contains a `compose.yaml` file. This file is **not**
-used by any script in this repository — `run_notebooks.sh`, `run_local.sh`,
-and the Bamboo/GitHub workflows all run suites with plain `docker run`/`docker
-pull`. `compose.yaml` exists solely as a way to manually test the ASTRA integration,
-where the test image is used to run the regression test and report results to ETQ.
-A similar test configuration exists in ASTRA for each regression test.
+ASTRA has its own test configuration for each regression test and does not
+use anything in this repository to run them. `test/run_astra.sh` lets you
+simulate an ASTRA run locally with `docker compose`, so you can test the ASTRA
+integration (credential fetching and result reporting) without needing ASTRA
+itself.
 
-Each `compose.yaml` defines two services:
+`run_astra.sh` builds the suite's image, then runs it alongside two
+`docker compose` services:
 
 - `reporter` — ETQ's `reporting-api` sidecar container. A healthcheck ensures
   `test` doesn't start until it's ready to accept results.
 - `test` — the suite's regression image, run with `ASTRA=true` and the
   environment variables below.
 
-Environment variables used under ASTRA:
+Environment variables used by ASTRA local testing:
 
 | Variable | Purpose |
 |---|---|
@@ -128,36 +128,18 @@ Environment variables used under ASTRA:
 | `AWS_PROFILE` / `AWS_REGION` | AWS credentials/region used to assume the role above. |
 | `HARMONY_HOST_URL` | Same as local runs — the Harmony environment under test. |
 
-### Testing a suite's `compose.yaml` manually
+### Testing a suite in ASTRA manually
 
-A suite's `compose.yaml` can be run directly with `docker compose up` to test out
-the regression test image as ASTRA would run it, without needing ASTRA itself.
 For example, for the `harmony-regression` suite:
 
     $ cd test
-    $ make harmony-regression-image
-    $ cd harmony-regression
     $ export HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov
     $ export AWS_PROFILE=harmony-sandbox
     $ export EDL_SECRETS_ROLE_ARN=<The IAM role ARN that ASTRA assumes to read EDL credentials from SSM>
-    $ docker compose up
+    $ ./run_astra.sh harmony-regression
 
-    WARN[0000] The "EDL_USER" variable is not set. Defaulting to a blank string.
-    WARN[0000] The "EDL_PASSWORD" variable is not set. Defaulting to a blank string.
-    WARN[0000] The "AWS_REGION" variable is not set. Defaulting to a blank string.
-    [+] Running 3/3
-     ✔ Network harmony-regression_default       Created                        0.0s
-     ✔ Container harmony-regression-reporter-1  Created                        0.0s
-     ✔ Container harmony-regression-test-1      Created                        0.1s
-    Attaching to test-1
-    test-1  | Input Notebook:  harmony-regression/HarmonyRegression.ipynb
-    test-1  | Output Notebook: /workdir/output/harmony-regression/Results.ipynb
-    test-1  | Working directory: harmony-regression
-    Executing: 100%|██████████| 29/29 [01:51<00:00,  3.83s/cell]
-    test-1  | Results submitted with ID 10722a12-a28e-4c08-8a35-95aea56a2d83.
-    test-1 exited with code 0
-
-Run `docker compose down` to shut down the reporting docker container.
+`run_astra.sh` tears down the `reporter` and `test` containers automatically
+on exit (including Ctrl-C), so there's no separate `docker compose down` step.
 
 ## Tag regression test images
 
