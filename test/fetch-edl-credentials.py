@@ -6,9 +6,11 @@ plaintext test configuration.
 """
 
 import os
+import shlex
 import sys
 
 import boto3
+from botocore.exceptions import BotoCoreError, ClientError
 
 
 def main() -> None:
@@ -20,27 +22,34 @@ def main() -> None:
         )
         return
 
-    sts = boto3.client("sts")
-    assumed = sts.assume_role(RoleArn=role_arn, RoleSessionName="harmony-regression")[
-        "Credentials"
-    ]
+    try:
+        sts = boto3.client("sts")
+        assumed = sts.assume_role(
+            RoleArn=role_arn, RoleSessionName="harmony-regression"
+        )["Credentials"]
 
-    ssm = boto3.client(
-        "ssm",
-        aws_access_key_id=assumed["AccessKeyId"],
-        aws_secret_access_key=assumed["SecretAccessKey"],
-        aws_session_token=assumed["SessionToken"],
-    )
+        ssm = boto3.client(
+            "ssm",
+            aws_access_key_id=assumed["AccessKeyId"],
+            aws_secret_access_key=assumed["SecretAccessKey"],
+            aws_session_token=assumed["SessionToken"],
+        )
 
-    user = ssm.get_parameter(
-        Name="/astra/harmony-regression-tests/EDL_USER", WithDecryption=True
-    )["Parameter"]["Value"]
-    password = ssm.get_parameter(
-        Name="/astra/harmony-regression-tests/EDL_PASSWORD", WithDecryption=True
-    )["Parameter"]["Value"]
+        user = ssm.get_parameter(
+            Name="/astra/harmony-regression-tests/EDL_USER", WithDecryption=True
+        )["Parameter"]["Value"]
+        password = ssm.get_parameter(
+            Name="/astra/harmony-regression-tests/EDL_PASSWORD", WithDecryption=True
+        )["Parameter"]["Value"]
+    except (ClientError, BotoCoreError) as error:
+        print(
+            f"Failed to fetch EDL credentials from SSM via role {role_arn}: {error}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
-    print(f"export EDL_USER={user}")
-    print(f"export EDL_PASSWORD={password}")
+    print(f"export EDL_USER={shlex.quote(user)}")
+    print(f"export EDL_PASSWORD={shlex.quote(password)}")
 
 
 if __name__ == "__main__":

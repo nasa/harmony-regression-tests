@@ -138,6 +138,7 @@ For example, for the `harmony-regression` suite:
     $ export EDL_SECRETS_ROLE_ARN=<The IAM role ARN that ASTRA assumes to read EDL credentials from SSM>
     $ ./run_astra.sh harmony-regression
 
+The notebook output will go to the same location as the ./run_notebook.sh output.
 `run_astra.sh` tears down the `reporter` and `test` containers automatically
 on exit (including Ctrl-C), so there's no separate `docker compose down` step.
 

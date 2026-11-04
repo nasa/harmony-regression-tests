@@ -10,6 +10,7 @@ to document pull requests to this repository.
 ### Added
 
 - Add support to build and publish all Harmony regression test images that can be run in ETQ/ASTRA.
+- Add `test/run_astra.sh` to build a suite's image and run it locally to simulate its ASTRA integration.
 
 ### Changed
 

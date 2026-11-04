@@ -3,7 +3,10 @@
 
 export PATH=/opt/conda/envs/papermill-${env_sub_dir}/bin:$PATH
 
-/bin/bash /workdir/build-netrc.sh
+if ! /bin/bash /workdir/build-netrc.sh; then
+  echo "Failed to build .netrc; aborting before running the notebook." >&2
+  exit 1
+fi
 
 mkdir -p /workdir/output/${env_sub_dir}
 

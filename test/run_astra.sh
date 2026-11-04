@@ -1,6 +1,7 @@
 #!/bin/bash
 # Build a suite's regression image and run it with docker compose
-# to test a test suite's ASTRA integration locally.
+# to test a test suite's ASTRA integration locally against a Harmony environment
+# as specified by the HARMONY_HOST_URL environment variable.
 #
 # Usage:
 #   test/      $ ./run_astra.sh hoss

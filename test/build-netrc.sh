@@ -1,8 +1,14 @@
 #!/bin/bash
 # script that runs in a harmony regression test to create a .netrc file to allow for EDL access.
+set -euo pipefail
 
 if [ "${ASTRA:-false}" = "true" ]; then
-  source <(python3 /workdir/fetch-edl-credentials.py)
+  # Captured via command substitution (not `source <(...)`) so a failure in
+  # fetch-edl-credentials.py propagates its exit code here instead of being
+  # silently swallowed, which would otherwise fall through to placeholder
+  # credentials below.
+  edl_env=$(python3 /workdir/fetch-edl-credentials.py)
+  eval "$edl_env"
 fi
 
 local_edl_user=${EDL_USER:-need_to_set_EDL_USER}
