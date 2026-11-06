@@ -101,6 +101,48 @@ environment before installing from the environment.yml.
 1. Run the tests.
 
 
+## Running the Tests in ASTRA
+
+Setting `ASTRA=true` changes container behavior to integrate with ASTRA.
+ASTRA has its own test configuration for each regression test and does not
+use anything in this repository to run them. `test/run_astra.sh` lets you
+simulate an ASTRA run locally with `docker compose`, so you can test the ASTRA
+integration (credential fetching and result reporting) without needing ASTRA
+itself. Since the ASTRA reporting image is hosted on Earthdata maven repository,
+you need to be on the Earthdata VPN to run the test.
+
+`run_astra.sh` builds the suite's image, then runs it alongside two
+`docker compose` services:
+
+- `reporter` — ETQ's `reporting-api` sidecar container. A healthcheck ensures
+  `test` doesn't start until it's ready to accept results.
+- `test` — the suite's regression image, run with `ASTRA=true` and the
+  environment variables below.
+
+Environment variables used by ASTRA local testing:
+
+| Variable | Purpose |
+|---|---|
+| `ASTRA` | Set to `true` to enable ASTRA-specific credential fetching and result reporting. |
+| `ETQ_REPORTING_URL` | URL of the `reporter` service (e.g. `http://reporter:8000`). If unset, `report.py` skips submission. |
+| `EDL_SECRETS_ROLE_ARN` | IAM role ARN that `fetch_edl_credentials.py` assumes to read EDL credentials from SSM. |
+| `AWS_PROFILE` / `AWS_REGION` | AWS credentials/region used to assume the role above. |
+| `HARMONY_HOST_URL` | Same as local runs — the Harmony environment under test. |
+
+### Testing a suite in ASTRA manually
+
+For example, for the `harmony-regression` suite:
+
+    $ cd test
+    $ export HARMONY_HOST_URL=https://harmony.uat.earthdata.nasa.gov
+    $ export AWS_PROFILE=harmony-sandbox
+    $ export EDL_SECRETS_ROLE_ARN=<The IAM role ARN that ASTRA assumes to read EDL credentials from SSM>
+    $ ./run_astra.sh harmony-regression
+
+The notebook output will go to the same location as the ./run_notebook.sh output.
+`run_astra.sh` tears down the `reporter` and `test` containers automatically
+on exit (including Ctrl-C), so there's no separate `docker compose down` step.
+
 ## Tag regression test images
 
 Each regression test suite contains a services_tested.txt file that lists the services covered by the test suite. Service names are comma-delimited.
