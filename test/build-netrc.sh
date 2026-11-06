@@ -4,10 +4,10 @@ set -euo pipefail
 
 if [ "${ASTRA:-false}" = "true" ]; then
   # Captured via command substitution (not `source <(...)`) so a failure in
-  # fetch-edl-credentials.py propagates its exit code here instead of being
+  # fetch_edl_credentials.py propagates its exit code here instead of being
   # silently swallowed, which would otherwise fall through to placeholder
   # credentials below.
-  edl_env=$(python3 /workdir/fetch-edl-credentials.py)
+  edl_env=$(python3 /workdir/fetch_edl_credentials.py)
   eval "$edl_env"
 fi
 

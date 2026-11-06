@@ -108,7 +108,8 @@ ASTRA has its own test configuration for each regression test and does not
 use anything in this repository to run them. `test/run_astra.sh` lets you
 simulate an ASTRA run locally with `docker compose`, so you can test the ASTRA
 integration (credential fetching and result reporting) without needing ASTRA
-itself.
+itself. Since the ASTRA reporting image is hosted on Earthdata maven repository,
+you need to be on the Earthdata VPN to run the test.
 
 `run_astra.sh` builds the suite's image, then runs it alongside two
 `docker compose` services:
@@ -124,7 +125,7 @@ Environment variables used by ASTRA local testing:
 |---|---|
 | `ASTRA` | Set to `true` to enable ASTRA-specific credential fetching and result reporting. |
 | `ETQ_REPORTING_URL` | URL of the `reporter` service (e.g. `http://reporter:8000`). If unset, `report.py` skips submission. |
-| `EDL_SECRETS_ROLE_ARN` | IAM role ARN that `fetch-edl-credentials.py` assumes to read EDL credentials from SSM. |
+| `EDL_SECRETS_ROLE_ARN` | IAM role ARN that `fetch_edl_credentials.py` assumes to read EDL credentials from SSM. |
 | `AWS_PROFILE` / `AWS_REGION` | AWS credentials/region used to assume the role above. |
 | `HARMONY_HOST_URL` | Same as local runs — the Harmony environment under test. |
 
