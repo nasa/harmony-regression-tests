@@ -5,6 +5,14 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-11-06 ([#343](https://github.com/nasa/harmony-regression-tests/pull/343))
+
+### Changed
+
+- Adds nbstripout to pre-commit config to prevent cell output from being committed to the repository.
+  - Cleans metadata and outputs from harmony-regression, hga, hybig, and sambah (patched versions)
+- Updates HOSS regression tests with Ruff timezone changes.
+
 ## 2026-11-02 ([#341](https://github.com/nasa/harmony-regression-tests/pull/341))
 
 ### Added
