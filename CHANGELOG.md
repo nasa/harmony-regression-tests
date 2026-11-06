@@ -10,8 +10,8 @@ to document pull requests to this repository.
 ### Changed
 
 - Adds nbstripout to pre-commit config to prevent cell output from being committed to the repository.
+  - Cleans metadata and outputs from harmony-regression, hga, hybig, and sambah (patched versions)
 - Updates HOSS regression tests with Ruff timezone changes.
-
 
 ## 2026-11-02 ([#341](https://github.com/nasa/harmony-regression-tests/pull/341))
 
