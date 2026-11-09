@@ -6,6 +6,7 @@ dependencies:
   - python=3.11.10
   - notebook=7.2.2
   - numpy=1.26.4
+  - pandas=2.2.3
   - papermill=2.6.0
   - hdf4=4.2.15
   - pyhdf=0.11.3
