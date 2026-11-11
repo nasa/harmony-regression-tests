@@ -5,12 +5,18 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-11-02 ([#345](https://github.com/nasa/harmony-regression-tests/pull/345))
+## 2026-11-11 ([#345](https://github.com/nasa/harmony-regression-tests/pull/345))
 
 ### Changed
 
 - Updated CASPER test reference files for CASPER updates
 - Updated CASPER notebook filename creation
+- 
+## 2026-11-09 ([#344](https://github.com/nasa/harmony-regression-tests/pull/344))
+
+### Fixed
+
+- Pinned `pandas=2.2.3` in the `subset-band-name` environment to prevent pip from upgrading NumPy to 2.x, which broke `pyhdf`.
 
 ## 2026-11-02 ([#341](https://github.com/nasa/harmony-regression-tests/pull/341))
 
