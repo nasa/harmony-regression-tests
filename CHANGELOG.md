@@ -5,11 +5,28 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-11-3 ([#340](https://github.com/nasa/harmony-regression-tests/pull/340))
+## 2026-11-16 ([#340](https://github.com/nasa/harmony-regression-tests/pull/340))
 
 ### Changed
 
 - Added Harmony GDAL Adapter to production test set.
+
+## 2026-11-09 ([#344](https://github.com/nasa/harmony-regression-tests/pull/344))
+
+### Fixed
+
+- Pinned `pandas=2.2.3` in the `subset-band-name` environment to prevent pip from upgrading NumPy to 2.x, which broke `pyhdf`.
+
+## 2026-11-02 ([#341](https://github.com/nasa/harmony-regression-tests/pull/341))
+
+### Added
+
+- Add support to build and publish all Harmony regression test images that can be run in ETQ/ASTRA.
+- Add `test/run_astra.sh` to build a suite's image and run it locally to simulate its ASTRA integration.
+
+### Changed
+
+- Incremented the version of all 24 regression test suites to force a rebuild of their Docker images with ASTRA support.
 
 ## 2026-10-24 ([#339](https://github.com/nasa/harmony-regression-tests/pull/339))
 
