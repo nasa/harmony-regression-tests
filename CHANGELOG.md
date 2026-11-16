@@ -5,13 +5,25 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
-## 2026-11-06 ([#343](https://github.com/nasa/harmony-regression-tests/pull/343))
+## 2026-11-16 ([#343](https://github.com/nasa/harmony-regression-tests/pull/343))
 
 ### Changed
 
 - Adds nbstripout to pre-commit config to prevent cell output from being committed to the repository.
   - Cleans metadata and outputs from harmony-regression, hga, hybig, and sambah (patched versions)
 - Updates HOSS regression tests with Ruff timezone changes.
+
+## 2026-11-16 ([#340](https://github.com/nasa/harmony-regression-tests/pull/340))
+
+### Changed
+
+- Added Harmony GDAL Adapter to production test set.
+
+## 2026-11-09 ([#344](https://github.com/nasa/harmony-regression-tests/pull/344))
+
+### Fixed
+
+- Pinned `pandas=2.2.3` in the `subset-band-name` environment to prevent pip from upgrading NumPy to 2.x, which broke `pyhdf`.
 
 ## 2026-11-02 ([#341](https://github.com/nasa/harmony-regression-tests/pull/341))
 
