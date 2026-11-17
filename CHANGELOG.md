@@ -12,6 +12,12 @@ to document pull requests to this repository.
 - Updated CASPER test reference files for CASPER updates
 - Updated CASPER notebook filename creation
 -
+## 2026-11-16 ([#340](https://github.com/nasa/harmony-regression-tests/pull/340))
+
+### Changed
+
+- Added Harmony GDAL Adapter to production test set.
+
 ## 2026-11-09 ([#344](https://github.com/nasa/harmony-regression-tests/pull/344))
 
 ### Fixed
