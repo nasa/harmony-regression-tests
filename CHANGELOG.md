@@ -16,6 +16,25 @@ to document pull requests to this repository.
   two on ORNL DAAC PRISM (BioSCape L2A and PACE-PAX L1B). A request without a
   bounding box must be refused with HTTP 422. Configured for SIT and UAT.
 
+## 2026-11-11 ([#345](https://github.com/nasa/harmony-regression-tests/pull/345))
+
+### Changed
+
+- Updated CASPER test reference files for CASPER updates
+- Updated CASPER notebook filename creation
+-
+## 2026-11-16 ([#340](https://github.com/nasa/harmony-regression-tests/pull/340))
+
+### Changed
+
+- Added Harmony GDAL Adapter to production test set.
+
+## 2026-11-09 ([#344](https://github.com/nasa/harmony-regression-tests/pull/344))
+
+### Fixed
+
+- Pinned `pandas=2.2.3` in the `subset-band-name` environment to prevent pip from upgrading NumPy to 2.x, which broke `pyhdf`.
+
 ## 2026-11-02 ([#341](https://github.com/nasa/harmony-regression-tests/pull/341))
 
 ### Added
