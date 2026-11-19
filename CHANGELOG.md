@@ -5,11 +5,19 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-11-19 ([#343](https://github.com/nasa/harmony-regression-tests/pull/343))
+
+### Changed
+
+- Adds nbstripout to pre-commit config to prevent cell output from being committed to the repository.
+  - Cleans metadata and outputs from harmony-regression, hga, hybig, and sambah (patched versions)
+- Updates HOSS regression tests with Ruff timezone changes.
+
 ## 2026-11-19 ([#347](https://github.com/nasa/harmony-regression-tests/pull/347))
 
 ### Changed
 
-- Added regression test for Level 1 data. Level 1 data files are large and need to be subsetted to ensure the test runs in shorter timeframe. Added an additional test section with Level 1 request parameters for the harmony request.
+- Added CASPER regression test for Level 1 data. Level 1 data files are large and need to be subsetted to ensure the test runs in shorter timeframe. Added an additional test section with Level 1 request parameters for the harmony request.
 
 ## 2026-11-11 ([#345](https://github.com/nasa/harmony-regression-tests/pull/345))
 
@@ -17,7 +25,7 @@ to document pull requests to this repository.
 
 - Updated CASPER test reference files for CASPER updates
 - Updated CASPER notebook filename creation
--
+
 ## 2026-11-16 ([#340](https://github.com/nasa/harmony-regression-tests/pull/340))
 
 ### Changed
