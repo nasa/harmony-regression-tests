@@ -9,7 +9,7 @@ to document pull requests to this repository.
 
 ### Changed
 
-- Added regression test for Level 1 data
+- Added regression test for Level 1 data. Level 1 data files are large and need to be subsetted to ensure the test runs in shorter timeframe. Added an additional test section with Level 1 request parameters for the harmony request.
 
 ## 2026-11-11 ([#345](https://github.com/nasa/harmony-regression-tests/pull/345))
 
