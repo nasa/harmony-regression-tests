@@ -5,6 +5,12 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-11-19 ([#347](https://github.com/nasa/harmony-regression-tests/pull/347))
+
+### Changed
+
+- Added regression test for Level 1 data. Level 1 data files are large and need to be subsetted to ensure the test runs in shorter timeframe. Added an additional test section with Level 1 request parameters for the harmony request.
+
 ## 2026-11-11 ([#345](https://github.com/nasa/harmony-regression-tests/pull/345))
 
 ### Changed
