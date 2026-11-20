@@ -72,6 +72,7 @@ on:
           - podaac-concise
           - podaac-l2-subsetter
           - query-cmr
+          - make-matchup
           - maskfill
           - stitchee
           - subset-band-name
@@ -113,6 +114,7 @@ on:
       - podaac-concise
       - podaac-l2-subsetter
       - query-cmr
+      - make-matchup
       - maskfill
       - stitchee
       - subset-band-name

@@ -47,6 +47,11 @@ jobs:
             shared-utils: "true"
             dockerfile: "pip.Dockerfile"
           -
+            image: "satellite-in-situ-matchup"
+            notebook: "satellite-in-situ-matchup_Regression.ipynb"
+            shared-utils: "true"
+            dockerfile: "pip.Dockerfile"
+          -
             image: "swath-projector"
             notebook: "SwathProjector_Regression.ipynb"
             shared-utils: "true"
