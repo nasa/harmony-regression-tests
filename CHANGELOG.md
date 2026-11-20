@@ -15,6 +15,13 @@ to document pull requests to this repository.
   Archive MODIS Terra ocean color, PACE OCI and VIIRS SNPP ocean color, and
   two on ORNL DAAC PRISM (BioSCape L2A and PACE-PAX L1B). A request without a
   bounding box must be refused with HTTP 422. Configured for SIT and UAT.
+  Each job is labeled with its test (`sism-rtest-<reference file>`).
+
+## 2026-11-19 ([#347](https://github.com/nasa/harmony-regression-tests/pull/347))
+
+### Changed
+
+- Added regression test for Level 1 data. Level 1 data files are large and need to be subsetted to ensure the test runs in shorter timeframe. Added an additional test section with Level 1 request parameters for the harmony request.
 
 ## 2026-11-11 ([#345](https://github.com/nasa/harmony-regression-tests/pull/345))
 
