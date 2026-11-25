@@ -50,6 +50,11 @@ swath-projector-image: Dockerfile swath-projector/environment.yaml
 	--build-arg notebook=SwathProjector_Regression.ipynb --build-arg sub_dir=swath-projector \
 	--build-arg shared_utils=true .
 
+satellite-in-situ-matchup-image: pip.Dockerfile satellite-in-situ-matchup/requirements.txt
+	docker build -t ghcr.io/nasa/regression-tests-satellite-in-situ-matchup:latest -f ./pip.Dockerfile \
+	--build-arg notebook=satellite-in-situ-matchup_Regression.ipynb --build-arg sub_dir=satellite-in-situ-matchup \
+	--build-arg shared_utils=true .
+
 subset-band-name-image: Dockerfile subset-band-name/environment.yaml
 	docker build -t ghcr.io/nasa/regression-tests-subset-band-name:latest -f ./Dockerfile \
 	--build-arg notebook=SubsetBandName_Regression.ipynb --build-arg sub_dir=subset-band-name \
@@ -117,6 +122,7 @@ images: harmony-image \
 	nsidc-icesat2-image \
 	nsidc-smap-image \
 	regridder-image \
+	satellite-in-situ-matchup-image \
 	smap-l2-gridder-image \
 	subset-band-name-image \
 	swath-projector-image \
