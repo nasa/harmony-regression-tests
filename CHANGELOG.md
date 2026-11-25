@@ -5,6 +5,20 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-11-17 ([#346](https://github.com/nasa/harmony-regression-tests/pull/346))
+
+### Added
+
+- Registered the `satellite-in-situ-matchup` regression tests for the
+  Satellite–In Situ Matchup Service (`make-matchup` on `/service-image-tag`).
+  Six observations are checked against reference CSVs: four on Earthdata
+  Archive MODIS Terra ocean color, PACE OCI and VIIRS SNPP ocean color, and
+  two on ORNL DAAC PRISM (BioSCape L2A and PACE-PAX L1B). A request without a
+  bounding box must be refused with HTTP 422. Configured for SIT and UAT.
+  Each job is labeled with its test (`sism-rtest-<reference file>`). All
+  requests are submitted before any is checked, so Harmony runs them in
+  parallel, and a failed test does not stop the others.
+
 ## 2026-11-19 ([#347](https://github.com/nasa/harmony-regression-tests/pull/347))
 
 ### Changed
