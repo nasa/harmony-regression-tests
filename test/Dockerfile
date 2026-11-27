@@ -11,7 +11,7 @@ ENV PYTHONDONTWRITEBYTECODE=true
 
 WORKDIR /workdir
 
-COPY build-netrc.sh notebook-entrypoint.sh fetch_edl_credentials.py report.py requirements-astra.txt ./
+COPY build-netrc.sh notebook-entrypoint.sh fetch_edl_credentials.py notebook_report.py report.py requirements-astra.txt ./
 
 RUN mkdir ./${sub_dir}
 COPY ${sub_dir}/environment.yaml ./${sub_dir}

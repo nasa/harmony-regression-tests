@@ -363,6 +363,50 @@ dependencies:
     - earthdata-hashdiff
 ```
 
+## Per-test results
+
+After papermill has run a notebook, `test/notebook_report.py` reads the
+executed notebook and reports each test in it individually. The following files
+are written next to `Results.ipynb` in `test/output/<suite>`:
+
+* `junit.xml` - a JUnit XML report, which can be read by most CI tools.
+* `test_results.json` - per-test results, submitted to ASTRA by `report.py`.
+* `summary.md` - a Markdown table, added to the GitHub Actions job summary.
+
+A summary is also printed at the end of each test suite's log:
+
+```
+harmony-regression test results: 8 passed, 1 failed
+  PASSED   Sample OGC Coverages Sync Request - Bounding Box and Temporal Subsetting with Reformatting
+  ...
+  FAILED   Cancel Async Requests - AssertionError: Job was not canceled properly.
+  PASSED   PODAAC L2 Subsetter (Sync)
+  PASSED   PODAAC L2 Subsetter (Async)
+  PASSED   harmony/download service
+```
+
+To report tests individually, tag each test cell in the notebook with both
+`test` and `raises-exception` (in Jupyter: View > Right Sidebar > Show Notebook
+Tools > Common Tools > Cell Tags):
+
+* `test` marks the cell as a test. The test is named after the nearest
+  preceding markdown heading.
+* `raises-exception` allows papermill to continue running the remaining tests
+  after a test fails. The test suite still fails if any test fails.
+
+Cells that are not tagged are treated as setup. Do not tag setup cells (imports,
+client creation, environment configuration) with `raises-exception`, so that a
+setup failure stops the notebook. The failing setup cell is reported as a
+failed test and the tests that were not run are reported as "not run".
+
+A test cell is reported as skipped if it completes without an error and prints
+a message containing "skip" or "not configured", e.g.,
+`print('Skipping - harmony/service-example is not configured for production.')`.
+
+Notebooks without any `test` tagged cells are reported as a single test, which
+is the previous behaviour. See `test/harmony-regression/HarmonyRegression.ipynb`
+for an example of a notebook with tagged test cells.
+
 ## Reference files
 
 > [!IMPORTANT]

@@ -210,12 +210,25 @@ jobs:
           name: failed-suite-${{ matrix.service }}
           path: failed-suite-${{ matrix.service }}.txt
 
+      - name: Add test results to job summary
+        if: always()
+        run: |
+          summary_file="test/output/${{ matrix.service }}/summary.md"
+          if [ -f "$summary_file" ]; then
+            cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No per-test results were generated for ${{ matrix.service }}." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Save notebook as an artifact
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: notebook-output-${{ matrix.service }}
-          path: test/output/${{ matrix.service }}/Results.ipynb
+          path: |
+            test/output/${{ matrix.service }}/Results.ipynb
+            test/output/${{ matrix.service }}/junit.xml
+            test/output/${{ matrix.service }}/test_results.json
 
       - name: Authenticate to GHCR
         if: steps.test-step.outcome == 'success'

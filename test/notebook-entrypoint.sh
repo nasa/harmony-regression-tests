@@ -8,18 +8,28 @@ if ! /bin/bash /workdir/build-netrc.sh; then
   exit 1
 fi
 
-mkdir -p /workdir/output/${env_sub_dir}
+output_dir=/workdir/output/${env_sub_dir}
+mkdir -p ${output_dir}
+# Remove results from any previous run so they cannot be mistaken for this one.
+rm -f ${output_dir}/Results.ipynb ${output_dir}/test_results.json ${output_dir}/junit.xml ${output_dir}/summary.md
 
 export NETRC=/workdir/.netrc
 
 start=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
-papermill --cwd ${env_sub_dir} ${env_sub_dir}/${env_notebook} /workdir/output/${env_sub_dir}/Results.ipynb -p harmony_host_url $harmony_host_url -k python3
+papermill --cwd ${env_sub_dir} ${env_sub_dir}/${env_notebook} ${output_dir}/Results.ipynb -p harmony_host_url $harmony_host_url -k python3
 exit_code=$?
 end=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
 
 status="passed"
 if [ $exit_code -ne 0 ]; then
   status="failed"
+fi
+
+# Generate per-test results (test_results.json, junit.xml and summary.md).
+# Failure to generate the report does not change the test suite result.
+if ! python3 /workdir/notebook_report.py ${output_dir}/Results.ipynb ${env_sub_dir} ${output_dir} \
+  --notebook-name ${env_notebook} --notebook-status $status; then
+  echo "Failed to generate per-test results report." >&2
 fi
 
 if [ "${ASTRA:-false}" = "true" ]; then
