@@ -12,7 +12,7 @@ ENV PYTHONDONTWRITEBYTECODE=true
 
 WORKDIR /workdir
 
-COPY build-netrc.sh notebook-entrypoint.sh fetch_edl_credentials.py report.py requirements-astra.txt ./
+COPY build-netrc.sh notebook-entrypoint.sh fetch_edl_credentials.py notebook_report.py report.py requirements-astra.txt ./
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libexpat1 \

@@ -5,6 +5,28 @@ versioning. Rather than a static releases, this repository contains of a number
 of regression tests that are each semi-independent. This CHANGELOG file should be used
 to document pull requests to this repository.
 
+## 2026-11-27 ([#TBD](https://github.com/nasa/harmony-regression-tests/pull/TBD))
+
+### Added
+
+- Add `test/notebook_report.py` to generate per-test results (`junit.xml`,
+  `test_results.json` and `summary.md`) from each executed notebook. Code cells
+  tagged `test` are reported as individual tests. Optional `raises-exception` tag
+  can be added to allow continued test suite execution after the current cell fails.
+- Submit per-test results to ASTRA, when available.
+- Add per-test results to the GitHub Actions job summary, and upload
+  `junit.xml` and `test_results.json` with the notebook artifact.
+
+### Changed
+
+- harmony-regression (v0.2.3)
+  - Tagged the test cells with `test` and `raises-exception`, as an example of
+    per-test reporting, so that all harmony-regression tests run, and are
+    reported individually, even if one of them fails. Tests that only run in
+    non-production environments now print a skip message in production, and
+    the single-variable sync requests have their own headings so that they are
+    reported as separate tests.
+
 ## 2026-11-19 ([#343](https://github.com/nasa/harmony-regression-tests/pull/343))
 
 ### Changed
